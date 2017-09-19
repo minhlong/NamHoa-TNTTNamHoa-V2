@@ -33,14 +33,4 @@ class DangNhapController extends Controller
             ]),
         ]);
     }
-
-    public function getThongTin()
-    {
-        $result = array_merge(\Auth::user()->toArray(), \Auth::user()->getPhanQuyen());
-        $khoaHocID = KhoaHoc::hienTaiHoacTaoMoi()->id;
-        $lopHoc = \Auth::user()->lop_hoc()->where('khoa_hoc_id', $khoaHocID)->first();
-        $result['lop_hoc_id'] = $lopHoc ? $lopHoc->id : null;
-
-        return response()->json($result);
-    }
 }
