@@ -13,14 +13,14 @@ class DangNhapController extends Controller
         $credentials = $request->only('id', 'password');
         try {
             if (!\Auth::attempt($credentials)) {
-            	return response()->json('Thông tin đăng nhập không đúng!', 401);
+            	return response()->json(['error' => 'Thông tin đăng nhập không đúng!'], 401);
             }
 
             if (\Auth::user()->loai_tai_khoan == 'THIEU_NHI') {
-            	return response()->json('Tài khoản không có quyền!', 401);
+            	return response()->json(['error' => 'Tài khoản không có quyền!'], 401);
             }
         } catch (JWTException $e) {
-        	return response()->json('Liên hệ Admin!', 401);
+        	return response()->json(['error' => 'Liên hệ Admin!'], 401);
         }
 
         $khoaHoc = KhoaHoc::hienTaiHoacTaoMoi();

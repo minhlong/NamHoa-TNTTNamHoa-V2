@@ -1,0 +1,39 @@
+agm-map {
+    height: 500px;
+}
+
+.search-list {
+    min-height: 565px;
+}
+
+.map-header {
+    height: 25px;
+    margin: none;
+    padding: none;
+    margin-bottom: 5px
+}
+
+// Button event severity
+@mixin btn-customize() {
+    color: #FFFFFF;
+}
+
+.btn-Critical {
+    background-color: #ED5565;
+    @include btn-customize();
+}
+
+.btn-Warning {
+    background-color: #f8ac59;
+    @include btn-customize();
+}
+
+.search-list {
+    .table-responsive {
+        padding-top: 15px;
+    }
+}
+
+.modal-body {
+    background: none;
+}

@@ -1,0 +1,17 @@
+<div class="row border-bottom">
+  <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+      <a class="minimalize-styl-2 btn btn-primary " (click)="toggleNavigation()"><i class="fa fa-bars"></i> </a>
+    </div>
+    <ul class="nav navbar-top-links navbar-right">
+      <li>
+        <span class="m-r-sm text-muted welcome-message">{{username}}</span>
+      </li>
+      <li>
+        <a [routerLink]="['/dang-xuat']" href="#">
+          <i class="fa fa-sign-out"></i> Đăng Xuất
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
