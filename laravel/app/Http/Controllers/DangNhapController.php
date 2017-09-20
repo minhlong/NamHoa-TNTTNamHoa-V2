@@ -23,14 +23,19 @@ class DangNhapController extends Controller
         	return response()->json('Liên hệ Admin!', 401);
         }
 
-        // $result = array_merge(\Auth::user()->toArray(), \Auth::user()->getPhanQuyen());
-        $lopHoc = \Auth::user()->lop_hoc()->where('khoa_hoc_id', KhoaHoc::hienTaiHoacTaoMoi()->id)->first();
+        $khoaHoc = KhoaHoc::hienTaiHoacTaoMoi();
+        $lopHoc = \Auth::user()->lop_hoc()->where('khoa_hoc_id', $khoaHoc->id)->first();
 
         return response()->json([
             'data' => JWTAuth::fromUser(\Auth::user(), [
                 'tai_khoan' => \Auth::user(),
-                'lop_hoc_id' => $lopHoc ? $lopHoc->id : null,
+                'phan_quyen' => \Auth::user()->getPhanQuyen(),
+                'lop_hoc_hien_tai_id' => $lopHoc ? $lopHoc->id : null,
+                'khoa_hoc_hien_tai_id' => $khoaHoc ? $khoaHoc->id : null,
             ]),
+            // 'tes' => [
+            //     'phan_quyen' => \Auth::user()->getPhanQuyen(),
+            // ]
         ]);
     }
 }

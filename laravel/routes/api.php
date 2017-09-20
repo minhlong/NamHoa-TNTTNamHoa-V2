@@ -21,7 +21,8 @@ Route::group(['middleware' => 'auth-jwt'], function () {
     	return response()->json([
     		'data' => \App\TaiKhoan::all(),
     	]);
-    });
+    })->middleware(['permission:tai-khoan']);
+
     Route::get('tai-khoan/{TaiKhoan}', function ($obj) {
     	return response()->json([
     		'data' => $obj,

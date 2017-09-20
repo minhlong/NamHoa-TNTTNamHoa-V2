@@ -9,8 +9,6 @@ class PhanQuyenSeeder extends Seeder
      */
     public function run()
     {
-        $this->command->info('Create fake data for Nhom Tai Khoan! Start');
-
         DB::table('nhom_tai_khoan')->delete();
         DB::table('phan_quyen')->delete();
         DB::table('taikhoan_nhomtaikhoan')->delete();
@@ -68,9 +66,15 @@ class PhanQuyenSeeder extends Seeder
         $model->ghi_chu = 'Phân quyền hệ thống, nhóm tài khoản';
         $model->save();
 
-        $nhomTaiKhoan = \App\NhomTaiKhoan::whereTenHienThi('Ban Học Tập')->first();
-        $nhomTaiKhoan->phan_quyen()->attach(\App\PhanQuyen::lists('id'));
+        $model = new \App\PhanQuyen();
+        $model->ten = 'nhan-xet';
+        $model->ten_hien_thi = 'Nhận xét cuối năm';
+        $model->ghi_chu = 'Chỉnh sửa nhận xét cuối năm. Mặc định Huynh Trưởng dạy chính sẽ có quyền này';
+        $model->save();
 
-        $this->command->info('Create fake data for Nhom Tai Khoan! Finished');
+        $nhomTaiKhoan = \App\NhomTaiKhoan::whereTenHienThi('Ban Học Tập')->first();
+        $nhomTaiKhoan->phan_quyen()->attach(\App\PhanQuyen::pluck('id'));
+
+        $this->command->info('Data: nhom_tai_khoan: Success');
     }
 }

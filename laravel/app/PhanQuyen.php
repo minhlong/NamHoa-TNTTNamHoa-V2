@@ -5,6 +5,17 @@ use Zizaco\Entrust\EntrustPermission;
 
 class PhanQuyen extends EntrustPermission
 {
+    /**
+     * Get the phan_quyen's name. Fix for Entrus
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getNameAttribute()
+    {
+        return $this->ten;
+    }
+
     public function role_nhom()
     {
         $query = $this->roles();

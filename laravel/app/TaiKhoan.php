@@ -6,11 +6,23 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContracts;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Config;
 use App\Services\Library;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class TaiKhoan extends BaseModel implements AuthenticatableContracts
 {
     use Authenticatable;
-    use SoftDeletes;
+    use EntrustUserTrait { restore as private restoreA; }
+    use SoftDeletes { restore as private restoreB; }
+
+    /**
+     * Fix Trail
+     */
+    public function restore()
+    {
+        $this->restoreA();
+        $this->restoreB();
+    }
+
     /**
      * @var bool
      */
@@ -140,7 +152,7 @@ class TaiKhoan extends BaseModel implements AuthenticatableContracts
             }
         }
 
-        return ['quyen_thuc_thi' => $arrPerms];
+        return $arrPerms;
     }
 
     /**

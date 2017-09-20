@@ -62,6 +62,12 @@ class Handler extends ExceptionHandler
             ], 404);
         }
 
+        if ($exception->getStatusCode() == 403) {
+            return response()->json([
+                'error' => 'Bạn chưa được phân quyền cho thao tác này!',
+            ], 403);
+        }
+
         return parent::render($request, $exception);
     }
 }
