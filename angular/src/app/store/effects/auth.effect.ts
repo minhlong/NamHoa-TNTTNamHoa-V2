@@ -19,11 +19,20 @@ export class AuthEffect {
 
   @Effect() auth$ = this.actions$.ofType(AuthAction.AUTH)
     .switchMap((payload: any) => this.authService.authenticate(payload.id, payload.password)
-      .map((user: any) => {
+      .map((_data: any) => {
         this.router.navigate(['/home']);
-        return new AuthAction.AuthCompleted(user);
+        return new AuthAction.AuthCompleted(_data);
       }).catch((err) => Observable.of(new AuthAction.AuthFailed(err)))
     );
+
+  @Effect() validateToken$ = this.actions$.ofType(AuthAction.VALIDATE_TOKEN)
+    .map(() => {
+      const __data = this.authService.isAuthenticated()
+      if (__data) {
+        return new AuthAction.AuthCompleted(__data);
+      }
+      return new AuthAction.Logout()
+    }).catch((err) => Observable.of(new AuthAction.AuthFailed(err)))
 
   @Effect() logout$ = this.actions$.ofType(AuthAction.LOGOUT)
     .map(() => {

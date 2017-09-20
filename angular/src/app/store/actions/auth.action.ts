@@ -14,7 +14,7 @@ export class Auth implements Action {
 
 export class AuthCompleted implements Action {
   readonly type = AUTH_COMPLETED;
-  constructor(public user) { }
+  constructor(public payload) { }
 }
 
 export class AuthFailed implements Action {

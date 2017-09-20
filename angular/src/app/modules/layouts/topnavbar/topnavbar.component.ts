@@ -12,12 +12,12 @@ declare var jQuery: any;
   templateUrl: 'topnavbar.template.html'
 })
 export class TopnavbarComponent {
-  username: string;
+  taiKhoan: Observable<any>;
 
   constructor(
     private store: Store<AppState>
   ) {
-    this.username = localStorage.getItem('username');
+    this.taiKhoan = this.store.select((state: AppState) => state.auth.tai_khoan);
   }
 
   toggleNavigation(): void {
