@@ -161,41 +161,42 @@ class TaiKhoanController extends Controller
 
     /**
      * Luu Thong Tin Tai Khoan.
+     *
      * @param TaiKhoan $taiKhoan
      * @param TaiKhoanFormRequest $taiKhoanFormRequest
      * @return string
      */
     public function postThongTin(TaiKhoan $taiKhoan, TaiKhoanFormRequest $taiKhoanFormRequest)
     {
-        if (!$taiKhoan->id) {
-            $taiKhoan = $taiKhoan->taoTaiKhoan($taiKhoanFormRequest->all());
-            // Insert via CSV Format
-            if ($taiKhoanFormRequest->get('ho_va_ten_cha') || $taiKhoanFormRequest->get('ho_va_ten_me')) {
-                if ($taiKhoanFormRequest->get('nganh')) {
-                    $lopHoc = new LopHoc();
-                    $lopHoc = $lopHoc->locDuLieu();
-                    $lopHoc = $lopHoc->where('khoa_hoc_id', KhoaHoc::hienTaiHoacTaoMoi()->id)
-                        ->first();
-                    if ($lopHoc) {
-                        App::make('App\Http\Controllers\LopHocController')->postHocVien($lopHoc, $taiKhoan);
-                    }
-                }
-                if ($taiKhoanFormRequest->get('ho_va_ten_cha')) {
-                    $taiKhoan->luuThanNhan([
-                        'loai_quan_he' => 'CHA',
-                        'ho_va_ten'    => $taiKhoanFormRequest->get('ho_va_ten_cha'),
-                    ]);
-                }
-                if ($taiKhoanFormRequest->get('ho_va_ten_me')) {
-                    $taiKhoan->luuThanNhan([
-                        'loai_quan_he' => 'ME',
-                        'ho_va_ten'    => $taiKhoanFormRequest->get('ho_va_ten_me'),
-                    ]);
-                }
+        // if (!$taiKhoan->id) {
+        //     $taiKhoan = $taiKhoan->taoTaiKhoan($taiKhoanFormRequest->all());
+        //     // Insert via CSV Format
+        //     if ($taiKhoanFormRequest->get('ho_va_ten_cha') || $taiKhoanFormRequest->get('ho_va_ten_me')) {
+        //         if ($taiKhoanFormRequest->get('nganh')) {
+        //             $lopHoc = new LopHoc();
+        //             $lopHoc = $lopHoc->locDuLieu();
+        //             $lopHoc = $lopHoc->where('khoa_hoc_id', KhoaHoc::hienTaiHoacTaoMoi()->id)
+        //                 ->first();
+        //             if ($lopHoc) {
+        //                 App::make('App\Http\Controllers\LopHocController')->postHocVien($lopHoc, $taiKhoan);
+        //             }
+        //         }
+        //         if ($taiKhoanFormRequest->get('ho_va_ten_cha')) {
+        //             $taiKhoan->luuThanNhan([
+        //                 'loai_quan_he' => 'CHA',
+        //                 'ho_va_ten'    => $taiKhoanFormRequest->get('ho_va_ten_cha'),
+        //             ]);
+        //         }
+        //         if ($taiKhoanFormRequest->get('ho_va_ten_me')) {
+        //             $taiKhoan->luuThanNhan([
+        //                 'loai_quan_he' => 'ME',
+        //                 'ho_va_ten'    => $taiKhoanFormRequest->get('ho_va_ten_me'),
+        //             ]);
+        //         }
 
-                return $taiKhoan->toJson();
-            }
-        } else {
+        //         return $taiKhoan->toJson();
+        //     }
+        // } else {
             $taiKhoan->fill($taiKhoanFormRequest->all());
             $taiKhoan->save();
             // Update Trang Thai
@@ -204,9 +205,11 @@ class TaiKhoanController extends Controller
             } elseif ($taiKhoan->trang_thai == 'HOAT_DONG' && $taiKhoan->trashed()) {
                 $taiKhoan->restore();
             }
-        }
+        // }
 
-        return $this->getThongTin($taiKhoan);
+        return response()->json([
+            'data' => $taiKhoan,
+        ]);
     }
 
     /**

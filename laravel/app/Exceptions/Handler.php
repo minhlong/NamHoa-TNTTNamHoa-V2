@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -62,10 +63,22 @@ class Handler extends ExceptionHandler
             ], 404);
         }
 
-        if ($exception->getStatusCode() == 403) {
+        if ($exception instanceof ValidationException) {
             return response()->json([
-                'error' => 'Bạn chưa được phân quyền cho thao tác này!',
-            ], 403);
+                'error' => $exception->errors(),
+            ], 400);
+        }
+
+        if ($this->isHttpException($exception)) {
+            switch ($exception->getStatusCode()) {
+                case '403':
+                    return response()->json([
+                        'error' => 'Bạn chưa được phân quyền cho thao tác này!',
+                    ], 403);
+                    break;
+                default:
+                    break;
+            }
         }
 
         return parent::render($request, $exception);

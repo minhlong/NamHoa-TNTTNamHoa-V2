@@ -17,17 +17,20 @@ Route::post('dang-nhap', 'DangNhapController@postDangNhap');
 
 Route::group(['middleware' => 'auth-jwt'], function () {
     /* Tai Khoan */
-    Route::get('tai-khoan', function () {
-    	return response()->json([
-    		'data' => \App\TaiKhoan::all(),
-    	]);
-    })->middleware(['permission:tai-khoan']);
-
-    Route::get('tai-khoan/{TaiKhoan}', function ($obj) {
-    	return response()->json([
-    		'data' => $obj,
-    	]);
+    Route::group(['prefix' => 'tai-khoan'], function () {
+        Route::get(null, function () {
+            return response()->json([
+                'data' => \App\TaiKhoan::all(),
+            ]);
+        });
+        Route::get('{TaiKhoan}', function ($obj) {
+            return response()->json([
+                'data' => $obj,
+            ]);
+        });
+        Route::post('/{TaiKhoan}', 'TaiKhoanController@postThongTin')->middleware(['permission:tai-khoan']);
     });
+
 
     /* Lop Hoc */
     Route::get('lop-hoc', function () {
