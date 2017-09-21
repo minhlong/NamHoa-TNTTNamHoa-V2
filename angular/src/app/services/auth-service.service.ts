@@ -35,7 +35,6 @@ export class AuthService {
   }
 
   isAuthenticated() {
-    console.log(tokenNotExpired());
     if (!tokenNotExpired()) {
       return false;
     }

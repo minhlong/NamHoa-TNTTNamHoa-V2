@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule, Store } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'; // Have to remove on production mod
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { ROUTES } from './app.routes';
 
@@ -30,8 +31,9 @@ import { LogoutComponent } from './components/logout.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 // Pipe
-import { ObjectKeysPipe } from './object-keys.pipe';
 import { environment } from '../environments/environment';
+import { LoaiTK, TrangThai, HienThiNgay } from './convert-type.pipe';
+import { KhoaHocComponent } from './khoa-hoc/khoa-hoc.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,10 @@ import { environment } from '../environments/environment';
     DashboardComponent,
 
     // Pipe
-    ObjectKeysPipe,
+    LoaiTK,
+    TrangThai,
+    HienThiNgay,
+    KhoaHocComponent,
   ],
   imports: [
     // Angular modules
@@ -49,6 +54,7 @@ import { environment } from '../environments/environment';
     HttpModule,
     FormsModule,
     BrowserAnimationsModule,
+    NgxPaginationModule,
 
     // Layout
     LayoutsModule,

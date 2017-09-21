@@ -15,8 +15,14 @@
       </li>
       <li [ngClass]="{active: activeRoute('/trang-chu')}">
         <a routerLink="/trang-chu">
-          <i class="fa fa-dashboard"></i>
-          <span class="nav-label">Trang Chủ</span>
+          <i class="fa fa-users"></i>
+          <span class="nav-label">Tài Khoản</span>
+        </a>
+      </li>
+      <li [ngClass]="{active: activeRoute('/khoa-hoc')}">
+        <a routerLink="/khoa-hoc">
+          <i class="fa fa fa-bookmark-o"></i>
+          <span class="nav-label">Khóa Học</span>
         </a>
       </li>
     </ul>
