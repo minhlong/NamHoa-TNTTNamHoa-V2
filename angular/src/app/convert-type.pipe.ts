@@ -7,9 +7,9 @@ import { appConst } from './shared/constance';
 export class LoaiTK implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    const _tmp = appConst.filter(el => el.loai_du_lieu === 'LOAI_TAI_KHOAN' && el.ky_hieu === value);
-    if (_tmp.length) {
-      return _tmp[0].ten
+    const _tmp = appConst.find(el => el.loai_du_lieu === 'LOAI_TAI_KHOAN' && el.ky_hieu === value);
+    if (_tmp) {
+      return _tmp.ten
     }
     return value;
   }
@@ -21,9 +21,9 @@ export class LoaiTK implements PipeTransform {
 export class TrangThai implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    const _tmp = appConst.filter(el => el.loai_du_lieu === 'TRANG_THAI' && el.ky_hieu === value);
-    if (_tmp.length) {
-      return _tmp[0].ten
+    const _tmp = appConst.find(el => el.loai_du_lieu === 'TRANG_THAI' && el.ky_hieu === value);
+    if (_tmp) {
+      return _tmp.ten
     }
     return value;
   }

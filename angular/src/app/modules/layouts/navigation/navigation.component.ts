@@ -14,9 +14,7 @@ declare var jQuery: any;
 
 export class NavigationComponent implements AfterViewInit, OnDestroy {
   sub: any;
-  phanQuyen = {
-    taiKhoan: false,
-  };
+  phanQuyen: any = {};
 
   constructor(
     private router: Router,
@@ -24,7 +22,9 @@ export class NavigationComponent implements AfterViewInit, OnDestroy {
 
   ) {
     this.sub = this.store.select((state: AppState) => state.auth.phan_quyen).subscribe(res => {
-      this.phanQuyen.taiKhoan = res.find(c => c === 'tai-khoan');
+      res.forEach(el => {
+        this.phanQuyen[el] = true;
+      })
     });
   }
 

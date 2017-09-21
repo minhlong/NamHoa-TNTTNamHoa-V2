@@ -19,7 +19,7 @@
           <span class="nav-label">Tài Khoản</span>
         </a>
       </li>
-      <li *ngIf="phanQuyen.taiKhoan" [ngClass]="{active: activeRoute('/khoa-hoc')}">
+      <li *ngIf="phanQuyen['tai-khoan']" [ngClass]="{active: activeRoute('/khoa-hoc')}">
         <a routerLink="/khoa-hoc">
           <i class="fa fa fa-bookmark-o"></i>
           <span class="nav-label">Khóa Học</span>

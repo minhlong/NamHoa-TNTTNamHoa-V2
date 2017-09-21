@@ -9,10 +9,7 @@ export type Action = authAction.All;
  */
 export interface AuthState {
   loading: boolean;
-  tai_khoan: {
-    identityId: string,
-    username: string,
-  };
+  tai_khoan: { [id: string]: any; };
   phan_quyen: any[],
   lop_hoc_hien_tai_id: string,
   khoa_hoc_hien_tai_id: string,
