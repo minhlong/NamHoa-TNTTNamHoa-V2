@@ -33,7 +33,7 @@ export class DashboardComponent {
     this._http.get(this.urlAPI).map(res => res.json()).subscribe(res => {
       this.dataArr = res.data;
     }, error => {
-      console.log(error);
+      this.toasterService.pop('error', 'Lỗi!', error);
     })
   }
 

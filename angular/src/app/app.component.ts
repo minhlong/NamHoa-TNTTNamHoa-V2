@@ -17,6 +17,7 @@ export class AppComponent implements AfterViewInit {
   public toasterconfig: ToasterConfig = new ToasterConfig({
     timeout: 5000,
     positionClass: 'toast-bottom-left',
+    newestOnTop: false,
     mouseoverTimerStop: true,
   });
 

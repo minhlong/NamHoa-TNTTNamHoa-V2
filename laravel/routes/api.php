@@ -49,7 +49,7 @@ Route::group(['middleware' => 'auth-jwt'], function () {
         return response()->json([
             'data' => \App\KhoaHoc::all(),
         ]);
-    });
+    })->middleware(['permission:tai-khoan']);
     Route::get('khoa-hoc/{KhoaHoc}', function ($obj) {
         return response()->json([
             'data' => $obj,

@@ -1,3 +1,4 @@
+import { ToasterService } from 'angular2-toaster';
 import { Component, OnInit } from '@angular/core';
 import { JwtAuthHttp } from '../services/http-auth.service';
 import { environment } from './../../environments/environment';
@@ -16,6 +17,7 @@ export class KhoaHocComponent {
   cookieState = JSON.parse(JSON.stringify(defaultPageState))
 
   constructor(
+    private toasterService: ToasterService,
     private _http: JwtAuthHttp,
   ) {
     consoleLog('DashboardComponent: constructor');
@@ -36,7 +38,7 @@ export class KhoaHocComponent {
         } else { return 0; }
       });
     }, error => {
-      console.log(error);
+      this.toasterService.pop('error', 'Lỗi!', error);
     })
   }
 
