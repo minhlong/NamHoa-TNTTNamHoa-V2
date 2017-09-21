@@ -1,6 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { correctHeight, detectBody, consoleLog } from './shared/helpers';
 import { Store } from '@ngrx/store';
+import { ToasterConfig } from 'angular2-toaster';
 
 import { AppState } from './store/reducers/index';
 import * as AuthAction from './store/actions/auth.action';
@@ -13,6 +14,11 @@ declare var jQuery: any;
   templateUrl: './app.component.html',
 })
 export class AppComponent implements AfterViewInit {
+  public toasterconfig: ToasterConfig = new ToasterConfig({
+    timeout: 5000,
+    positionClass: 'toast-bottom-left',
+    mouseoverTimerStop: true,
+  });
 
   constructor(
     private store: Store<AppState>

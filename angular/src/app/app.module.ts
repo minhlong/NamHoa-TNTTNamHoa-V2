@@ -8,6 +8,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule, Store } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'; // Have to remove on production mod
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ToasterModule } from 'angular2-toaster';
 
 import { ROUTES } from './app.routes';
 
@@ -55,6 +56,7 @@ import { KhoaHocComponent } from './khoa-hoc/khoa-hoc.component';
     FormsModule,
     BrowserAnimationsModule,
     NgxPaginationModule,
+    ToasterModule,
 
     // Layout
     LayoutsModule,

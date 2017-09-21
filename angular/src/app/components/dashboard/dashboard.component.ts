@@ -3,6 +3,7 @@ import { JwtAuthHttp } from '../../services/http-auth.service';
 import { consoleLog } from '../../shared/helpers';
 import { environment } from '../../../environments/environment';
 import { defaultPageState } from './defaultPageState';
+import { ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +18,7 @@ export class DashboardComponent {
   cookieState = JSON.parse(JSON.stringify(defaultPageState))
 
   constructor(
+    private toasterService: ToasterService,
     private _http: JwtAuthHttp,
   ) {
     consoleLog('DashboardComponent: constructor');
@@ -46,6 +48,10 @@ export class DashboardComponent {
 
   resetCookieState() {
     localStorage.removeItem(this.cookieState.id);
-    this.cookieState = JSON.parse(JSON.stringify(defaultPageState))
+    this.cookieState = JSON.parse(JSON.stringify(defaultPageState));
+  }
+
+  view(_taiKhoan) {
+    this.toasterService.pop('success', _taiKhoan.ho_va_ten, _taiKhoan.ho_va_ten);
   }
 }
