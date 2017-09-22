@@ -1,4 +1,4 @@
-<div class="middle-box text-center loginscreen  animated fadeInDown">
+<div class="middle-box text-center loginscreen  animated fadeInDown" style="padding-top: 100px">
   <div>
     <h2>AngularWebApp</h2>
     <div *ngIf="errorMessage|async" class="alert alert-danger">
@@ -16,7 +16,11 @@
         <div class="sk-bounce2"></div>
         <div class="sk-bounce3"></div>
       </div>
-      <button *ngIf="!(isLoading|async)" [disabled]="!credential.id || !credential.password" type="submit" (click)="onLogin()" class="btn btn-primary block full-width m-b">Login</button>
+      <div class="text-center block">
+        <button *ngIf="!(isLoading|async)" [disabled]="!credential.id || !credential.password" type="submit" (click)="onLogin()" class="btn btn-primary  m-b">
+          Đăng Nhập
+        </button>
+      </div>
     </form>
   </div>
 </div>

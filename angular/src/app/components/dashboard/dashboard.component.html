@@ -67,10 +67,10 @@
             <label>Loại Tài Khoản</label>
             <select name="loai_tai_khoan" [(ngModel)]="cookieState.Floai_tai_khoan" class="form-control">
                 <option [ngValue]="null"></option>
-                <option value="THIEU_NHI">{{'THIEU_NHI' | trangThai}}</option>
-                <option value="HUYNH_TRUONG">{{'HUYNH_TRUONG' | trangThai}}</option>
-                <option value="SOEUR">{{'SOEUR' | trangThai}}</option>
-                <option value="LINH_MUC">{{'LINH_MUC' | trangThai}}</option>
+                <option value="THIEU_NHI">{{'THIEU_NHI' | loaiTK}}</option>
+                <option value="HUYNH_TRUONG">{{'HUYNH_TRUONG' | loaiTK}}</option>
+                <option value="SOEUR">{{'SOEUR' | loaiTK}}</option>
+                <option value="LINH_MUC">{{'LINH_MUC' | loaiTK}}</option>
               </select>
           </div>
           <div class="form-group col-sm-4 col-md-3 form-group-sm">
