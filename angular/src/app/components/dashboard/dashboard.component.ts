@@ -8,6 +8,7 @@ import { JwtAuthHttp } from '../../services/http-auth.service';
 import { consoleLog } from '../../shared/helpers';
 import { environment } from '../../../environments/environment';
 import { defaultPageState } from './defaultPageState';
+import { ngay } from '../../convert-type.pipe';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +18,12 @@ import { defaultPageState } from './defaultPageState';
 
 export class DashboardComponent implements OnDestroy {
   urlAPI = environment.apiURL + '/tai-khoan';
+  maskOption = {
+    mask: [/[0-3]/, /[1-9]/, '-', /[0-1]/, /[1-9]/, '-', /[1-2]/, /[0-9]/, /[0-9]/, /[0-9]/],
+    guide: true,
+    placeholderChar: ' ',
+  }
+
   isLoading = true;
   khoaHienTaiID = 0;
   dataArr = [];
@@ -75,6 +82,10 @@ export class DashboardComponent implements OnDestroy {
     search.set('trang_thai', this.cookieState.Ftrang_thai);
     search.set('loai_tai_khoan', this.cookieState.Floai_tai_khoan);
     search.set('ho_va_ten', this.cookieState.Fho_va_ten);
+    search.set('ngay_sinh_tu', ngay(this.cookieState.Fngay_sinh_tu));
+    search.set('ngay_sinh_den', ngay(this.cookieState.Fngay_sinh_den));
+    search.set('ngay_tao_tu', ngay(this.cookieState.Fngay_tao_tu));
+    search.set('ngay_tao_den', ngay(this.cookieState.Fngay_tao_den));
 
     this._http.get(this.urlAPI, { search }).map(res => res.json()).subscribe(res => {
       this.isLoading = false;

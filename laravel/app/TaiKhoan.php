@@ -289,8 +289,11 @@ class TaiKhoan extends BaseModel implements AuthenticatableContracts
         if ($q = \Request::get('trang_thai')) { $query->where('trang_thai', $q); }
         if ($q = \Request::get('loai_tai_khoan')) { $query->whereIn('loai_tai_khoan', $q); }
         if ($q = \Request::get('ho_va_ten')) { $query->where('ho_va_ten', 'like', '%' . $q . '%'); }
-        if ($q = \Request::get('ngay_sinh')) { $query->where('ngay_sinh', '=', $q); }
-        if ($q = \Request::get('created_at')) { $query->where('created_at', '=', $q); }
+
+        if ($q = \Request::get('ngay_sinh_tu')) { $query->where('ngay_sinh', '>=', $q); }
+        if ($q = \Request::get('ngay_sinh_den')) { $query->where('ngay_sinh', '<=', $q); }
+        if ($q = \Request::get('ngay_tao_tu')) { $query->where('created_at', '>=', $q); }
+        if ($q = \Request::get('ngay_tao_den')) { $query->where('created_at', '<=', $q); }
 
         $khoa = \Request::get('khoa');
         $nganh = \Request::get('nganh');

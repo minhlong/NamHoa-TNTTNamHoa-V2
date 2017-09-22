@@ -13,6 +13,10 @@ export const defaultPageState = {
   Ftrang_thai: 'HOAT_DONG',
   Floai_tai_khoan: null,
   Fho_va_ten: null,
+  Fngay_sinh_tu: null,
+  Fngay_sinh_den: null,
+  Fngay_tao_tu: null,
+  Fngay_tao_den: null,
 
   // Show/Hide Column
   num: true,

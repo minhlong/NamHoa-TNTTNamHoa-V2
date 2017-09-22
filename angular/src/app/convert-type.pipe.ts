@@ -77,12 +77,16 @@ export class Doi implements PipeTransform {
 export class HienThiNgay implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    if (value === '0000-00-00') {
-      return null;
-    }
-    if (value) {
-      return value.replace(/(.+)[-|\/](.+)[-|\/](.+)/i, '$3-$2-$1');
-    }
-    return value;
+    return ngay(value);
   }
+}
+
+export function ngay(value) {
+  if (value === '0000-00-00') {
+    return null;
+  }
+  if (value) {
+    return value.replace(/(.+)[-|\/](.+)[-|\/](.+)/i, '$3-$2-$1');
+  }
+  return value;
 }

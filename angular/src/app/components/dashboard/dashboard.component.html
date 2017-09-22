@@ -9,8 +9,8 @@
       </div>
     </div>
     <div class="ibox-content">
-      <div class="row">
-        <form role="form">
+      <form role="form">
+        <div class="row">
           <div *ngIf="checkHidden(cookieState.Fkhoa)" class="form-group col-sm-4 col-md-3 form-group-sm">
             <label>Khóa</label>
             <select name="khoa" [(ngModel)]="cookieState.Fkhoa" class="form-control">
@@ -74,8 +74,26 @@
             <label>Họ và Tên</label>
             <input [(ngModel)]="cookieState.Fho_va_ten" name="ho_va_ten" type="text" class="form-control">
           </div>
-        </form>
-      </div>
+        </div>
+        <div class="row">
+          <div *ngIf="checkHidden(cookieState.Fngay_sinh_tu)" class="form-group col-sm-4 col-md-3 form-group-sm">
+            <label>Ngày Sinh (Từ ngày)</label>
+            <input [(ngModel)]="cookieState.Fngay_sinh_tu" name="ngay_sinh_tu" [textMask]="maskOption" type="text" class="form-control" placeholder="vd: 31-12-2000">
+          </div>
+          <div *ngIf="checkHidden(cookieState.Fngay_sinh_den)" class="form-group col-sm-4 col-md-3 form-group-sm">
+            <label>Ngày Sinh (Đến ngày)</label>
+            <input [(ngModel)]="cookieState.Fngay_sinh_den" name="ngay_sinh_den" [textMask]="maskOption" type="text" class="form-control" placeholder="vd: 31-12-2000">
+          </div>
+          <div *ngIf="checkHidden(cookieState.Fngay_tao_tu)" class="form-group col-sm-4 col-md-3 form-group-sm">
+            <label>Ngày Tạo (Từ ngày)</label>
+            <input [(ngModel)]="cookieState.Fngay_tao_tu" name="ngay_tao_tu" [textMask]="maskOption" type="text" class="form-control" placeholder="vd: 31-12-2000">
+          </div>
+          <div *ngIf="checkHidden(cookieState.Fngay_tao_den)" class="form-group col-sm-4 col-md-3 form-group-sm">
+            <label>Ngày Tạo (Đến ngày)</label>
+            <input [(ngModel)]="cookieState.Fngay_tao_den" name="ngay_tao_den" [textMask]="maskOption" type="text" class="form-control" placeholder="vd: 31-12-2000">
+          </div>
+        </div>
+      </form>
     </div>
     <div class="ibox-footer text-center">
       <button class="btn btn-default btn-xs" (click)="searchData()">Tìm kiếm</button>
@@ -86,6 +104,7 @@
       <h5>Danh Sách</h5>
       <div class="ibox-tools">
         <div class="dropdown pull-right">
+          <button class="btn btn-default btn-xs" (click)="searchData()">Tải lại trang</button>
           <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             Tùy chỉnh cột
             <span class="caret"></span>
