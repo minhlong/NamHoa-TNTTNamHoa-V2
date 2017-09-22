@@ -10,6 +10,8 @@ export const defaultPageState = {
   Fnganh: null,
   Fcap: null,
   Fdoi: null,
+  Ftrang_thai: 'HOAT_DONG',
+  Floai_tai_khoan: null,
   Fho_va_ten: null,
 
   // Show/Hide Column

@@ -14,7 +14,7 @@
           <div *ngIf="checkHidden(cookieState.Fkhoa)" class="form-group col-sm-4 col-md-3 form-group-sm">
             <label>Khóa</label>
             <select name="khoa" [(ngModel)]="cookieState.Fkhoa" class="form-control">
-                <option [ngValue]="null">Tất cả</option>
+                <option [ngValue]="null"></option>
                 <option [ngValue]="khoaHienTaiID">Hiện tại ({{khoaHienTaiID}})</option>
                 <option [ngValue]="khoaHienTaiID - 1">{{khoaHienTaiID - 1}}</option>
                 <option [ngValue]="khoaHienTaiID - 2">{{khoaHienTaiID - 2}}</option> 
@@ -23,7 +23,7 @@
           <div *ngIf="checkHidden(cookieState.Fnganh)" class="form-group col-sm-4 col-md-3 form-group-sm">
             <label>Ngành</label>
             <select name="nganh" [(ngModel)]="cookieState.Fnganh" class="form-control">
-                <option [ngValue]="null">Tất cả</option>
+                <option [ngValue]="null"></option>
                 <option value="AU_NHI">{{'AU_NHI' | nganh}}</option>
                 <option value="THIEU_NHI">{{'THIEU_NHI' | nganh}}</option>
                 <option value="NGHIA_SI">{{'NGHIA_SI' | nganh}}</option>
@@ -33,7 +33,7 @@
           <div *ngIf="checkHidden(cookieState.Fcap)" class="form-group col-sm-4 col-md-3 form-group-sm">
             <label>Cấp</label>
             <select name="cap" [(ngModel)]="cookieState.Fcap" class="form-control">
-                <option [ngValue]="null">Tất cả</option>
+                <option [ngValue]="null"></option>
                 <option value="CHIEN_CON">{{'CHIEN_CON' | cap}}</option>
                 <option value="1">{{'1' | cap}}</option>
                 <option value="2">{{'2' | cap}}</option>
@@ -46,15 +46,33 @@
           <div *ngIf="checkHidden(cookieState.Fdoi)" class="form-group col-sm-4 col-md-3 form-group-sm">
             <label>Đội</label>
             <select name="doi" [(ngModel)]="cookieState.Fdoi" class="form-control">
-                <option [ngValue]="null">Tất cả</option>
+                <option [ngValue]="null"></option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
             </select>
           </div>
+          <div *ngIf="checkHidden(cookieState.Ftrang_thai)" class="form-group col-sm-4 col-md-3 form-group-sm">
+            <label>Trạng Thái</label>
+            <select name="trang_thai" [(ngModel)]="cookieState.Ftrang_thai" class="form-control">
+                <option [ngValue]="null"></option>
+                <option value="HOAT_DONG">{{'HOAT_DONG' | trangThai}}</option>
+                <option value="TAM_NGUNG">{{'TAM_NGUNG' | trangThai}}</option>
+            </select>
+          </div>
+          <div *ngIf="checkHidden(cookieState.Floai_tai_khoan)" class="form-group col-sm-4 col-md-3 form-group-sm">
+            <label>Loại Tài Khoản</label>
+            <select name="loai_tai_khoan" [(ngModel)]="cookieState.Floai_tai_khoan" class="form-control">
+                <option [ngValue]="null"></option>
+                <option value="THIEU_NHI">{{'THIEU_NHI' | trangThai}}</option>
+                <option value="HUYNH_TRUONG">{{'HUYNH_TRUONG' | trangThai}}</option>
+                <option value="SOEUR">{{'SOEUR' | trangThai}}</option>
+                <option value="LINH_MUC">{{'LINH_MUC' | trangThai}}</option>
+              </select>
+          </div>
           <div class="form-group col-sm-4 col-md-3 form-group-sm">
             <label>Họ và Tên</label>
-            <input type="text" class="form-control">
+            <input [(ngModel)]="cookieState.Fho_va_ten" name="ho_va_ten" type="text" class="form-control">
           </div>
         </form>
       </div>

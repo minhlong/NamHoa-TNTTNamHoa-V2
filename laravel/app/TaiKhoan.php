@@ -276,9 +276,8 @@ class TaiKhoan extends BaseModel implements AuthenticatableContracts
 
     /**
      * @param $query
-     * @param Library $library
      */
-    public function scopeLocDuLieu($query, Library $library)
+    public function scopeLocDuLieu($query)
     {
         if ($arrID = \Request::get('id')) {
             if (is_array($arrID)) {
@@ -287,18 +286,12 @@ class TaiKhoan extends BaseModel implements AuthenticatableContracts
                 $query->where('id', 'like', '%' . $arrID . '%');
             }
         }
-        if ($q = \Request::get('q')) { // Lop Hoc - Them Huynh Truong
-            $query->where(function ($subQuery) use ($q) {
-                $subQuery->where('id', 'like', '%' . $q . '%')
-                    ->orWhere('ho_va_ten', 'like', '%' . $q . '%');
-            });
-        }
-        if ($q = \Request::get('trang_thai')) {
-            $query->withTrashed()->whereIn('trang_thai', $q);
-        }
-        if ($q = \Request::get('loai_tai_khoan')) {
-            $query->whereIn('loai_tai_khoan', $q);
-        }
+        if ($q = \Request::get('trang_thai')) { $query->where('trang_thai', $q); }
+        if ($q = \Request::get('loai_tai_khoan')) { $query->whereIn('loai_tai_khoan', $q); }
+        if ($q = \Request::get('ho_va_ten')) { $query->where('ho_va_ten', 'like', '%' . $q . '%'); }
+        if ($q = \Request::get('ngay_sinh')) { $query->where('ngay_sinh', '=', $q); }
+        if ($q = \Request::get('created_at')) { $query->where('created_at', '=', $q); }
+
         $khoa = \Request::get('khoa');
         $nganh = \Request::get('nganh');
         $cap = \Request::get('cap');
@@ -318,34 +311,6 @@ class TaiKhoan extends BaseModel implements AuthenticatableContracts
                     $query->where('doi', $doi);
                 }
             });
-        }
-        if ($q = \Request::get('ho_va_ten')) {
-            $query->where('ho_va_ten', 'like', '%' . $q . '%');
-        }
-        if ($q = \Request::get('sinh_tu_ngay')) {
-            $q = $library->chuanHoaNgay($q);
-            $query->where('ngay_sinh', '>=', $q);
-        }
-        if ($q = \Request::get('sinh_den_ngay')) {
-            $q = $library->chuanHoaNgay($q);
-            $query->where('ngay_sinh', '<=', $q);
-        }
-        if ($q = \Request::get('tao_tu_ngay')) {
-            $q = $library->chuanHoaNgay($q);
-            $query->where('created_at', '>=', $q);
-        }
-        if ($q = \Request::get('tao_den_ngay')) {
-            $q = $library->chuanHoaNgay($q);
-            $query->where('created_at', '<=', $q);
-        }
-        if (isset(\Request::get('order')[0])) {
-            $order = \Request::get('order')[0];
-            $columns = [
-                1 => 'id',
-                2 => 'ten',
-                5 => 'created_at',
-            ];
-            $query->orderBy($columns[$order['column']], $order['dir']);
         }
     }
 

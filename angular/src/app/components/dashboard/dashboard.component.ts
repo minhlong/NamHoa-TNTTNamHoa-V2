@@ -1,11 +1,13 @@
 import { AppState } from './../../store/reducers/index';
 import { Component, OnDestroy } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
+import { ToasterService } from 'angular2-toaster';
+import { Store } from '@ngrx/store';
+
 import { JwtAuthHttp } from '../../services/http-auth.service';
 import { consoleLog } from '../../shared/helpers';
 import { environment } from '../../../environments/environment';
 import { defaultPageState } from './defaultPageState';
-import { ToasterService } from 'angular2-toaster';
-import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-dashboard',
@@ -53,6 +55,7 @@ export class DashboardComponent implements OnDestroy {
   resetCookieState() {
     localStorage.removeItem(this.cookieState.id);
     this.resetPageState();
+    this.searchData();
   }
 
   checkHidden(_val): boolean {
@@ -63,7 +66,17 @@ export class DashboardComponent implements OnDestroy {
     this.isLoading = true;
     this.cookieState.FmoRong = false;
     this.updateState();
-    this._http.get(this.urlAPI).map(res => res.json()).subscribe(res => {
+
+    const search = new URLSearchParams();
+    search.set('khoa', this.cookieState.Fkhoa);
+    search.set('nganh', this.cookieState.Fnganh);
+    search.set('cap', this.cookieState.Fcap);
+    search.set('doi', this.cookieState.Fdoi);
+    search.set('trang_thai', this.cookieState.Ftrang_thai);
+    search.set('loai_tai_khoan', this.cookieState.Floai_tai_khoan);
+    search.set('ho_va_ten', this.cookieState.Fho_va_ten);
+
+    this._http.get(this.urlAPI, { search }).map(res => res.json()).subscribe(res => {
       this.isLoading = false;
       this.dataArr = res.data;
     }, error => {
