@@ -102,16 +102,6 @@ class LopHoc extends BaseModel
         $query->orderBy('nganh', 'asc');
         $query->orderBy('cap', 'asc');
         $query->orderBy('doi', 'asc');
-        if (isset(\Request::get('order')[0])) {
-            $order = \Request::get('order')[0];
-            $columns = [
-                0 => 'khoa_hoc_id',
-                1 => 'nganh',
-                2 => 'cap',
-                3 => 'doi',
-            ];
-            $query->orderBy($columns[$order['column']], $order['dir']);
-        }
     }
 
     /**

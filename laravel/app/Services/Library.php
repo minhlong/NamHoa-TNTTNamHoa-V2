@@ -14,6 +14,10 @@ class Library
             return preg_replace('/(\d+)-(\d+)-(\d+) (\d+):(\d+):(\d+)$/', '$3-$2-$1 $4:$5:$6', $needles);
         }
 
+        if ($needles == '0000-00-00') {
+            return null;
+        }
+
         return preg_replace('/(\d+)-(\d+)-(\d+)$/', '$3-$2-$1', $needles);
     }
 
