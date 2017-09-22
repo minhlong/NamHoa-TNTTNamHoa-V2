@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth-jwt'], function () {
     /* Tai Khoan */
     Route::group(['prefix' => 'tai-khoan'], function () {
         Route::get(null, 'TaiKhoanController@getDanhSach');
+        Route::get('export', 'TaiKhoanController@generateExcelFile');
         Route::get('{TaiKhoan}', function ($obj) {
             return response()->json([
                 'data' => $obj,

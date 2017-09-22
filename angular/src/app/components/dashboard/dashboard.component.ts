@@ -17,6 +17,7 @@ import { ngay } from '../../convert-type.pipe';
 })
 
 export class DashboardComponent implements OnDestroy {
+  webAPI = environment.webURL + '/tai-khoan/download';
   urlAPI = environment.apiURL + '/tai-khoan';
   maskOption = {
     mask: [/[0-3]/, /[1-9]/, '-', /[0-1]/, /[1-9]/, '-', /[1-2]/, /[0-9]/, /[0-9]/, /[0-9]/],
@@ -74,6 +75,27 @@ export class DashboardComponent implements OnDestroy {
     this.cookieState.FmoRong = false;
     this.updateState();
 
+    const search = this.getFilter();
+    this._http.get(this.urlAPI, { search }).map(res => res.json()).subscribe(res => {
+      this.isLoading = false;
+      this.dataArr = res.data;
+    }, error => {
+      this.isLoading = false;
+      this.dataArr = [];
+      this.toasterService.pop('error', 'Lỗi!', error);
+    })
+  }
+
+  exportData() {
+    const search = this.getFilter();
+    this._http.get(this.urlAPI + '/export', { search }).map(res => res.json()).subscribe(res => {
+      window.open(this.webAPI + '/' + res.data);
+    }, error => {
+      this.toasterService.pop('error', 'Lỗi!', error);
+    })
+  }
+
+  private getFilter() {
     const search = new URLSearchParams();
     search.set('khoa', this.cookieState.Fkhoa);
     search.set('nganh', this.cookieState.Fnganh);
@@ -86,15 +108,7 @@ export class DashboardComponent implements OnDestroy {
     search.set('ngay_sinh_den', ngay(this.cookieState.Fngay_sinh_den));
     search.set('ngay_tao_tu', ngay(this.cookieState.Fngay_tao_tu));
     search.set('ngay_tao_den', ngay(this.cookieState.Fngay_tao_den));
-
-    this._http.get(this.urlAPI, { search }).map(res => res.json()).subscribe(res => {
-      this.isLoading = false;
-      this.dataArr = res.data;
-    }, error => {
-      this.isLoading = false;
-      this.dataArr = [];
-      this.toasterService.pop('error', 'Lỗi!', error);
-    })
+    return search;
   }
 
   view(_taiKhoan) {

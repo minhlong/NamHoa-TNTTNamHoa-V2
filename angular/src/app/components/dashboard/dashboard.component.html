@@ -3,6 +3,9 @@
     <div class="ibox-title">
       <h5>Lọc</h5>
       <div class="ibox-tools">
+        <button class="btn btn-xs btn-default m-r-lg" (click)="exportData()">
+          Xuất Danh Sách <span *ngIf="cookieState.Fkhoa">& Tình Hình Học Tập</span>
+        </button>
         <button class="btn btn-xs btn-default" (click)="cookieState.FmoRong = !cookieState.FmoRong;">
           {{cookieState.FmoRong ? 'Thu gọn' : 'Mở rộng'}}
         </button>
