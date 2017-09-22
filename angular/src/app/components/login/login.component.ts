@@ -11,7 +11,7 @@ import * as AuthAction from '../../store/actions/auth.action';
   templateUrl: 'login.template.html'
 })
 export class LoginComponent {
-  login: { username?: string, password?: string } = {};
+  credential: { id?: string, password?: string } = {};
 
   isLoading: Observable<any>;
   errorMessage: Observable<any>;
@@ -26,12 +26,10 @@ export class LoginComponent {
   /**
    * User submit login form
    */
-  onLogin(form: NgForm) {
-    if (form.valid) {
-      this.store.dispatch(new AuthAction.Auth(
-        this.login.username,
-        this.login.password
-      ));
-    }
+  onLogin() {
+    this.store.dispatch(new AuthAction.Auth(
+      this.credential.id,
+      this.credential.password
+    ));
   }
 }

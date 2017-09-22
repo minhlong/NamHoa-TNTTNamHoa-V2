@@ -12,7 +12,7 @@ export interface AuthState {
   tai_khoan: { [id: string]: any; };
   phan_quyen: any[],
   lop_hoc_hien_tai_id: string,
-  khoa_hoc_hien_tai_id: string,
+  khoa_hoc_hien_tai_id: number,
   error: string;
 }
 

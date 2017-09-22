@@ -1,10 +1,74 @@
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="ibox">
     <div class="ibox-title">
+      <h5>Lọc</h5>
+      <div class="ibox-tools">
+        <button class="btn btn-xs btn-default" (click)="cookieState.FmoRong = !cookieState.FmoRong;">
+          {{cookieState.FmoRong ? 'Thu gọn' : 'Mở rộng'}}
+        </button>
+      </div>
+    </div>
+    <div class="ibox-content">
+      <div class="row">
+        <form role="form">
+          <div *ngIf="checkHidden(cookieState.Fkhoa)" class="form-group col-sm-4 col-md-3 form-group-sm">
+            <label>Khóa</label>
+            <select name="khoa" [(ngModel)]="cookieState.Fkhoa" class="form-control">
+                <option [ngValue]="null">Tất cả</option>
+                <option [ngValue]="khoaHienTaiID">Hiện tại ({{khoaHienTaiID}})</option>
+                <option [ngValue]="khoaHienTaiID - 1">{{khoaHienTaiID - 1}}</option>
+                <option [ngValue]="khoaHienTaiID - 2">{{khoaHienTaiID - 2}}</option> 
+            </select>
+          </div>
+          <div *ngIf="checkHidden(cookieState.Fnganh)" class="form-group col-sm-4 col-md-3 form-group-sm">
+            <label>Ngành</label>
+            <select name="nganh" [(ngModel)]="cookieState.Fnganh" class="form-control">
+                <option [ngValue]="null">Tất cả</option>
+                <option value="AU_NHI">{{'AU_NHI' | nganh}}</option>
+                <option value="THIEU_NHI">{{'THIEU_NHI' | nganh}}</option>
+                <option value="NGHIA_SI">{{'NGHIA_SI' | nganh}}</option>
+                <option value="HT_DU_BI">{{'HT_DU_BI' | nganh}}</option>
+            </select>
+          </div>
+          <div *ngIf="checkHidden(cookieState.Fcap)" class="form-group col-sm-4 col-md-3 form-group-sm">
+            <label>Cấp</label>
+            <select name="cap" [(ngModel)]="cookieState.Fcap" class="form-control">
+                <option [ngValue]="null">Tất cả</option>
+                <option value="CHIEN_CON">{{'CHIEN_CON' | cap}}</option>
+                <option value="1">{{'1' | cap}}</option>
+                <option value="2">{{'2' | cap}}</option>
+                <option value="3">{{'3' | cap}}</option>
+                <option value="4">{{'4' | cap}}</option>
+                <option value="5">{{'5' | cap}}</option>
+                <option value="6">{{'6' | cap}}</option>
+            </select>
+          </div>
+          <div *ngIf="checkHidden(cookieState.Fdoi)" class="form-group col-sm-4 col-md-3 form-group-sm">
+            <label>Đội</label>
+            <select name="doi" [(ngModel)]="cookieState.Fdoi" class="form-control">
+                <option [ngValue]="null">Tất cả</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+          </div>
+          <div class="form-group col-sm-4 col-md-3 form-group-sm">
+            <label>Họ và Tên</label>
+            <input type="text" class="form-control">
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="ibox-footer text-center">
+      <button class="btn btn-default btn-xs" (click)="searchData()">Tìm kiếm</button>
+    </div>
+  </div>
+  <div class="ibox">
+    <div class="ibox-title">
       <h5>Danh Sách</h5>
       <div class="ibox-tools">
         <div class="dropdown pull-right">
-          <button class="btn btn-xs btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             Tùy chỉnh cột
             <span class="caret"></span>
           </button>
@@ -95,7 +159,7 @@
         </div>
       </div>
     </div>
-    <div class="ibox-content {{!dataArr.length ? 'sk-loading' : null}}">
+    <div class="ibox-content {{isLoading ? 'sk-loading' : null}}">
       <div class="sk-spinner sk-spinner-three-bounce">
         <div class="sk-bounce1"></div>
         <div class="sk-bounce2"></div>
@@ -146,7 +210,7 @@
           </tbody>
         </table>
       </div>
-      <pagination-template #ep="paginationApi" [id]="cookieState.id" (pageChange)="updatePageChange($event)">
+      <pagination-template #ep="paginationApi" [id]="cookieState.id" (pageChange)="cookieState.currentPage = $event; updateState();">
         <div class="text-center">
           <div class="btn-group">
             <button *ngIf="ep.isFirstPage()" type="button" class="btn btn-sm btn-white disabled"><i class="fa fa-chevron-left"></i></button>

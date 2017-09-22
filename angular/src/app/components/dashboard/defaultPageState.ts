@@ -4,6 +4,14 @@ export const defaultPageState = {
   itemsPerPage: 10,
   currentPage: 1,
 
+  // Filter
+  FmoRong: false,
+  Fkhoa: null,
+  Fnganh: null,
+  Fcap: null,
+  Fdoi: null,
+  Fho_va_ten: null,
+
   // Show/Hide Column
   num: true,
   ma_so: true,

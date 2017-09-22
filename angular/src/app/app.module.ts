@@ -33,7 +33,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 // Pipe
 import { environment } from '../environments/environment';
-import { LoaiTK, TrangThai, HienThiNgay } from './convert-type.pipe';
+import { LoaiTK, TrangThai, Nganh, Cap, Doi, HienThiNgay } from './convert-type.pipe';
 import { KhoaHocComponent } from './khoa-hoc/khoa-hoc.component';
 
 @NgModule({
@@ -42,12 +42,15 @@ import { KhoaHocComponent } from './khoa-hoc/khoa-hoc.component';
     LoginComponent,
     LogoutComponent,
     DashboardComponent,
+    KhoaHocComponent,
 
     // Pipe
     LoaiTK,
     TrangThai,
+    Nganh,
+    Cap,
+    Doi,
     HienThiNgay,
-    KhoaHocComponent,
   ],
   imports: [
     // Angular modules

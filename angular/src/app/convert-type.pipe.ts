@@ -30,6 +30,48 @@ export class TrangThai implements PipeTransform {
 }
 
 @Pipe({
+  name: 'nganh'
+})
+export class Nganh implements PipeTransform {
+
+  transform(value: any, args?: any): any {
+    const _tmp = appConst.find(el => el.loai_du_lieu === 'NGANH' && el.ky_hieu === value);
+    if (_tmp) {
+      return _tmp.ten
+    }
+    return value;
+  }
+}
+
+@Pipe({
+  name: 'cap'
+})
+export class Cap implements PipeTransform {
+
+  transform(value: any, args?: any): any {
+    const _tmp = appConst.find(el => el.loai_du_lieu === 'CAP' && el.ky_hieu === value);
+    if (_tmp) {
+      return _tmp.ten
+    }
+    return value;
+  }
+}
+
+@Pipe({
+  name: 'doi'
+})
+export class Doi implements PipeTransform {
+
+  transform(value: any, args?: any): any {
+    const _tmp = appConst.find(el => el.loai_du_lieu === 'DOI' && el.ky_hieu === value);
+    if (_tmp) {
+      return _tmp.ten
+    }
+    return value;
+  }
+}
+
+@Pipe({
   name: 'ngay'
 })
 export class HienThiNgay implements PipeTransform {

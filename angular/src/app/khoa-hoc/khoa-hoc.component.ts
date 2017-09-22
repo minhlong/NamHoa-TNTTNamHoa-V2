@@ -42,11 +42,6 @@ export class KhoaHocComponent {
     })
   }
 
-  updatePageChange(_page) {
-    this.cookieState.currentPage = _page;
-    this.updateState();
-  }
-
   updateState() {
     localStorage.setItem(this.cookieState.id, JSON.stringify(this.cookieState));
   }
