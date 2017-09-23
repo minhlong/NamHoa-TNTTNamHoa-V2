@@ -10,6 +10,7 @@ import { LogoutComponent } from './components/logout.component';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { KhoaHocComponent } from './khoa-hoc/khoa-hoc.component';
+import { TrangChuComponent } from './trang-chu/trang-chu.component';
 
 const noAuth: Routes = [
   {
@@ -25,7 +26,8 @@ const hasAuth: Routes = [
     path: '', component: BasicComponent,
     children: [
       { path: '', redirectTo: 'trang-chu', pathMatch: 'full' },
-      { path: 'trang-chu', component: DashboardComponent },
+      { path: 'trang-chu', component: TrangChuComponent },
+      { path: 'tai-khoan', component: DashboardComponent },
       { path: 'khoa-hoc', component: KhoaHocComponent },
       { path: 'dang-xuat', component: LogoutComponent },
     ],

@@ -78,12 +78,12 @@ export class DashboardComponent implements OnDestroy {
 
     const search = this.getFilter();
     this._http.get(this.urlAPI, { search }).map(res => res.json()).subscribe(res => {
-      this.isLoading = false;
       this.dataArr = res.data;
     }, error => {
-      this.isLoading = false;
       this.dataArr = [];
       this.toasterService.pop('error', 'Lỗi!', error);
+    }, () => {
+      this.isLoading = false;
     })
   }
 

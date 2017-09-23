@@ -15,13 +15,19 @@
       </li>
       <li [ngClass]="{active: activeRoute('/trang-chu')}">
         <a routerLink="/trang-chu">
+          <i class="fa fa-home"></i>
+          <span class="nav-label">Trang Chủ</span>
+        </a>
+      </li>
+      <li [ngClass]="{active: activeRoute('/tai-khoan')}">
+        <a routerLink="/tai-khoan">
           <i class="fa fa-users"></i>
           <span class="nav-label">Tài Khoản</span>
         </a>
       </li>
       <li *ngIf="phanQuyen['tai-khoan']" [ngClass]="{active: activeRoute('/khoa-hoc')}">
         <a routerLink="/khoa-hoc">
-          <i class="fa fa fa-bookmark-o"></i>
+          <i class="fa fa fa-bookmark"></i>
           <span class="nav-label">Khóa Học</span>
         </a>
       </li>

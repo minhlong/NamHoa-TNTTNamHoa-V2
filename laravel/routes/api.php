@@ -16,6 +16,9 @@ use Illuminate\Http\Request;
 Route::post('dang-nhap', 'DangNhapController@postDangNhap');
 
 Route::group(['middleware' => 'auth-jwt'], function () {
+    /* Trang Chu */
+    Route::get('trang-chu', 'TrangChuController@getThongTin');
+
     /* Tai Khoan */
     Route::group(['prefix' => 'tai-khoan'], function () {
         Route::get(null, 'TaiKhoanController@getDanhSach');

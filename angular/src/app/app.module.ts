@@ -36,6 +36,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { environment } from '../environments/environment';
 import { LoaiTK, TrangThai, Nganh, Cap, Doi, HienThiNgay } from './convert-type.pipe';
 import { KhoaHocComponent } from './khoa-hoc/khoa-hoc.component';
+import { TrangChuComponent } from './trang-chu/trang-chu.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { KhoaHocComponent } from './khoa-hoc/khoa-hoc.component';
     Cap,
     Doi,
     HienThiNgay,
+    TrangChuComponent,
   ],
   imports: [
     // Angular modules

@@ -99,7 +99,7 @@
       </form>
     </div>
     <div class="ibox-footer text-center">
-      <button class="btn btn-default btn-xs" (click)="searchData()">Tìm kiếm</button>
+      <button class="btn btn-default btn-sm" (click)="searchData()">Tìm kiếm</button>
     </div>
   </div>
   <div class="ibox">
@@ -107,7 +107,6 @@
       <h5>Danh Sách</h5>
       <div class="ibox-tools">
         <div class="dropdown pull-right">
-          <button class="btn btn-default btn-xs" (click)="searchData()">Tải lại trang</button>
           <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             Tùy chỉnh cột
             <span class="caret"></span>
@@ -197,6 +196,7 @@
             <li><a (click)="resetCookieState()">Mặc định</a></li>
           </ul>
         </div>
+        <button class="btn btn-default btn-xs pull-right m-r-lg" (click)="searchData()">Tải lại trang</button>
       </div>
     </div>
     <div class="ibox-content {{isLoading ? 'sk-loading' : null}}">
