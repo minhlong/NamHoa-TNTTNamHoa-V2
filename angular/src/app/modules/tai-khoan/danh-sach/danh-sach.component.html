@@ -196,7 +196,7 @@
             <li><a (click)="resetCookieState()">Mặc định</a></li>
           </ul>
         </div>
-        <button class="btn btn-default btn-xs pull-right m-r-lg" (click)="searchData()">Tải lại trang</button>
+        <button class="btn btn-default btn-xs pull-right m-r-lg" *ngIf="!isLoading" (click)="searchData()">Tải lại trang</button>
       </div>
     </div>
     <div class="ibox-content {{isLoading ? 'sk-loading' : null}}">
