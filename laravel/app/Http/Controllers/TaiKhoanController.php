@@ -31,13 +31,15 @@ class TaiKhoanController extends Controller
     public function generateExcelFile(TaiKhoan $taiKhoan, LopHoc $lopHoc, Request $request, Library $library)
     {
         $file = \Excel::create('Danh Sach Tai Khoan_' . date('d-m-Y') . '_' . strtotime('now'), function ($excel) use ($taiKhoan, $lopHoc, $request, $library) {
-            $arrRow = $this->genTaiKhoan($taiKhoan, $library);
+            $khoaID = $request->get('khoa');
+
+            $arrRow = $this->genTaiKhoan($taiKhoan, $khoaID, $library);
             $excel->sheet('Danh Sách', function ($sheet) use ($arrRow) {
                 $sheet->fromArray($arrRow, null, null, null, false)
                     ->setFreeze('C2');
             });
 
-            if (!$khoaID = $request->get('khoa')) {
+            if (!$khoaID) {
                 return;
             }
 
@@ -58,14 +60,21 @@ class TaiKhoanController extends Controller
         ]);
     }
 
-    protected function genTaiKhoan($taiKhoan, $library) {
+    protected function genTaiKhoan($taiKhoan, $khoaID, $library) {
         $taiKhoan = $taiKhoan->locDuLieu()->withTrashed();
+
+        if ($khoaID) {
+            $taiKhoan->with(['lop_hoc' => function ($q) use ($khoaID){
+                $q->locDuLieu();
+            }]);
+        }
 
         // Generate Data
         $arrRow[] = [
             'Mã Số',
             'Họ và Tên',
             'Tên',
+            'Lớp',
             'Loại Tài Khoản',
             'Trạng Thái',
             'Tên Thánh',
@@ -81,10 +90,15 @@ class TaiKhoanController extends Controller
             'Ghi Chú',
         ];
         foreach ($taiKhoan->get() as $item) {
+            $tmpTenLop = null;
+            if ($khoaID) {
+                $tmpTenLop = $item->lop_hoc->first() ? $item->lop_hoc->first()->taoTen() : null;
+            }
             $arrRow[] = [
                 $item->id,
                 $item->ho_va_ten,
                 $item->ten,
+                $tmpTenLop,
                 $item->loai_tai_khoan,
                 $item->trang_thai,
                 $item->ten_thanh,

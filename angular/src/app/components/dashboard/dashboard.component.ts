@@ -26,6 +26,7 @@ export class DashboardComponent implements OnDestroy {
   }
 
   isLoading = true;
+  isLoadingExport = false;
   khoaHienTaiID = 0;
   dataArr = [];
   sub: any;
@@ -87,11 +88,16 @@ export class DashboardComponent implements OnDestroy {
   }
 
   exportData() {
+    this.isLoadingExport = true;
     const search = this.getFilter();
+    this.toasterService.pop('info', 'Đang tải');
+
     this._http.get(this.urlAPI + '/export', { search }).map(res => res.json()).subscribe(res => {
       window.open(this.webAPI + '/' + res.data);
     }, error => {
       this.toasterService.pop('error', 'Lỗi!', error);
+    }, () => {
+      this.isLoadingExport = false;
     })
   }
 

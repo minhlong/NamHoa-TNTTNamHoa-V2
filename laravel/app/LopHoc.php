@@ -118,7 +118,7 @@ class LopHoc extends BaseModel
             $strTen .= ' - ' . 'Đội' . ' ' . ThongSo::layTenDoi($this->doi);
         }
         if (!$disableTenKhoa) {
-            $tenKhoa = 'Khóa Học' . ' ' . $this->khoa_hoc_id;
+            $tenKhoa = 'Khóa' . ' ' . $this->khoa_hoc_id;
             $strTen = $tenKhoa . ' - ' . $strTen;
         }
 
