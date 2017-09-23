@@ -25,6 +25,21 @@
           <span class="nav-label">Tài Khoản</span>
         </a>
       </li>
+      <li [ngClass]="{active: activeRouteAbsolute('/tai-khoan') || activeRoute('/tai-khoan/chi-tiet')}">
+        <a routerLink="/tai-khoan">
+          <span class="nav-label second-line">+ Danh Sách</span>
+        </a>
+      </li>
+      <li [ngClass]="{active: activeRoute('/tai-khoan/tao-moi')}">
+        <a routerLink="/tai-khoan/tao-moi">
+          <span class="nav-label second-line">+ Tạo Mới</span>
+        </a>
+      </li>
+      <li [ngClass]="{active: activeRoute('/tai-khoan/mat-khau')}">
+        <a routerLink="/tai-khoan/mat-khau">
+          <span class="nav-label second-line">+ Mật Khẩu</span>
+        </a>
+      </li>
       <li *ngIf="phanQuyen['tai-khoan']" [ngClass]="{active: activeRoute('/khoa-hoc')}">
         <a routerLink="/khoa-hoc">
           <i class="fa fa fa-bookmark"></i>

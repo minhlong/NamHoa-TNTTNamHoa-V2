@@ -1,4 +1,9 @@
 .second-line {
     white-space: nowrap;
-    padding-left: 58px;
+    padding-left: 35px;
+}
+
+li.active {
+    border-left: none;
+    // background: none;
 }

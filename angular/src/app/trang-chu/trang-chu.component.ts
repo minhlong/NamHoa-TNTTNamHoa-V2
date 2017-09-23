@@ -62,7 +62,7 @@ export class TrangChuComponent {
   }
 
   xemTaiKhoan(taiKhoan) {
-    this.router.navigate(['/tai-khoan/', taiKhoan.id]);
+    this.router.navigate(['/tai-khoan/chi-tiet/', taiKhoan.id]);
   }
 
   xemNganh(_nganh, _loaiTK) {

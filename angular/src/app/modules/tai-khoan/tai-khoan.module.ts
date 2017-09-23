@@ -7,6 +7,8 @@ import { ChiTietComponent } from './chi-tiet/chi-tiet.component';
 import { RouterModule } from '@angular/router';
 import { TextMaskModule } from 'angular2-text-mask';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { TaoMoiComponent } from './tao-moi/tao-moi.component';
+import { MatKhauComponent } from './mat-khau/mat-khau.component';
 
 @NgModule({
   imports: [
@@ -19,12 +21,16 @@ import { NgxPaginationModule } from 'ngx-pagination';
     // Routes
     RouterModule.forChild([
       { path: '', component: DanhSachComponent },
-      { path: ':id', component: ChiTietComponent },
+      { path: 'chi-tiet/:id', component: ChiTietComponent },
+      { path: 'mat-khau', component: MatKhauComponent },
+      { path: 'tao-moi', component: TaoMoiComponent },
     ]),
   ],
   declarations: [
     DanhSachComponent,
     ChiTietComponent,
+    TaoMoiComponent,
+    MatKhauComponent,
   ]
 })
 export class TaiKhoanModule { }

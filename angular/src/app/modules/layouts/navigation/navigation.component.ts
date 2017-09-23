@@ -36,6 +36,10 @@ export class NavigationComponent implements AfterViewInit, OnDestroy {
     return this.router.url.indexOf(routename) > -1;
   }
 
+  activeRouteAbsolute(routename: string): boolean {
+    return this.router.url === routename;
+  }
+
   ngOnDestroy() {
     this.sub.unsubscribe();
   }

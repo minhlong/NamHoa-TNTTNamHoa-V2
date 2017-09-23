@@ -20,7 +20,7 @@
                 <tr>
                   <th>Ngành</th>
                   <th class="text-center">Sĩ Số</th>
-                  <th>Thao Tác</th>
+                  <th>Xem</th>
                 </tr>
               </thead>
               <tbody>
@@ -93,9 +93,8 @@
             <table class="table table-striped table-bordered table-hover">
               <thead>
                 <tr>
-                  <th class="text-center">#</th>
                   <th>Tên Lớp</th>
-                  <th>Thao Tác</th>
+                  <th>Xem</th>
                 </tr>
               </thead>
               <tbody>
@@ -103,12 +102,10 @@
                   <td colspan="10" class="text-center">Chưa có dữ liệu.</td>
                 </tr>
                 <tr *ngFor="let _item of chuaDiemDanh.lop| paginate: pState; let _i = index">
-                  <td class="text-center">
-                    {{((pState.currentPage - 1) * pState.itemsPerPage ) + _i + 1}}
-                  </td>
                   <td>{{_item.ten}}</td>
                   <td>
-                    <button class="btn btn-xs btn-default" (click)="itemSelected = _item; openModalBtn.click()">Xem</button>
+                    <a class="btn btn-xs btn-default" [routerLink]="['/lop-hoc/chi-tiet', _item.id]">Lớp</a>
+                    <button class="btn btn-xs btn-default" (click)="itemSelected = _item; openModalBtn.click()">H/Trưởng</button>
                   </td>
                 </tr>
               </tbody>
@@ -152,7 +149,8 @@
             <tr>
               <th class="text-center">#</th>
               <th>Huynh Trưởng</th>
-              <th>Thao Tác</th>
+              <th>Điện Thoại</th>
+              <th>Xem</th>
             </tr>
           </thead>
           <tbody>
@@ -164,6 +162,9 @@
                 {{_item.ten_thanh}} {{_item.ho_va_ten}}
               </td>
               <td>
+                {{_item.dien_thoai}}
+              </td>
+              <td>
                 <a (click)="closeModalBtn.click(); xemTaiKhoan(_item)" class="btn btn-xs btn-default">
                   Xem
                 </a>
@@ -173,7 +174,7 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" #closeModalBtn>Thoát</button>
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" #closeModalBtn>Thoát</button>
       </div>
     </div>
   </div>
