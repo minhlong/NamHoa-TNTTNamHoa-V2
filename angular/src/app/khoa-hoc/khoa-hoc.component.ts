@@ -2,7 +2,7 @@ import { ToasterService } from 'angular2-toaster';
 import { Component, OnInit } from '@angular/core';
 import { JwtAuthHttp } from '../services/http-auth.service';
 import { environment } from './../../environments/environment';
-import { consoleLog } from '../shared/helpers';
+import { consoleLog } from '../_helpers';
 import { defaultPageState } from './defaultPageState';
 
 @Component({

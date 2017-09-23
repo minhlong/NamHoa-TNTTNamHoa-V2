@@ -8,7 +8,6 @@ import { GuestGuard } from './services/guards/guest-guard.service';
 
 import { LogoutComponent } from './components/logout.component';
 import { LoginComponent } from './components/login/login.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { KhoaHocComponent } from './khoa-hoc/khoa-hoc.component';
 import { TrangChuComponent } from './trang-chu/trang-chu.component';
 
@@ -27,7 +26,7 @@ const hasAuth: Routes = [
     children: [
       { path: '', redirectTo: 'trang-chu', pathMatch: 'full' },
       { path: 'trang-chu', component: TrangChuComponent },
-      { path: 'tai-khoan', component: DashboardComponent },
+      { path: 'tai-khoan', loadChildren: './modules/tai-khoan/tai-khoan.module#TaiKhoanModule' },
       { path: 'khoa-hoc', component: KhoaHocComponent },
       { path: 'dang-xuat', component: LogoutComponent },
     ],

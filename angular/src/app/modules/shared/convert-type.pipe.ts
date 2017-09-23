@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { appConst } from './shared/constance';
+import { appConst } from './constance';
 
 @Pipe({
   name: 'loaiTK'

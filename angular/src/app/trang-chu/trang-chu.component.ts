@@ -1,9 +1,10 @@
-import { defaultPageState } from './../components/dashboard/defaultPageState';
 import { Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { Component, OnInit } from '@angular/core';
+
 import { JwtAuthHttp } from '../services/http-auth.service';
 import { environment } from './../../environments/environment';
+import { defaultPageState } from '../modules/tai-khoan/danh-sach/defaultPageState';
 
 @Component({
   selector: 'app-trang-chu',
@@ -61,7 +62,7 @@ export class TrangChuComponent {
   }
 
   xemTaiKhoan(taiKhoan) {
-    this.router.navigate(['/tai-khoan', taiKhoan.id]);
+    this.router.navigate(['/tai-khoan/', taiKhoan.id]);
   }
 
   xemNganh(_nganh, _loaiTK) {

@@ -1,22 +1,20 @@
-import { AppState } from './../../store/reducers/index';
-import { Component, OnDestroy } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
-import { ToasterService } from 'angular2-toaster';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { ToasterService } from 'angular2-toaster';
 
-import { JwtAuthHttp } from '../../services/http-auth.service';
-import { consoleLog } from '../../shared/helpers';
-import { environment } from '../../../environments/environment';
 import { defaultPageState } from './defaultPageState';
-import { ngay } from '../../convert-type.pipe';
+import { AppState } from './../../../store/reducers/index';
+import { environment } from '../../../../environments/environment';
+import { JwtAuthHttp } from '../../../services/http-auth.service';
+import { consoleLog } from '../../../_helpers';
+import { ngay } from '../../shared/convert-type.pipe';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  selector: 'app-danh-sach',
+  templateUrl: './danh-sach.component.html',
+  styleUrls: ['./danh-sach.component.scss']
 })
-
-export class DashboardComponent implements OnDestroy {
+export class DanhSachComponent implements OnDestroy {
   webAPI = environment.webURL + '/tai-khoan/download';
   urlAPI = environment.apiURL + '/tai-khoan';
   maskOption = {

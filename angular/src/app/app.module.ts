@@ -15,6 +15,7 @@ import { ROUTES } from './app.routes';
 
 // Modules
 import { LayoutsModule } from './modules/layouts/layouts.module';
+import { SharedModule } from './modules/shared/shared.module';
 
 // Services
 import { providers } from './services/index';
@@ -30,11 +31,9 @@ import { reducer } from './store/reducers/index';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 // Pipe
 import { environment } from '../environments/environment';
-import { LoaiTK, TrangThai, Nganh, Cap, Doi, HienThiNgay } from './convert-type.pipe';
 import { KhoaHocComponent } from './khoa-hoc/khoa-hoc.component';
 import { TrangChuComponent } from './trang-chu/trang-chu.component';
 
@@ -43,16 +42,7 @@ import { TrangChuComponent } from './trang-chu/trang-chu.component';
     AppComponent,
     LoginComponent,
     LogoutComponent,
-    DashboardComponent,
     KhoaHocComponent,
-
-    // Pipe
-    LoaiTK,
-    TrangThai,
-    Nganh,
-    Cap,
-    Doi,
-    HienThiNgay,
     TrangChuComponent,
   ],
   imports: [
@@ -64,10 +54,10 @@ import { TrangChuComponent } from './trang-chu/trang-chu.component';
     NgxPaginationModule,
     ToasterModule,
     TextMaskModule,
+    SharedModule,
 
     // Layout
     LayoutsModule,
-
     // Routes
     RouterModule.forRoot(ROUTES, { useHash: true }),
 

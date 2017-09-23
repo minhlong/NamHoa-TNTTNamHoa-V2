@@ -1,5 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { correctHeight, detectBody, consoleLog } from './shared/helpers';
+import { correctHeight, detectBody, consoleLog } from './_helpers';
 import { Store } from '@ngrx/store';
 import { ToasterConfig } from 'angular2-toaster';
 

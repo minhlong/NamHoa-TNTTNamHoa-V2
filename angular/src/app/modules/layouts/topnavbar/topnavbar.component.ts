@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { smoothlyMenu } from '../../../shared/helpers';
+import { smoothlyMenu } from '../../../_helpers';
 import { AppState } from '../../../store/reducers/index';
 import { Observable } from 'rxjs/Rx';
 
