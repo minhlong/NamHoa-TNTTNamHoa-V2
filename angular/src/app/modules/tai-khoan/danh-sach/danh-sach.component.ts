@@ -117,10 +117,6 @@ export class DanhSachComponent implements OnDestroy {
     return search;
   }
 
-  view(_taiKhoan) {
-    this.toasterService.pop('success', _taiKhoan.ho_va_ten, _taiKhoan.ho_va_ten);
-  }
-
   ngOnDestroy() {
     this.sub.unsubscribe()
   }

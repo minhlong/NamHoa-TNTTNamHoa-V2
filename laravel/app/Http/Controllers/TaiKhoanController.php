@@ -265,4 +265,17 @@ class TaiKhoanController extends Controller
     {
         return \Response::download("/tmp/$fileName");
     }
+
+    /**
+     * @param $id Image name
+     * @param Library $library
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function getHinhAnhDaiDien($id, Library $library)
+    {
+        $response = response($library->getProfileImage($id));
+        $response->header('Content-Type', 'image/png');
+
+        return $response;
+    }
 }

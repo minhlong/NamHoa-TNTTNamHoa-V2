@@ -244,7 +244,7 @@
               <td *ngIf="cookieState.ngay_them_suc">{{_item.ngay_them_suc | ngay}}</td>
               <td *ngIf="cookieState.dien_thoai">{{_item.dien_thoai}}</td>
               <td *ngIf="cookieState.thao_tac">
-                <button class="btn btn-xs btn-default" (click)="view(_item)">Xem</button>
+                <button class="btn btn-xs btn-default" [routerLink]="['/tai-khoan/chi-tiet', _item.id]">Xem</button>
               </td>
             </tr>
           </tbody>

@@ -12,3 +12,4 @@
 */
 
 Route::get('tai-khoan/download/{fileName}', 'TaiKhoanController@getDownloadFile');
+Route::get('tai-khoan/{id}/anh-ca-nhan', 'TaiKhoanController@getHinhAnhDaiDien');
