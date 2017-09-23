@@ -55,7 +55,7 @@ class TrangChuController extends Controller
             ->orderBy('nganh')
             ->orderBy('cap')
             ->orderBy('doi')
-            ->get();
+            ->get()->load('huynh_truong');
         foreach ($list as $obj) {
             $id = $obj->hoc_vien()->pluck('tai_khoan.id');
             $counter = DiemDanh::where('ngay', $currentSunday)->whereIn('tai_khoan_id', $id)->get()->count();
@@ -63,12 +63,13 @@ class TrangChuController extends Controller
                 $result[] = [
                     'id'  => $obj->id,
                     'ten' => $obj->taoTen(true),
+                    'huynh_truong' => $obj->huynh_truong,
                 ];
             }
         }
 
         return [
-            'ngay' => $library->chuanHoaNgay($currentSunday),
+            'ngay' => $currentSunday,
             'lop'  => $result,
         ];
     }

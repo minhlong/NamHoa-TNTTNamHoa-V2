@@ -78,7 +78,7 @@
     <div class="col-md-6">
       <div class="ibox">
         <div class="ibox-title">
-          <h5>Chưa Điểm Danh - Ngày {{chuaDiemDanh.ngay | nganh}}</h5>
+          <h5>Chưa Điểm Danh - Ngày {{chuaDiemDanh.ngay | ngay}}</h5>
           <div class="ibox-tools">
             <button class="btn btn-default btn-xs pull-right" (click)="loadData()">Tải lại trang</button>
           </div>
@@ -108,7 +108,7 @@
                   </td>
                   <td>{{_item.ten}}</td>
                   <td>
-                    <button class="btn btn-xs btn-default" (click)="view(_item)">Xem</button>
+                    <button class="btn btn-xs btn-default" (click)="itemSelected = _item; openModalBtn.click()">Xem</button>
                   </td>
                 </tr>
               </tbody>
@@ -129,6 +129,51 @@
             </div>
           </pagination-template>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<a class="btn-open-modal" data-toggle="modal" data-target="#locationThing" #openModalBtn></a>
+<div class="modal inmodal" id="locationThing" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" *ngIf="itemSelected">
+    <div class="modal-content animated bounceInRight">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title">
+          {{itemSelected.ten}}
+        </h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+            <tr>
+              <th class="text-center">#</th>
+              <th>Huynh Trưởng</th>
+              <th>Thao Tác</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let _item of itemSelected.huynh_truong; let _i = index">
+              <td class="text-center">
+                {{_i + 1}}
+              </td>
+              <td>
+                {{_item.ho_va_ten}}
+              </td>
+              <td>
+                <a (click)="closeModalBtn.click(); xemTaiKhoan(_item)" class="btn btn-xs btn-default">
+                  Xem
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" #closeModalBtn>Thoát</button>
       </div>
     </div>
   </div>

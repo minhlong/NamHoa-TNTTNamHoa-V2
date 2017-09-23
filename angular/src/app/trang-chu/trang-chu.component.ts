@@ -13,6 +13,7 @@ import { environment } from './../../environments/environment';
 export class TrangChuComponent {
   urlAPI = environment.apiURL + '/trang-chu';
   isLoading = true;
+  itemSelected = null;
   chuaDiemDanh: any;
   siSo: any;
   pState = {
@@ -50,13 +51,17 @@ export class TrangChuComponent {
 
     this._http.get(this.urlAPI).map(res => res.json()).subscribe(res => {
       this.siSo = res.si_so;
+      this.isLoading = false;
       this.chuaDiemDanh = res.chua_diem_danh;
     }, error => {
       this.resetData();
-      this.toasterService.pop('error', 'Lỗi!', error);
-    }, () => {
       this.isLoading = false;
+      this.toasterService.pop('error', 'Lỗi!', error);
     })
+  }
+
+  xemTaiKhoan(taiKhoan) {
+    this.router.navigate(['/tai-khoan', taiKhoan.id]);
   }
 
   xemNganh(_nganh, _loaiTK) {

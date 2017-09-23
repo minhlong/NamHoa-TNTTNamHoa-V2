@@ -79,8 +79,10 @@ export class DashboardComponent implements OnDestroy {
     const search = this.getFilter();
     this._http.get(this.urlAPI, { search }).map(res => res.json()).subscribe(res => {
       this.dataArr = res.data;
+      this.isLoading = false;
     }, error => {
       this.dataArr = [];
+      this.isLoading = false;
       this.toasterService.pop('error', 'Lỗi!', error);
     }, () => {
       this.isLoading = false;
@@ -93,12 +95,12 @@ export class DashboardComponent implements OnDestroy {
     this.toasterService.pop('info', 'Đang tải');
 
     this._http.get(this.urlAPI + '/export', { search }).map(res => res.json()).subscribe(res => {
+      this.isLoadingExport = false;
       window.open(this.webAPI + '/' + res.data);
     }, error => {
-      this.toasterService.pop('error', 'Lỗi!', error);
-    }, () => {
       this.isLoadingExport = false;
-    })
+      this.toasterService.pop('error', 'Lỗi!', error);
+    });
   }
 
   private getFilter() {
