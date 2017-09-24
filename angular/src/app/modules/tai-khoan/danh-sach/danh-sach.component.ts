@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ToasterService } from 'angular2-toaster';
+import { URLSearchParams } from '@angular/http';
 
 import { defaultPageState } from './defaultPageState';
 import { AppState } from './../../../store/reducers/index';
