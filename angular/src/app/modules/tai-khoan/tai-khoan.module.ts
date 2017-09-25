@@ -10,6 +10,7 @@ import { DanhSachComponent } from './danh-sach/danh-sach.component';
 import { ChiTietComponent } from './chi-tiet/chi-tiet.component';
 import { TaoMoiComponent } from './tao-moi/tao-moi.component';
 import { MatKhauComponent } from './mat-khau/mat-khau.component';
+import { FormComponent } from './form/form.component';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { MatKhauComponent } from './mat-khau/mat-khau.component';
     ChiTietComponent,
     TaoMoiComponent,
     MatKhauComponent,
+    FormComponent,
   ]
 })
 export class TaiKhoanModule { }

@@ -60,7 +60,7 @@
       </div>
     </div>
   </div>
-  <div class="ibox">
+  <div *ngIf="tab === 'chi-tiet'" class="ibox">
     <div class="ibox-title">
       <h5>Thông Tin</h5>
     </div>
@@ -154,9 +154,12 @@
       </div>
     </div>
     <div class="ibox-footer">
-      <button class="btn btn-primary btn-sm m-l-lg">Cập Nhật Thông Tin</button>
+      <button class="btn btn-primary btn-sm m-l-lg" (click)="tab = 'form'">Cập Nhật Thông Tin</button>
       <button class="btn btn-primary btn-sm m-l-lg">Đổi Mật Khẩu</button>
     </div>
+  </div>
+  <div *ngIf="tab === 'form'" class="ibox">
+    <app-form (updateInfo)="update($event)" [taiKhoanInfo]="taiKhoanInfo"></app-form>
   </div>
 </div>
 <a class="btn-open-modal" data-toggle="modal" data-target="#locationThing" #openModalBtn></a>

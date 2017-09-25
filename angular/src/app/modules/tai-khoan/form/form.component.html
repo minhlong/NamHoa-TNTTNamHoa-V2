@@ -1,0 +1,67 @@
+<div class="ibox-title">
+  <h5>Thông Tin</h5>
+</div>
+<div class="ibox-content {{isLoading ? 'sk-loading' : null}}">
+  <div class="sk-spinner sk-spinner-three-bounce">
+    <div class="sk-bounce1"></div>
+    <div class="sk-bounce2"></div>
+    <div class="sk-bounce3"></div>
+  </div>
+  <form action="#" class="row form-horizontal111">
+    <!-- <div class="form-group col-sm-6">
+      <label class="control-label">Mã Số</label>
+      <input type="text" [(ngModel)]="taiKhoanInfo.id" name="id" class="form-control">
+    </div> -->
+    <div class="form-group col-sm-6">
+      <label class="control-label">Tên Thánh</label>
+      <input type="text" [(ngModel)]="taiKhoanInfo.ten_thanh" name="ten_thanh" class="form-control">
+    </div>
+    <div class="form-group col-sm-6">
+      <label class="control-label">Họ và Tên</label>
+      <input type="text" [(ngModel)]="taiKhoanInfo.ho_va_ten" name="ho_va_ten" class="form-control">
+    </div>
+    <!-- <div class="form-group col-sm-6">
+      <label class="control-label">Trạng Thái</label>
+      <input type="text" [(ngModel)]="taiKhoanInfo.trang_thai" name="trang_thai" class="form-control">
+    </div> -->
+    <!-- <div class="form-group col-sm-6">
+      <label class="control-label">Loại Tài Khoản</label>
+      <input type="text" [(ngModel)]="taiKhoanInfo.loai_tai_khoan" name="loai_tai_khoan" class="form-control">
+    </div> -->
+    <div class="form-group col-sm-6">
+      <label class="control-label">Giới Tính</label>
+      <input type="text" [(ngModel)]="taiKhoanInfo.gioi_tinh" name="gioi_tinh" class="form-control">
+    </div>
+    <div class="form-group col-sm-6">
+      <label class="control-label">Ngày sinh</label>
+      <input type="text" [(ngModel)]="taiKhoanInfo.ngay_sinh" name="ngay_sinh" class="form-control">
+    </div>
+    <div class="form-group col-sm-6">
+      <label class="control-label">Ngày Rửa Tội</label>
+      <input type="text" [(ngModel)]="taiKhoanInfo.ngay_rua_toi" name="ngay_rua_toi" class="form-control">
+    </div>
+    <div class="form-group col-sm-6">
+      <label class="control-label">Ngày Ruớc Lễ</label>
+      <input type="text" [(ngModel)]="taiKhoanInfo.ngay_ruoc_le" name="ngay_ruoc_le" class="form-control">
+    </div>
+    <div class="form-group col-sm-6">
+      <label class="control-label">Ngày Thêm Sức</label>
+      <input type="text" [(ngModel)]="taiKhoanInfo.ngay_them_suc" name="ngay_them_suc" class="form-control">
+    </div>
+    <div class="form-group col-sm-6">
+      <label class="control-label">Email</label>
+      <input type="email" [(ngModel)]="taiKhoanInfo.email" name="email" class="form-control">
+    </div>
+    <div class="form-group col-sm-12">
+      <label class="control-label">Địa Chỉ</label>
+      <input type="text" [(ngModel)]="taiKhoanInfo.dia_chi" name="dia_chi" class="form-control">
+    </div>
+    <div class="form-group col-sm-12">
+      <label class="control-label">Ghi Chú</label>
+      <textarea class="form-control" rows="5" [(ngModel)]="taiKhoanInfo.ghi_chu" name="ghi_chu"></textarea>
+    </div>
+  </form>
+</div>
+<div class="ibox-footer">
+  <button class="btn btn-primary btn-sm m-l-lg" (click)="update()">Lưu</button>
+</div>

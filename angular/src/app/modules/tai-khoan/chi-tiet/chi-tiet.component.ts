@@ -10,6 +10,7 @@ import { environment } from './../../../../environments/environment';
   styleUrls: ['./chi-tiet.component.scss']
 })
 export class ChiTietComponent implements OnInit, OnDestroy {
+  tab = 'chi-tiet'; // form, mat-khau
   itemSelected = null;
   isLoading: boolean;
   taiKhoanID: any;
@@ -49,6 +50,12 @@ export class ChiTietComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+  }
+
+  update(params) {
+    this.tab = 'chi-tiet';
+    console.log(this.tab);
+    console.log(params);
   }
 
   ngOnDestroy() {
