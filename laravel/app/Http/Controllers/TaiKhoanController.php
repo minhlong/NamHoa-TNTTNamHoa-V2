@@ -28,6 +28,22 @@ class TaiKhoanController extends Controller
         ]);
     }
 
+    /**
+     * Lấy Thông Tin Cá Nhân.
+     * @param TaiKhoan $taiKhoan
+     * @return mixed
+     */
+    public function getThongTin(TaiKhoan $taiKhoan)
+    {
+        $taiKhoan->load(['lop_hoc']);
+        foreach ($taiKhoan->lop_hoc as &$item) {
+            $item->load(['huynh_truong']);
+            $item->ten_lop = $item->taoTen();
+        }
+
+        return response()->json($taiKhoan->toArray());
+    }
+
     public function generateExcelFile(TaiKhoan $taiKhoan, LopHoc $lopHoc, Request $request, Library $library)
     {
         $file = \Excel::create('Danh Sach Tai Khoan_' . date('d-m-Y') . '_' . strtotime('now'), function ($excel) use ($taiKhoan, $lopHoc, $request, $library) {

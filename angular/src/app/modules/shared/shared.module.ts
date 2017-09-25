@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoaiTK, TrangThai, Nganh, Cap, Doi, HienThiNgay } from './convert-type.pipe';
+import { LoaiTK, TrangThai, Nganh, Cap, Doi, GioiTinh, HienThiNgay } from './convert-type.pipe';
 
 @NgModule({
   imports: [
@@ -13,6 +13,7 @@ import { LoaiTK, TrangThai, Nganh, Cap, Doi, HienThiNgay } from './convert-type.
     Cap,
     Doi,
     HienThiNgay,
+    GioiTinh,
   ],
   exports: [
     LoaiTK,
@@ -21,6 +22,7 @@ import { LoaiTK, TrangThai, Nganh, Cap, Doi, HienThiNgay } from './convert-type.
     Cap,
     Doi,
     HienThiNgay,
+    GioiTinh,
   ]
 })
 export class SharedModule { }

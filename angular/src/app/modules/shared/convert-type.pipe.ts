@@ -72,6 +72,16 @@ export class Doi implements PipeTransform {
 }
 
 @Pipe({
+  name: 'gioiTinh'
+})
+export class GioiTinh implements PipeTransform {
+
+  transform(value: any, args?: any): any {
+    return value === 'NAM' ? 'Nam' : 'Nữ';
+  }
+}
+
+@Pipe({
   name: 'ngay'
 })
 export class HienThiNgay implements PipeTransform {
