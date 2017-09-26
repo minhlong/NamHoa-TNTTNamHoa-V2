@@ -98,7 +98,7 @@
         </div>
       </form>
     </div>
-    <div class="ibox-footer text-center">
+    <div class="ibox-footer text-center" *ngIf="!isLoading">
       <button class="btn btn-default btn-sm" (click)="searchData()">Tìm kiếm</button>
     </div>
   </div>
@@ -196,7 +196,6 @@
             <li><a (click)="resetCookieState()">Mặc định</a></li>
           </ul>
         </div>
-        <button class="btn btn-default btn-xs pull-right m-r-lg" *ngIf="!isLoading" (click)="searchData()">Tải lại trang</button>
       </div>
     </div>
     <div class="ibox-content {{isLoading ? 'sk-loading' : null}}">
