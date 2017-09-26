@@ -5,7 +5,9 @@
     </div>
     <ul class="nav navbar-top-links navbar-right">
       <li>
-        <span class="m-r-sm text-muted welcome-message">{{(taiKhoan | async)?.ten_thanh}} {{(taiKhoan | async)?.ho_va_ten}}</span>
+        <a (click)="view()">
+          <span class="m-r-sm text-muted welcome-message">{{taiKhoan.ten_thanh}} {{taiKhoan.ho_va_ten}}</span>
+        </a>
       </li>
       <li>
         <a [routerLink]="['/dang-xuat']" href="#">

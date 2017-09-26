@@ -294,4 +294,28 @@ class TaiKhoanController extends Controller
 
         return $response;
     }
+
+    /**
+     * Luu Thong Tin Tai Khoan.
+     * @param TaiKhoan $taiKhoan
+     * @param TaiKhoanFormRequest $taiKhoanFormRequest
+     * @return string
+     */
+    public function postUpdate(TaiKhoan $taiKhoan, TaiKhoanFormRequest $taiKhoanFormRequest)
+    {
+        if(!\Entrust::can('tai-khoan') && $taiKhoan->id != \Auth::user()->id) {
+            abort(403);
+        }
+
+        $taiKhoan->fill($taiKhoanFormRequest->all());
+        $taiKhoan->save();
+        // Update Trang Thai
+        if ($taiKhoan->trang_thai == 'TAM_NGUNG' && !$taiKhoan->trashed()) {
+            $taiKhoan->delete();
+        } elseif ($taiKhoan->trang_thai == 'HOAT_DONG' && $taiKhoan->trashed()) {
+            $taiKhoan->restore();
+        }
+
+        return $this->getThongTin($taiKhoan);
+    }
 }

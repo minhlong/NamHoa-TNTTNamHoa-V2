@@ -24,11 +24,7 @@ Route::group(['middleware' => 'auth-jwt'], function () {
         Route::get(null, 'TaiKhoanController@getDanhSach');
         Route::get('export', 'TaiKhoanController@generateExcelFile');
         Route::get('{TaiKhoan}', 'TaiKhoanController@getThongTin');
-        // Route::get('{TaiKhoan}', function ($obj) {
-        //     return response()->json([
-        //         'data' => $obj,
-        //     ]);
-        // });
+        Route::post('{TaiKhoan}', 'TaiKhoanController@postUpdate');
     });
 
 
@@ -58,7 +54,7 @@ Route::group(['middleware' => 'auth-jwt'], function () {
 });
 
 Route::bind('TaiKhoan', function ($value) {
-    return \App\TaiKhoan::findOrFail($value);
+    return \App\TaiKhoan::withTrashed()->findOrFail($value);
 });
 Route::bind('LopHoc', function ($value) {
     return \App\LopHoc::findOrFail($value);

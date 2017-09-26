@@ -1,5 +1,5 @@
 import { SharedModule } from '../shared/shared.module';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -16,6 +16,7 @@ import { FormComponent } from './form/form.component';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     SharedModule,
     TextMaskModule,
     NgxPaginationModule,

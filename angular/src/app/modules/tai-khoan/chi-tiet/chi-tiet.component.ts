@@ -1,8 +1,11 @@
 import { ToasterService } from 'angular2-toaster';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+
 import { JwtAuthHttp } from '../../../services/http-auth.service';
 import { environment } from './../../../../environments/environment';
+import { AppState } from './../../../store/reducers/index';
 
 @Component({
   selector: 'app-chi-tiet',
@@ -13,9 +16,11 @@ export class ChiTietComponent implements OnInit, OnDestroy {
   tab = 'chi-tiet'; // form, mat-khau
   itemSelected = null;
   isLoading: boolean;
-  taiKhoanID: any;
+  curAuth: any;
+  taiKhoanID: string;
   taiKhoanInfo: any = {};
   parSub: any;
+  authSub: any;
   webAPI = environment.webURL + '/tai-khoan';
   urlAPI = environment.apiURL + '/tai-khoan';
   pState = {
@@ -26,6 +31,7 @@ export class ChiTietComponent implements OnInit, OnDestroy {
   }
 
   constructor(
+    private store: Store<AppState>,
     private router: Router,
     private toasterService: ToasterService,
     private _http: JwtAuthHttp,
@@ -43,22 +49,37 @@ export class ChiTietComponent implements OnInit, OnDestroy {
           this.toasterService.pop('error', 'Lỗi!', error);
         });
     })
+
+   this.authSub =  this.store.select((state: AppState) => state.auth).subscribe(res => {
+      this.curAuth = res;
+    });
+  }
+
+  ngOnInit() {
+  }
+
+  hasPerm() {
+    if (this.curAuth.phan_quyen.includes('tai-khoan') || this.taiKhoanID.toUpperCase() === this.curAuth.tai_khoan.id) {
+      return true;
+    }
+    return false;
   }
 
   xemTaiKhoan(taiKhoan) {
     this.router.navigate(['/tai-khoan/chi-tiet/', taiKhoan.id]);
   }
 
-  ngOnInit() {
-  }
-
-  update(params) {
+  update(_info) {
     this.tab = 'chi-tiet';
-    console.log(this.tab);
-    console.log(params);
+
+    if (!_info) {
+      return; // Click Thoát
+    }
+    this.taiKhoanInfo = _info;
   }
 
   ngOnDestroy() {
     this.parSub.unsubscribe();
+    this.authSub.unsubscribe();
   }
 }

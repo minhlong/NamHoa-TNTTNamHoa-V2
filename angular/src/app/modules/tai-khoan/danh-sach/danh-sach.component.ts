@@ -19,9 +19,8 @@ export class DanhSachComponent implements OnDestroy {
   webAPI = environment.webURL + '/tai-khoan/download';
   urlAPI = environment.apiURL + '/tai-khoan';
   maskOption = {
-    mask: [/[0-3]/, /[1-9]/, '-', /[0-1]/, /[1-9]/, '-', /[1-2]/, /[0-9]/, /[0-9]/, /[0-9]/],
+    mask: [/[0-3]/, /[0-9]/, '-', /[0-1]/, /[0-9]/, '-', /[1-2]/, /[0-9]/, /[0-9]/, /[0-9]/],
     guide: true,
-    placeholderChar: ' ',
   }
 
   isLoading = true;

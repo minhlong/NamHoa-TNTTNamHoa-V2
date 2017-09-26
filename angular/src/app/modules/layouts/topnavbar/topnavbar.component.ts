@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { smoothlyMenu } from '../../../_helpers';
@@ -11,17 +12,29 @@ declare var jQuery: any;
   selector: 'app-topnavbar',
   templateUrl: 'topnavbar.template.html'
 })
-export class TopnavbarComponent {
-  taiKhoan: Observable<any>;
+export class TopnavbarComponent implements OnDestroy {
+  authSub: any;
+  taiKhoan: any = {};
 
   constructor(
+    private router: Router,
     private store: Store<AppState>
   ) {
-    this.taiKhoan = this.store.select((state: AppState) => state.auth.tai_khoan);
+    this.authSub = this.store.select((state: AppState) => state.auth.tai_khoan).subscribe(res => {
+      this.taiKhoan = res;
+    });
   }
 
   toggleNavigation(): void {
     jQuery('body').toggleClass('mini-navbar');
     smoothlyMenu();
+  }
+
+  view() {
+    this.router.navigate(['/tai-khoan/chi-tiet/', this.taiKhoan.id]);
+  }
+
+  ngOnDestroy() {
+    this.authSub.unsubscribe();
   }
 }
