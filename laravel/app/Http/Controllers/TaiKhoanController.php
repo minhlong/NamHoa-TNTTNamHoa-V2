@@ -318,4 +318,12 @@ class TaiKhoanController extends Controller
 
         return $this->getThongTin($taiKhoan);
     }
+
+    public function postMatKhau(TaiKhoan $taiKhoan)
+    {
+        $taiKhoan->capNhatMatKhau(\Request::get('mat_khau'));
+        $taiKhoan->save();
+
+        return response()->json($taiKhoan);
+    }
 }

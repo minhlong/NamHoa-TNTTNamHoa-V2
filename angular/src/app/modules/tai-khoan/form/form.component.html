@@ -77,7 +77,7 @@
     </div>
   </form>
 </div>
-<div class="ibox-footer">
+<div class="ibox-footer" *ngIf="!isLoading">
   <button (click)="cancel()" class="btn btn-default btn-sm m-l-lg">Thoát</button>
   <button (click)="save()" class="btn btn-primary btn-sm m-l-lg">Lưu</button>
 </div>

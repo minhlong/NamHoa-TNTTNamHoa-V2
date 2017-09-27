@@ -70,9 +70,12 @@ export class FormComponent implements OnInit {
       ngay_them_suc: ngay(this.infoFB.value.ngay_them_suc),
     });
 
+    this.isLoading = true;
     this._http.post(_url, _par).map(res => res.json()).subscribe(res => {
+      this.isLoading = false;
       this.updateInfo.emit(res);
     }, _err => {
+      this.isLoading = false;
       if (typeof _err === 'string') {
         this.toasterService.pop('error', 'Lỗi!', _err);
       } else {

@@ -12,7 +12,7 @@
       <div class="row" *ngIf="taiKhoanInfo">
         <div class="col-md-5">
           <div class="contact-box center-version">
-            <a href="#">
+            <a>
               <img alt="image" class="img-circle" src="{{webAPI}}/{{taiKhoanID}}/anh-ca-nhan">
               <h3 class="m-b-xs"><strong>{{taiKhoanID}}</strong></h3>
               <div class="font-bold">{{taiKhoanInfo.ten_thanh}} {{taiKhoanInfo.ho_va_ten}}</div>
@@ -144,7 +144,7 @@
           <div class="form-group col-sm-12" *ngIf="taiKhoanInfo.ghi_chu">
             <label class="col-sm-3 control-label">Ghi Chú</label>
             <div class="col-sm-9">
-              <p class="form-control-static">{{taiKhoanInfo.ghi_chu}}</p>
+              <p class="form-control-static" [innerHtml]="taiKhoanInfo.ghi_chu | newline"></p>
             </div>
           </div>
         </form>
@@ -152,11 +152,14 @@
     </div>
     <div class="ibox-footer" *ngIf="hasPerm()">
       <button class="btn btn-primary btn-sm m-l-lg" (click)="tab = 'form'">Cập Nhật Thông Tin</button>
-      <button class="btn btn-primary btn-sm m-l-lg">Đổi Mật Khẩu</button>
+      <button class="btn btn-primary btn-sm m-l-lg" (click)="tab = 'mat-khau'">Đổi Mật Khẩu</button>
     </div>
   </div>
   <div *ngIf="tab === 'form'" class="ibox">
     <app-form (updateInfo)="update($event)" [curAuth]="curAuth" [taiKhoanInfo]="taiKhoanInfo"></app-form>
+  </div>
+  <div *ngIf="tab === 'mat-khau'" class="ibox">
+    <app-mat-khau (updateInfo)="update($event)" [taiKhoanInfo]="taiKhoanInfo"></app-mat-khau>
   </div>
 </div>
 <a class="btn-open-modal" data-toggle="modal" data-target="#locationThing" #openModalBtn></a>

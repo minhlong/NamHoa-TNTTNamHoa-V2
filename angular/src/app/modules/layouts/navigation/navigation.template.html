@@ -3,7 +3,7 @@
     <ul class="nav metismenu" id="side-menu">
       <li class="nav-header">
         <div class="dropdown profile-element">
-          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+          <a data-toggle="dropdown" class="dropdown-toggle" >
             <span class="clear"> 
               <span class="block m-t-xs"> <strong class="font-bold">AngularWebApp</strong></span>
             </span>
@@ -19,7 +19,7 @@
           <span class="nav-label">Trang Chủ</span>
         </a>
       </li>
-      <li *ngIf="!phanQuyen['tai-khoan']" [ngClass]="{active: activeRouteAbsolute('/tai-khoan')}">
+      <li *ngIf="!phanQuyen['tai-khoan']" [ngClass]="{active: activeRoute('/tai-khoan')}">
         <a routerLink="/tai-khoan">
           <i class="fa fa-users"></i>
           <span class="nav-label">Tài Khoản</span>
@@ -36,9 +36,6 @@
           </li>
           <li [ngClass]="{active: activeRoute('/tai-khoan/tao-moi')}">
             <a routerLink="/tai-khoan/tao-moi">+ Tạo Mới</a>
-          </li>
-          <li [ngClass]="{active: activeRoute('/tai-khoan/mat-khau')}">
-            <a routerLink="/tai-khoan/mat-khau">+ Mật Khẩu</a>
           </li>
         </ul>
       </li>

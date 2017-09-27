@@ -25,8 +25,8 @@ Route::group(['middleware' => 'auth-jwt'], function () {
         Route::get('export', 'TaiKhoanController@generateExcelFile');
         Route::get('{TaiKhoan}', 'TaiKhoanController@getThongTin');
         Route::post('{TaiKhoan}', 'TaiKhoanController@postUpdate');
+        Route::post('{TaiKhoan}/mat-khau', 'TaiKhoanController@postMatKhau');
     });
-
 
     /* Lop Hoc */
     Route::get('lop-hoc', function () {
