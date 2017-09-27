@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth-jwt'], function () {
         Route::get('{TaiKhoan}', 'TaiKhoanController@getThongTin');
         Route::post('{TaiKhoan}', 'TaiKhoanController@postUpdate');
         Route::post('{TaiKhoan}/mat-khau', 'TaiKhoanController@postMatKhau');
+        Route::post('{TaiKhoan}/xoa', 'TaiKhoanController@postXoa')->middleware(['permission:tai-khoan']);
     });
 
     /* Lop Hoc */

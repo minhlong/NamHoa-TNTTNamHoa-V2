@@ -162,8 +162,9 @@
     <app-mat-khau (updateInfo)="update($event)" [taiKhoanInfo]="taiKhoanInfo"></app-mat-khau>
   </div>
 </div>
-<a class="btn-open-modal" data-toggle="modal" data-target="#locationThing" #openModalBtn></a>
-<div class="modal inmodal" id="locationThing" tabindex="-1" role="dialog" aria-hidden="true">
+
+<a class="btn-open-modal" data-toggle="modal" data-target="#tmpModel" #openModalBtn></a>
+<div class="modal inmodal" id="tmpModel" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog" *ngIf="itemSelected">
     <div class="modal-content animated bounceInRight">
       <div class="modal-header">

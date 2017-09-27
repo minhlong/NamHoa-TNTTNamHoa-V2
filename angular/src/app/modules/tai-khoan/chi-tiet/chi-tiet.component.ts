@@ -50,7 +50,7 @@ export class ChiTietComponent implements OnInit, OnDestroy {
         });
     })
 
-   this.authSub =  this.store.select((state: AppState) => state.auth).subscribe(res => {
+    this.authSub = this.store.select((state: AppState) => state.auth).subscribe(res => {
       this.curAuth = res;
     });
   }

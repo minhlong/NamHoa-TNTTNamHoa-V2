@@ -326,4 +326,17 @@ class TaiKhoanController extends Controller
 
         return response()->json($taiKhoan);
     }
+
+    public function postXoa(TaiKhoan $taiKhoan)
+    {
+        try {
+            $taiKhoan->forceDelete();
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Liên hệ quản trị'
+            ], 400);
+        }
+        
+        return response()->json();
+    }
 }

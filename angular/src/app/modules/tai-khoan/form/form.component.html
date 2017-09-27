@@ -8,26 +8,22 @@
     <div class="sk-bounce3"></div>
   </div>
   <form [formGroup]="infoFB" (submit)="save()" class="row form-horizontal111">
-    <!-- < [class.has-error]="error.id"div class="form-group col-sm-6">
-      <label class="control-label">Mã Số</label>
-      <input type="text" formControlName="id" class="form-control">
-    </div> -->
-    <div [class.has-error]="error.ten_thanh" class="form-group col-sm-6">
+    <div [class.has-error]="error && error.ten_thanh" class="form-group col-sm-6">
       <label class="control-label">Tên Thánh</label>
       <input type="text" formControlName="ten_thanh" class="form-control">
     </div>
-    <div [class.has-error]="error.ho_va_ten" class="form-group col-sm-6">
+    <div [class.has-error]="error && error.ho_va_ten" class="form-group col-sm-6">
       <label class="control-label">Họ và Tên</label>
       <input type="text" formControlName="ho_va_ten" class="form-control">
     </div>
-    <div *ngIf="hasPermBHT()" [class.has-error]="error.trang_thai" div class="form-group col-sm-6">
+    <div *ngIf="hasPermBHT()" [class.has-error]="error && error.trang_thai" div class="form-group col-sm-6">
       <label class="control-label">Trạng Thái</label>
       <select name="trang_thai" formControlName="trang_thai" class="form-control">
           <option value="HOAT_DONG">{{'HOAT_DONG' | trangThai}}</option>
           <option value="TAM_NGUNG">{{'TAM_NGUNG' | trangThai}}</option>
       </select>
     </div>
-    <div *ngIf="hasPermBHT()" [class.has-error]="error.loai_tai_khoan" div class="form-group col-sm-6">
+    <div *ngIf="hasPermBHT()" [class.has-error]="error && error.loai_tai_khoan" div class="form-group col-sm-6">
       <label class="control-label">Loại Tài Khoản</label>
       <select formControlName="loai_tai_khoan" class="form-control">
         <option value="THIEU_NHI">{{'THIEU_NHI' | loaiTK}}</option>
@@ -36,42 +32,42 @@
         <option value="LINH_MUC">{{'LINH_MUC' | loaiTK}}</option>
       </select>
     </div>
-    <div [class.has-error]="error.gioi_tinh" class="form-group col-sm-6">
+    <div [class.has-error]="error && error.gioi_tinh" class="form-group col-sm-6">
       <label class="control-label">Giới Tính</label>
       <select formControlName="gioi_tinh" class="form-control">
           <option value="NAM">Nam</option>
           <option value="NU">Nữ</option>
       </select>
     </div>
-    <div [class.has-error]="error.ngay_sinh" class="form-group col-sm-6">
+    <div [class.has-error]="error && error.ngay_sinh" class="form-group col-sm-6">
       <label class="control-label">Ngày sinh</label>
       <input type="text" formControlName="ngay_sinh" [textMask]="maskOption" class="form-control">
     </div>
-    <div [class.has-error]="error.ngay_rua_toi" class="form-group col-sm-6">
+    <div [class.has-error]="error && error.ngay_rua_toi" class="form-group col-sm-6">
       <label class="control-label">Ngày Rửa Tội</label>
       <input type="text" formControlName="ngay_rua_toi" [textMask]="maskOption" class="form-control">
     </div>
-    <div [class.has-error]="error.ngay_ruoc_le" class="form-group col-sm-6">
+    <div [class.has-error]="error && error.ngay_ruoc_le" class="form-group col-sm-6">
       <label class="control-label">Ngày Ruớc Lễ</label>
       <input type="text" formControlName="ngay_ruoc_le" [textMask]="maskOption" class="form-control">
     </div>
-    <div [class.has-error]="error.ngay_them_suc" class="form-group col-sm-6">
+    <div [class.has-error]="error && error.ngay_them_suc" class="form-group col-sm-6">
       <label class="control-label">Ngày Thêm Sức</label>
       <input type="text" formControlName="ngay_them_suc" [textMask]="maskOption" class="form-control">
     </div>
-    <div [class.has-error]="error.email" class="form-group col-sm-6">
+    <div [class.has-error]="error && error.email" class="form-group col-sm-6">
       <label class="control-label">Email</label>
       <input type="email" formControlName="email" class="form-control">
     </div>
-    <div [class.has-error]="error.dien_thoai" class="form-group col-sm-6">
+    <div [class.has-error]="error && error.dien_thoai" class="form-group col-sm-6">
       <label class="control-label">Điện Thoại</label>
       <input type="text" formControlName="dien_thoai" class="form-control">
     </div>
-    <div [class.has-error]="error.dia_chi" class="form-group col-sm-12">
+    <div [class.has-error]="error && error.dia_chi" class="form-group col-sm-12">
       <label class="control-label">Địa Chỉ</label>
       <input type="text" formControlName="dia_chi" class="form-control">
     </div>
-    <div [class.has-error]="error.ghi_chu" class="form-group col-sm-12">
+    <div [class.has-error]="error && error.ghi_chu" class="form-group col-sm-12">
       <label class="control-label">Ghi Chú</label>
       <textarea formControlName="ghi_chu" class="form-control" rows="5"></textarea>
     </div>

@@ -9,6 +9,7 @@ import { environment } from '../../../../environments/environment';
 import { JwtAuthHttp } from '../../../services/http-auth.service';
 import { consoleLog } from '../../../_helpers';
 import { ngay } from '../../shared/convert-type.pipe';
+import { AuthState } from './../../../store/reducers/auth.reducer';
 
 @Component({
   selector: 'app-danh-sach',
@@ -27,6 +28,10 @@ export class DanhSachComponent implements OnDestroy {
   isLoadingExport = false;
   khoaHienTaiID = 0;
   dataArr = [];
+
+  itemSelected: any;
+  curAuth: AuthState;
+  authSub: any;
   sub: any;
 
   cookieState: any;
@@ -42,10 +47,34 @@ export class DanhSachComponent implements OnDestroy {
       this.khoaHienTaiID = x;
     });
 
+
+    this.authSub = this.store.select((state: AppState) => state.auth).subscribe(res => {
+      this.curAuth = res;
+    });
+
     // Update current page state
     this.resetPageState();
 
     this.searchData();
+  }
+
+  hasPermXoaTaiKhoan(taiKhoan) {
+    if (this.curAuth.phan_quyen.includes('tai-khoan') && taiKhoan.trang_thai === 'TAM_NGUNG') {
+      return true;
+    }
+    return false;
+  }
+
+  xoaTaiKhoan(taiKhoan) {
+    this.isLoading = true;
+    const _url = this.urlAPI + '/' + taiKhoan.id + '/xoa';
+    this._http.post(_url, null).map(res => res.json()).subscribe(res => {
+      this.toasterService.pop('success', 'Đã xóa ' + taiKhoan.id + ' ' + taiKhoan.ten_thanh + ' ' + taiKhoan.ho_va_ten);
+      this.searchData();
+    }, _err => {
+      this.toasterService.pop('error', 'Lỗi!', _err);
+      this.isLoading = false;
+    })
   }
 
   private resetPageState() {
@@ -80,9 +109,7 @@ export class DanhSachComponent implements OnDestroy {
       this.isLoading = false;
     }, error => {
       this.dataArr = [];
-      this.isLoading = false;
       this.toasterService.pop('error', 'Lỗi!', error);
-    }, () => {
       this.isLoading = false;
     })
   }
@@ -119,5 +146,6 @@ export class DanhSachComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.sub.unsubscribe()
+    this.authSub.unsubscribe()
   }
 }
