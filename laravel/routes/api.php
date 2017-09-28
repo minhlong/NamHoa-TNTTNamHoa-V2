@@ -18,12 +18,13 @@ Route::post('dang-nhap', 'DangNhapController@postDangNhap');
 Route::group(['middleware' => 'auth-jwt'], function () {
     /* Trang Chu */
     Route::get('trang-chu', 'TrangChuController@getThongTin');
-    Route::post('upload', 'TrangChuController@postUpload');
 
     /* Tai Khoan */
     Route::group(['prefix' => 'tai-khoan'], function () {
         Route::get(null, 'TaiKhoanController@getDanhSach');
         Route::get('export', 'TaiKhoanController@generateExcelFile');
+        Route::post('tap-tin', 'TaiKhoanController@postTapTin');
+        Route::post('tap-tin/tao', 'TaiKhoanController@postTao');
         Route::get('{TaiKhoan}', 'TaiKhoanController@getThongTin');
         Route::post('{TaiKhoan}', 'TaiKhoanController@postUpdate');
         Route::post('{TaiKhoan}/mat-khau', 'TaiKhoanController@postMatKhau');
