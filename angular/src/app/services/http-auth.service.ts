@@ -41,11 +41,8 @@ export class JwtAuthHttp extends AuthHttp {
 export function authFactory(http: Http, store: Store<any>) {
   return new JwtAuthHttp(
     new AuthConfig({
-     headerPrefix: 'Bearer',
-     noTokenScheme: true,
-      globalHeaders: [{
-        'Content-Type': 'application/json',
-      }],
+      headerPrefix: 'Bearer',
+      noTokenScheme: true,
       noJwtError: true
     }), http, store);
 }

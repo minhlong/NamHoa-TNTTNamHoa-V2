@@ -18,6 +18,7 @@ Route::post('dang-nhap', 'DangNhapController@postDangNhap');
 Route::group(['middleware' => 'auth-jwt'], function () {
     /* Trang Chu */
     Route::get('trang-chu', 'TrangChuController@getThongTin');
+    Route::post('upload', 'TrangChuController@postUpload');
 
     /* Tai Khoan */
     Route::group(['prefix' => 'tai-khoan'], function () {

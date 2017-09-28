@@ -8,7 +8,7 @@
       "root": "src",
       "outDir": "dist",
       "assets": [
-        "assets",
+        "assets/SoYeuLyLich.xlsx",
         "favicon.ico"
       ],
       "index": "index.html",
