@@ -16,7 +16,7 @@ export class ChiTietComponent implements OnInit, OnDestroy {
   urlAPI = environment.apiURL + '/tai-khoan';
   tab = 'chi-tiet'; // form, mat-khau
   itemSelected = null;
-  isLoading: boolean;
+  isLoading = true;
 
   pState = {
     // Paging
@@ -26,7 +26,7 @@ export class ChiTietComponent implements OnInit, OnDestroy {
   }
 
   taiKhoanID: string;
-  taiKhoanInfo: any = {};
+  taiKhoanInfo: any;
 
   parSub: any;
   authSub: any;

@@ -1,11 +1,16 @@
 <div class="wrapper wrapper-content animated fadeInRight">
-  <div class="ibox-content m-b-sm border-bottom">
-    <div class="text-center ">
-      <h3 *ngIf="lopHocInfo">{{lopHocInfo.ten}}</h3>
-      <button class="btn btn-default btn-sm m-l-lg m-t-sm btn-w-m">Thông Tin</button>
-      <button class="btn btn-default btn-sm m-l-lg m-t-sm btn-w-m">Điểm Danh</button>
-      <button class="btn btn-default btn-sm m-l-lg m-t-sm btn-w-m">Vào Điểm</button>
-      <button class="btn btn-default btn-sm m-l-lg m-t-sm btn-w-m">Tổng Kết</button>
+  <div class="ibox-content m-b-sm border-bottom {{isLoading ? 'sk-loading' : null}}">
+    <div class="sk-spinner sk-spinner-three-bounce">
+      <div class="sk-bounce1"></div>
+      <div class="sk-bounce2"></div>
+      <div class="sk-bounce3"></div>
+    </div>
+    <div class="text-center" *ngIf="lopHocInfo">
+      <h3>{{lopHocInfo.ten}}</h3>
+      <button [routerLink]="['/lop-hoc/chi-tiet', lopHocInfo.id, 'thong-tin']" class="btn btn-default btn-sm m-l-lg m-t-sm btn-w-m">Thông Tin</button>
+      <button [routerLink]="['/lop-hoc/chi-tiet', lopHocInfo.id, 'diem-danh']" class="btn btn-default btn-sm m-l-lg m-t-sm btn-w-m">Điểm Danh</button>
+      <button [routerLink]="['/lop-hoc/chi-tiet', lopHocInfo.id, 'diem-so']" class="btn btn-default btn-sm m-l-lg m-t-sm btn-w-m">Vào Điểm</button>
+      <button [routerLink]="['/lop-hoc/chi-tiet', lopHocInfo.id, 'tong-ket']" class="btn btn-default btn-sm m-l-lg m-t-sm btn-w-m">Tổng Kết</button>
     </div>
   </div>
   <router-outlet></router-outlet>

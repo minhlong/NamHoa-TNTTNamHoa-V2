@@ -9,6 +9,9 @@ import { SharedModule } from '../shared/shared.module';
 import { DanhSachComponent } from './danh-sach/danh-sach.component';
 import { ChiTietComponent } from './chi-tiet/chi-tiet.component';
 import { ThongTinComponent } from './thong-tin/thong-tin.component';
+import { DiemDanhComponent } from './diem-danh/diem-danh.component';
+import { DiemSoComponent } from './diem-so/diem-so.component';
+import { TongKetComponent } from './tong-ket/tong-ket.component';
 
 @NgModule({
   imports: [
@@ -27,10 +30,13 @@ import { ThongTinComponent } from './thong-tin/thong-tin.component';
         children: [
           { path: '', redirectTo: 'thong-tin', pathMatch: 'full' },
           { path: 'thong-tin', component: ThongTinComponent },
+          { path: 'diem-danh', component: DiemDanhComponent },
+          { path: 'diem-so', component: DiemSoComponent },
+          { path: 'tong-ket', component: TongKetComponent },
         ],
       },
     ]),
   ],
-  declarations: [DanhSachComponent, ChiTietComponent, ThongTinComponent]
+  declarations: [DanhSachComponent, ChiTietComponent, ThongTinComponent, DiemDanhComponent, DiemSoComponent, TongKetComponent]
 })
 export class LopHocModule { }

@@ -14,6 +14,7 @@ import { AppState } from './../../../store/reducers/index';
 })
 export class ThongTinComponent implements OnDestroy {
 
+  isLoading = true;
   authSub: any;
   lhSub: any;
   htSub: any;
@@ -48,6 +49,7 @@ export class ThongTinComponent implements OnDestroy {
 
     this.lhSub = this.store.select((state: AppState) => state.lop_hoc.thong_tin).subscribe(res => {
       this.lopHocInfo = res;
+      this.isLoading = false;
     });
 
     this.htSub = this.store.select((state: AppState) => state.lop_hoc.huynh_truong).subscribe(res => {

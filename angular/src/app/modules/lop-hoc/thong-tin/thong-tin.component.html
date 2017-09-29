@@ -6,13 +6,13 @@
   </div>
   <div *ngIf="lopHocInfo">
     <form action="#" class="row form-horizontal">
-      <div class="form-group" *ngIf="lopHocInfo.vi_tri_hoc">
+      <div class="form-group col-sm-12" *ngIf="lopHocInfo.vi_tri_hoc">
         <label class="col-sm-3 control-label">Vị Trí Học</label>
         <div class="col-sm-9">
           <p class="form-control-static">{{lopHocInfo.vi_tri_hoc}}</p>
         </div>
       </div>
-      <div class="form-group" *ngIf="lopHocInfo.ghi_chu">
+      <div class="form-group col-sm-12" *ngIf="lopHocInfo.ghi_chu">
         <label class="col-sm-3 control-label">Ghi Chú</label>
         <div class="col-sm-9">
           <p class="form-control-static" [innerHtml]="lopHocInfo.ghi_chu | newline"></p>
@@ -91,6 +91,6 @@
     </div>
   </div>
 </div>
-<div class="ibox-footer" *ngIf="hasPerm()">
+<div class="ibox-footer" *ngIf="hasPerm() && !isLoading">
   <button class="btn btn-primary btn-sm">Sửa</button>
 </div>

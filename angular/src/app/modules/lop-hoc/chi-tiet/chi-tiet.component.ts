@@ -13,6 +13,7 @@ import * as LopHocAction from './../../../store/actions/lop-hoc.action';
 })
 export class ChiTietComponent implements OnDestroy {
 
+  isLoading = true;
   lopHocID: string;
   lopHocInfo: any = {};
 
@@ -31,6 +32,7 @@ export class ChiTietComponent implements OnDestroy {
 
     this.lhSub = this.store.select((state: AppState) => state.lop_hoc.thong_tin).subscribe(res => {
       this.lopHocInfo = res;
+      this.isLoading = false;
     });
   }
 
