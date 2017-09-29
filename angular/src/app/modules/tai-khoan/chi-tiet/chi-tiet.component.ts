@@ -21,7 +21,6 @@ export class ChiTietComponent implements OnInit, OnDestroy {
   taiKhoanInfo: any = {};
   parSub: any;
   authSub: any;
-  webAPI = environment.webURL + '/tai-khoan';
   urlAPI = environment.apiURL + '/tai-khoan';
   pState = {
     // Paging

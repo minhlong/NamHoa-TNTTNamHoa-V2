@@ -3,6 +3,9 @@
     <div class="ibox-title">
       <h5>Lọc</h5>
       <div class="ibox-tools">
+        <button *ngIf="hasPermTaoMoi()" routerLink="/tai-khoan/tao-moi" class="btn btn-xs btn-default m-r-lg">
+          Tạo Mới
+        </button>
         <button *ngIf="!isLoadingExport" class="btn btn-xs btn-default m-r-lg" (click)="exportData()">
           Xuất Danh Sách <span *ngIf="cookieState.Fkhoa">& Tình Hình Học Tập</span>
         </button>

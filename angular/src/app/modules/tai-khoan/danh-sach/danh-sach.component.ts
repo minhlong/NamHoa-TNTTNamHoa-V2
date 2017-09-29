@@ -65,6 +65,13 @@ export class DanhSachComponent implements OnDestroy {
     return false;
   }
 
+  hasPermTaoMoi() {
+    if (this.curAuth.phan_quyen.includes('tai-khoan')) {
+      return true;
+    }
+    return false;
+  }
+
   xoaTaiKhoan(taiKhoan) {
     this.isLoading = true;
     const _url = this.urlAPI + '/' + taiKhoan.id + '/xoa';

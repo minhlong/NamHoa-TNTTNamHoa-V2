@@ -283,19 +283,6 @@ class TaiKhoanController extends Controller
     }
 
     /**
-     * @param $id Image name
-     * @param Library $library
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
-    public function getHinhAnhDaiDien($id, Library $library)
-    {
-        $response = response($library->getProfileImage($id));
-        $response->header('Content-Type', 'image/png');
-
-        return $response;
-    }
-
-    /**
      * Luu Thong Tin Tai Khoan.
      * @param TaiKhoan $taiKhoan
      * @param TaiKhoanFormRequest $taiKhoanFormRequest
@@ -321,6 +308,10 @@ class TaiKhoanController extends Controller
 
     public function postMatKhau(TaiKhoan $taiKhoan)
     {
+        if(!\Entrust::can('tai-khoan') && $taiKhoan->id != \Auth::user()->id) {
+            abort(403);
+        }
+
         $taiKhoan->capNhatMatKhau(\Request::get('mat_khau'));
         $taiKhoan->save();
 

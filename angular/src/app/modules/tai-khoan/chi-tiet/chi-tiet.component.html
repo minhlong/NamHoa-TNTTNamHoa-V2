@@ -13,7 +13,11 @@
         <div class="col-md-5">
           <div class="contact-box center-version">
             <a>
-              <img alt="image" class="img-circle" src="{{webAPI}}/{{taiKhoanID}}/anh-ca-nhan">
+              <cl-image public-id="profile/{{taiKhoanID}}.png">
+                <cl-transformation default_image="default.png"></cl-transformation>
+                <cl-transformation width="400" height="400" gravity="face" radius="max" crop="crop"></cl-transformation>
+                <cl-transformation width="150" crop="scale"></cl-transformation>
+              </cl-image>
               <h3 class="m-b-xs"><strong>{{taiKhoanID}}</strong></h3>
               <div class="font-bold">{{taiKhoanInfo.ten_thanh}} {{taiKhoanInfo.ho_va_ten}}</div>
             </a>

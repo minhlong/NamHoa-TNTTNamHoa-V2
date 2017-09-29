@@ -21,37 +21,6 @@ class Library
         return preg_replace('/(\d+)-(\d+)-(\d+)$/', '$3-$2-$1', $needles);
     }
 
-    public function base64ToImage($base64_string, $output_file)
-    {
-        $ifp = fopen($output_file, 'wb');
-        $data = explode(',', $base64_string);
-        fwrite($ifp, base64_decode($data[1]));
-        fclose($ifp);
-
-        return $output_file;
-    }
-
-    public function getProfileImage($ID = '')
-    {
-        $type = 'png';
-        $imagePath = $this->getProfilePath() . "/$ID.$type";
-        if (!file_exists($imagePath)) {
-            $imagePath = $this->getProfilePath() . '/default.png';
-        }
-
-        return \File::get($imagePath);
-    }
-
-    /**
-     * Get the path to the profile image folder.
-     * @param string $path
-     * @return string
-     */
-    public function getProfilePath($path = '')
-    {
-        return public_path('profile-image') . ($path ? '/' . $path : $path);
-    }
-
     /**
      * Get Week Days.
      * @param string $startDate

@@ -11,6 +11,8 @@ import { ChiTietComponent } from './chi-tiet/chi-tiet.component';
 import { TaoMoiComponent } from './tao-moi/tao-moi.component';
 import { MatKhauComponent } from './mat-khau/mat-khau.component';
 import { FormComponent } from './form/form.component';
+import { CloudinaryModule } from '@cloudinary/angular-4.x';
+import * as  Cloudinary from 'cloudinary-core';
 
 @NgModule({
   imports: [
@@ -20,6 +22,7 @@ import { FormComponent } from './form/form.component';
     SharedModule,
     TextMaskModule,
     NgxPaginationModule,
+    CloudinaryModule.forRoot(Cloudinary, { cloud_name: 'tnttnamhoa' }),
 
     // Routes
     RouterModule.forChild([

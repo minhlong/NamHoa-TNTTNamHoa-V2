@@ -127,4 +127,8 @@ export class TaoMoiComponent implements OnInit {
 
     return _cls;
   }
+
+  downloadTemplate() {
+    window.open('/assets/SoYeuLyLich.xlsx');
+  }
 }

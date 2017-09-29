@@ -3,9 +3,9 @@
     <div class="ibox-title">
       <h5>Tạo Mới</h5>
       <div class="ibox-tools">
-        <a class="btn btn-xs btn-success m-r-lg" href="/assets/SoYeuLyLich.xlsx">
+        <button (click)="downloadTemplate();" class="btn btn-xs btn-success m-r-lg">
           Tải tập tin mẫu
-        </a>
+        </button>
       </div>
     </div>
     <div class="ibox-content {{isLoading ? 'sk-loading' : null}}">
