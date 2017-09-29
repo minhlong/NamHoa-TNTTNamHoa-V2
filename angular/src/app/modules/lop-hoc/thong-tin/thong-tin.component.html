@@ -60,11 +60,14 @@
         <table class="table table-hover table-bordered">
           <thead>
             <tr>
-              <th class="text-center" colspan="3">Thiếu Nhi</th>
+              <th class="text-center" colspan="4">Thiếu Nhi</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let _item of thieuNhiArr | paginate: pTN">
+            <tr *ngFor="let _item of thieuNhiArr | paginate: pTN; let _i = index">
+              <td class="text-center">
+                {{((pTN.currentPage - 1) * pTN.itemsPerPage ) + _i + 1}}
+              </td>
               <td>{{_item.ho_va_ten}}</td>
               <td>{{_item.dien_thoai}}</td>
               <td>
