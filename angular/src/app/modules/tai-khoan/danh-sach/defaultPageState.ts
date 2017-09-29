@@ -12,6 +12,7 @@ export const defaultPageState = {
   Fdoi: null,
   Ftrang_thai: 'HOAT_DONG',
   Floai_tai_khoan: null,
+  Fid: null,
   Fho_va_ten: null,
   Fngay_sinh_tu: null,
   Fngay_sinh_den: null,

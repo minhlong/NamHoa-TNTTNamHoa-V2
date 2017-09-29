@@ -249,7 +249,7 @@ class TaiKhoan extends BaseModel implements AuthenticatableContracts
     public static function taoTaiKhoan($arrAttribute)
     {
         $arrAttribute = array_merge([
-            'loai_tai_khoan' => null,
+            'loai_tai_khoan' => 'THIEU_NHI',
             'ho_va_ten'      => 'Họ và Tên',
         ], $arrAttribute);
         $taiKhoan = new self($arrAttribute);

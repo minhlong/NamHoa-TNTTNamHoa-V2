@@ -73,6 +73,10 @@
                 <option value="LINH_MUC">{{'LINH_MUC' | loaiTK}}</option>
               </select>
           </div>
+          <div *ngIf="checkHidden(cookieState.Fid)" class="form-group col-sm-4 col-md-3 form-group-sm">
+            <label>Mã Số</label>
+            <input [(ngModel)]="cookieState.Fid" name="id" type="text" class="form-control">
+          </div>
           <div class="form-group col-sm-4 col-md-3 form-group-sm">
             <label>Họ và Tên</label>
             <input [(ngModel)]="cookieState.Fho_va_ten" name="ho_va_ten" type="text" class="form-control">

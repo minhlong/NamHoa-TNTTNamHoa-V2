@@ -136,6 +136,7 @@ export class DanhSachComponent implements OnDestroy {
     search.set('doi', this.cookieState.Fdoi);
     search.set('trang_thai', this.cookieState.Ftrang_thai);
     search.set('loai_tai_khoan', this.cookieState.Floai_tai_khoan);
+    search.set('id', this.cookieState.Fid);
     search.set('ho_va_ten', this.cookieState.Fho_va_ten);
     search.set('ngay_sinh_tu', ngay(this.cookieState.Fngay_sinh_tu));
     search.set('ngay_sinh_den', ngay(this.cookieState.Fngay_sinh_den));

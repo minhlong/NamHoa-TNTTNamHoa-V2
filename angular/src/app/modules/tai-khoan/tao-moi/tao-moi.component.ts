@@ -13,12 +13,14 @@ import { environment } from '../../../../environments/environment';
 export class TaoMoiComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
 
+  private webAPI = environment.webURL + '/tai-khoan/download';
   private urlAPI = environment.apiURL + '/tai-khoan/tap-tin';
   active: number
   current = 1
   totalStep = 3
   isLoading = false;
   dataArr: any;
+  resultArr: any;
 
   constructor(
     private toasterService: ToasterService,
@@ -39,8 +41,8 @@ export class TaoMoiComponent implements OnInit {
       this.isLoading = true;
       this._http.post(this.urlAPI, formData).map(res => res.json()).subscribe(res => {
         this.dataArr = res.data;
-        this.nextStep();
         this.isLoading = false;
+        this.nextStep();
       }, _err => {
         if (typeof _err === 'string') {
           this.toasterService.pop('error', 'Lỗi!', _err);
@@ -63,8 +65,10 @@ export class TaoMoiComponent implements OnInit {
   taoTaiKhoan() {
     this.isLoading = true;
     this._http.post(this.urlAPI + '/tao', { data: this.dataArr }).map(res => res.json()).subscribe(res => {
-      this.nextStep();
       this.isLoading = false;
+      this.resultArr = res.data;
+      this.nextStep();
+      window.open(this.webAPI + '/' + res.file);
     }, _err => {
       if (typeof _err === 'string') {
         this.toasterService.pop('error', 'Lỗi!', _err);

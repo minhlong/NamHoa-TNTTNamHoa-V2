@@ -43,7 +43,11 @@
       </div>
       <div [ngSwitch]="current">
         <div *ngSwitchCase="1">
-          <input #fileInput type="file" />
+          <form class="row form-hsorizontal">
+            <div class="form-group col-sm-offset-4 col-sm-4">
+              <input #fileInput type="file" />
+            </div>
+          </form>
         </div>
         <div *ngSwitchCase="2">
           <div class="table-responsive">
@@ -69,7 +73,7 @@
                   <td class="text-center">
                     {{_i + 1}}
                   </td>
-                  <td>{{_item.lop_hoc ? _item.lop_hoc.ten : null}}</td>
+                  <td>{{_item.lop_hoc_ten}}</td>
                   <td>{{_item.ten_thanh}}</td>
                   <td>{{_item.ho_va_ten}}</td>
                   <td>{{_item.gioi_tinh | gioiTinh}}</td>
@@ -86,7 +90,46 @@
           </div>
         </div>
         <div *ngSwitchCase="3">
-          333
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th class="text-center">#</th>
+                  <th>Mã số</th>
+                  <th>Lớp</th>
+                  <th>Tên Thánh</th>
+                  <th>Họ và Tên</th>
+                  <th>Giới Tính</th>
+                  <th>Loại Tài Khoản</th>
+                  <th>Ngày Sinh</th>
+                  <th>Ngày Rửa Tội</th>
+                  <th>Ngày Rước Lễ</th>
+                  <th>Ngày Thêm Sức</th>
+                  <th>Điện Thoại</th>
+                  <th>Địa Chỉ</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="resultArr">
+                <tr *ngFor="let _item of resultArr; let _i = index">
+                  <td class="text-center">
+                    {{_i + 1}}
+                  </td>
+                  <td>{{_item.id}}</td>
+                  <td>{{_item.lop_hoc_ten}}</td>
+                  <td>{{_item.ten_thanh}}</td>
+                  <td>{{_item.ho_va_ten}}</td>
+                  <td>{{_item.gioi_tinh | gioiTinh}}</td>
+                  <td>{{_item.loai_tai_khoan | loaiTK}}</td>
+                  <td>{{_item.ngay_sinh | ngay}}</td>
+                  <td>{{_item.ngay_rua_toi | ngay}}</td>
+                  <td>{{_item.ngay_ruoc_le | ngay}}</td>
+                  <td>{{_item.ngay_them_suc | ngay}}</td>
+                  <td>{{_item.dien_thoai}}</td>
+                  <td>{{_item.dia_chi}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

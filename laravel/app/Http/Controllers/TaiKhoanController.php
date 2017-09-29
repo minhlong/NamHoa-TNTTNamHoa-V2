@@ -46,12 +46,12 @@ class TaiKhoanController extends Controller
 
     public function generateExcelFile(TaiKhoan $taiKhoan, LopHoc $lopHoc, Request $request, Library $library)
     {
-        $file = \Excel::create('Danh Sach Tai Khoan_' . date('d-m-Y') . '_' . strtotime('now'), function ($excel) use ($taiKhoan, $lopHoc, $request, $library) {
+        $file = \Excel::create('Danh Sach Tai Khoan_' . date('d-m-Y'), function ($excel) use ($taiKhoan, $lopHoc, $request, $library) {
             $khoaID = $request->get('khoa');
 
             $arrRow = $this->genTaiKhoan($taiKhoan, $khoaID, $library);
             $excel->sheet('Danh Sách', function ($sheet) use ($arrRow) {
-                $sheet->fromArray($arrRow, null, null, null, false)
+                $sheet->fromArray($arrRow)
                     ->setFreeze('C2');
             });
 
@@ -62,14 +62,14 @@ class TaiKhoanController extends Controller
             $arrData = $this->getTongKet($lopHoc, $request);
             $arrRow = $this->generateTongKetData($arrData, $library);
             $excel->sheet('Tổng Kết - Khóa ' . $khoaID, function ($sheet) use ($arrRow) {
-                $sheet->fromArray($arrRow, null, null, null, false)
+                $sheet->fromArray($arrRow)
                     ->setMergeColumn([
                         'columns' => range('A', 'L'),
                         'rows'    => [[1, 2],]
                     ])->setFreeze('D3');
             });
 
-        })->store('xls', '/tmp', true);
+        })->store('xlsx', '/tmp', true);
 
         return response()->json([
             'data' => $file['file'],
@@ -341,76 +341,141 @@ class TaiKhoanController extends Controller
     }
 
     public function postTapTin(Request $request, Library $library) {
-        if($request->hasFile('file')){
-            $file = $request->file('file');
-            $results = \Excel::load($file->getRealPath())->get();
+        if(!$request->hasFile('file')) {
+           return response()->json([
+                'error' => 'Không tìm thấy tập tin.',
+           ], 400);
+        }
 
-            try {
-                $tmpCollect = $results[0];
-                $arrTmp = [];
-                $khoaHocID = KhoaHoc::hienTaiHoacTaoMoi()->id;
-                $tmpRule = [
-                    'ho_va_ten' => 'required',
-                    'ngay_sinh' => 'required|required|date_format:Y-m-d',
-                    'ngay_rua_toi' => 'nullable|date_format:Y-m-d',
-                    'ngay_ruoc_le' => 'nullable|date_format:Y-m-d',
-                    'ngay_them_suc' => 'nullable|date_format:Y-m-d',
-                ];
+        $file = $request->file('file');
+        $results = \Excel::load($file->getRealPath())->get();
 
-                $tmpCollect = $tmpCollect->filter(function ($c) {
-                    return $c->ho_va_ten && $c->ngay_sinh;
-                })->map(function ($c) use ($library) {
-                    $c['ngay_sinh'] = $library->chuanHoaNgay($c['ngay_sinh']);
-                    $c['ngay_rua_toi'] = $c['ngay_rua_toi'] ? $library->chuanHoaNgay($c['ngay_rua_toi']) : null;
-                    $c['ngay_ruoc_le'] = $c['ngay_ruoc_le'] ? $library->chuanHoaNgay($c['ngay_ruoc_le']) : null;
-                    $c['ngay_them_suc'] = $c['ngay_them_suc'] ? $library->chuanHoaNgay($c['ngay_them_suc']) : null;
+        try {
+            $tmpCollect = $results[0];
+            $arrTmp = [];
+            $khoaHocID = KhoaHoc::hienTaiHoacTaoMoi()->id;
+            $lopHocColl = LopHoc::where('khoa_hoc_id', $khoaHocID)->get();
+            $tmpRule = [
+                'ho_va_ten' => 'required',
+                'ngay_sinh' => 'required|required|date_format:Y-m-d',
+                'ngay_rua_toi' => 'nullable|date_format:Y-m-d',
+                'ngay_ruoc_le' => 'nullable|date_format:Y-m-d',
+                'ngay_them_suc' => 'nullable|date_format:Y-m-d',
+            ];
 
-                    return $c;
-                });
+            $tmpCollect = $tmpCollect->filter(function ($c) {
+                return $c->ho_va_ten && $c->ngay_sinh;
+            })->map(function ($c) use ($library) {
+                $c['ngay_sinh'] = $library->chuanHoaNgay($c['ngay_sinh']);
+                $c['ngay_rua_toi'] = $c['ngay_rua_toi'] ? $library->chuanHoaNgay($c['ngay_rua_toi']) : null;
+                $c['ngay_ruoc_le'] = $c['ngay_ruoc_le'] ? $library->chuanHoaNgay($c['ngay_ruoc_le']) : null;
+                $c['ngay_them_suc'] = $c['ngay_them_suc'] ? $library->chuanHoaNgay($c['ngay_them_suc']) : null;
 
-                foreach ($tmpCollect as $c) {
-                    $validator = \Validator::make($c->toArray(), $tmpRule);
-                    if ($validator->fails()) {
-                        return response()->json([
-                            'error' => $validator->errors(),
-                            $c
-                        ], 400);
-                    }
-                    $tmpLop = LopHoc::where('khoa_hoc_id', $khoaHocID)
-                                                ->where('nganh', $c->nganh)
-                                                ->where('cap', $c->cap)
-                                                ->where('doi', $c->doi)->first();
-                    if ($tmpLop) {
-                        $tmpLop->ten = $tmpLop->taoTen();
-                    }
-                    $c['lop_hoc'] = $tmpLop;
+                return $c;
+            });
+
+            foreach ($tmpCollect as $c) {
+                $validator = \Validator::make($c->toArray(), $tmpRule);
+                if ($validator->fails()) {
+                    return response()->json([
+                        'error' => $validator->errors()
+                    ], 400);
                 }
 
-                return response()->json([
-                    'data' => $tmpCollect,
-                ]);
-            } catch (\Exception $e) {
-               return response()->json([
-                    'error' => 'Kiểm tra lại định dạng tập tin.',
-               ], 400);        
+                $tmpLop = $lopHocColl->filter( function ($lh) use ($c) {
+                    return $lh->nganh == $c->nganh && $lh->cap == $c->cap && $lh->doi == $c->doi;
+                })->first();
+
+                if ($tmpLop) {
+                    $c['lop_hoc_id'] = $tmpLop->id;
+                    $c['lop_hoc_ten'] = $tmpLop->taoTen();
+                }
             }
-       }
-       return response()->json([
-            'error' => 'Không tìm thấy tập tin.',
-       ], 400);
+
+            return response()->json([
+                'data' => $tmpCollect,
+            ]);
+        } catch (\Exception $e) {
+           return response()->json([
+                'error' => 'Kiểm tra lại định dạng tập tin.',
+           ], 400);        
+        }
     }
 
     public function postTao(Request $request, Library $library) {
+        if(!$request->has('data')) {
+           return response()->json([
+                'error' => 'Không thấy dữ liệu.',
+           ], 400);
+        }
+
+        $resultArr = [];
+        $taiKhoanArr = $request->data;
+        $khoaHocID = KhoaHoc::hienTaiHoacTaoMoi()->id;
+        $lopHocColl = LopHoc::where('khoa_hoc_id', $khoaHocID)->get();
+
         \DB::beginTransaction();
+        foreach ($taiKhoanArr as $taiKhoan) {
+            $newItem = TaiKhoan::taoTaiKhoan($taiKhoan);
+            if (isset($taiKhoan['lop_hoc_id'])) {
+                $tmpLop = $lopHocColl->filter( function ($lh) use ($taiKhoan) {
+                    return $lh->id == $taiKhoan['lop_hoc_id'];
+                })->first();
 
+                if ($tmpLop) {
+                    App::make('App\Http\Controllers\LopHocController')->attachHocVien($tmpLop, $newItem);
+                    $newItem['lop_hoc_ten'] = $tmpLop->taoTen();
+                }
+            }
+            $resultArr[] = $newItem;
+        }
+        
+        $arrRow[] = [
+            'Mã Số',
+            'Họ và Tên',
+            'Tên',
+            'Lớp',
+            'Loại Tài Khoản',
+            'Trạng Thái',
+            'Tên Thánh',
+            'Giới Tính',
+            'Ngày Sinh',
+            'Ngày Rửa Tội',
+            'Ngày Ruớc Lễ',
+            'Ngày Thêm Sức',
+            'Điện Thoại',
+            'Địa Chỉ',
+        ];
+        foreach ($resultArr as $item) {
+            $arrRow[] = [
+                $item->id,
+                $item->ho_va_ten,
+                $item->ten,
+                $item->lop_hoc_ten,
+                $item->loai_tai_khoan,
+                $item->trang_thai,
+                $item->ten_thanh,
+                $item->gioi_tinh,
+                $library->chuanHoaNgay($item->ngay_sinh),
+                $library->chuanHoaNgay($item->ngay_rua_toi),
+                $library->chuanHoaNgay($item->ngay_ruoc_le),
+                $library->chuanHoaNgay($item->ngay_them_suc),
+                $item->dien_thoai,
+                $item->dia_chi,
+            ];
+        }
 
+        $file = \Excel::create('TaoMoi_' . date('d-m-Y'), function ($excel) use ($arrRow) {
+            $excel->sheet('Danh Sách', function ($sheet) use ($arrRow) {
+                $sheet->fromArray($arrRow)
+                    ->setFreeze('C2');
+            });
+        })->store('xlsx', '/tmp', true);
         \DB::commit();
 
-       return response()->json([
-            'data' => [
-                'danh-sach' => [],
-            ],
-            'file-name' => 'abc',
-       ]);
+        return response()->json([
+            'data' => $resultArr,
+            'file' => $file['file'],
+        ]);
     }
 }
