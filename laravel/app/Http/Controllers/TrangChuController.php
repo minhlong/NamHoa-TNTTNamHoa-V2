@@ -13,19 +13,19 @@ class TrangChuController extends Controller
     public function getThongTin(Library $library)
     {
         $khoaHocID = KhoaHoc::hienTaiHoacTaoMoi()->id;
-        $counterAuNhi = TaiKhoan::whereHas('lop_hoc', function ($query) use ($khoaHocID) {
+        $counterAuNhi = TaiKhoan::where('trang_thai', 'HOAT_DONG')->whereHas('lop_hoc', function ($query) use ($khoaHocID) {
             $query->where('khoa_hoc_id', $khoaHocID)->where('nganh', 'AU_NHI');
         })->where('loai_tai_khoan', 'THIEU_NHI')->get()->count();
-        $counterThieuNhi = TaiKhoan::whereHas('lop_hoc', function ($query) use ($khoaHocID) {
+        $counterThieuNhi = TaiKhoan::where('trang_thai', 'HOAT_DONG')->whereHas('lop_hoc', function ($query) use ($khoaHocID) {
             $query->where('khoa_hoc_id', $khoaHocID)->where('nganh', 'THIEU_NHI');
         })->where('loai_tai_khoan', 'THIEU_NHI')->get()->count();
-        $countNghiaSi = TaiKhoan::whereHas('lop_hoc', function ($query) use ($khoaHocID) {
+        $countNghiaSi = TaiKhoan::where('trang_thai', 'HOAT_DONG')->whereHas('lop_hoc', function ($query) use ($khoaHocID) {
             $query->where('khoa_hoc_id', $khoaHocID)->where('nganh', 'NGHIA_SI');
         })->where('loai_tai_khoan', 'THIEU_NHI')->get()->count();
-        $countHTDuBi = TaiKhoan::whereHas('lop_hoc', function ($query) use ($khoaHocID) {
+        $countHTDuBi = TaiKhoan::where('trang_thai', 'HOAT_DONG')->whereHas('lop_hoc', function ($query) use ($khoaHocID) {
             $query->where('khoa_hoc_id', $khoaHocID)->where('nganh', 'HT_DU_BI');
         })->where('loai_tai_khoan', 'THIEU_NHI')->get()->count();
-        $countHT = TaiKhoan::where('loai_tai_khoan', 'HUYNH_TRUONG')->whereHas('lop_hoc', function ($query) use ($khoaHocID) {
+        $countHT = TaiKhoan::where('trang_thai', 'HOAT_DONG')->where('loai_tai_khoan', 'HUYNH_TRUONG')->whereHas('lop_hoc', function ($query) use ($khoaHocID) {
             $query->where('khoa_hoc_id', $khoaHocID);
         })->get()->count();
 
