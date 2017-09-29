@@ -1,3 +1,12 @@
-<p>
-  chi-tiet works!
-</p>
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="ibox-content m-b-sm border-bottom">
+    <div class="text-center ">
+      <h3 *ngIf="lopHocInfo">{{lopHocInfo.ten}}</h3>
+      <button class="btn btn-default btn-sm m-l-lg m-t-sm btn-w-m">Thông Tin</button>
+      <button class="btn btn-default btn-sm m-l-lg m-t-sm btn-w-m">Điểm Danh</button>
+      <button class="btn btn-default btn-sm m-l-lg m-t-sm btn-w-m">Vào Điểm</button>
+      <button class="btn btn-default btn-sm m-l-lg m-t-sm btn-w-m">Tổng Kết</button>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>

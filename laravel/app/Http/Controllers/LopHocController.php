@@ -45,7 +45,7 @@ class LopHocController extends Controller
     public function getThongTin(LopHoc $lopHoc)
     {
         $lopHoc->load(['huynh_truong', 'hoc_vien']);
-        $lopHoc->tenLop = $lopHoc->taoTen();
+        $lopHoc->ten = $lopHoc->taoTen();
 
         return response()->json($lopHoc);
     }

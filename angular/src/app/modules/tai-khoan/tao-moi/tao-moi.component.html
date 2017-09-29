@@ -3,7 +3,7 @@
     <div class="ibox-title">
       <h5>Tạo Mới</h5>
       <div class="ibox-tools">
-        <button (click)="downloadTemplate();" class="btn btn-xs btn-success m-r-lg">
+        <button (click)="downloadTemplate();" class="btn btn-xs btn-default m-r-lg">
           Tải tập tin mẫu
         </button>
       </div>
@@ -162,19 +162,19 @@
       </div>
     </div>
     <div class="ibox-footer" *ngIf="!isLoading">
-      <a *ngIf="current > 1 && current < totalStep" (click)="prevStep()" class="btn btn-w-m btn-primary btn-sm">
-        <i class="fa fa-arrow-left"></i>
+      <a *ngIf="current > 1 && current < totalStep" (click)="prevStep()" class="btn btn-w-m btn-default btn-sm">
+        <i class="fa fa-arrow-left m-r-xs"></i>
         Quay lại
       </a>
-      <button *ngIf="current === 1" (click)="addFile()" class="btn btn-w-m btn-primary btn-sm">
+      <button *ngIf="current === 1" (click)="addFile()" class="btn btn-w-m btn-default btn-sm">
         Tiếp tục
-        <i class="fa fa-arrow-right"></i>
+        <i class="fa fa-arrow-right m-l-xs"></i>
       </button>
-      <button *ngIf="current === 2" (click)="taoTaiKhoan()" class="btn btn-w-m btn-primary btn-sm">
+      <button *ngIf="current === 2" (click)="taoTaiKhoan()" class="btn btn-w-m btn-default btn-sm">
         Tiếp tục
-        <i class="fa fa-arrow-right"></i>
+        <i class="fa fa-arrow-right m-l-xs"></i>
       </button>
-      <button *ngIf="current === totalStep" (click)="restart()" class="btn btn-w-m btn-primary btn-sm">
+      <button *ngIf="current === totalStep" (click)="restart()" class="btn btn-w-m btn-default btn-sm">
         Thêm mới
       </button>
     </div>

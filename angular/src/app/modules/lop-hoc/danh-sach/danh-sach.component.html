@@ -80,6 +80,7 @@
             <tr>
               <th class="text-center">#</th>
               <th>Tên Lớp</th>
+              <th>Vị Trí Học</th>
               <th>Xem</th>
             </tr>
           </thead>
@@ -92,6 +93,7 @@
                 {{((cookieState.currentPage - 1) * cookieState.itemsPerPage ) + _i + 1}}
               </td>
               <td>{{_item.ten}}</td>
+              <td>{{_item.vi_tri_hoc}}</td>
               <td>
                 <button class="btn btn-xs btn-default" [routerLink]="['/lop-hoc/chi-tiet', _item.id]">Xem</button>
               </td>

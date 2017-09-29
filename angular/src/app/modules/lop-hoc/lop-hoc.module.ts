@@ -8,6 +8,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from '../shared/shared.module';
 import { DanhSachComponent } from './danh-sach/danh-sach.component';
 import { ChiTietComponent } from './chi-tiet/chi-tiet.component';
+import { ThongTinComponent } from './thong-tin/thong-tin.component';
 
 @NgModule({
   imports: [
@@ -21,9 +22,15 @@ import { ChiTietComponent } from './chi-tiet/chi-tiet.component';
     // Routes
     RouterModule.forChild([
       { path: '', component: DanhSachComponent },
-      { path: 'chi-tiet/:id', component: ChiTietComponent },
+      {
+        path: 'chi-tiet/:id', component: ChiTietComponent,
+        children: [
+          { path: '', redirectTo: 'thong-tin', pathMatch: 'full' },
+          { path: 'thong-tin', component: ThongTinComponent },
+        ],
+      },
     ]),
   ],
-  declarations: [DanhSachComponent, ChiTietComponent]
+  declarations: [DanhSachComponent, ChiTietComponent, ThongTinComponent]
 })
 export class LopHocModule { }

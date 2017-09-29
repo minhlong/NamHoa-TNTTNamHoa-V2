@@ -13,21 +13,24 @@ import { AppState } from './../../../store/reducers/index';
   styleUrls: ['./chi-tiet.component.scss']
 })
 export class ChiTietComponent implements OnInit, OnDestroy {
+  urlAPI = environment.apiURL + '/tai-khoan';
   tab = 'chi-tiet'; // form, mat-khau
   itemSelected = null;
   isLoading: boolean;
-  curAuth: any;
-  taiKhoanID: string;
-  taiKhoanInfo: any = {};
-  parSub: any;
-  authSub: any;
-  urlAPI = environment.apiURL + '/tai-khoan';
+
   pState = {
     // Paging
     id: 'TaiKhoan-ChiTiet-Page',
     itemsPerPage: 3,
     currentPage: 1,
   }
+
+  taiKhoanID: string;
+  taiKhoanInfo: any = {};
+
+  parSub: any;
+  authSub: any;
+  curAuth: any;
 
   constructor(
     private store: Store<AppState>,

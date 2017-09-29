@@ -1,10 +1,13 @@
 import { ActionReducerMap } from '@ngrx/store';
-import * as AuthR from './auth.reducer';
+import * as authReducer from './auth.reducer';
+import * as lopHocReducer from './lop-hoc.reducer';
 
 export interface AppState {
-  auth: AuthR.AuthState,
+  auth: authReducer.AuthState,
+  lop_hoc: lopHocReducer.LopHocState,
 }
 
 export const reducer: ActionReducerMap<AppState> = {
-  auth: AuthR.reducer
+  auth: authReducer.reducer,
+  lop_hoc: lopHocReducer.reducer,
 };

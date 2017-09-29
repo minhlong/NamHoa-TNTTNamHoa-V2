@@ -20,10 +20,9 @@ import { SharedModule } from './modules/shared/shared.module';
 // Services
 import { providers } from './services/index';
 
-// Redux - Actions
-// import { actions } from './store/actions/index';
 // Redux - Effects
 import { AuthEffect } from './store/effects/auth.effect';
+import { LopHocEffect } from './store/effects/lop-hoc.effect';
 // Redux - Reducer
 import { reducer } from './store/reducers/index';
 
@@ -63,7 +62,7 @@ import { TrangChuComponent } from './trang-chu/trang-chu.component';
 
     // Redux
     StoreModule.forRoot(reducer),
-    EffectsModule.forRoot([AuthEffect]),
+    EffectsModule.forRoot([AuthEffect, LopHocEffect]),
 
     // Should be removed when deploy
     !environment.production ? StoreDevtoolsModule.instrument() : [],
