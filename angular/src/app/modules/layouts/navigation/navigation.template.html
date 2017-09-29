@@ -25,6 +25,12 @@
           <span class="nav-label">Tài Khoản</span>
         </a>
       </li>
+      <li [ngClass]="{active: activeRoute('/lop-hoc')}">
+        <a routerLink="/lop-hoc">
+          <i class="fa fa fa-graduation-cap"></i>
+          <span class="nav-label">Lớp học</span>
+        </a>
+      </li>
       <li [ngClass]="{active: activeRoute('/khoa-hoc')}">
         <a routerLink="/khoa-hoc">
           <i class="fa fa fa-bookmark"></i>

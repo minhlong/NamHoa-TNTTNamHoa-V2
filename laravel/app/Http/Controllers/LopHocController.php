@@ -16,25 +16,14 @@ class LopHocController extends Controller
      */
     public function getDanhSach(LopHoc $lopHoc)
     {
-        $lopHoc = $lopHoc->locDuLieu();
-        $records = [
-            'data'                 => [],
-            'draw'                 => \Request::get('draw'),
-            'iTotalDisplayRecords' => $lopHoc->get()->count(), // Before Skipt data
-        ];
-        if (($length = \Request::get('length')) > 0) {
-            $lopHoc = $lopHoc->skip(\Request::get('start'))->take($length);
-        }
-        foreach ($lopHoc->get() as $item) {
-            $records['data'][] = [
-                'tenLop'     => $item->taoTen(),
-                'vi_tri_hoc' => $item->vi_tri_hoc,
-                'ghi_chu'    => $item->ghi_chu,
-                'id'         => $item->id,
-            ];
-        }
+        $lopHoc = $lopHoc->locDuLieu()->get()->map(function ($c) {
+            $c['ten'] = $c->taoTen();
+            return $c;
+        });
 
-        return response()->json($records);
+        return response()->json([
+            'data' => $lopHoc,
+        ]);
     }
 
     /**

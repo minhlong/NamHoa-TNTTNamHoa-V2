@@ -19,7 +19,7 @@ class TaiKhoanController extends Controller
      * @param Library $library
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getDanhSach(TaiKhoan $taiKhoan, Library $library)
+    public function getDanhSach(TaiKhoan $taiKhoan)
     {
         $taiKhoan = $taiKhoan->locDuLieu()->withTrashed()->get();
 

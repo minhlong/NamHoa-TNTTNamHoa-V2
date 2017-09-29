@@ -27,6 +27,7 @@ const hasAuth: Routes = [
       { path: '', redirectTo: 'trang-chu', pathMatch: 'full' },
       { path: 'trang-chu', component: TrangChuComponent },
       { path: 'tai-khoan', loadChildren: './modules/tai-khoan/tai-khoan.module#TaiKhoanModule' },
+      { path: 'lop-hoc', loadChildren: './modules/lop-hoc/lop-hoc.module#LopHocModule' },
       { path: 'khoa-hoc', component: KhoaHocComponent },
       { path: 'dang-xuat', component: LogoutComponent },
     ],
