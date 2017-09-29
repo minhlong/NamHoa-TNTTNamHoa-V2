@@ -14,7 +14,9 @@ declare var jQuery: any;
 })
 export class TopnavbarComponent implements OnDestroy {
   authSub: any;
-  taiKhoan: any = {};
+  lopIDSub: any;
+  taiKhoan: any;
+  lopID: any;
 
   constructor(
     private router: Router,
@@ -23,6 +25,9 @@ export class TopnavbarComponent implements OnDestroy {
     this.authSub = this.store.select((state: AppState) => state.auth.tai_khoan).subscribe(res => {
       this.taiKhoan = res;
     });
+    this.lopIDSub = this.store.select((state: AppState) => state.auth.lop_hoc_hien_tai_id).subscribe(res => {
+      this.lopID = res;
+    });
   }
 
   toggleNavigation(): void {
@@ -30,11 +35,8 @@ export class TopnavbarComponent implements OnDestroy {
     smoothlyMenu();
   }
 
-  view() {
-    this.router.navigate(['/tai-khoan/chi-tiet/', this.taiKhoan.id]);
-  }
-
   ngOnDestroy() {
     this.authSub.unsubscribe();
+    this.lopIDSub.unsubscribe();
   }
 }
