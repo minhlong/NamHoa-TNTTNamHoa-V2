@@ -29,12 +29,16 @@
               <thead>
                 <tr>
                   <th>Lớp</th>
+                  <th *ngIf="taiKhoanInfo.loai_tai_khoan === 'THIEU_NHI'">Xếp Hạng</th>
                   <th>Xem</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let _item of taiKhoanInfo.lop_hoc| paginate: pState; let _i = index">
                   <td>{{_item.ten_lop}}</td>
+                  <td *ngIf="taiKhoanInfo.loai_tai_khoan === 'THIEU_NHI'">
+                    {{_item.pivot.xep_hang | xepHang}}
+                  </td>
                   <td>
                     <a class="btn btn-xs btn-default" [routerLink]="['/lop-hoc/chi-tiet', _item.id]">Lớp</a>
                     <button class="btn btn-xs btn-default" (click)="itemSelected = _item; openModalBtn.click()">H/Trưởng</button>

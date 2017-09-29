@@ -11,7 +11,7 @@
     <div class="ibox-content">
       <form role="form">
         <div class="row">
-          <div class="form-group col-sm-4 col-md-3 form-group-sm">
+          <div class="form-group col-sm-6 col-md-3 form-group-sm">
             <label>Khóa</label>
             <select name="khoa" [(ngModel)]="cookieState.Fkhoa" class="form-control">
                 <option [ngValue]="null"></option>
@@ -20,7 +20,7 @@
                 <option [ngValue]="khoaHienTaiID - 2">{{khoaHienTaiID - 2}}</option> 
             </select>
           </div>
-          <div class="form-group col-sm-4 col-md-3 form-group-sm">
+          <div class="form-group col-sm-6 col-md-3 form-group-sm">
             <label>Ngành</label>
             <select name="nganh" [(ngModel)]="cookieState.Fnganh" class="form-control">
                 <option [ngValue]="null"></option>
@@ -30,7 +30,7 @@
                 <option value="HT_DU_BI">{{'HT_DU_BI' | nganh}}</option>
             </select>
           </div>
-          <div class="form-group col-sm-4 col-md-3 form-group-sm">
+          <div class="form-group col-sm-6 col-md-3 form-group-sm">
             <label>Cấp</label>
             <select name="cap" [(ngModel)]="cookieState.Fcap" class="form-control">
                 <option [ngValue]="null"></option>
@@ -43,7 +43,7 @@
                 <option value="6">{{'6' | cap}}</option>
             </select>
           </div>
-          <div class="form-group col-sm-4 col-md-3 form-group-sm">
+          <div class="form-group col-sm-6 col-md-3 form-group-sm">
             <label>Đội</label>
             <select name="doi" [(ngModel)]="cookieState.Fdoi" class="form-control">
                 <option [ngValue]="null"></option>
@@ -80,8 +80,6 @@
             <tr>
               <th class="text-center">#</th>
               <th>Tên Lớp</th>
-              <th>Vị Trí Học</th>
-              <th>Ghi Chú</th>
               <th>Xem</th>
             </tr>
           </thead>
@@ -94,8 +92,6 @@
                 {{((cookieState.currentPage - 1) * cookieState.itemsPerPage ) + _i + 1}}
               </td>
               <td>{{_item.ten}}</td>
-              <td>{{_item.vi_tri_hoc}}</td>
-              <td>{{_item.ghi_chu}}</td>
               <td>
                 <button class="btn btn-xs btn-default" [routerLink]="['/lop-hoc/chi-tiet', _item.id]">Xem</button>
               </td>

@@ -7,6 +7,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 
 import { SharedModule } from '../shared/shared.module';
 import { DanhSachComponent } from './danh-sach/danh-sach.component';
+import { ChiTietComponent } from './chi-tiet/chi-tiet.component';
 
 @NgModule({
   imports: [
@@ -20,8 +21,9 @@ import { DanhSachComponent } from './danh-sach/danh-sach.component';
     // Routes
     RouterModule.forChild([
       { path: '', component: DanhSachComponent },
+      { path: 'chi-tiet/:id', component: ChiTietComponent },
     ]),
   ],
-  declarations: [DanhSachComponent]
+  declarations: [DanhSachComponent, ChiTietComponent]
 })
 export class LopHocModule { }

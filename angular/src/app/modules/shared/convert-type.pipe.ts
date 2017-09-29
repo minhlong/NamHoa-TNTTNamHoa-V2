@@ -9,6 +9,20 @@ export class NewlinePipe implements PipeTransform {
 }
 
 @Pipe({
+  name: 'xepHang'
+})
+export class XepHang implements PipeTransform {
+
+  transform(value: any, args?: any): any {
+    const _tmp = appConst.find(el => el.loai_du_lieu === 'XEP_HANG' && el.ky_hieu === value);
+    if (_tmp) {
+      return _tmp.ten
+    }
+    return value;
+  }
+}
+
+@Pipe({
   name: 'loaiTK'
 })
 export class LoaiTK implements PipeTransform {
