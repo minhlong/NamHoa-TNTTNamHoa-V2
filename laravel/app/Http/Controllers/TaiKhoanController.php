@@ -393,7 +393,7 @@ class TaiKhoanController extends Controller
             }
 
             return response()->json([
-                'data' => $tmpCollect,
+                'data' => array_merge([],$tmpCollect->toArray()),
             ]);
         } catch (\Exception $e) {
            return response()->json([

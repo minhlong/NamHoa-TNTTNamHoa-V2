@@ -19,8 +19,20 @@ export class TaoMoiComponent implements OnInit {
   current = 1
   totalStep = 3
   isLoading = false;
+
   dataArr: any;
+  dataArrPaging = {
+    id: 'dataArr',
+    itemsPerPage: 10,
+    currentPage: 1,
+  }
+
   resultArr: any;
+  resultArrPaging = {
+    id: 'resultArr',
+    itemsPerPage: 10,
+    currentPage: 1,
+  }
 
   constructor(
     private toasterService: ToasterService,
