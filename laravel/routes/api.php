@@ -34,7 +34,7 @@ Route::group(['middleware' => 'auth-jwt'], function () {
 
     /* Lop Hoc */
     Route::group(['prefix' => 'lop-hoc'], function () {
-        Route::get(null, 'LopHocController@getDanhSach');
+        Route::get('khoa-{khoaID}', 'LopHocController@getDanhSachTheoKhoa');
         Route::get('{LopHoc}', 'LopHocController@getThongTin');
     });
 

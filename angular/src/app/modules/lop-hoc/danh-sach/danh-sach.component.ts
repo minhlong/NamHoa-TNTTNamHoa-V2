@@ -63,7 +63,7 @@ export class DanhSachComponent implements OnDestroy {
     this.updateState();
 
     const search = this.getFilter();
-    this._http.get(this.urlAPI, { search }).map(res => res.json()).subscribe(res => {
+    this._http.get(this.urlAPI + '/khoa-' + this.cookieState.Fkhoa, { search }).map(res => res.json()).subscribe(res => {
       this.dataArr = res.data;
       this.isLoading = false;
     }, error => {
@@ -79,7 +79,6 @@ export class DanhSachComponent implements OnDestroy {
 
   private getFilter() {
     const search = new URLSearchParams();
-    search.set('khoa', this.cookieState.Fkhoa);
     search.set('nganh', this.cookieState.Fnganh);
     search.set('cap', this.cookieState.Fcap);
     search.set('doi', this.cookieState.Fdoi);

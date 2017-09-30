@@ -11,12 +11,11 @@ use App\TaiKhoan;
 class LopHocController extends Controller
 {
     /**
-     * @param LopHoc $lopHoc
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getDanhSach(LopHoc $lopHoc)
+    public function getDanhSachTheoKhoa($khoaHocID, LopHoc $lopHoc)
     {
-        $lopHoc = $lopHoc->locDuLieu()->get()->map(function ($c) {
+        $lopHoc = $lopHoc->where('khoa_hoc_id', $khoaHocID)->locDuLieu()->get()->load('huynh_truong')->map(function ($c) {
             $c['ten'] = $c->taoTen();
             return $c;
         });

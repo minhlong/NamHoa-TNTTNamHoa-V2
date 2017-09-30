@@ -7,11 +7,12 @@
     </div>
     <div class="text-center" *ngIf="lopHocInfo">
       <h3>{{lopHocInfo.ten}}</h3>
+      <h5 *ngIf="lopHocInfo.vi_tri_hoc">Vị Trí Học: {{lopHocInfo.vi_tri_hoc}}</h5>
       <button [routerLink]="['/lop-hoc/chi-tiet', lopHocInfo.id, 'thong-tin']" class="btn btn-default btn-sm m-l-lg m-t-sm btn-w-m">Thông Tin</button>
       <button [routerLink]="['/lop-hoc/chi-tiet', lopHocInfo.id, 'diem-danh']" class="btn btn-default btn-sm m-l-lg m-t-sm btn-w-m">Điểm Danh</button>
       <button [routerLink]="['/lop-hoc/chi-tiet', lopHocInfo.id, 'diem-so']" class="btn btn-default btn-sm m-l-lg m-t-sm btn-w-m">Vào Điểm</button>
       <button [routerLink]="['/lop-hoc/chi-tiet', lopHocInfo.id, 'tong-ket']" class="btn btn-default btn-sm m-l-lg m-t-sm btn-w-m">Tổng Kết</button>
-      <button [routerLink]="['/lop-hoc/chi-tiet', lopHocInfo.id, 'tong-ket']" class="btn btn-default btn-sm m-l-lg m-t-sm btn-w-m">S/Yếu L/Lịch</button>
+      <!-- <button [routerLink]="['/lop-hoc/chi-tiet', lopHocInfo.id, 'phieu-lien-lac']" class="btn btn-default btn-sm m-l-lg m-t-sm btn-w-m">Phiếu L/Lạc</button> -->
     </div>
   </div>
   <router-outlet></router-outlet>

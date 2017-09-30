@@ -47,17 +47,18 @@ export class ThongTinComponent implements OnDestroy {
       this.curAuth = res;
     });
 
-    this.lhSub = this.store.select((state: AppState) => state.lop_hoc.thong_tin).subscribe(res => {
-      this.lopHocInfo = res;
-      this.isLoading = false;
-    });
+    // this.lhSub = this.store.select((state: AppState) => state.lop_hoc.thong_tin).subscribe(res => {
+    //   this.lopHocInfo = res;
+    // });
 
     this.htSub = this.store.select((state: AppState) => state.lop_hoc.huynh_truong).subscribe(res => {
       this.huynhTruongArr = res;
+      this.isLoading = false;
     });
 
     this.tnSub = this.store.select((state: AppState) => state.lop_hoc.thieu_nhi).subscribe(res => {
       this.thieuNhiArr = res;
+      this.isLoading = false;
     });
   }
 
@@ -70,7 +71,7 @@ export class ThongTinComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.authSub.unsubscribe();
-    this.lhSub.unsubscribe();
+    // this.lhSub.unsubscribe();
     this.htSub.unsubscribe();
     this.tnSub.unsubscribe();
   }

@@ -196,7 +196,7 @@
             <li>
               <div class="checkbox"><label> 
                 <input type="checkbox" [(ngModel)]="cookieState.thao_tac" (change)="updateState()">
-                  Xem
+                  Thao Tác
                 </label></div>
             </li>
             <li role="separator" class="divider"></li>
@@ -227,7 +227,7 @@
               <th *ngIf="cookieState.ngay_ruoc_le">Ngày Rước Lễ</th>
               <th *ngIf="cookieState.ngay_them_suc">Ngày Thêm Sức</th>
               <th *ngIf="cookieState.dien_thoai">Điện Thoại</th>
-              <th *ngIf="cookieState.thao_tac">Xem</th>
+              <th *ngIf="cookieState.thao_tac">Thao Tác</th>
             </tr>
           </thead>
           <tbody>
@@ -285,7 +285,7 @@
           <span class="sr-only">Close</span>
         </button>
         <h4>
-          Bạn có muốn xóa {{itemSelected.ten_thanh}} {{itemSelected.ho_va_ten}}?
+          Bạn muốn xóa {{itemSelected.ten_thanh}} {{itemSelected.ho_va_ten}}?
         </h4>
       </div>
       <div class="modal-footer text-center">

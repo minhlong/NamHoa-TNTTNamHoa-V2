@@ -4,22 +4,6 @@
     <div class="sk-bounce2"></div>
     <div class="sk-bounce3"></div>
   </div>
-  <div *ngIf="lopHocInfo">
-    <form action="#" class="row form-horizontal">
-      <div class="form-group col-sm-12" *ngIf="lopHocInfo.vi_tri_hoc">
-        <label class="col-sm-3 control-label">Vị Trí Học</label>
-        <div class="col-sm-9">
-          <p class="form-control-static">{{lopHocInfo.vi_tri_hoc}}</p>
-        </div>
-      </div>
-      <div class="form-group col-sm-12" *ngIf="lopHocInfo.ghi_chu">
-        <label class="col-sm-3 control-label">Ghi Chú</label>
-        <div class="col-sm-9">
-          <p class="form-control-static" [innerHtml]="lopHocInfo.ghi_chu | newline"></p>
-        </div>
-      </div>
-    </form>
-  </div>
   <div class="row">
     <div class="col-md-6 m-t-sm" *ngIf="huynhTruongArr.length">
       <div class="table-responsive">
@@ -95,7 +79,7 @@
   </div>
 </div>
 <div class="ibox-footer" *ngIf="hasPerm() && !isLoading">
-  <button class="btn btn-primary btn-sm m-r-lg">Sửa</button>
-  <button class="btn btn-primary btn-sm m-r-lg">C/Nhật H/Trưởng</button>
-  <button class="btn btn-primary btn-sm m-r-lg">C/Nhật T/Nhi</button>
+  <button class="btn btn-default btn-sm m-r-lg">Sửa Thông Tin</button>
+  <button class="btn btn-default btn-sm m-r-lg">C/Nhật H/Trưởng</button>
+  <button class="btn btn-default btn-sm m-r-lg">C/Nhật T/Nhi</button>
 </div>
