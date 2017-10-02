@@ -13,11 +13,7 @@
         <div class="col-md-5">
           <div class="contact-box center-version">
             <a>
-              <cl-image public-id="profile/{{taiKhoanID}}.png">
-                <cl-transformation default_image="default.png"></cl-transformation>
-                <cl-transformation width="400" height="400" gravity="face" radius="max" crop="crop"></cl-transformation>
-                <cl-transformation width="150" crop="scale"></cl-transformation>
-              </cl-image>
+              <img src="http://res.cloudinary.com/tnttnamhoa/image/upload/d_default.png/c_crop,g_face,h_400,r_max,w_400/c_scale,w_200/v1/profile/{{taiKhoanID}}" alt="{{taiKhoanID}}">
               <h3 class="m-b-xs"><strong>{{taiKhoanID}}</strong></h3>
               <div class="font-bold">{{taiKhoanInfo.ten_thanh}} {{taiKhoanInfo.ho_va_ten}}</div>
             </a>

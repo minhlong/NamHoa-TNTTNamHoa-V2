@@ -4,8 +4,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TextMaskModule } from 'angular2-text-mask';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { CloudinaryModule } from '@cloudinary/angular-4.x';
-import * as  Cloudinary from 'cloudinary-core';
 
 import { DanhSachComponent } from './danh-sach/danh-sach.component';
 import { ChiTietComponent } from './chi-tiet/chi-tiet.component';
@@ -22,7 +20,6 @@ import { SharedModule } from '../shared/shared.module';
     SharedModule,
     TextMaskModule,
     NgxPaginationModule,
-    CloudinaryModule.forRoot(Cloudinary, { cloud_name: 'tnttnamhoa' }),
 
     // Routes
     RouterModule.forChild([
