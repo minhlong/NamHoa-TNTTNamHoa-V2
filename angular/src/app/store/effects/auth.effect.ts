@@ -7,6 +7,8 @@ import 'rxjs/Rx';
 
 import * as AuthAction from '../actions/auth.action';
 import { AuthService } from '../../services/auth-service.service';
+import { JwtAuthHttp } from '../../services/http-auth.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class AuthEffect {
@@ -14,8 +16,10 @@ export class AuthEffect {
   constructor(
     private actions$: Actions,
     private router: Router,
+    private _http: JwtAuthHttp,
     private authService: AuthService,
   ) { }
+  urlAPI = environment.apiURL;
 
   @Effect() auth$ = this.actions$.ofType(AuthAction.AUTH)
     .switchMap((payload: any) => {
@@ -29,12 +33,21 @@ export class AuthEffect {
 
   @Effect() validateToken$ = this.actions$.ofType(AuthAction.VALIDATE_TOKEN)
     .map(() => {
-      const __data = this.authService.isAuthenticated()
-      if (__data) {
-        return new AuthAction.AuthCompleted(__data);
+      const _data = this.authService.isAuthenticated()
+      if (_data) {
+        return new AuthAction.AuthCompleted(_data);
       }
       return new AuthAction.Logout()
     }).catch((err) => Observable.of(new AuthAction.AuthFailed(err)))
+
+  @Effect() authCompleted$ = this.actions$.ofType(AuthAction.AUTH_COMPLETED)
+    .map<Action, any>(toPayload)
+    .switchMap((_data: any) => {
+      return this._http.get(this.urlAPI + '/khoa-hoc/' + _data.khoa_hoc_hien_tai_id)
+        .map(res => res.json())
+        .map(res => new AuthAction.GetKhoaHoc(res.data))
+        .catch((err) => Observable.of(new AuthAction.AuthFailed(err)));
+    });
 
   @Effect() logout$ = this.actions$.ofType(AuthAction.LOGOUT)
     .map(() => {

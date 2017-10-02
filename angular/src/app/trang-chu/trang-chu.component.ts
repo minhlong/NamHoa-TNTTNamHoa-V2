@@ -20,7 +20,7 @@ export class TrangChuComponent {
   pState = {
     // Paging
     id: 'TrangChu-List-Page',
-    itemsPerPage: 10,
+    itemsPerPage: 4,
     currentPage: 1,
   }
 

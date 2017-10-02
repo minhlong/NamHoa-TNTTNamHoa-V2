@@ -36,8 +36,8 @@ export class DanhSachComponent implements OnDestroy {
   ) {
     consoleLog('Lop Hoc Danh Sach: constructor');
 
-    this.sub = this.store.select((state: AppState) => state.auth.khoa_hoc_hien_tai_id).subscribe(x => {
-      this.khoaHienTaiID = x;
+    this.sub = this.store.select((state: AppState) => state.auth.khoa_hoc_hien_tai).subscribe(x => {
+      this.khoaHienTaiID = x.id;
     });
 
 

@@ -1,3 +1,4 @@
+import { ToasterService } from 'angular2-toaster';
 import { Injectable } from '@angular/core';
 import { Effect, Actions, toPayload } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
@@ -14,6 +15,7 @@ export class LopHocEffect {
   urlAPI = environment.apiURL + '/lop-hoc';
 
   constructor(
+    private toasterService: ToasterService,
     private _http: JwtAuthHttp,
     private actions$: Actions,
     private router: Router,
@@ -26,5 +28,12 @@ export class LopHocEffect {
         .map(res => {
           return new LopHocAction.GetInfoSucc(res);
         });
+    }).catch((err) => {
+      this.toasterService.pop('error', 'Lỗi!', err);
+      return Observable.of(new LopHocAction.Err(err));
     });
+
+  // @Effect({ dispatch: false }) getInfoSucc$ = this.actions$.ofType(LopHocAction.GETINFO_SUCC)
+  //   .do((payload: any) => {
+  //   });
 }

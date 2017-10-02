@@ -11,8 +11,8 @@ export interface AuthState {
   loading: boolean;
   tai_khoan: { [id: string]: any; };
   phan_quyen: any[],
-  lop_hoc_hien_tai_id: string,
-  khoa_hoc_hien_tai_id: number,
+  lop_hoc_hien_tai_id: number,
+  khoa_hoc_hien_tai: { [id: string]: any; };
   error: string;
 }
 
@@ -21,7 +21,9 @@ export const defaultState: AuthState = {
   tai_khoan: null,
   phan_quyen: [],
   lop_hoc_hien_tai_id: null,
-  khoa_hoc_hien_tai_id: null,
+  khoa_hoc_hien_tai: {
+    id: null
+  },
   error: null
 };
 
@@ -32,32 +34,27 @@ export function reducer(state = defaultState, action: Action): AuthState {
   switch (action.type) {
     case authAction.AUTH:
     case authAction.LOGOUT: {
-      return Object.assign({}, state, {
-        tai_khoan: null,
-        phan_quyen: [],
-        lop_hoc_hien_tai_id: null,
-        khoa_hoc_hien_tai_id: null,
+      return Object.assign({}, defaultState, {
         loading: true,
-        error: null
       });
     }
     case authAction.AUTH_COMPLETED: {
-      return Object.assign({}, state, {
+      return Object.assign({}, defaultState, {
         tai_khoan: action.payload.tai_khoan,
         phan_quyen: action.payload.phan_quyen,
         lop_hoc_hien_tai_id: action.payload.lop_hoc_hien_tai_id,
-        khoa_hoc_hien_tai_id: action.payload.khoa_hoc_hien_tai_id,
-        loading: false,
-        error: null
+        khoa_hoc_hien_tai: {
+          id: action.payload.khoa_hoc_hien_tai_id
+        },
+      });
+    }
+    case authAction.GET_KHOAHOC: {
+      return Object.assign({}, state, {
+        khoa_hoc_hien_tai: action.khoaHoc,
       });
     }
     case authAction.AUTH_FAILED: {
-      return Object.assign({}, state, {
-        tai_khoan: null,
-        phan_quyen: [],
-        lop_hoc_hien_tai_id: null,
-        khoa_hoc_hien_tai_id: null,
-        loading: false,
+      return Object.assign({}, defaultState, {
         error: action.err,
       });
     }
