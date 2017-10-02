@@ -1,17 +1,21 @@
+import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { JwtAuthHttp } from '../services/http-auth.service';
 import { environment } from './../../environments/environment';
 import { defaultPageState } from '../modules/tai-khoan/danh-sach/defaultPageState';
+import { AppState } from './../store/reducers/index';
 
 @Component({
   selector: 'app-trang-chu',
   templateUrl: './trang-chu.component.html',
   styleUrls: ['./trang-chu.component.scss']
 })
-export class TrangChuComponent {
+export class TrangChuComponent implements OnDestroy {
+  sub: any;
+  khoaHienTai: any;
   urlAPI = environment.apiURL + '/trang-chu';
   isLoading = true;
   itemSelected = null;
@@ -25,12 +29,17 @@ export class TrangChuComponent {
   }
 
   constructor(
+    private store: Store<AppState>,
     private router: Router,
     private toasterService: ToasterService,
     private _http: JwtAuthHttp,
   ) {
     this.resetData();
     this.loadData();
+
+    this.sub = this.store.select((state: AppState) => state.auth.khoa_hoc_hien_tai).subscribe(x => {
+      this.khoaHienTai = x;
+    });
   }
 
   private resetData() {
@@ -72,5 +81,9 @@ export class TrangChuComponent {
     }));
 
     this.router.navigate(['/tai-khoan']);
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }

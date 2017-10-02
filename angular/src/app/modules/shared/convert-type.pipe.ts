@@ -103,6 +103,20 @@ export class GioiTinh implements PipeTransform {
 }
 
 @Pipe({
+  name: 'phieu'
+})
+export class Phieu implements PipeTransform {
+
+  transform(value: any, args?: any): any {
+    const _tmp = appConst.find(el => el.loai_du_lieu === 'PHIEU' && el.ky_hieu === value);
+    if (_tmp) {
+      return _tmp.ten
+    }
+    return value;
+  }
+}
+
+@Pipe({
   name: 'ngay'
 })
 export class HienThiNgay implements PipeTransform {
@@ -120,4 +134,20 @@ export function ngay(value) {
     return value.replace(/(.+)[-|\/](.+)[-|\/](.+)/i, '$3-$2-$1');
   }
   return value;
+}
+
+@Pipe({
+  name: 'objectKeys'
+})
+export class ObjectKeysPipe implements PipeTransform {
+
+  transform(value, args: string[]): any {
+    const keys = [];
+    for (const key in value) {
+      if (value[key]) {
+        keys.push({ key: key, val: value[key] });
+      }
+    }
+    return keys;
+  }
 }

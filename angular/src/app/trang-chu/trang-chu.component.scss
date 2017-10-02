@@ -1,3 +1,16 @@
 .table-r1 {
-  height: 280px;
+    height: 280px;
+}
+
+.table-r2 {
+    height: 220px;
+}
+
+.table-r3 {
+    th,
+    td {
+        &:not(:first-child) {
+            text-align: center;
+        }
+    }
 }
