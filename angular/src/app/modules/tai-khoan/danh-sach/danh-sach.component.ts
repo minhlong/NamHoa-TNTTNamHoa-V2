@@ -102,13 +102,6 @@ export class DanhSachComponent implements OnDestroy {
     return search;
   }
 
-  hasPermXoaTaiKhoan(taiKhoan) {
-    if (this.curAuth.phan_quyen.includes('tai-khoan') && taiKhoan.trang_thai === 'TAM_NGUNG') {
-      return true;
-    }
-    return false;
-  }
-
   hasPermTaoMoi() {
     if (this.curAuth.phan_quyen.includes('tai-khoan')) {
       return true;
@@ -116,11 +109,18 @@ export class DanhSachComponent implements OnDestroy {
     return false;
   }
 
-  xoaTaiKhoan(taiKhoan) {
+  hasPermXoa(_item) {
+    if (this.curAuth.phan_quyen.includes('tai-khoan') && _item.trang_thai === 'TAM_NGUNG') {
+      return true;
+    }
+    return false;
+  }
+
+  xoa(_item) {
     this.isLoading = true;
-    const _url = this.urlAPI + '/' + taiKhoan.id + '/xoa';
+    const _url = this.urlAPI + '/' + _item.id + '/xoa';
     this._http.post(_url, null).map(res => res.json()).subscribe(res => {
-      this.toasterService.pop('success', 'Đã xóa ' + taiKhoan.id + ' ' + taiKhoan.ten_thanh + ' ' + taiKhoan.ho_va_ten);
+      this.toasterService.pop('success', 'Đã xóa ' + _item.id + ' ' + _item.ten_thanh + ' ' + _item.ho_va_ten);
       this.searchData();
     }, _err => {
       this.toasterService.pop('error', 'Lỗi!', _err);

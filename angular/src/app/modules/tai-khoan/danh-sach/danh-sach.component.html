@@ -251,7 +251,7 @@
               <td *ngIf="cookieState.dien_thoai">{{_item.dien_thoai}}</td>
               <td *ngIf="cookieState.thao_tac">
                 <button class="btn btn-xs btn-default" [routerLink]="['/tai-khoan/chi-tiet', _item.id]">Xem</button>
-                <button class="btn btn-xs btn-danger" (click)="itemSelected = _item; openConfimModel.click()" *ngIf="hasPermXoaTaiKhoan(_item)">Xóa</button>
+                <button class="btn btn-xs btn-danger" (click)="itemSelected = _item; openConfimModel.click()" *ngIf="hasPermXoa(_item)">Xóa</button>
               </td>
             </tr>
           </tbody>
@@ -290,7 +290,7 @@
       </div>
       <div class="modal-footer text-center">
         <button type="button" class="btn btn-w-m btn-warning" data-dismiss="modal" #closeConfimModel>Không</button>
-        <button type="button" class="btn btn-w-m btn-primary" (click)="closeConfimModel.click(); xoaTaiKhoan(itemSelected);">Có</button>
+        <button type="button" class="btn btn-w-m btn-primary" (click)="closeConfimModel.click(); xoa(itemSelected);">Có</button>
       </div>
     </div>
   </div>

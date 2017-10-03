@@ -98,6 +98,25 @@ export class DanhSachComponent implements OnDestroy {
     return false;
   }
 
+  hasPermXoa(_item) {
+    if (this.curAuth.phan_quyen.includes('lop-hoc')) {
+      return true;
+    }
+    return false;
+  }
+
+  xoa(_item) {
+    this.isLoading = true;
+    const _url = this.urlAPI + '/' + _item.id + '/xoa';
+    this._http.post(_url, null).map(res => res.json()).subscribe(res => {
+      this.toasterService.pop('success', 'Đã xóa ' + _item.ten);
+      this.searchData();
+    }, _err => {
+      this.toasterService.pop('error', 'Lỗi!', _err);
+      this.isLoading = false;
+    })
+  }
+
   ngOnDestroy() {
     this.sub.unsubscribe()
     this.authSub.unsubscribe()

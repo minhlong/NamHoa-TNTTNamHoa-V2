@@ -234,11 +234,10 @@ class LopHocController extends Controller
         $hocVien->pivot->save();
     }
 
-    public function delete(LopHoc $lopHoc)
+    public function postXoa(LopHoc $lopHoc)
     {
         $lopHoc->delete();
-
-        return response()->json(true);
+        return response()->json();
     }
 
     public function getHocVienYeu()
