@@ -25,13 +25,7 @@ export class ThongTinComponent implements OnDestroy {
   huynhTruongArr = [];
   thieuNhiArr = [];
 
-  pHT = {
-    id: 'htTabl',
-    itemsPerPage: 3,
-    currentPage: 1,
-  }
-
-  pTN = {
+  pagingTN = {
     id: 'tnTable',
     itemsPerPage: 10,
     currentPage: 1,

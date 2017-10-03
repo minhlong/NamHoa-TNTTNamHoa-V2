@@ -10,6 +10,7 @@ import { JwtAuthHttp } from '../../../services/http-auth.service';
 import { consoleLog } from '../../../_helpers';
 import { ngay } from '../../shared/convert-type.pipe';
 import { AuthState } from './../../../store/reducers/auth.reducer';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-danh-sach',
@@ -30,6 +31,7 @@ export class DanhSachComponent implements OnDestroy {
   cookieState: any;
 
   constructor(
+    private router: Router,
     private toasterService: ToasterService,
     private store: Store<AppState>,
     private _http: JwtAuthHttp,
@@ -115,6 +117,10 @@ export class DanhSachComponent implements OnDestroy {
       this.toasterService.pop('error', 'Lỗi!', _err);
       this.isLoading = false;
     })
+  }
+
+  xemTaiKhoan(taiKhoan) {
+    this.router.navigate(['/tai-khoan/chi-tiet/', taiKhoan.id]);
   }
 
   ngOnDestroy() {
