@@ -55,17 +55,10 @@
               <thead>
                 <tr>
                   <th class="text-center">#</th>
-                  <th>Lớp</th>
-                  <th>Tên Thánh</th>
-                  <th>Họ và Tên</th>
-                  <th>Giới Tính</th>
-                  <th>Loại Tài Khoản</th>
-                  <th>Ngày Sinh</th>
-                  <th>Ngày Rửa Tội</th>
-                  <th>Ngày Rước Lễ</th>
-                  <th>Ngày Thêm Sức</th>
-                  <th>Điện Thoại</th>
-                  <th>Địa Chỉ</th>
+                  <th>Ngành</th>
+                  <th>Cấp</th>
+                  <th>Đội</th>
+                  <th>Vị Trí Học</th>
                 </tr>
               </thead>
               <tbody *ngIf="dataArr">
@@ -73,17 +66,10 @@
                   <td class="text-center">
                     {{((dataArrPaging.currentPage - 1) * dataArrPaging.itemsPerPage ) + _i + 1}}
                   </td>
-                  <td>{{_item.lop_hoc_ten}}</td>
-                  <td>{{_item.ten_thanh}}</td>
-                  <td>{{_item.ho_va_ten}}</td>
-                  <td>{{_item.gioi_tinh | gioiTinh}}</td>
-                  <td>{{_item.loai_tai_khoan | loaiTK}}</td>
-                  <td>{{_item.ngay_sinh | ngay}}</td>
-                  <td>{{_item.ngay_rua_toi | ngay}}</td>
-                  <td>{{_item.ngay_ruoc_le | ngay}}</td>
-                  <td>{{_item.ngay_them_suc | ngay}}</td>
-                  <td>{{_item.dien_thoai}}</td>
-                  <td>{{_item.dia_chi}}</td>
+                  <td>{{_item.nganh | nganh }}</td>
+                  <td>{{_item.cap | cap }}</td>
+                  <td>{{_item.doi | doi }}</td>
+                  <td>{{_item.vi_tri_hoc}}</td>
                 </tr>
               </tbody>
             </table>
@@ -109,18 +95,9 @@
               <thead>
                 <tr>
                   <th class="text-center">#</th>
-                  <th>Mã số</th>
-                  <th>Lớp</th>
-                  <th>Tên Thánh</th>
-                  <th>Họ và Tên</th>
-                  <th>Giới Tính</th>
-                  <th>Loại Tài Khoản</th>
-                  <th>Ngày Sinh</th>
-                  <th>Ngày Rửa Tội</th>
-                  <th>Ngày Rước Lễ</th>
-                  <th>Ngày Thêm Sức</th>
-                  <th>Điện Thoại</th>
-                  <th>Địa Chỉ</th>
+                  <th>Mã Lớp</th>
+                  <th>Tên Lớp</th>
+                  <th>Vị Trí Học</th>
                 </tr>
               </thead>
               <tbody *ngIf="resultArr">
@@ -129,17 +106,8 @@
                     {{((resultArrPaging.currentPage - 1) * resultArrPaging.itemsPerPage ) + _i + 1}}
                   </td>
                   <td>{{_item.id}}</td>
-                  <td>{{_item.lop_hoc_ten}}</td>
-                  <td>{{_item.ten_thanh}}</td>
-                  <td>{{_item.ho_va_ten}}</td>
-                  <td>{{_item.gioi_tinh | gioiTinh}}</td>
-                  <td>{{_item.loai_tai_khoan | loaiTK}}</td>
-                  <td>{{_item.ngay_sinh | ngay}}</td>
-                  <td>{{_item.ngay_rua_toi | ngay}}</td>
-                  <td>{{_item.ngay_ruoc_le | ngay}}</td>
-                  <td>{{_item.ngay_them_suc | ngay}}</td>
-                  <td>{{_item.dien_thoai}}</td>
-                  <td>{{_item.dia_chi}}</td>
+                  <td>{{_item.ten}}</td>
+                  <td>{{_item.vi_tri_hoc}}</td>
                 </tr>
               </tbody>
             </table>

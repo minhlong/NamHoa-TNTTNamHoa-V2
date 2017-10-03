@@ -11,4 +11,4 @@
 |
 */
 
-Route::get('tai-khoan/download/{fileName}', 'TaiKhoanController@getDownloadFile');
+Route::get('download/{fileName}', 'HelperController@getDownloadFile');

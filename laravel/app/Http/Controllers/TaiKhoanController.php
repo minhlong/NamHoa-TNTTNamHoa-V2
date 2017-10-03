@@ -277,11 +277,6 @@ class TaiKhoanController extends Controller
         return $arrResult;
     }
 
-    public function getDownloadFile($fileName)
-    {
-        return \Response::download("/tmp/$fileName");
-    }
-
     /**
      * Luu Thong Tin Tai Khoan.
      * @param TaiKhoan $taiKhoan
@@ -456,7 +451,7 @@ class TaiKhoanController extends Controller
             ];
         }
 
-        $file = \Excel::create('TaoMoi_' . date('d-m-Y'), function ($excel) use ($arrRow) {
+        $file = \Excel::create('TaoMoi_TaiKhoan_' . date('d-m-Y'), function ($excel) use ($arrRow) {
             $excel->sheet('Danh Sách', function ($sheet) use ($arrRow) {
                 $sheet->fromArray($arrRow)
                     ->setFreeze('C2');

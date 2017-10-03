@@ -1,12 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Services\Library;
+use Illuminate\Http\Request;
+
 use App\DiemDanh;
 use App\DiemSo;
 use App\KhoaHoc;
 use App\LopHoc;
-use App\Services\Library;
-use App\TaiKhoan;
+use App\tmpItem;
 
 class LopHocController extends Controller
 {
@@ -22,6 +24,93 @@ class LopHocController extends Controller
 
         return response()->json([
             'data' => $lopHoc,
+        ]);
+    }
+
+    public function postTapTin(Request $request, Library $library) {
+        if(!$request->hasFile('file')) {
+           return response()->json([
+                'error' => 'Không tìm thấy tập tin.',
+           ], 400);
+        }
+
+        $file = $request->file('file');
+        $results = \Excel::load($file->getRealPath())->get();
+
+        try {
+            $tmpCollect = $results[0];
+            $khoaHocID = KhoaHoc::hienTaiHoacTaoMoi()->id;
+            $lopHocColl = LopHoc::where('khoa_hoc_id', $khoaHocID)->get();
+
+            $tmpCollect = $tmpCollect->filter(function ($c) {
+                return $c->nganh;
+            });
+
+            foreach ($lopHocColl as $c) {
+                $tmpCollect = $tmpCollect->filter( function ($lh) use ($c) {
+                    return !($lh->nganh == $c->nganh && $lh->cap == $c->cap && $lh->doi == $c->doi);
+                });
+            }
+
+            return response()->json([
+                'data' => array_merge([],$tmpCollect->toArray()),
+            ]);
+        } catch (\Exception $e) {
+           return response()->json([
+                'error' => 'Kiểm tra lại định dạng tập tin.',
+           ], 400);        
+        }
+    }
+
+    public function postTao(Request $request) {
+        if(!$request->has('data')) {
+           return response()->json([
+                'error' => 'Không thấy dữ liệu.',
+           ], 400);
+        }
+
+        $resultArr = [];
+        $tmpItemArr = $request->data;
+        $khoaHocID = KhoaHoc::hienTaiHoacTaoMoi()->id;
+        $lopHocColl = LopHoc::where('khoa_hoc_id', $khoaHocID)->get();
+
+        \DB::beginTransaction();
+        foreach ($tmpItemArr as $tmpItem) {
+            try {
+                $lopHoc = LopHoc::create(array_merge([
+                    'khoa_hoc_id' => $khoaHocID,
+                ], $tmpItem));   
+            } catch (\Exception $e) {
+                continue;
+            }
+
+            $lopHoc->ten = $lopHoc->taoTen();
+            $resultArr[] = $lopHoc;
+        }
+        
+        $arrRow[] = [
+            'Mã Lớp',
+            'Tên',
+            'Vị Trí Học',
+        ];
+        foreach ($resultArr as $item) {
+            $arrRow[] = [
+                $item->id,
+                $item->ten,
+                $item->vi_tri_hoc,
+            ];
+        }
+
+        $file = \Excel::create('TaoMoi_LopHoc_' . date('d-m-Y'), function ($excel) use ($arrRow) {
+            $excel->sheet('Danh Sách', function ($sheet) use ($arrRow) {
+                $sheet->fromArray($arrRow);
+            });
+        })->store('xlsx', '/tmp', true);
+        \DB::commit();
+
+        return response()->json([
+            'data' => $resultArr,
+            'file' => $file['file'],
         ]);
     }
 
@@ -62,19 +151,19 @@ class LopHocController extends Controller
 
     /**
      * @param LopHoc $lopHoc
-     * @param TaiKhoan $taiKhoan
+     * @param tmpItem $tmpItem
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function postHocVien(LopHoc $lopHoc, TaiKhoan $taiKhoan)
+    public function postHocVien(LopHoc $lopHoc, tmpItem $tmpItem)
     {
-        $this->attachHocVien($lopHoc, $taiKhoan);
+        $this->attachHocVien($lopHoc, $tmpItem);
 
         return $this->getThongTin($lopHoc);
     }
 
-    public function attachHocVien(LopHoc $lopHoc, TaiKhoan $taiKhoan)
+    public function attachHocVien(LopHoc $lopHoc, tmpItem $tmpItem)
     {
-        $lopHoc->hoc_vien()->attach($taiKhoan->id, [
+        $lopHoc->hoc_vien()->attach($tmpItem->id, [
             'chuyen_can' => $lopHoc->chuyen_can,
             'hoc_luc'    => $lopHoc->hoc_luc,
         ]);
@@ -83,12 +172,12 @@ class LopHocController extends Controller
 
     /**
      * @param LopHoc $lopHoc
-     * @param TaiKhoan $taiKhoan
+     * @param tmpItem $tmpItem
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteHocVien(LopHoc $lopHoc, TaiKhoan $taiKhoan)
+    public function deleteHocVien(LopHoc $lopHoc, tmpItem $tmpItem)
     {
-        $lopHoc->hoc_vien()->detach($taiKhoan->id);
+        $lopHoc->hoc_vien()->detach($tmpItem->id);
         $lopHoc->tinhTongKet();
 
         return $this->getThongTin($lopHoc);
@@ -223,10 +312,10 @@ class LopHocController extends Controller
         return $arrResult;
     }
 
-    public function postXepHang(LopHoc $lopHoc, TaiKhoan $taiKhoan)
+    public function postXepHang(LopHoc $lopHoc, tmpItem $tmpItem)
     {
         $hocVien = $lopHoc->hoc_vien()
-            ->where('tai_khoan_id', $taiKhoan->id)
+            ->where('tai_khoan_id', $tmpItem->id)
             ->first();
         $hocVien->pivot->xep_hang = \Request::get('hang');
         $hocVien->pivot->ghi_chu = \Request::get('ghi_chu_hang');
@@ -243,7 +332,7 @@ class LopHocController extends Controller
     public function getHocVienYeu()
     {
         $khoahoc = KhoaHoc::hienTaiHoacTaoMoi();
-        $TaiKhoans = TaiKhoan::whereHas('lop_hoc',
+        $tmpItems = tmpItem::whereHas('lop_hoc',
             function ($q) use ($khoahoc) {
                 $q->where('khoa_hoc_id', $khoahoc->id)
                     ->where(function ($query) {
@@ -265,18 +354,18 @@ class LopHocController extends Controller
         $records = [
             'data'                 => [],
             'draw'                 => \Request::get('draw'),
-            'iTotalDisplayRecords' => $TaiKhoans->get()->count(), // Before Skipt data
+            'iTotalDisplayRecords' => $tmpItems->get()->count(), // Before Skipt data
         ];
         if (($length = \Request::get('length')) > 0) {
-            $TaiKhoans = $TaiKhoans->skip(\Request::get('start'))->take($length);
+            $tmpItems = $tmpItems->skip(\Request::get('start'))->take($length);
         }
         // Load Class for current Year
-        $TaiKhoans = $TaiKhoans->with([
+        $tmpItems = $tmpItems->with([
             'lop_hoc' => function ($query) use ($khoahoc) {
                 $query->where('khoa_hoc_id', $khoahoc->id);
             }
         ]);
-        foreach ($TaiKhoans->get() as $item) {
+        foreach ($tmpItems->get() as $item) {
             $records['data'][] = [
                 'ten'        => "$item->ten_thanh $item->ho_va_ten",
                 'chuyen_can' => $item->lop_hoc[0]->pivot['chuyen_can'],
@@ -302,7 +391,7 @@ class LopHocController extends Controller
         \Excel::create($fileName . '-' . strtotime('now'),
             function ($excel) use ($lopHoc, $library) {
                 $arrData = $this->getTongKet($lopHoc);
-                $arrRow = $this->generateTaiKhoanData($arrData, $library);
+                $arrRow = $this->generatetmpItemData($arrData, $library);
                 $excel->sheet('Danh Sách Lớp', function ($sheet) use ($arrRow) {
                     $sheet->fromArray($arrRow, null, null, null, false)
                         ->setFreeze('D2');
@@ -436,7 +525,7 @@ class LopHocController extends Controller
      * @param Library $library
      * @return array
      */
-    protected function generateTaiKhoanData($arrData, Library $library)
+    protected function generatetmpItemData($arrData, Library $library)
     {
         $arrRow = [];
         $arrHeader = [

@@ -14,7 +14,7 @@ export class TaoMoiComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
 
   private webAPI = environment.webURL + '/download';
-  private urlAPI = environment.apiURL + '/tai-khoan/tap-tin';
+  private urlAPI = environment.apiURL + '/lop-hoc/tap-tin';
   active: number
   current = 1
   totalStep = 3
@@ -129,6 +129,6 @@ export class TaoMoiComponent implements OnInit {
   }
 
   downloadTemplate() {
-    window.open('assets/template-file/SoYeuLyLich.xlsx');
+    window.open('/assets/template-file/LopHoc.xlsx');
   }
 }

@@ -12,6 +12,7 @@ import { ThongTinComponent } from './thong-tin/thong-tin.component';
 import { DiemDanhComponent } from './diem-danh/diem-danh.component';
 import { DiemSoComponent } from './diem-so/diem-so.component';
 import { TongKetComponent } from './tong-ket/tong-ket.component';
+import { TaoMoiComponent } from './tao-moi/tao-moi.component';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { TongKetComponent } from './tong-ket/tong-ket.component';
     // Routes
     RouterModule.forChild([
       { path: '', component: DanhSachComponent },
+      { path: 'tao-moi', component: TaoMoiComponent },
       {
         path: 'chi-tiet/:id', component: ChiTietComponent,
         children: [
@@ -37,6 +39,10 @@ import { TongKetComponent } from './tong-ket/tong-ket.component';
       },
     ]),
   ],
-  declarations: [DanhSachComponent, ChiTietComponent, ThongTinComponent, DiemDanhComponent, DiemSoComponent, TongKetComponent]
+  declarations: [
+    DanhSachComponent,
+    ChiTietComponent, ThongTinComponent, DiemDanhComponent, DiemSoComponent, TongKetComponent,
+    TaoMoiComponent,
+  ]
 })
 export class LopHocModule { }
