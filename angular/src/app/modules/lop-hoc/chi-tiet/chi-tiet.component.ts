@@ -27,7 +27,7 @@ export class ChiTietComponent implements OnDestroy {
   ) {
     this.parSub = this.activatedRoute.params.subscribe(params => {
       this.lopHocID = params['id'];
-      this.store.dispatch(new LopHocAction.GetInfo(this.lopHocID));
+      this.store.dispatch(new LopHocAction.GetLopInfo(this.lopHocID));
     })
 
     this.lhSub = this.store.select((state: AppState) => state.lop_hoc.thong_tin).subscribe(res => {

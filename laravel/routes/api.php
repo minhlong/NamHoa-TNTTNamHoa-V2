@@ -40,6 +40,7 @@ Route::group(['middleware' => 'auth-jwt'], function () {
         Route::post(null, 'LopHocController@post');
         Route::post('tap-tin', 'LopHocController@postTapTin')->middleware(['permission:lop-hoc']);
         Route::post('tap-tin/tao', 'LopHocController@postTao')->middleware(['permission:lop-hoc']);
+        Route::post('{LopHoc}', 'LopHocController@postUpdate');
         Route::post('{LopHoc}/xoa', 'LopHocController@postXoa')->middleware(['permission:lop-hoc']);
     });
 

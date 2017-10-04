@@ -4,12 +4,12 @@ export const GETINFO = '[Lop Hoc] Get Info';
 export const GETINFO_SUCC = '[Lop Hoc] Get Info Success';
 export const ERR = '[Lop Hoc] Lỗi';
 
-export class GetInfo implements Action {
+export class GetLopInfo implements Action {
   readonly type = GETINFO;
   constructor(public id) { }
 }
 
-export class GetInfoSucc implements Action {
+export class GetLopInfoSucc implements Action {
   readonly type = GETINFO_SUCC;
   constructor(public payload) { }
 }
@@ -19,4 +19,4 @@ export class Err implements Action {
   constructor(public error) { }
 }
 
-export type All = GetInfo | GetInfoSucc | Err;
+export type All = GetLopInfo | GetLopInfoSucc | Err;

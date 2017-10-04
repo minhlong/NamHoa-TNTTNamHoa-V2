@@ -13,6 +13,7 @@ import { DiemDanhComponent } from './diem-danh/diem-danh.component';
 import { DiemSoComponent } from './diem-so/diem-so.component';
 import { TongKetComponent } from './tong-ket/tong-ket.component';
 import { TaoMoiComponent } from './tao-moi/tao-moi.component';
+import { FormComponent } from './form/form.component';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { TaoMoiComponent } from './tao-moi/tao-moi.component';
     DanhSachComponent,
     ChiTietComponent, ThongTinComponent, DiemDanhComponent, DiemSoComponent, TongKetComponent,
     TaoMoiComponent,
+    FormComponent,
   ]
 })
 export class LopHocModule { }

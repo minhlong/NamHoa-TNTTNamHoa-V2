@@ -19,6 +19,7 @@ export const appConst = [
   { loai_du_lieu: 'CAP', ky_hieu: '4', ten: '4' },
   { loai_du_lieu: 'CAP', ky_hieu: '5', ten: '5' },
   { loai_du_lieu: 'CAP', ky_hieu: '6', ten: '6' },
+
   { loai_du_lieu: 'DOI', ky_hieu: '1', ten: '1' },
   { loai_du_lieu: 'DOI', ky_hieu: '2', ten: '2' },
   { loai_du_lieu: 'DOI', ky_hieu: '3', ten: '3' },

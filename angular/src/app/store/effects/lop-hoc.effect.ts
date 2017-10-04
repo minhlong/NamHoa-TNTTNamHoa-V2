@@ -26,7 +26,7 @@ export class LopHocEffect {
       return this._http.get(this.urlAPI + '/' + payload.id)
         .map(res => res.json())
         .map(res => {
-          return new LopHocAction.GetInfoSucc(res);
+          return new LopHocAction.GetLopInfoSucc(res);
         });
     }).catch((err) => {
       this.toasterService.pop('error', 'Lỗi!', err);

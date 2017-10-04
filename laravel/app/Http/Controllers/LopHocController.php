@@ -118,10 +118,16 @@ class LopHocController extends Controller
      * @param LopHoc $lopHoc
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function post(LopHoc $lopHoc)
+    public function postUpdate(LopHoc $lopHoc)
     {
-        $lopHoc->fill(\Request::all());
-        $lopHoc->save();
+        try {
+            $lopHoc->fill(\Request::all());
+            $lopHoc->save();
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Kiểm tra lại thông tin.',
+           ], 400);
+        }
 
         return $this->getThongTin($lopHoc);
     }

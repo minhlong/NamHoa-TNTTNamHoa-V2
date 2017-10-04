@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { JwtAuthHttp } from '../../../services/http-auth.service';
 import { environment } from './../../../../environments/environment';
 import { AppState } from './../../../store/reducers/index';
+import { GetLopInfoSucc } from '../../../store/actions/lop-hoc.action';
 
 @Component({
   selector: 'app-thong-tin',
@@ -14,14 +15,13 @@ import { AppState } from './../../../store/reducers/index';
 })
 export class ThongTinComponent implements OnDestroy {
 
+  tab = 'thong-tin'
   isLoading = true;
   authSub: any;
-  lhSub: any;
   htSub: any;
   tnSub: any;
 
   curAuth: any;
-  lopHocInfo: any = {};
   huynhTruongArr = [];
   thieuNhiArr = [];
 
@@ -41,10 +41,6 @@ export class ThongTinComponent implements OnDestroy {
       this.curAuth = res;
     });
 
-    // this.lhSub = this.store.select((state: AppState) => state.lop_hoc.thong_tin).subscribe(res => {
-    //   this.lopHocInfo = res;
-    // });
-
     this.htSub = this.store.select((state: AppState) => state.lop_hoc.huynh_truong).subscribe(res => {
       this.huynhTruongArr = res;
       this.isLoading = false;
@@ -56,17 +52,22 @@ export class ThongTinComponent implements OnDestroy {
     });
   }
 
+  ngOnDestroy() {
+    this.authSub.unsubscribe();
+    this.htSub.unsubscribe();
+    this.tnSub.unsubscribe();
+  }
+
   hasPerm() {
     if (this.curAuth.phan_quyen.includes('lop-hoc')) {
       return true;
     }
     return false;
   }
-
-  ngOnDestroy() {
-    this.authSub.unsubscribe();
-    // this.lhSub.unsubscribe();
-    this.htSub.unsubscribe();
-    this.tnSub.unsubscribe();
+  update(_info) {
+    this.tab = 'thong-tin';
+    if (_info) {
+      this.store.dispatch(new GetLopInfoSucc(_info));
+    }
   }
 }
