@@ -9,6 +9,7 @@ import { JwtAuthHttp } from './../../../../services/http-auth.service';
 import { environment } from './../../../../../environments/environment';
 import { AppState } from './../../../../store/reducers/index';
 import { bodauTiengViet } from '../../../../_helpers';
+import { GetLopInfoSucc } from '../../../../store/actions/lop-hoc.action';
 
 @Component({
   selector: 'app-huynh-truong',
@@ -22,6 +23,7 @@ export class HuynhTruongComponent implements OnInit, OnDestroy {
 
   @Output() updateInfo = new EventEmitter();
 
+  khoaHienTaiID: any;
   isLoading: boolean;
   error: any;
   sub: any;
@@ -46,16 +48,8 @@ export class HuynhTruongComponent implements OnInit, OnDestroy {
   ) {
 
     this.sub = this.store.select((state: AppState) => state.auth.khoa_hoc_hien_tai).subscribe(_khoa => {
-      const search = new URLSearchParams();
-      search.set('chua_xep_lop', _khoa.id);
-      search.set('trang_thai', 'HOAT_DONG');
-      search.set('loai_tai_khoan', 'HUYNH_TRUONG');
-      this._http.get(this.tkAPI, { search }).map(res => res.json()).subscribe(res => {
-        this.taiKhoanSrcArr = res.data;
-        this.search$.next(''); // Trigger Search
-      }, error => {
-        this.toasterService.pop('error', 'Lỗi!', error);
-      })
+      this.khoaHienTaiID = _khoa.id;
+      this.loadTaiKhoan();
     });
 
     this.lhSub = this.store.select((state: AppState) => state.lop_hoc.thong_tin).subscribe(res => {
@@ -83,6 +77,82 @@ export class HuynhTruongComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
     this.lhSub.unsubscribe();
     this.htSub.unsubscribe();
+  }
+
+  private loadTaiKhoan() {
+    const search = new URLSearchParams();
+    search.set('chua_xep_lop', this.khoaHienTaiID);
+    search.set('trang_thai', 'HOAT_DONG');
+    search.set('loai_tai_khoan', 'HUYNH_TRUONG');
+    this._http.get(this.tkAPI, { search }).map(res => res.json()).subscribe(res => {
+      this.taiKhoanSrcArr = res.data;
+      this.search$.next(''); // Trigger Search
+    }, error => {
+      this.toasterService.pop('error', 'Lỗi!', error);
+    })
+  }
+
+  huyTatCa(_id = null) {
+    this._http.post(this.lhAPI + '/' + this.lopHocInfo.id + '/huynh-truong', {
+      id: []
+    }).map(res => res.json()).subscribe(res => {
+      this.taiKhoanSrcArr = res.data;
+      this.search$.next(''); // Trigger Search
+    }, error => {
+      this.toasterService.pop('error', 'Lỗi!', error);
+    })
+  }
+
+  them(_id = null) {
+    this.isLoading = true;
+    const _tmpArr = [];
+    if (_id) {
+      _tmpArr.push(_id);
+    } else {
+      this.taiKhoanArr.filter((_el) => {
+        return _el.checked === true;
+      }).forEach(_el => {
+        _tmpArr.push(_el.id);
+      });
+    }
+
+    this._http.post(this.lhAPI + '/' + this.lopHocInfo.id + '/huynh-truong', {
+      id: _tmpArr
+    }).map(res => res.json()).subscribe(_res => {
+      this.loadTaiKhoan();
+      this.toasterService.pop('success', 'Đã thêm!');
+      this.store.dispatch(new GetLopInfoSucc(_res));
+      this.isLoading = false;
+    }, error => {
+      this.toasterService.pop('error', 'Lỗi!', error);
+      this.isLoading = false;
+    })
+  }
+
+  xoa(_id = null) {
+    this.isLoading = true;
+    const _tmpArr = [];
+    if (_id) {
+      _tmpArr.push(_id);
+    } else {
+      this.huynhTruongArr.filter((_el) => {
+        return _el.checked === true;
+      }).forEach(_el => {
+        _tmpArr.push(_el.id);
+      });
+    }
+
+    this._http.post(this.lhAPI + '/' + this.lopHocInfo.id + '/huynh-truong/xoa', {
+      id: _tmpArr
+    }).map(res => res.json()).subscribe(_res => {
+      this.loadTaiKhoan();
+      this.toasterService.pop('success', 'Đã thêm!');
+      this.store.dispatch(new GetLopInfoSucc(_res));
+      this.isLoading = false;
+    }, error => {
+      this.toasterService.pop('error', 'Lỗi!', error);
+      this.isLoading = false;
+    })
   }
 
   checkAll(_arr: any[], _event) {

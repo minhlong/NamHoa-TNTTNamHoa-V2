@@ -109,8 +109,8 @@ export class DanhSachComponent implements OnDestroy {
 
   xoa(_item) {
     this.isLoading = true;
-    const _url = this.urlAPI + '/' + _item.id + '/xoa';
-    this._http.post(_url, null).map(res => res.json()).subscribe(res => {
+    const _url = this.urlAPI + '/' + _item.id;
+    this._http.delete(_url, null).map(res => res.json()).subscribe(res => {
       this.toasterService.pop('success', 'Đã xóa ' + _item.ten);
       this.searchData();
     }, _err => {

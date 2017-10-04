@@ -148,10 +148,41 @@ class LopHocController extends Controller
      * @param LopHoc $lopHoc
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function postHuynhTruong(LopHoc $lopHoc)
+    public function postHuynhTruong(LopHoc $lopHoc, Request $request)
     {
-        $lopHoc->luuHuynhTruongTroGiang();
+        if(!$request->has('id') || !is_array($request->id)) {
+           return response()->json([
+                'error' => 'Không thấy dữ liệu.',
+           ], 400);
+        }
 
+        $arrID = $request->id;
+        foreach ($arrID as $tmpID) {
+            $lopHoc->huynh_truong()->attach($tmpID, [
+                'chuyen_can' => $lopHoc->chuyen_can,
+                'hoc_luc'    => $lopHoc->hoc_luc,
+            ]);
+        }
+        return $this->getThongTin($lopHoc);
+    }
+
+    /**
+     * @param LopHoc $lopHoc
+     * @param tmpItem $tmpItem
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteHuynhTruong(LopHoc $lopHoc, Request $request)
+    {
+        if(!$request->has('id') || !is_array($request->id)) {
+           return response()->json([
+                'error' => 'Không thấy dữ liệu.',
+           ], 400);
+        }
+
+        $arrID = $request->id;
+        foreach ($arrID as $tmpID) {
+            $lopHoc->huynh_truong()->detach($tmpID);
+        }
         return $this->getThongTin($lopHoc);
     }
 

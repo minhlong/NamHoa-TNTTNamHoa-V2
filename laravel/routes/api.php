@@ -29,7 +29,7 @@ Route::group(['middleware' => 'auth-jwt'], function () {
         Route::post('tap-tin/tao', 'TaiKhoanController@postTao')->middleware(['permission:tai-khoan']);
         Route::post('{TaiKhoan}', 'TaiKhoanController@postUpdate');
         Route::post('{TaiKhoan}/mat-khau', 'TaiKhoanController@postMatKhau');
-        Route::post('{TaiKhoan}/xoa', 'TaiKhoanController@postXoa')->middleware(['permission:tai-khoan']);
+        Route::delete('{TaiKhoan}', 'TaiKhoanController@postXoa')->middleware(['permission:tai-khoan']);
     });
 
     /* Lop Hoc */
@@ -41,7 +41,9 @@ Route::group(['middleware' => 'auth-jwt'], function () {
         Route::post('tap-tin', 'LopHocController@postTapTin')->middleware(['permission:lop-hoc']);
         Route::post('tap-tin/tao', 'LopHocController@postTao')->middleware(['permission:lop-hoc']);
         Route::post('{LopHoc}', 'LopHocController@postUpdate')->middleware(['permission:lop-hoc']);
-        Route::post('{LopHoc}/xoa', 'LopHocController@postXoa')->middleware(['permission:lop-hoc']);
+        Route::post('{LopHoc}/huynh-truong', 'LopHocController@postHuynhTruong')->middleware(['permission:lop-hoc']);
+        Route::post('{LopHoc}/huynh-truong/xoa', 'LopHocController@deleteHuynhTruong')->middleware(['permission:lop-hoc']);
+        Route::delete('{LopHoc}', 'LopHocController@postXoa')->middleware(['permission:lop-hoc']);
     });
 
     /* Khoa Hoc */

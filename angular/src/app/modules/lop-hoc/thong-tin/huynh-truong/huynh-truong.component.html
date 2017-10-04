@@ -15,7 +15,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6 m-t-sm" *ngIf="huynhTruongArr.length">
+    <div class="col-md-6 m-t-sm">
       <div class="table-responsive">
         <table class="table table-hover table-bordered">
           <thead>
@@ -30,7 +30,7 @@
                 <span *ngIf="getChecked(huynhTruongArr)">Đã chọn {{getChecked(huynhTruongArr)}}</span>
               </th>
               <th>
-                <a class="btn btn-xs btn-default" *ngIf="getChecked(huynhTruongArr)">Hủy Tất Cả</a>
+                <a (click)="xoa()" class="btn btn-xs btn-default" *ngIf="getChecked(huynhTruongArr)">Hủy Tất Cả</a>
               </th>
             </tr>
           </thead>
@@ -41,14 +41,14 @@
               </td>
               <td>{{_item.ho_va_ten}}</td>
               <td>
-                <a class="btn btn-xs btn-default">Hủy</a>
+                <a (click)="xoa(_item.id)" class="btn btn-xs btn-default">Hủy</a>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <div class="col-md-6 m-t-sm" *ngIf="taiKhoanArr.length">
+    <div class="col-md-6 m-t-sm">
       <div class="table-responsive">
         <table class="table table-hover table-bordered">
           <thead>
@@ -63,7 +63,7 @@
                 <span *ngIf="getChecked(taiKhoanArr)">Đã chọn {{getChecked(taiKhoanArr)}}</span>
               </th>
               <th>
-                <a class="btn btn-xs btn-default" *ngIf="getChecked(taiKhoanArr)">Thêm Tất Cả</a>
+                <a (click)="them()" class="btn btn-xs btn-default" *ngIf="getChecked(taiKhoanArr)">Thêm Tất Cả</a>
               </th>
             </tr>
           </thead>
@@ -74,7 +74,7 @@
               </td>
               <td>{{_item.ho_va_ten}}</td>
               <td>
-                <a class="btn btn-xs btn-default">Thêm</a>
+                <a (click)="them(_item.id)" class="btn btn-xs btn-default">Thêm</a>
               </td>
             </tr>
           </tbody>
