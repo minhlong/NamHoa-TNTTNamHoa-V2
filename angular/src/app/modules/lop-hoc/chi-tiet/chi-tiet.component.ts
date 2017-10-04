@@ -21,6 +21,7 @@ export class ChiTietComponent implements OnDestroy {
   lhSub: any;
 
   constructor(
+    private router: Router,
     private store: Store<AppState>,
     private toasterService: ToasterService,
     private activatedRoute: ActivatedRoute
@@ -39,5 +40,9 @@ export class ChiTietComponent implements OnDestroy {
   ngOnDestroy() {
     this.parSub.unsubscribe();
     this.lhSub.unsubscribe();
+  }
+
+  activeRoute(routename: string): boolean {
+    return this.router.url.indexOf(routename) > -1;
   }
 }

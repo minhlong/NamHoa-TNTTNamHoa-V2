@@ -64,6 +64,7 @@ export class ThongTinComponent implements OnDestroy {
     }
     return false;
   }
+
   update(_info) {
     this.tab = 'thong-tin';
     if (_info) {
