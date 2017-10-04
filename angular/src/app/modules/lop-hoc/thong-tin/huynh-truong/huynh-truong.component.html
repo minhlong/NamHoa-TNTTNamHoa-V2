@@ -1,10 +1,13 @@
-<ng-container *ngIf="tab === 'thong-tin'">
-  <div class="ibox-content {{isLoading ? 'sk-loading' : null}}">
-    <div class="sk-spinner sk-spinner-three-bounce">
-      <div class="sk-bounce1"></div>
-      <div class="sk-bounce2"></div>
-      <div class="sk-bounce3"></div>
-    </div>
+<div class="ibox-title">
+  <h5>Huynh Trưởng</h5>
+</div>
+<div class="ibox-content {{isLoading ? 'sk-loading' : null}}">
+  <div class="sk-spinner sk-spinner-three-bounce">
+    <div class="sk-bounce1"></div>
+    <div class="sk-bounce2"></div>
+    <div class="sk-bounce3"></div>
+  </div>
+  <form [formGroup]="infoFB" (submit)="save()" class="row">
     <div class="row">
       <div class="col-md-6 m-t-sm" *ngIf="huynhTruongArr.length">
         <div class="table-responsive">
@@ -26,7 +29,7 @@
           </table>
         </div>
       </div>
-      <div class="col-md-6 m-t-sm" *ngIf="thieuNhiArr.length">
+      <div class="col-md-6 m-t-sm" *ngIf="taiKhoanArr.length">
         <div class="table-responsive">
           <table class="table table-hover table-bordered">
             <thead>
@@ -35,9 +38,9 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let _item of thieuNhiArr | paginate: pagingTN; let _i = index">
+              <tr *ngFor="let _item of taiKhoanArr | paginate: pagingHT; let _i = index">
                 <td class="text-center">
-                  {{((pagingTN.currentPage - 1) * pagingTN.itemsPerPage ) + _i + 1}}
+                  {{((pagingHT.currentPage - 1) * pagingHT.itemsPerPage ) + _i + 1}}
                 </td>
                 <td>{{_item.ho_va_ten}}</td>
                 <td>{{_item.dien_thoai}}</td>
@@ -48,7 +51,7 @@
             </tbody>
           </table>
         </div>
-        <pagination-template #ep="paginationApi" [id]="pagingTN.id" (pageChange)="pagingTN.currentPage = $event;">
+        <pagination-template #ep="paginationApi" [id]="pagingHT.id" (pageChange)="pagingHT.currentPage = $event;">
           <div class="text-center">
             <div class="btn-group">
               <button *ngIf="ep.isFirstPage()" type="button" class="btn btn-sm btn-white disabled"><i class="fa fa-chevron-left"></i></button>
@@ -64,20 +67,9 @@
         </pagination-template>
       </div>
     </div>
-  </div>
-  <div class="ibox-footer" *ngIf="hasPerm() && !isLoading">
-    <button (click)="tab = 'form'" class="btn btn-default btn-sm m-r-lg">Sửa Thông Tin</button>
-    <button (click)="tab = 'huynh-truong'" class="btn btn-default btn-sm m-r-lg">C/Nhật H/Trưởng</button>
-    <button (click)="tab = 'thieu-nhi'" class="btn btn-default btn-sm m-r-lg">C/Nhật T/Nhi</button>
-  </div>
-</ng-container>
-
-<ng-container *ngIf="tab === 'form'" class="ibox">
-  <app-form (updateInfo)="update($event)"></app-form>
-</ng-container>
-<ng-container *ngIf="tab === 'huynh-truong'" class="ibox">
-  <app-huynh-truong (updateInfo)="update($event)"></app-huynh-truong>
-</ng-container>
-<ng-container *ngIf="tab === 'thieu-nhi'" class="ibox">
-  <app-thieu-nhi (updateInfo)="update($event)"></app-thieu-nhi>
-</ng-container>
+  </form>
+</div>
+<div class="ibox-footer" *ngIf="!isLoading">
+  <button (click)="cancel()" class="btn btn-default btn-sm m-l-lg">Thoát</button>
+  <button (click)="save()" class="btn btn-primary btn-sm m-l-lg">Lưu</button>
+</div>

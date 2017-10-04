@@ -3,16 +3,16 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angu
 import { ToasterService } from 'angular2-toaster';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { JwtAuthHttp } from '../../../services/http-auth.service';
-import { environment } from './../../../../environments/environment';
-import { AppState } from './../../../store/reducers/index';
+import { JwtAuthHttp } from './../../../../services/http-auth.service';
+import { environment } from './../../../../../environments/environment';
+import { AppState } from './../../../../store/reducers/index';
 
 @Component({
-  selector: 'app-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss']
+  selector: 'app-thieu-nhi',
+  templateUrl: './thieu-nhi.component.html',
+  styleUrls: ['./thieu-nhi.component.scss']
 })
-export class FormComponent implements OnInit, OnDestroy {
+export class ThieuNhiComponent implements OnDestroy {
   private urlAPI = environment.apiURL + '/lop-hoc';
   @Output() updateInfo = new EventEmitter();
 
@@ -35,10 +35,6 @@ export class FormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.infoFB = this.formBuilder.group({
-      nganh: this.lopHocInfo.nganh,
-      cap: this.lopHocInfo.cap,
-      doi: this.lopHocInfo.doi,
-      vi_tri_hoc: this.lopHocInfo.vi_tri_hoc,
     });
   }
 
@@ -73,4 +69,5 @@ export class FormComponent implements OnInit, OnDestroy {
   cancel() {
     this.updateInfo.emit(null);
   }
+
 }

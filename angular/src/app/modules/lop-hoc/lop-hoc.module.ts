@@ -8,12 +8,14 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from '../shared/shared.module';
 import { DanhSachComponent } from './danh-sach/danh-sach.component';
 import { ChiTietComponent } from './chi-tiet/chi-tiet.component';
-import { ThongTinComponent } from './thong-tin/thong-tin.component';
 import { DiemDanhComponent } from './diem-danh/diem-danh.component';
 import { DiemSoComponent } from './diem-so/diem-so.component';
 import { TongKetComponent } from './tong-ket/tong-ket.component';
 import { TaoMoiComponent } from './tao-moi/tao-moi.component';
-import { FormComponent } from './form/form.component';
+import { ThongTinComponent } from './thong-tin/thong-tin.component';
+import { FormComponent } from './thong-tin/form/form.component';
+import { HuynhTruongComponent } from './thong-tin/huynh-truong/huynh-truong.component';
+import { ThieuNhiComponent } from './thong-tin/thieu-nhi/thieu-nhi.component';
 
 @NgModule({
   imports: [
@@ -42,9 +44,9 @@ import { FormComponent } from './form/form.component';
   ],
   declarations: [
     DanhSachComponent,
-    ChiTietComponent, ThongTinComponent, DiemDanhComponent, DiemSoComponent, TongKetComponent,
+    ChiTietComponent, DiemDanhComponent, DiemSoComponent, TongKetComponent,
+    ThongTinComponent, FormComponent, HuynhTruongComponent, ThieuNhiComponent,
     TaoMoiComponent,
-    FormComponent,
   ]
 })
 export class LopHocModule { }

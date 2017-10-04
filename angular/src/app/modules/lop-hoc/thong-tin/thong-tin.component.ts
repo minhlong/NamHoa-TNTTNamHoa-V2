@@ -18,10 +18,14 @@ export class ThongTinComponent implements OnDestroy {
   tab = 'thong-tin'
   isLoading = true;
   authSub: any;
+  lhSub: any;
   htSub: any;
   tnSub: any;
 
   curAuth: any;
+  lopHocInfo: any = {
+    khoa_hoc_id: null
+  };
   huynhTruongArr = [];
   thieuNhiArr = [];
 
@@ -41,6 +45,10 @@ export class ThongTinComponent implements OnDestroy {
       this.curAuth = res;
     });
 
+    this.lhSub = this.store.select((state: AppState) => state.lop_hoc.thong_tin).subscribe(res => {
+      this.lopHocInfo = res;
+    });
+
     this.htSub = this.store.select((state: AppState) => state.lop_hoc.huynh_truong).subscribe(res => {
       this.huynhTruongArr = res;
       this.isLoading = false;
@@ -54,12 +62,13 @@ export class ThongTinComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.authSub.unsubscribe();
+    this.lhSub.unsubscribe();
     this.htSub.unsubscribe();
     this.tnSub.unsubscribe();
   }
 
   hasPerm() {
-    if (this.curAuth.phan_quyen.includes('lop-hoc')) {
+    if (this.curAuth.khoa_hoc_hien_tai.id === this.lopHocInfo.khoa_hoc_id && this.curAuth.phan_quyen.includes('lop-hoc')) {
       return true;
     }
     return false;

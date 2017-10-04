@@ -15,7 +15,9 @@ export interface LopHocState {
 }
 
 export const defaultLopHocState: LopHocState = {
-  thong_tin: null,
+  thong_tin: {
+    khoa_hoc_id: null,
+  },
   huynh_truong: [],
   thieu_nhi: [],
   error: null
