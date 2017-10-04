@@ -8,6 +8,7 @@ import { Subject } from 'rxjs/Rx';
 import { JwtAuthHttp } from './../../../../services/http-auth.service';
 import { environment } from './../../../../../environments/environment';
 import { AppState } from './../../../../store/reducers/index';
+import { bodauTiengViet } from '../../../../_helpers';
 
 @Component({
   selector: 'app-huynh-truong',
@@ -67,7 +68,9 @@ export class HuynhTruongComponent implements OnInit, OnDestroy {
 
     this.search$.debounceTime(400).subscribe((_str) => {
       this.taiKhoanArr = this.taiKhoanSrcArr.filter(el => {
-        return el.ho_va_ten.toLowerCase().indexOf(_str.toLowerCase()) !== -1
+        const _tmpA = bodauTiengViet(el.ho_va_ten);
+        const _tmpB = bodauTiengViet(_str);
+        return _tmpA.toLowerCase().indexOf(_tmpB.toLowerCase()) !== -1
       });
     });
   }
