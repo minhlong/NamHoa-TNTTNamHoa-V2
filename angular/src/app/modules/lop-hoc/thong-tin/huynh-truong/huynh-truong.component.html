@@ -30,7 +30,7 @@
                 <span *ngIf="getChecked(huynhTruongArr)">Đã chọn {{getChecked(huynhTruongArr)}}</span>
               </th>
               <th>
-                <a (click)="xoa()" class="btn btn-xs btn-default" *ngIf="getChecked(huynhTruongArr)">Hủy Tất Cả</a>
+                <a (click)="xoa()" class="btn btn-xs btn-default" *ngIf="getChecked(huynhTruongArr)">Hủy Đã Chọn</a>
               </th>
             </tr>
           </thead>
@@ -63,7 +63,7 @@
                 <span *ngIf="getChecked(taiKhoanArr)">Đã chọn {{getChecked(taiKhoanArr)}}</span>
               </th>
               <th>
-                <a (click)="them()" class="btn btn-xs btn-default" *ngIf="getChecked(taiKhoanArr)">Thêm Tất Cả</a>
+                <a (click)="them()" class="btn btn-xs btn-default" *ngIf="getChecked(taiKhoanArr)">Thêm Đã Chọn</a>
               </th>
             </tr>
           </thead>

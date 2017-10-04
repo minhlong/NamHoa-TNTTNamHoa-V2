@@ -83,7 +83,7 @@ export class HuynhTruongComponent implements OnInit, OnDestroy {
     const search = new URLSearchParams();
     search.set('chua_xep_lop', this.khoaHienTaiID);
     search.set('trang_thai', 'HOAT_DONG');
-    search.set('loai_tai_khoan', 'HUYNH_TRUONG');
+    search.set('loai_tai_khoan', 'HUYNH_TRUONG,SOEUR,LINH_MUC');
     this._http.get(this.tkAPI, { search }).map(res => res.json()).subscribe(res => {
       this.taiKhoanSrcArr = res.data;
       this.search$.next(''); // Trigger Search
