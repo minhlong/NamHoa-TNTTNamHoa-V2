@@ -1,4 +1,60 @@
-<div class="ibox-title">
+<div class="ibox-title m-t-lg">
+  <h5>Tìm các em chưa xếp lớp</h5>
+</div>
+<div class="ibox-content {{isLoading ? 'sk-loading' : null}}">
+  <div class="sk-spinner sk-spinner-three-bounce">
+    <div class="sk-bounce1"></div>
+    <div class="sk-bounce2"></div>
+    <div class="sk-bounce3"></div>
+  </div>
+  <div class="row">
+    <div class="form-group col-sm-4 col-md-3 form-group-sm">
+      <label>Khóa</label>
+      <select [(ngModel)]="searchForm.khoa" class="form-control">
+          <option [ngValue]="null"></option>
+          <option [ngValue]="khoaHienTaiID - 1">{{khoaHienTaiID - 1}}</option>
+          <option [ngValue]="khoaHienTaiID - 2">{{khoaHienTaiID - 2}}</option> 
+      </select>
+    </div>
+    <div class="form-group col-sm-4 col-md-3 form-group-sm">
+      <label>Ngành</label>
+      <select [(ngModel)]="searchForm.nganh" name="nganh" class="form-control">
+          <option [ngValue]="null"></option>
+          <option value="AU_NHI">{{'AU_NHI' | nganh}}</option>
+          <option value="THIEU_NHI">{{'THIEU_NHI' | nganh}}</option>
+          <option value="NGHIA_SI">{{'NGHIA_SI' | nganh}}</option>
+          <option value="HT_DU_BI">{{'HT_DU_BI' | nganh}}</option>
+      </select>
+    </div>
+    <div class="form-group col-sm-4 col-md-3 form-group-sm">
+      <label>Cấp</label>
+      <select [(ngModel)]="searchForm.cap" name="cap" class="form-control">
+          <option [ngValue]="null"></option>
+          <option value="CHIEN_CON">{{'CHIEN_CON' | cap}}</option>
+          <option value="1">{{'1' | cap}}</option>
+          <option value="2">{{'2' | cap}}</option>
+          <option value="3">{{'3' | cap}}</option>
+          <option value="4">{{'4' | cap}}</option>
+          <option value="5">{{'5' | cap}}</option>
+          <option value="6">{{'6' | cap}}</option>
+      </select>
+    </div>
+    <div class="form-group col-sm-4 col-md-3 form-group-sm">
+      <label>Đội</label>
+      <select [(ngModel)]="searchForm.doi" name="doi" class="form-control">
+          <option [ngValue]="null"></option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+      </select>
+    </div>
+  </div>
+</div>
+<div class="ibox-footer text-center" *ngIf="!isLoading">
+  <button class="btn btn-default btn-sm" (click)="loadTaiKhoan()">Tìm kiếm</button>
+</div>
+
+<div class="ibox-title m-t-sm">
   <h5>Thiếu Nhi</h5>
 </div>
 <div class="ibox-content {{isLoading ? 'sk-loading' : null}}">
@@ -7,10 +63,110 @@
     <div class="sk-bounce2"></div>
     <div class="sk-bounce3"></div>
   </div>
-  <form [formGroup]="infoFB" (submit)="save()" class="row">
-  </form>
+  <div class="row">
+    <div class=" col-md-offset-6 col-md-6">
+      <div class="form-group">
+        <input (keyup)="filter$.next($event.target.value)" placeholder="Lọc theo tên..." type="text" class="form-control">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 m-t-sm" *ngIf="thieuNhiArr.length">
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th class="text-center" colspan="3">Đã Xếp Lớp</th>
+            </tr>
+            <tr>
+              <th class="text-center">
+                <input type="checkbox" (change)="checkAll(thieuNhiArr, $event)">
+              </th>
+              <th>
+                <span *ngIf="getChecked(thieuNhiArr)">Đã chọn {{getChecked(thieuNhiArr)}}</span>
+              </th>
+              <th>
+                <a (click)="xoa()" class="btn btn-xs btn-default" *ngIf="getChecked(thieuNhiArr)">Hủy Đã Chọn</a>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let _item of thieuNhiArr | paginate: pagingHT; let _i = index">
+              <td class="text-center">
+                <input type="checkbox" [(ngModel)]="_item.checked">
+              </td>
+              <td>{{_item.ho_va_ten}}</td>
+              <td>
+                <a (click)="xoa(_item.id)" class="btn btn-xs btn-default">Hủy</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <pagination-template #ep="paginationApi" [id]="pagingHT.id" (pageChange)="pagingHT.currentPage = $event;">
+        <div class="text-center">
+          <div class="btn-group">
+            <button *ngIf="ep.isFirstPage()" type="button" class="btn btn-sm btn-white disabled"><i class="fa fa-chevron-left"></i></button>
+            <button (click)="ep.previous()" *ngIf="!ep.isFirstPage()" type="button" class="btn btn-sm btn-white"><i class="fa fa-chevron-left"></i></button>
+            <ng-container *ngFor="let page of ep.pages">
+              <button *ngIf="ep.getCurrent() !== page.value" (click)="ep.setCurrent(page.value)" class="btn btn-sm btn-white">{{ page.label }}</button>
+              <button *ngIf="ep.getCurrent() === page.value" class="btn btn-sm btn-white active">{{ page.label }}</button>
+            </ng-container>
+            <button *ngIf="ep.isLastPage()" type="button" class="btn btn-sm btn-white disabled"><i class="fa fa-chevron-right"></i></button>
+            <button (click)="ep.next()" *ngIf="!ep.isLastPage()" type="button" class="btn btn-sm btn-white"><i class="fa fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </pagination-template>
+    </div>
+    <div class="col-md-6 m-t-sm" *ngIf="taiKhoanArr.length">
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th class="text-center" colspan="3">Chưa Xếp Lớp</th>
+            </tr>
+            <tr>
+              <th class="text-center">
+                <input type="checkbox" (change)="checkAll(taiKhoanArr, $event)">
+              </th>
+              <th>
+                <span *ngIf="getChecked(taiKhoanArr)">Đã chọn {{getChecked(taiKhoanArr)}}</span>
+              </th>
+              <th>
+                <a (click)="them()" class="btn btn-xs btn-default" *ngIf="getChecked(taiKhoanArr)">Thêm Đã Chọn</a>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let _item of taiKhoanArr | paginate: pagingTN; let _i = index">
+              <td class="text-center">
+                <input type="checkbox" [(ngModel)]="_item.checked">
+              </td>
+              <td>{{_item.ho_va_ten}}</td>
+              <td>
+                <a (click)="them(_item.id)" class="btn btn-xs btn-default">Thêm</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <pagination-template #ep="paginationApi" [id]="pagingTN.id" (pageChange)="pagingTN.currentPage = $event;">
+        <div class="text-center">
+          <div class="btn-group">
+            <button *ngIf="ep.isFirstPage()" type="button" class="btn btn-sm btn-white disabled"><i class="fa fa-chevron-left"></i></button>
+            <button (click)="ep.previous()" *ngIf="!ep.isFirstPage()" type="button" class="btn btn-sm btn-white"><i class="fa fa-chevron-left"></i></button>
+            <ng-container *ngFor="let page of ep.pages">
+              <button *ngIf="ep.getCurrent() !== page.value" (click)="ep.setCurrent(page.value)" class="btn btn-sm btn-white">{{ page.label }}</button>
+              <button *ngIf="ep.getCurrent() === page.value" class="btn btn-sm btn-white active">{{ page.label }}</button>
+            </ng-container>
+            <button *ngIf="ep.isLastPage()" type="button" class="btn btn-sm btn-white disabled"><i class="fa fa-chevron-right"></i></button>
+            <button (click)="ep.next()" *ngIf="!ep.isLastPage()" type="button" class="btn btn-sm btn-white"><i class="fa fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </pagination-template>
+    </div>
+  </div>
 </div>
 <div class="ibox-footer" *ngIf="!isLoading">
   <button (click)="cancel()" class="btn btn-default btn-sm m-l-lg">Thoát</button>
-  <button (click)="save()" class="btn btn-primary btn-sm m-l-lg">Lưu</button>
 </div>

@@ -16,7 +16,7 @@ import { GetLopInfoSucc } from '../../../../store/actions/lop-hoc.action';
   templateUrl: './huynh-truong.component.html',
   styleUrls: ['./huynh-truong.component.scss']
 })
-export class HuynhTruongComponent implements OnInit, OnDestroy {
+export class HuynhTruongComponent implements OnDestroy {
   private tkAPI = environment.apiURL + '/tai-khoan';
   private lhAPI = environment.apiURL + '/lop-hoc';
   private taiKhoanSrcArr = [];
@@ -32,7 +32,7 @@ export class HuynhTruongComponent implements OnInit, OnDestroy {
   lopHocInfo: any = {};
   huynhTruongArr = [];
   taiKhoanArr = [];
-  search$ = new Subject<any>();
+  filter$ = new Subject<any>();
 
   pagingHT = {
     id: 'htTable',
@@ -60,7 +60,7 @@ export class HuynhTruongComponent implements OnInit, OnDestroy {
       this.huynhTruongArr = res;
     });
 
-    this.search$.debounceTime(400).subscribe((_str) => {
+    this.filter$.debounceTime(400).subscribe((_str) => {
       this.taiKhoanArr = this.taiKhoanSrcArr.filter(el => {
         const _tmpA = bodauTiengViet(el.ho_va_ten);
         const _tmpB = bodauTiengViet(_str);
@@ -69,11 +69,8 @@ export class HuynhTruongComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
-  }
-
   ngOnDestroy() {
-    this.search$.complete();
+    this.filter$.complete();
     this.sub.unsubscribe();
     this.lhSub.unsubscribe();
     this.htSub.unsubscribe();
@@ -86,7 +83,7 @@ export class HuynhTruongComponent implements OnInit, OnDestroy {
     search.set('loai_tai_khoan', 'HUYNH_TRUONG,SOEUR,LINH_MUC');
     this._http.get(this.tkAPI, { search }).map(res => res.json()).subscribe(res => {
       this.taiKhoanSrcArr = res.data;
-      this.search$.next(''); // Trigger Search
+      this.filter$.next(''); // Trigger Search
     }, error => {
       this.toasterService.pop('error', 'Lỗi!', error);
     })
@@ -97,7 +94,7 @@ export class HuynhTruongComponent implements OnInit, OnDestroy {
       id: []
     }).map(res => res.json()).subscribe(res => {
       this.taiKhoanSrcArr = res.data;
-      this.search$.next(''); // Trigger Search
+      this.filter$.next(''); // Trigger Search
     }, error => {
       this.toasterService.pop('error', 'Lỗi!', error);
     })
