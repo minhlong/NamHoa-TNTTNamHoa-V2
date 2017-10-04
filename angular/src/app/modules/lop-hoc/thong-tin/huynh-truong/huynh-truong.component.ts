@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angu
 import { ToasterService } from 'angular2-toaster';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
+import { Subject } from 'rxjs/Rx';
 
 import { JwtAuthHttp } from './../../../../services/http-auth.service';
 import { environment } from './../../../../../environments/environment';
@@ -16,10 +17,11 @@ import { AppState } from './../../../../store/reducers/index';
 export class HuynhTruongComponent implements OnInit, OnDestroy {
   private tkAPI = environment.apiURL + '/tai-khoan';
   private lhAPI = environment.apiURL + '/lop-hoc';
+  private taiKhoanSrcArr = [];
+
   @Output() updateInfo = new EventEmitter();
 
   isLoading: boolean;
-  infoFB: FormGroup;
   error: any;
   sub: any;
   htSub: any;
@@ -27,6 +29,7 @@ export class HuynhTruongComponent implements OnInit, OnDestroy {
   lopHocInfo: any = {};
   huynhTruongArr = [];
   taiKhoanArr = [];
+  search$ = new Subject<any>();
 
   pagingHT = {
     id: 'htTable',
@@ -47,7 +50,8 @@ export class HuynhTruongComponent implements OnInit, OnDestroy {
       search.set('trang_thai', 'HOAT_DONG');
       search.set('loai_tai_khoan', 'HUYNH_TRUONG');
       this._http.get(this.tkAPI, { search }).map(res => res.json()).subscribe(res => {
-        this.taiKhoanArr = res.data;
+        this.taiKhoanSrcArr = res.data;
+        this.search$.next(''); // Trigger Search
       }, error => {
         this.toasterService.pop('error', 'Lỗi!', error);
       })
@@ -60,41 +64,34 @@ export class HuynhTruongComponent implements OnInit, OnDestroy {
     this.htSub = this.store.select((state: AppState) => state.lop_hoc.huynh_truong).subscribe(res => {
       this.huynhTruongArr = res;
     });
-  }
 
-  ngOnInit() {
-    this.infoFB = this.formBuilder.group({
+    this.search$.debounceTime(400).subscribe((_str) => {
+      this.taiKhoanArr = this.taiKhoanSrcArr.filter(el => {
+        return el.ho_va_ten.toLowerCase().indexOf(_str.toLowerCase()) !== -1
+      });
     });
   }
 
+  ngOnInit() {
+  }
+
   ngOnDestroy() {
+    this.search$.complete();
     this.sub.unsubscribe();
     this.lhSub.unsubscribe();
     this.htSub.unsubscribe();
   }
 
-  save() {
-    const _url = this.lhAPI + '/' + this.lopHocInfo.id;
-    this.isLoading = true;
-
-    this._http.post(_url, this.infoFB.value).map(res => res.json()).subscribe(res => {
-      this.isLoading = false;
-      this.updateInfo.emit(res);
-    }, _err => {
-      this.isLoading = false;
-      if (typeof _err === 'string') {
-        this.toasterService.pop('error', 'Lỗi!', _err);
-      } else {
-        this.error = _err;
-        for (const _field in _err) {
-          if (_err.hasOwnProperty(_field)) {
-            _err[_field].forEach(_mess => {
-              this.toasterService.pop('error', 'Lỗi!', _mess);
-            });
-          }
-        }
-      }
+  checkAll(_arr: any[], _event) {
+    _arr.forEach(_el => {
+      _el.checked = _event.target.checked
     });
+  }
+
+  getChecked(_arr: any[]) {
+    return _arr.filter((_el) => {
+      return _el.checked === true;
+    }).length;
   }
 
   cancel() {
