@@ -43,7 +43,7 @@ export class HuynhTruongComponent implements OnInit, OnDestroy {
 
     this.sub = this.store.select((state: AppState) => state.auth.khoa_hoc_hien_tai).subscribe(_khoa => {
       const search = new URLSearchParams();
-      search.set('khoa', _khoa.id);
+      search.set('chua_xep_lop', _khoa.id);
       search.set('trang_thai', 'HOAT_DONG');
       search.set('loai_tai_khoan', 'HUYNH_TRUONG');
       this._http.get(this.tkAPI, { search }).map(res => res.json()).subscribe(res => {

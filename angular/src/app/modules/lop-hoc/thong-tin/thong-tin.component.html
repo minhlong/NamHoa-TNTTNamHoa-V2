@@ -16,7 +16,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let _item of huynhTruongArr">
-                <td>{{_item.ho_va_ten}}</td>
+                <td>{{_item.ten_thanh}} {{_item.ho_va_ten}}</td>
                 <td>{{_item.dien_thoai}}</td>
                 <td>
                   <a class="btn btn-xs btn-default" [routerLink]="['/tai-khoan/chi-tiet', _item.id]">Xem</a>
@@ -39,7 +39,7 @@
                 <td class="text-center">
                   {{((pagingTN.currentPage - 1) * pagingTN.itemsPerPage ) + _i + 1}}
                 </td>
-                <td>{{_item.ho_va_ten}}</td>
+                <td>{{_item.ten_thanh}} {{_item.ho_va_ten}}</td>
                 <td>{{_item.dien_thoai}}</td>
                 <td>
                   <a class="btn btn-xs btn-default" [routerLink]="['/tai-khoan/chi-tiet', _item.id]">Xem</a>

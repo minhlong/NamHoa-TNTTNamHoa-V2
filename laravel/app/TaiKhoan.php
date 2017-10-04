@@ -315,6 +315,12 @@ class TaiKhoan extends BaseModel implements AuthenticatableContracts
                 }
             });
         }
+
+        if ($chuaXepLop = \Request::get('chua_xep_lop')) {
+            $query->whereDoesntHave('lop_hoc', function ($query) use ($chuaXepLop) {
+                $query->where('khoa_hoc_id', $chuaXepLop);
+            });
+        }
     }
 
     /**

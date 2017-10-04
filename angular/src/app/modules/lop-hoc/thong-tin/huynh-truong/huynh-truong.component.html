@@ -14,15 +14,28 @@
           <table class="table table-hover table-bordered">
             <thead>
               <tr>
-                <th class="text-center" colspan="3">Huynh Trưởng</th>
+                <th class="text-center" colspan="3">Đã Xếp Lớp</th>
+              </tr>
+              <tr>
+                <th class="text-center">
+                  <input type="checkbox" name="checkAllXoa">
+                </th>
+                <th>
+                  Đã chọn 1
+                </th>
+                <th>
+                  <a class="btn btn-xs btn-default">Hủy Tất Cả</a>
+                </th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let _item of huynhTruongArr">
+                <td class="text-center">
+                  <input type="checkbox" name="checkAllXoa">
+                </td>
                 <td>{{_item.ho_va_ten}}</td>
-                <td>{{_item.dien_thoai}}</td>
                 <td>
-                  <a class="btn btn-xs btn-default" [routerLink]="['/tai-khoan/chi-tiet', _item.id]">Xem</a>
+                  <a class="btn btn-xs btn-default">Hủy</a>
                 </td>
               </tr>
             </tbody>
@@ -34,18 +47,28 @@
           <table class="table table-hover table-bordered">
             <thead>
               <tr>
-                <th class="text-center" colspan="4">Thiếu Nhi</th>
+                <th class="text-center" colspan="3">Chưa Xếp Lớp</th>
+              </tr>
+              <tr>
+                <th class="text-center">
+                  <input type="checkbox" name="checkAllXoa">
+                </th>
+                <th>
+                  Đã chọn 1
+                </th>
+                <th>
+                  <a class="btn btn-xs btn-default">Thêm Tất Cả</a>
+                </th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let _item of taiKhoanArr | paginate: pagingHT; let _i = index">
                 <td class="text-center">
-                  {{((pagingHT.currentPage - 1) * pagingHT.itemsPerPage ) + _i + 1}}
+                  <input type="checkbox" name="checkAllXoa">
                 </td>
                 <td>{{_item.ho_va_ten}}</td>
-                <td>{{_item.dien_thoai}}</td>
                 <td>
-                  <a class="btn btn-xs btn-default" [routerLink]="['/tai-khoan/chi-tiet', _item.id]">Xem</a>
+                  <a class="btn btn-xs btn-default">Thêm</a>
                 </td>
               </tr>
             </tbody>
