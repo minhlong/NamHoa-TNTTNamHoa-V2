@@ -29,26 +29,24 @@ class DiemDanh extends BaseModel
     public function getChuyenCanData(array $arrHocVien, $sDate)
     {
         $aResult = [];
-        if ($sDate) {
-            foreach ($arrHocVien as $tai_khoan_id) {
-                $aResult[$sDate][$tai_khoan_id] = [
-                    'di_le'   => null,
-                    'di_hoc'  => null,
-                    'ghi_chu' => null,
+        foreach ($arrHocVien as $tai_khoan_id) {
+            $aResult[$sDate][$tai_khoan_id] = [
+                'di_le'   => null,
+                'di_hoc'  => null,
+                'ghi_chu' => null,
+            ];
+        }
+        $aChuyenCan = $this->whereIn('tai_khoan_id', $arrHocVien)
+            ->where('ngay', $sDate)
+            ->where('phan_loai', null)
+            ->get();
+        if (!$aChuyenCan->isEmpty()) {
+            foreach ($aChuyenCan as $chuyenCan) {
+                $aResult[$chuyenCan->ngay][$chuyenCan->tai_khoan_id] = [
+                    'di_le'   => $chuyenCan->di_le,
+                    'di_hoc'  => $chuyenCan->di_hoc,
+                    'ghi_chu' => $chuyenCan->ghi_chu,
                 ];
-            }
-            $aChuyenCan = $this->whereIn('tai_khoan_id', $arrHocVien)
-                ->where('ngay', $sDate)
-                ->where('phan_loai', null)
-                ->get();
-            if (!$aChuyenCan->isEmpty()) {
-                foreach ($aChuyenCan as $chuyenCan) {
-                    $aResult[$chuyenCan->ngay][$chuyenCan->tai_khoan_id] = [
-                        'di_le'   => $chuyenCan->di_le,
-                        'di_hoc'  => $chuyenCan->di_hoc,
-                        'ghi_chu' => $chuyenCan->ghi_chu,
-                    ];
-                }
             }
         }
 

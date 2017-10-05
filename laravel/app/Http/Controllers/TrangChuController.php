@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 use App\DiemDanh;
 use App\KhoaHoc;
 use App\LopHoc;
-use App\Services\Library;
 use App\TaiKhoan;
+use App\Services\Library;
 use Illuminate\Http\Request;
 
 class TrangChuController extends Controller
@@ -58,9 +58,7 @@ class TrangChuController extends Controller
             ->orderBy('doi')
             ->get()->load('huynh_truong');
         foreach ($list as $obj) {
-            $id = $obj->hoc_vien()->pluck('tai_khoan.id');
-            $counter = DiemDanh::where('ngay', $currentSunday)->whereIn('tai_khoan_id', $id)->get()->count();
-            if (!$counter && !DiemDanh::checkCacheReport($currentSunday, $obj->id)) {
+            if (!DiemDanh::checkCacheReport($currentSunday, $obj->id)) {
                 $result[] = [
                     'id'  => $obj->id,
                     'ten' => $obj->taoTen(true),
