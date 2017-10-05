@@ -101,7 +101,7 @@ export class DanhSachComponent implements OnDestroy {
   }
 
   hasPermXoa(_item) {
-    if (this.curAuth.phan_quyen.includes('lop-hoc')) {
+    if (this.curAuth.phan_quyen.includes('lop-hoc') && _item.khoa_hoc_id === this.khoaHienTaiID) {
       return true;
     }
     return false;

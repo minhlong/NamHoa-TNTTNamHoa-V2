@@ -49,7 +49,7 @@ class TaiKhoanController extends Controller
         $file = \Excel::create('Danh Sach Tai Khoan_' . date('d-m-Y'), function ($excel) use ($taiKhoan, $lopHoc, $request, $library) {
             $khoaID = $request->get('khoa');
 
-            $arrRow = $this->genTaiKhoan($taiKhoan, $khoaID, $library);
+            $arrRow = $this->generateTaiKhoanData($taiKhoan, $khoaID, $library);
             $excel->sheet('Danh Sách', function ($sheet) use ($arrRow) {
                 $sheet->fromArray($arrRow)
                     ->setFreeze('C2');
@@ -76,7 +76,7 @@ class TaiKhoanController extends Controller
         ]);
     }
 
-    protected function genTaiKhoan($taiKhoan, $khoaID, $library) {
+    protected function generateTaiKhoanData($taiKhoan, $khoaID, $library) {
         $taiKhoan = $taiKhoan->locDuLieu()->withTrashed();
 
         if ($khoaID) {
@@ -409,7 +409,7 @@ class TaiKhoanController extends Controller
                 })->first();
 
                 if ($tmpLop) {
-                    App::make('App\Http\Controllers\LopHocController')->attachHocVien($tmpLop, $newItem);
+                    App::make('App\Http\Controllers\LopHocController')->themThanhVien($tmpLop, [$newItem->id]);
                     $newItem['lop_hoc_ten'] = $tmpLop->taoTen();
                 }
             }

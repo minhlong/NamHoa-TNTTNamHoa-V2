@@ -110,17 +110,6 @@ export class ThieuNhiComponent implements OnDestroy {
     })
   }
 
-  huyTatCa(_id = null) {
-    this._http.post(this.lhAPI + '/' + this.lopHocInfo.id + '/huynh-truong', {
-      id: []
-    }).map(res => res.json()).subscribe(res => {
-      this.taiKhoanSrcArr = res.data;
-      this.filter$.next(''); // Trigger Search
-    }, error => {
-      this.toasterService.pop('error', 'Lỗi!', error);
-    })
-  }
-
   them(_id = null) {
     this.isLoading = true;
     const _tmpArr = [];
@@ -134,7 +123,7 @@ export class ThieuNhiComponent implements OnDestroy {
       });
     }
 
-    this._http.post(this.lhAPI + '/' + this.lopHocInfo.id + '/huynh-truong', {
+    this._http.post(this.lhAPI + '/' + this.lopHocInfo.id + '/thanh-vien', {
       id: _tmpArr
     }).map(res => res.json()).subscribe(_res => {
       this.loadTaiKhoan();
@@ -160,7 +149,7 @@ export class ThieuNhiComponent implements OnDestroy {
       });
     }
 
-    this._http.post(this.lhAPI + '/' + this.lopHocInfo.id + '/huynh-truong/xoa', {
+    this._http.post(this.lhAPI + '/' + this.lopHocInfo.id + '/thanh-vien/xoa', {
       id: _tmpArr
     }).map(res => res.json()).subscribe(_res => {
       this.loadTaiKhoan();

@@ -8,7 +8,7 @@
     <div class="sk-bounce3"></div>
   </div>
   <div class="row">
-    <div class="form-group col-sm-4 col-md-3 form-group-sm">
+    <div class="form-group col-sm-6 col-md-3 form-group-sm">
       <label>Khóa</label>
       <select [(ngModel)]="searchForm.khoa" class="form-control">
           <option [ngValue]="null"></option>
@@ -16,7 +16,7 @@
           <option [ngValue]="khoaHienTaiID - 2">{{khoaHienTaiID - 2}}</option> 
       </select>
     </div>
-    <div class="form-group col-sm-4 col-md-3 form-group-sm">
+    <div class="form-group col-sm-6 col-md-3 form-group-sm">
       <label>Ngành</label>
       <select [(ngModel)]="searchForm.nganh" name="nganh" class="form-control">
           <option [ngValue]="null"></option>
@@ -26,7 +26,7 @@
           <option value="HT_DU_BI">{{'HT_DU_BI' | nganh}}</option>
       </select>
     </div>
-    <div class="form-group col-sm-4 col-md-3 form-group-sm">
+    <div class="form-group col-sm-6 col-md-3 form-group-sm">
       <label>Cấp</label>
       <select [(ngModel)]="searchForm.cap" name="cap" class="form-control">
           <option [ngValue]="null"></option>
@@ -39,7 +39,7 @@
           <option value="6">{{'6' | cap}}</option>
       </select>
     </div>
-    <div class="form-group col-sm-4 col-md-3 form-group-sm">
+    <div class="form-group col-sm-6 col-md-3 form-group-sm">
       <label>Đội</label>
       <select [(ngModel)]="searchForm.doi" name="doi" class="form-control">
           <option [ngValue]="null"></option>

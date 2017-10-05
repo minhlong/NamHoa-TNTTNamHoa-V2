@@ -41,8 +41,8 @@ Route::group(['middleware' => 'auth-jwt'], function () {
         Route::post('tap-tin', 'LopHocController@postTapTin')->middleware(['permission:lop-hoc']);
         Route::post('tap-tin/tao', 'LopHocController@postTao')->middleware(['permission:lop-hoc']);
         Route::post('{LopHoc}', 'LopHocController@postUpdate')->middleware(['permission:lop-hoc']);
-        Route::post('{LopHoc}/huynh-truong', 'LopHocController@postHuynhTruong')->middleware(['permission:lop-hoc']);
-        Route::post('{LopHoc}/huynh-truong/xoa', 'LopHocController@deleteHuynhTruong')->middleware(['permission:lop-hoc']);
+        Route::post('{LopHoc}/thanh-vien', 'LopHocController@postThemThanhVien')->middleware(['permission:lop-hoc']);
+        Route::post('{LopHoc}/thanh-vien/xoa', 'LopHocController@postXoaThanhVien')->middleware(['permission:lop-hoc']);
         Route::delete('{LopHoc}', 'LopHocController@postXoa')->middleware(['permission:lop-hoc']);
     });
 

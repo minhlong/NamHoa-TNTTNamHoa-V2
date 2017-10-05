@@ -162,7 +162,7 @@
     </div>
     <div class="ibox-footer" *ngIf="hasPerm() && !isLoading">
       <button class="btn btn-default btn-sm m-l-lg" (click)="tab = 'form'">Sửa</button>
-      <button class="btn btn-default btn-sm m-l-lg" (click)="tab = 'mat-khau'">Đổi Mật Khẩu</button>
+      <button class="btn btn-default btn-sm m-l-lg" (click)="tab = 'mat-khau'" *ngIf="taiKhoanInfo.loai_tai_khoan !== 'THIEU_NHI'">Đổi Mật Khẩu</button>
     </div>
   </div>
   <div *ngIf="tab === 'form'" class="ibox">
