@@ -124,35 +124,7 @@ class LopHoc extends BaseModel
 
         return $strTen;
     }
-
-    /**
-     * @return bool
-     */
-    public function luuHuynhTruongTroGiang()
-    {
-        $arrHuynhTruong = $arrTroGiang = [];
-        if ($arrTmpHuynhTruong = \Request::get('phu_trach')) {
-            foreach ($arrTmpHuynhTruong as $data) {
-                if (isset($data['id'])) {
-                    $arrHuynhTruong[] = $data['id'];
-                } else {
-                    $arrTroGiang[] = $data['text'];
-                }
-            }
-        }
-        // Add Huynh Truong
-        $this->huynh_truong()->sync($arrHuynhTruong, false); // Insert new Huynh Truong
-        $arrDelete = $this->huynh_truong()->whereNotIn('tai_khoan_id', $arrHuynhTruong)
-            ->pluck('tai_khoan_id')->toArray(); // Delete Huynh Truong
-        if (!empty($arrDelete)) {
-            $this->huynh_truong()->detach($arrDelete);
-        }
-        // Add Tro Giang
-        $this->tro_giang = $arrTroGiang;
-
-        return $this->save();
-    }
-
+    
     /**
      * Tinh Diem Chuyen Can.
      */
