@@ -39,7 +39,6 @@ export class ThongTinComponent implements OnDestroy {
     private store: Store<AppState>,
     private toasterService: ToasterService,
     private _http: JwtAuthHttp,
-    private activatedRoute: ActivatedRoute
   ) {
     this.authSub = this.store.select((state: AppState) => state.auth).subscribe(res => {
       this.curAuth = res;

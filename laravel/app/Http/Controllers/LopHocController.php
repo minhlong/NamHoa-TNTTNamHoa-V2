@@ -190,25 +190,26 @@ class LopHocController extends Controller
         return $this->getThongTin($lopHoc);
     }
 
-    // /**
-    //  * @param LopHoc $lopHoc
-    //  * @param DiemDanh $diemDanh
-    //  * @return \Symfony\Component\HttpFoundation\Response
-    //  */
-    // public function getChuyenCan(LopHoc $lopHoc, DiemDanh $diemDanh, Library $library)
-    // {
-    //     $arrHocVien = $lopHoc->hoc_vien()->pluck('tai_khoan_id')->toArray();
-    //     $sDate = $this->getSundayFromADate($lopHoc, $library, \Request::get('ngay_hoc'));
-    //     $arrOptions = [
-    //         'lop_hoc_id' => $lopHoc->id,
-    //         'ngay_hoc'   => $sDate,
-    //     ];
-    //     $result = array_merge([
-    //         'data' => $diemDanh->getChuyenCanData($arrHocVien, $sDate)
-    //     ], \Auth::user()->getPhanQuyen($arrOptions));
+    /**
+     * @param LopHoc $lopHoc
+     * @param DiemDanh $diemDanh
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function getChuyenCan(LopHoc $lopHoc, DiemDanh $diemDanh, Request $request, Library $library)
+    {
+        if(!$request->has('ngay_hoc')) {
+           return response()->json([
+                'error' => 'Không thấy dữ liệu.',
+           ], 400);
+        }
 
-    //     return response()->json($result);
-    // }
+        $arrHocVien = $lopHoc->hoc_vien()->pluck('tai_khoan_id')->toArray();
+        $sDate = $this->getSundayFromADate($lopHoc, $library, $request->ngay_hoc);
+
+        return response()->json([
+            'data' => $diemDanh->getChuyenCanData($arrHocVien, $sDate)
+        ]);
+    }
 
     // public function postChuyenCan(LopHoc $lopHoc, DiemDanh $diemDanh)
     // {
@@ -250,29 +251,29 @@ class LopHocController extends Controller
     //     $hocVien->pivot->save();
     // }
 
-    // /**
-    //  * @param LopHoc $lopHoc
-    //  * @param Library $library
-    //  * @param $ngay_hoc
-    //  * @return mixed|null
-    //  */
-    // private function getSundayFromADate(LopHoc $lopHoc, Library $library, $ngay_hoc)
-    // {
-    //     // Trong pham vi 6 ngay
-    //     $endDate = strtotime($ngay_hoc);
-    //     $startDate = strtotime('-6day', $endDate);
-    //     // Chỉ hiện ngày trong phạm vi của Khóa Học Tương Ứng
-    //     if ($startDate < strtotime($lopHoc->khoa_hoc->ngay_bat_dau)) {
-    //         $startDate = strtotime($lopHoc->khoa_hoc->ngay_bat_dau);
-    //     }
-    //     if ($endDate > strtotime($lopHoc->khoa_hoc->ngay_ket_thuc)) {
-    //         $endDate = strtotime($lopHoc->khoa_hoc->ngay_ket_thuc);
-    //     }
-    //     $startDate = date('Y-m-d', $startDate);
-    //     $endDate = date('Y-m-d', $endDate);
-    //     // Lay ngay Chua Nhat
-    //     $aDate = $library->SpecificDayBetweenDates($startDate, $endDate);
+    /**
+     * @param LopHoc $lopHoc
+     * @param Library $library
+     * @param $ngay_hoc
+     * @return mixed|null
+     */
+    private function getSundayFromADate(LopHoc $lopHoc, Library $library, $ngay_hoc)
+    {
+        // Trong pham vi 6 ngay
+        $endDate = strtotime($ngay_hoc);
+        $startDate = strtotime('-6day', $endDate);
+        // Chỉ hiện ngày trong phạm vi của Khóa Học Tương Ứng
+        if ($startDate < strtotime($lopHoc->khoa_hoc->ngay_bat_dau)) {
+            $startDate = strtotime($lopHoc->khoa_hoc->ngay_bat_dau);
+        }
+        if ($endDate > strtotime($lopHoc->khoa_hoc->ngay_ket_thuc)) {
+            $endDate = strtotime($lopHoc->khoa_hoc->ngay_ket_thuc);
+        }
+        $startDate = date('Y-m-d', $startDate);
+        $endDate = date('Y-m-d', $endDate);
+        // Lay ngay Chua Nhat
+        $aDate = $library->SpecificDayBetweenDates($startDate, $endDate);
 
-    //     return empty($aDate) ? null : array_shift($aDate);
-    // }
+        return empty($aDate) ? null : array_shift($aDate);
+    }
 }

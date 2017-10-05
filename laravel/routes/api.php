@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth-jwt'], function () {
     Route::group(['prefix' => 'lop-hoc'], function () {
         Route::get('khoa-{khoaID}', 'LopHocController@getDanhSachTheoKhoa');
         Route::get('{LopHoc}', 'LopHocController@getThongTin');
+        Route::get('{LopHoc}/chuyen-can', 'LopHocController@getChuyenCan');
 
         Route::post(null, 'LopHocController@post');
         Route::post('tap-tin', 'LopHocController@postTapTin')->middleware(['permission:lop-hoc']);
