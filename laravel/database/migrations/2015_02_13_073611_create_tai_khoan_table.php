@@ -28,15 +28,15 @@ class CreateTaiKhoanTable extends Migration
             $table->string('dia_chi')->nullable();
             $table->text('ghi_chu')->nullable();
             $table->string('giao_ho')->nullable();
-            $table->unsignedInteger('gia_pha_id')->nullable();
+            // $table->unsignedInteger('gia_pha_id')->nullable();
             $table->char('tai_khoan_cap_nhat', 5)->nullable();
             $table->timestamps();
             $table->softDeletes();
 
             $table->primary('id');
 
-            $table->foreign('gia_pha_id')
-                ->references('id')->on('gia_pha');
+            // $table->foreign('gia_pha_id')
+            //     ->references('id')->on('gia_pha');
         });
     }
 
