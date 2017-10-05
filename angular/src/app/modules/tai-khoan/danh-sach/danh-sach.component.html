@@ -129,6 +129,12 @@
             </li>
             <li>
               <div class="checkbox"><label> 
+                <input type="checkbox" [(ngModel)]="cookieState.anh" (change)="updateState()">
+                  Ảnh
+                </label></div>
+            </li>
+            <li>
+              <div class="checkbox"><label> 
                 <input type="checkbox" [(ngModel)]="cookieState.ma_so" (change)="updateState()">
                   Mã Số
                 </label></div>
@@ -216,6 +222,7 @@
           <thead>
             <tr>
               <th *ngIf="cookieState.num" class="text-center">#</th>
+              <th *ngIf="cookieState.anh" class="text-center">Ảnh</th>
               <th *ngIf="cookieState.ma_so">Mã Số</th>
               <th *ngIf="cookieState.ten_thanh">Tên Thánh</th>
               <th *ngIf="cookieState.ho_va_ten">Họ và Tên</th>
@@ -237,6 +244,11 @@
             <tr *ngFor="let _item of dataArr| paginate: cookieState; let _i = index">
               <td *ngIf="cookieState.num" class="text-center">
                 {{((cookieState.currentPage - 1) * cookieState.itemsPerPage ) + _i + 1}}
+              </td>
+              <td *ngIf="cookieState.anh" class="text-center">
+                <a href="http://res.cloudinary.com/tnttnamhoa/image/upload/d_default.png/c_crop,g_face,h_400,r_max,w_400/v1/profile/{{_item.id}}" target="_blank">
+                  <img src="http://res.cloudinary.com/tnttnamhoa/image/upload/d_default.png/c_crop,g_face,h_400,r_max,w_400/c_scale,w_20/v1/profile/{{_item.id}}" alt="{{_item.id}}">
+                </a>
               </td>
               <td *ngIf="cookieState.ma_so">{{_item.id}}</td>
               <td *ngIf="cookieState.ten_thanh">{{_item.ten_thanh}}</td>

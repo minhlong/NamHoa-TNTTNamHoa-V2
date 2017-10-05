@@ -6,6 +6,9 @@
         <button *ngIf="hasPermTaoMoi()" routerLink="/lop-hoc/tao-moi" class="btn btn-xs btn-default m-r-lg">
           Tạo Mới
         </button>
+        <button *ngIf="!isLoadingExport" (click)="exportData()" class="btn btn-xs btn-default m-r-lg">
+          Xuất Danh Sách & Tình Hình Học Tập
+        </button>
       </div>
     </div>
     <div class="ibox-content">

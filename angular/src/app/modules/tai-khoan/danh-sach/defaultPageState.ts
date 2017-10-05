@@ -21,6 +21,7 @@ export const defaultPageState = {
 
   // Show/Hide Column
   num: true,
+  anh: true,
   ma_so: true,
   ten_thanh: true,
   ho_va_ten: true,

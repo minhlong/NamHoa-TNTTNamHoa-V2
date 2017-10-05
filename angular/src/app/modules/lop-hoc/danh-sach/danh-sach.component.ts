@@ -18,7 +18,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./danh-sach.component.scss']
 })
 export class DanhSachComponent implements OnDestroy {
-  urlAPI = environment.apiURL + '/lop-hoc';
+  webAPI = environment.webURL + '/download';
+  tkAPI = environment.apiURL + '/tai-khoan';
+  lhAPI = environment.apiURL + '/lop-hoc';
+  isLoadingExport: boolean;
   isLoading = true;
   khoaHienTaiID = 0;
   dataArr = [];
@@ -53,6 +56,11 @@ export class DanhSachComponent implements OnDestroy {
     this.searchData();
   }
 
+  ngOnDestroy() {
+    this.sub.unsubscribe()
+    this.authSub.unsubscribe()
+  }
+
   private resetPageState() {
     this.cookieState = JSON.parse(JSON.stringify(defaultPageState));
     this.cookieState.Fkhoa = this.khoaHienTaiID;
@@ -65,7 +73,7 @@ export class DanhSachComponent implements OnDestroy {
     this.updateState();
 
     const search = this.getFilter();
-    this._http.get(this.urlAPI + '/khoa-' + this.cookieState.Fkhoa, { search }).map(res => res.json()).subscribe(res => {
+    this._http.get(this.lhAPI + '/khoa-' + this.cookieState.Fkhoa, { search }).map(res => res.json()).subscribe(res => {
       this.dataArr = res.data;
       this.isLoading = false;
     }, error => {
@@ -109,7 +117,7 @@ export class DanhSachComponent implements OnDestroy {
 
   xoa(_item) {
     this.isLoading = true;
-    const _url = this.urlAPI + '/' + _item.id;
+    const _url = this.lhAPI + '/' + _item.id;
     this._http.delete(_url, null).map(res => res.json()).subscribe(res => {
       this.toasterService.pop('success', 'Đã xóa ' + _item.ten);
       this.searchData();
@@ -123,8 +131,18 @@ export class DanhSachComponent implements OnDestroy {
     this.router.navigate(['/tai-khoan/chi-tiet/', taiKhoan.id]);
   }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe()
-    this.authSub.unsubscribe()
+  exportData() {
+    this.isLoadingExport = true;
+    const search = this.getFilter();
+    search.set('khoa', this.cookieState.Fkhoa);
+    this.toasterService.pop('info', 'Đang tải');
+
+    this._http.get(this.tkAPI + '/export', { search }).map(res => res.json()).subscribe(res => {
+      this.isLoadingExport = false;
+      window.open(this.webAPI + '/' + res.data);
+    }, error => {
+      this.isLoadingExport = false;
+      this.toasterService.pop('error', 'Lỗi!', error);
+    });
   }
 }
