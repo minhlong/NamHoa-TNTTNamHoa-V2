@@ -1,15 +1,126 @@
-import { Component, OnInit } from '@angular/core';
+import { ToasterService } from 'angular2-toaster';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { URLSearchParams } from '@angular/http';
+
+import { JwtAuthHttp } from '../../../services/http-auth.service';
+import { environment } from './../../../../environments/environment';
+import { AppState } from './../../../store/reducers/index';
+import { GetLopInfoSucc } from '../../../store/actions/lop-hoc.action';
+import { ngay } from '../../shared/convert-type.pipe';
 
 @Component({
   selector: 'app-diem-so',
   templateUrl: './diem-so.component.html',
   styleUrls: ['./diem-so.component.scss']
 })
-export class DiemSoComponent implements OnInit {
+export class DiemSoComponent implements OnDestroy {
+  private lhAPI = environment.apiURL + '/lop-hoc';
 
-  constructor() { }
+  tab = 'thong-tin'
+  isLoading = false;
 
-  ngOnInit() {
+  pagingTN = {
+    id: 'tnTable',
+    itemsPerPage: 10,
+    currentPage: 1,
   }
 
+  lopHocID: null;
+
+  curAuth: any;
+  dotKTHienTai: number;
+  dotKTArr: any = [];
+  lanKTArr: any = [];
+  thieuNhiArr = [];
+  apiData: {
+    data: any[],
+    sunday: null,
+  };
+
+  sub$: any;
+  subAuth$: any;
+  subTn$: any;
+
+  constructor(
+    private activeRoute: ActivatedRoute,
+    private store: Store<AppState>,
+    private toasterService: ToasterService,
+    private _http: JwtAuthHttp,
+  ) {
+
+    this.sub$ = this.activeRoute.parent.params.subscribe(params => {
+      this.lopHocID = params['id'];
+    });
+    this.subAuth$ = this.store.select((state: AppState) => state.auth).subscribe(res => {
+      this.curAuth = res;
+      this.dotKTHienTai = res.khoa_hoc_hien_tai.cap_nhat_dot_kiem_tra;
+      this.dotKTArr = Array(res.khoa_hoc_hien_tai.so_dot_kiem_tra).fill(null).map((x, i) => i + 1);
+      this.lanKTArr = Array(res.khoa_hoc_hien_tai.so_lan_kiem_tra).fill(null).map((x, i) => i + 1);
+    });
+    this.subTn$ = this.store.select((state: AppState) => state.lop_hoc.thieu_nhi).subscribe(res => {
+      this.thieuNhiArr = res;
+      this.loadData();
+    });
+  }
+
+  ngOnDestroy() {
+    this.sub$.unsubscribe();
+    this.subAuth$.unsubscribe();
+    this.subTn$.unsubscribe();
+  }
+
+  loadData() {
+    const search = new URLSearchParams();
+    // search.set('ngay_hoc', ngay(this.ngayHoc));
+
+    // this.isLoading = true;
+    // this.apiData = null;
+    // this._http.get(this.lhAPI + '/' + this.lopHocID + '/chuyen-can', { search })
+    //   .map(res => res.json()).subscribe(_res => {
+    //     this.apiData = _res;
+    //     this.isLoading = false;
+    //   }, error => {
+    //     this.toasterService.pop('error', 'Lỗi!', error);
+    //     this.isLoading = false;
+    //   })
+  }
+
+  findChuyenCan(tn) {
+    let res;
+    if (this.apiData) {
+      res = this.apiData.data.find(c => c.tai_khoan_id === tn.id);
+    }
+    return res ? res : {};
+  }
+
+  /**
+   * Kiểm tra quyền điểm danh
+   * + Tài khoản được phân quyền 'diem-danh'
+   * + Hạn điểm danh còn hiệu lực trong phần cấu hình Khóa Học
+   */
+  hasPerm() {
+    if (this.curAuth.phan_quyen.includes('diem-danh')) {
+      return true;
+    }
+
+    if (this.apiData) {
+      const eventStartTime = new Date(this.apiData.sunday);
+      const eventEndTime = new Date(new Date().toJSON().slice(0, 10));
+      const duration = (eventEndTime.valueOf() - eventStartTime.valueOf()) / (60 * 60 * 24 * 1000);
+      if (duration < this.curAuth.khoa_hoc_hien_tai.ngung_diem_danh) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  update(_info) {
+    this.tab = 'thong-tin';
+    if (_info) {
+      this.loadData();
+    }
+  }
 }

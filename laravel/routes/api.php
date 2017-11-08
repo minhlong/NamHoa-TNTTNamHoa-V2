@@ -47,7 +47,7 @@ Route::group(['middleware' => 'auth-jwt'], function () {
         Route::delete('{LopHoc}', 'LopHocController@postXoa')->middleware(['permission:lop-hoc']);
         
         Route::get('{LopHoc}/chuyen-can', 'LopHocController@getChuyenCan');
-        Route::post('{LopHoc}/chuyen-can', 'LopHocController@postChuyenCan');
+        Route::post('{LopHoc}/chuyen-can', 'LopHocController@postChuyenCan'); // Fix: Update permission
     });
 
     /* Khoa Hoc */
