@@ -29,25 +29,12 @@ class DiemDanh extends BaseModel
     public function getChuyenCanData(array $arrHocVien, $sDate)
     {
         $aResult = [];
-        foreach ($arrHocVien as $tai_khoan_id) {
-            $aResult[$sDate][$tai_khoan_id] = [
-                'di_le'   => null,
-                'di_hoc'  => null,
-                'ghi_chu' => null,
-            ];
-        }
         $aChuyenCan = $this->whereIn('tai_khoan_id', $arrHocVien)
             ->where('ngay', $sDate)
             ->where('phan_loai', null)
-            ->get();
-        if (!$aChuyenCan->isEmpty()) {
-            foreach ($aChuyenCan as $chuyenCan) {
-                $aResult[$chuyenCan->ngay][$chuyenCan->tai_khoan_id] = [
-                    'di_le'   => $chuyenCan->di_le,
-                    'di_hoc'  => $chuyenCan->di_hoc,
-                    'ghi_chu' => $chuyenCan->ghi_chu,
-                ];
-            }
+            ->get(['tai_khoan_id','di_le','di_hoc','ghi_chu']);
+        foreach ($aChuyenCan as $chuyenCan) {
+            $aResult[] = $chuyenCan;
         }
 
         return $aResult;
@@ -56,39 +43,30 @@ class DiemDanh extends BaseModel
     /**
      * @param LopHoc $lopHoc
      */
-    public function luuChuyenCan(LopHoc $lopHoc)
+    public function luuChuyenCan(LopHoc $lopHoc, $taiKhoanArr, $date)
     {
-        $arrData = \Request::all();
-        foreach ($arrData as $date => $arrTmp) {
-            foreach ($arrTmp as $taiKhoanID => $arrChuyenCan) {
-                // Update old data to Logs
-                $this->where('tai_khoan_id', $taiKhoanID)
-                    ->where('ngay', $date)
-                    ->where('phan_loai', null)
-                    ->update(['phan_loai' => 'LOGS']);
-                // Insert new Data
-                if ($arrChuyenCan['di_le'] || $arrChuyenCan['di_hoc'] || $arrChuyenCan['ghi_chu']) {
-                    $this->create([
-                        'tai_khoan_id' => $taiKhoanID,
-                        'ngay'         => $date,
-                        'di_le'        => $arrChuyenCan['di_le'],
-                        'di_hoc'       => $arrChuyenCan['di_hoc'],
-                        'ghi_chu'      => $arrChuyenCan['ghi_chu'],
-                    ]);
-                }
-            }
-            /* Update Cache for Reporting on Dashboard Page - 2 Weeks*/
-            $this->setCacheReport($date, $lopHoc->id);
+        foreach ($taiKhoanArr as $taiKhoanID => $arrChuyenCan) {
+            $this->firstOrNew(['tai_khoan_id' => $taiKhoanID, 'ngay' => $date, 'phan_loai' => null])
+            ->fill([
+                'di_le'        => $arrChuyenCan['di_le'],
+                'di_hoc'       => $arrChuyenCan['di_hoc'],
+                'ghi_chu'      => $arrChuyenCan['ghi_chu'],
+            ])
+            ->save();
         }
+        
+        /* Lưu lại cache để detect những lớp đã/chưa điểm danh - 2 Weeks*/
+        $this->daDiemDanh($date, $lopHoc->id);
+        
         $lopHoc->tinhDiemChuyenCan();
     }
 
-    protected function setCacheReport($date, $lopHocID)
+    protected function daDiemDanh($date, $lopHocID)
     {
         \Cache::put("chuyen-can.{$date}.{$lopHocID}", true, 20160);
     }
 
-    protected function checkCacheReport($date, $lopHocID)
+    protected function chuaDiemDanh($date, $lopHocID)
     {
         return \Cache::has("chuyen-can.{$date}.{$lopHocID}");
     }

@@ -213,7 +213,8 @@ class LopHocController extends Controller
         }
 
         return response()->json([
-            'data' => $diemDanh->getChuyenCanData($arrHocVien, $sDate)
+            'data'   => $diemDanh->getChuyenCanData($arrHocVien, $sDate),
+            'sunday' => $sDate,
         ]);
     }
 
@@ -245,7 +246,7 @@ class LopHocController extends Controller
 
     public function postChuyenCan(LopHoc $lopHoc, DiemDanh $diemDanh)
     {
-        $diemDanh->luuChuyenCan($lopHoc);
+        // $diemDanh->luuChuyenCan($lopHoc);
 
         return response()->json(true);
     }

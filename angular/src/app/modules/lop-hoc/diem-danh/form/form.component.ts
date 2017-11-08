@@ -8,13 +8,21 @@ import { environment } from './../../../../../environments/environment';
 import { AppState } from './../../../../store/reducers/index';
 
 @Component({
-  selector: 'app-form-thong-tin',
+  selector: 'app-form-diem-danh',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss']
 })
-export class FormThongTinComponent implements OnInit, OnDestroy {
+export class FormDiemDanhComponent implements OnInit, OnDestroy {
   private urlAPI = environment.apiURL + '/lop-hoc';
+  @Input() apiData;
+  @Input() thieuNhiArr;
   @Output() updateInfo = new EventEmitter();
+
+  pagingTN = {
+    id: 'tnTable',
+    itemsPerPage: 10,
+    currentPage: 1,
+  }
 
   isLoading: boolean;
   infoFB: FormGroup;
@@ -25,7 +33,7 @@ export class FormThongTinComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private toasterService: ToasterService,
-    private formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private _http: JwtAuthHttp,
   ) {
     this.lhSub = this.store.select((state: AppState) => state.lop_hoc.thong_tin).subscribe(res => {
@@ -34,12 +42,34 @@ export class FormThongTinComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.infoFB = this.formBuilder.group({
-      nganh: this.lopHocInfo.nganh,
-      cap: this.lopHocInfo.cap,
-      doi: this.lopHocInfo.doi,
-      vi_tri_hoc: this.lopHocInfo.vi_tri_hoc,
+    this.infoFB = this._fb.group({
+      thieu_nhi: this._fb.array(this.initChuyenCan()),
     });
+    console.log(this.infoFB);
+  }
+
+  private initChuyenCan() {
+    const tmpArr = [];
+    this.thieuNhiArr.forEach(_tn => {
+      const tmpTn = this.findChuyenCan(_tn);
+      tmpArr.push(this._fb.group({
+        id: _tn.id,
+        ho_va_ten: _tn.ho_va_ten,
+        di_le: tmpTn.di_le,
+        di_hoc: tmpTn.di_hoc,
+        ghi_chu: tmpTn.ghi_chu,
+      }));
+    });
+
+    return tmpArr;
+  }
+
+  private findChuyenCan(tn) {
+    let res;
+    if (this.apiData) {
+      res = this.apiData.data.find(c => c.tai_khoan_id === tn.id);
+    }
+    return res ? res : {};
   }
 
   ngOnDestroy() {

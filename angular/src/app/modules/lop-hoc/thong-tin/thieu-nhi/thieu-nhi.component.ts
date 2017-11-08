@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
@@ -23,13 +24,11 @@ export class ThieuNhiComponent implements OnDestroy {
 
   @Output() updateInfo = new EventEmitter();
 
+  lopHocID: null;
   khoaHienTaiID: any;
   isLoading: boolean;
   error: any;
-  sub: any;
-  htSub: any;
-  lhSub: any;
-  lopHocInfo: any = {};
+
   thieuNhiArr = [];
   taiKhoanArr = [];
   filter$ = new Subject<any>();
@@ -53,24 +52,27 @@ export class ThieuNhiComponent implements OnDestroy {
     currentPage: 1,
   }
 
+  sub$: any;
+  subKhoa$: any;
+  subHt$: any;
+
   constructor(
+    private activeRoute: ActivatedRoute,
     private store: Store<AppState>,
     private toasterService: ToasterService,
     private formBuilder: FormBuilder,
     private _http: JwtAuthHttp,
   ) {
 
-    this.sub = this.store.select((state: AppState) => state.auth.khoa_hoc_hien_tai).subscribe(_khoa => {
+    this.sub$ = this.activeRoute.parent.params.subscribe(params => {
+      this.lopHocID = params['id'];
+    });
+    this.subKhoa$ = this.store.select((state: AppState) => state.auth.khoa_hoc_hien_tai).subscribe(_khoa => {
       this.khoaHienTaiID = _khoa.id;
       this.searchForm.khoa = _khoa.id - 1;
       this.loadTaiKhoan();
     });
-
-    this.lhSub = this.store.select((state: AppState) => state.lop_hoc.thong_tin).subscribe(res => {
-      this.lopHocInfo = res;
-    });
-
-    this.htSub = this.store.select((state: AppState) => state.lop_hoc.thieu_nhi).subscribe(res => {
+    this.subHt$ = this.store.select((state: AppState) => state.lop_hoc.thieu_nhi).subscribe(res => {
       this.thieuNhiArr = res;
     });
 
@@ -85,9 +87,9 @@ export class ThieuNhiComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.filter$.complete();
-    this.sub.unsubscribe();
-    this.lhSub.unsubscribe();
-    this.htSub.unsubscribe();
+    this.sub$.unsubscribe();
+    this.subKhoa$.unsubscribe();
+    this.subHt$.unsubscribe();
   }
 
   private loadTaiKhoan() {
@@ -123,7 +125,7 @@ export class ThieuNhiComponent implements OnDestroy {
       });
     }
 
-    this._http.post(this.lhAPI + '/' + this.lopHocInfo.id + '/thanh-vien', {
+    this._http.post(this.lhAPI + '/' + this.lopHocID + '/thanh-vien', {
       id: _tmpArr
     }).map(res => res.json()).subscribe(_res => {
       this.loadTaiKhoan();
@@ -149,7 +151,7 @@ export class ThieuNhiComponent implements OnDestroy {
       });
     }
 
-    this._http.post(this.lhAPI + '/' + this.lopHocInfo.id + '/thanh-vien/xoa', {
+    this._http.post(this.lhAPI + '/' + this.lopHocID + '/thanh-vien/xoa', {
       id: _tmpArr
     }).map(res => res.json()).subscribe(_res => {
       this.loadTaiKhoan();

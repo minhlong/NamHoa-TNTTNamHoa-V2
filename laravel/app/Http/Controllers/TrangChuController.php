@@ -58,7 +58,7 @@ class TrangChuController extends Controller
             ->orderBy('doi')
             ->get()->load('huynh_truong');
         foreach ($list as $obj) {
-            if (!DiemDanh::checkCacheReport($currentSunday, $obj->id)) {
+            if (!DiemDanh::chuaDiemDanh($currentSunday, $obj->id)) {
                 $result[] = [
                     'id'  => $obj->id,
                     'ten' => $obj->taoTen(true),

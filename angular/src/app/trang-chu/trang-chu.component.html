@@ -8,7 +8,7 @@
             <button class="btn btn-default btn-xs pull-right" *ngIf="!isLoading" (click)="loadData()">Tải lại trang</button>
           </div>
         </div>
-        <div class="ibox-content table-r1 {{isLoading ? 'sk-loading' : null}}">
+        <div class="ibox-content table-r1" [class.sk-loading]="isLoading">
           <div class="sk-spinner sk-spinner-three-bounce">
             <div class="sk-bounce1"></div>
             <div class="sk-bounce2"></div>
@@ -83,7 +83,7 @@
             <button class="btn btn-default btn-xs pull-right" *ngIf="!isLoading" (click)="loadData()">Tải lại trang</button>
           </div>
         </div>
-        <div class="ibox-content table-r1 {{isLoading ? 'sk-loading' : null}}">
+        <div class="ibox-content table-r1" [class.sk-loading]="isLoading">
           <div class="sk-spinner sk-spinner-three-bounce">
             <div class="sk-bounce1"></div>
             <div class="sk-bounce2"></div>
