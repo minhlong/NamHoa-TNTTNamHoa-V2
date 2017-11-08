@@ -6,7 +6,7 @@
   </div>
   <div class="row">
     <div class="col-md-12 table-responsive">
-      <form [formGroup]="infoFB">
+      <form [formGroup]="formGroup">
         <table class="table table-hover table-bordered">
           <thead>
             <tr *ngIf="apiData">
@@ -20,7 +20,7 @@
             </tr>
           </thead>
           <tbody formArrayName="thieu_nhi">
-            <ng-container *ngFor="let _item of infoFB.controls.thieu_nhi.controls | paginate: pagingTN; let _i = index">
+            <ng-container *ngFor="let _item of formGroup.controls.thieu_nhi.controls | paginate: pagingTN; let _i = index">
               <tr [formGroupName]="((pagingTN.currentPage - 1) * pagingTN.itemsPerPage ) + _i">
                 <td> {{_item.get('ho_va_ten').value}}</td>
                 <td class="text-center">
@@ -67,43 +67,6 @@
       </pagination-template>
     </div>
   </div>
-  <!-- <form [formGroup]="infoFB" (submit)="save()" class="row">
-    <div [class.has-error]="error && error.nganh" div class="form-group form-group-sm col-sm-4">
-      <label class="control-label">Ngành</label>
-      <select name="nganh" formControlName="nganh" class="form-control">
-        <option value="AU_NHI">{{'AU_NHI' | nganh}}</option>
-        <option value="THIEU_NHI">{{'THIEU_NHI' | nganh}}</option>
-        <option value="NGHIA_SI">{{'NGHIA_SI' | nganh}}</option>
-        <option value="HT_DU_BI">{{'HT_DU_BI' | nganh}}</option>
-      </select>
-    </div>
-    <div [class.has-error]="error && error.cap" div class="form-group form-group-sm col-sm-4">
-      <label class="control-label">Cấp</label>
-      <select name="cap" formControlName="cap" class="form-control">
-        <option [ngValue]="null"></option>
-        <option value="CHIEN_CON">{{'CHIEN_CON' | cap}}</option>
-        <option value="1">{{'1' | cap}}</option>
-        <option value="2">{{'2' | cap}}</option>
-        <option value="3">{{'3' | cap}}</option>
-        <option value="4">{{'4' | cap}}</option>
-        <option value="5">{{'5' | cap}}</option>
-        <option value="6">{{'6' | cap}}</option>
-      </select>
-    </div>
-    <div [class.has-error]="error && error.doi" div class="form-group form-group-sm col-sm-4">
-      <label class="control-label">Đội</label>
-      <select name="doi" formControlName="doi" class="form-control">
-        <option [ngValue]="null"></option>
-        <option value="1">{{'1' | doi}}</option>
-        <option value="2">{{'2' | doi}}</option>
-        <option value="3">{{'3' | doi}}</option>
-      </select>
-    </div>
-    <div [class.has-error]="error && error.vi_tri_hoc" class="form-group form-group-sm col-sm-12">
-      <label class="control-label">Vị trí học</label>
-      <input type="text" formControlName="vi_tri_hoc" class="form-control">
-    </div>
-  </form> -->
 </div>
 <div class="ibox-footer" *ngIf="!isLoading">
   <button (click)="cancel()" class="btn btn-default btn-sm m-l-lg">Thoát</button>

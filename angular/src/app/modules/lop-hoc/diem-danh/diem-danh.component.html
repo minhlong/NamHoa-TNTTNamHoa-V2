@@ -8,7 +8,7 @@
     <div class="row m-b-sm">
       <div class="col-sm-offset-4 col-sm-4">
         <div class="input-group input-group-sm">
-          <input type="text" [(ngModel)]="ngayHoc" [textMask]="maskOption" class="form-control text-center">
+          <input type="text" [(ngModel)]="ngayHoc" [textMask]="maskOption" (keyup.enter)="loadData()" class="form-control text-center">
           <span class="input-group-btn">
           <button (click)="loadData()" class="btn btn-default">
             Tìm

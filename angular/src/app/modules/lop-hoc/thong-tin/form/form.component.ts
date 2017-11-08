@@ -17,7 +17,7 @@ export class FormThongTinComponent implements OnInit, OnDestroy {
   @Output() updateInfo = new EventEmitter();
 
   isLoading: boolean;
-  infoFB: FormGroup;
+  formGroup: FormGroup;
   error: any;
   lhSub: any;
   lopHocInfo: any = {};
@@ -34,7 +34,7 @@ export class FormThongTinComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.infoFB = this.formBuilder.group({
+    this.formGroup = this.formBuilder.group({
       nganh: this.lopHocInfo.nganh,
       cap: this.lopHocInfo.cap,
       doi: this.lopHocInfo.doi,
@@ -50,7 +50,7 @@ export class FormThongTinComponent implements OnInit, OnDestroy {
     const _url = this.urlAPI + '/' + this.lopHocInfo.id;
     this.isLoading = true;
 
-    this._http.post(_url, this.infoFB.value).map(res => res.json()).subscribe(res => {
+    this._http.post(_url, this.formGroup.value).map(res => res.json()).subscribe(res => {
       this.isLoading = false;
       this.updateInfo.emit(res);
     }, _err => {

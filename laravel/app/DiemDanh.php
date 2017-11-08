@@ -45,8 +45,8 @@ class DiemDanh extends BaseModel
      */
     public function luuChuyenCan(LopHoc $lopHoc, $taiKhoanArr, $date)
     {
-        foreach ($taiKhoanArr as $taiKhoanID => $arrChuyenCan) {
-            $this->firstOrNew(['tai_khoan_id' => $taiKhoanID, 'ngay' => $date, 'phan_loai' => null])
+        foreach ($taiKhoanArr as $arrChuyenCan) {
+            $this->firstOrNew(['tai_khoan_id' => $arrChuyenCan['id'], 'ngay' => $date, 'phan_loai' => null])
             ->fill([
                 'di_le'        => $arrChuyenCan['di_le'],
                 'di_hoc'       => $arrChuyenCan['di_hoc'],

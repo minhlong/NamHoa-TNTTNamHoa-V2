@@ -244,11 +244,11 @@ class LopHocController extends Controller
         return empty($aDate) ? null : array_shift($aDate);
     }
 
-    public function postChuyenCan(LopHoc $lopHoc, DiemDanh $diemDanh)
+    public function postChuyenCan(LopHoc $lopHoc, Request $request, DiemDanh $diemDanh)
     {
-        // $diemDanh->luuChuyenCan($lopHoc);
+        $diemDanh->luuChuyenCan($lopHoc, $request->thieu_nhi, $request->ngay);
 
-        return response()->json(true);
+        return response()->json($request);
     }
 
     // public function getHocLuc(LopHoc $lopHoc, DiemSo $diemSo)

@@ -23,20 +23,20 @@ Route::group(['middleware' => 'auth-jwt'], function () {
     Route::group(['prefix' => 'tai-khoan'], function () {
         Route::get(null, 'TaiKhoanController@getDanhSach');
         Route::get('export', 'TaiKhoanController@generateExcelFile');
-        Route::get('{TaiKhoan}', 'TaiKhoanController@getThongTin');
 
         Route::post('tap-tin', 'TaiKhoanController@postTapTin')->middleware(['permission:tai-khoan']);
         Route::post('tap-tin/tao', 'TaiKhoanController@postTao')->middleware(['permission:tai-khoan']);
+
+        Route::get('{TaiKhoan}', 'TaiKhoanController@getThongTin');
         Route::post('{TaiKhoan}', 'TaiKhoanController@postUpdate');
-        Route::post('{TaiKhoan}/mat-khau', 'TaiKhoanController@postMatKhau');
         Route::delete('{TaiKhoan}', 'TaiKhoanController@postXoa')->middleware(['permission:tai-khoan']);
+        Route::post('{TaiKhoan}/mat-khau', 'TaiKhoanController@postMatKhau');
     });
 
     /* Lop Hoc */
     Route::group(['prefix' => 'lop-hoc'], function () {
         Route::get('khoa-{khoaID}', 'LopHocController@getDanhSachTheoKhoa');
         Route::get('{LopHoc}', 'LopHocController@getThongTin');
-        Route::get('{LopHoc}/chuyen-can', 'LopHocController@getChuyenCan');
 
         Route::post(null, 'LopHocController@post');
         Route::post('tap-tin', 'LopHocController@postTapTin')->middleware(['permission:lop-hoc']);
@@ -45,6 +45,9 @@ Route::group(['middleware' => 'auth-jwt'], function () {
         Route::post('{LopHoc}/thanh-vien', 'LopHocController@postThemThanhVien')->middleware(['permission:lop-hoc']);
         Route::post('{LopHoc}/thanh-vien/xoa', 'LopHocController@postXoaThanhVien')->middleware(['permission:lop-hoc']);
         Route::delete('{LopHoc}', 'LopHocController@postXoa')->middleware(['permission:lop-hoc']);
+        
+        Route::get('{LopHoc}/chuyen-can', 'LopHocController@getChuyenCan');
+        Route::post('{LopHoc}/chuyen-can', 'LopHocController@postChuyenCan');
     });
 
     /* Khoa Hoc */

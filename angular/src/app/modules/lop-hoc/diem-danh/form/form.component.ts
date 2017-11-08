@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
@@ -13,10 +14,11 @@ import { AppState } from './../../../../store/reducers/index';
   styleUrls: ['./form.component.scss']
 })
 export class FormDiemDanhComponent implements OnInit, OnDestroy {
-  private urlAPI = environment.apiURL + '/lop-hoc';
   @Input() apiData;
   @Input() thieuNhiArr;
   @Output() updateInfo = new EventEmitter();
+
+  private urlAPI = environment.apiURL + '/lop-hoc';
 
   pagingTN = {
     id: 'tnTable',
@@ -24,28 +26,33 @@ export class FormDiemDanhComponent implements OnInit, OnDestroy {
     currentPage: 1,
   }
 
+  lopHocID: null;
   isLoading: boolean;
-  infoFB: FormGroup;
+  formGroup: FormGroup;
   error: any;
-  lhSub: any;
-  lopHocInfo: any = {};
+  sub$: any;
 
   constructor(
+    private activeRoute: ActivatedRoute,
     private store: Store<AppState>,
     private toasterService: ToasterService,
     private _fb: FormBuilder,
     private _http: JwtAuthHttp,
   ) {
-    this.lhSub = this.store.select((state: AppState) => state.lop_hoc.thong_tin).subscribe(res => {
-      this.lopHocInfo = res;
+    this.sub$ = this.activeRoute.parent.params.subscribe(params => {
+      this.lopHocID = params['id'];
     });
   }
 
   ngOnInit() {
-    this.infoFB = this._fb.group({
+    this.formGroup = this._fb.group({
+      ngay: this.apiData.sunday,
       thieu_nhi: this._fb.array(this.initChuyenCan()),
     });
-    console.log(this.infoFB);
+  }
+
+  ngOnDestroy() {
+    this.sub$.unsubscribe();
   }
 
   private initChuyenCan() {
@@ -72,15 +79,11 @@ export class FormDiemDanhComponent implements OnInit, OnDestroy {
     return res ? res : {};
   }
 
-  ngOnDestroy() {
-    this.lhSub.unsubscribe();
-  }
-
   save() {
-    const _url = this.urlAPI + '/' + this.lopHocInfo.id;
+    const _url = this.urlAPI + '/' + this.lopHocID + '/chuyen-can';
     this.isLoading = true;
 
-    this._http.post(_url, this.infoFB.value).map(res => res.json()).subscribe(res => {
+    this._http.post(_url, this.formGroup.value).map(res => res.json()).subscribe(res => {
       this.isLoading = false;
       this.updateInfo.emit(res);
     }, _err => {

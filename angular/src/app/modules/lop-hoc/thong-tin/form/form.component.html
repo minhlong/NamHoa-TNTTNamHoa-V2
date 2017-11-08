@@ -7,7 +7,7 @@
     <div class="sk-bounce2"></div>
     <div class="sk-bounce3"></div>
   </div>
-  <form [formGroup]="infoFB" (submit)="save()" class="row">
+  <form [formGroup]="formGroup" (submit)="save()" class="row">
     <div [class.has-error]="error && error.nganh" div class="form-group form-group-sm col-sm-4">
       <label class="control-label">Ngành</label>
       <select name="nganh" formControlName="nganh" class="form-control">
