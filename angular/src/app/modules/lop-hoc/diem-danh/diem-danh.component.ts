@@ -62,7 +62,9 @@ export class DiemDanhComponent implements OnDestroy {
     });
     this.subTn$ = this.store.select((state: AppState) => state.lop_hoc.thieu_nhi).subscribe(res => {
       this.thieuNhiArr = res;
-      this.loadData();
+      if (this.thieuNhiArr.length) {
+        this.loadData();
+      }
     });
   }
 
@@ -99,6 +101,7 @@ export class DiemDanhComponent implements OnDestroy {
   /**
    * Kiểm tra quyền điểm danh
    * + Tài khoản được phân quyền 'diem-danh'
+   * hoặc
    * + Hạn điểm danh còn hiệu lực trong phần cấu hình Khóa Học
    */
   hasPerm() {

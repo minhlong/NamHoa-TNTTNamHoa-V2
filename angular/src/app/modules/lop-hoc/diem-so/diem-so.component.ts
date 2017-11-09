@@ -28,9 +28,10 @@ export class DiemSoComponent implements OnDestroy {
   }
 
   lopHocID: null;
-
   curAuth: any;
+  lanKTHienTai: number;
   dotKTHienTai: number;
+  dotKTKhoaHoc: number;
   dotKTArr: any = [];
   lanKTArr: any = [];
   thieuNhiArr = [];
@@ -55,13 +56,15 @@ export class DiemSoComponent implements OnDestroy {
     });
     this.subAuth$ = this.store.select((state: AppState) => state.auth).subscribe(res => {
       this.curAuth = res;
-      this.dotKTHienTai = res.khoa_hoc_hien_tai.cap_nhat_dot_kiem_tra;
+      this.dotKTHienTai = this.dotKTKhoaHoc = res.khoa_hoc_hien_tai.cap_nhat_dot_kiem_tra;
       this.dotKTArr = Array(res.khoa_hoc_hien_tai.so_dot_kiem_tra).fill(null).map((x, i) => i + 1);
       this.lanKTArr = Array(res.khoa_hoc_hien_tai.so_lan_kiem_tra).fill(null).map((x, i) => i + 1);
     });
     this.subTn$ = this.store.select((state: AppState) => state.lop_hoc.thieu_nhi).subscribe(res => {
       this.thieuNhiArr = res;
-      this.loadData();
+      if (this.thieuNhiArr.length) {
+        this.loadData();
+      }
     });
   }
 
@@ -72,49 +75,48 @@ export class DiemSoComponent implements OnDestroy {
   }
 
   loadData() {
-    const search = new URLSearchParams();
-    // search.set('ngay_hoc', ngay(this.ngayHoc));
-
-    // this.isLoading = true;
-    // this.apiData = null;
-    // this._http.get(this.lhAPI + '/' + this.lopHocID + '/chuyen-can', { search })
-    //   .map(res => res.json()).subscribe(_res => {
-    //     this.apiData = _res;
-    //     this.isLoading = false;
-    //   }, error => {
-    //     this.toasterService.pop('error', 'Lỗi!', error);
-    //     this.isLoading = false;
-    //   })
-  }
-
-  findChuyenCan(tn) {
-    let res;
-    if (this.apiData) {
-      res = this.apiData.data.find(c => c.tai_khoan_id === tn.id);
+    if (!this.dotKTHienTai) {
+      return;
     }
-    return res ? res : {};
+    const search = new URLSearchParams();
+    search.set('dot', this.dotKTHienTai.toString());
+
+    this.isLoading = true;
+    this.apiData = null;
+    this._http.get(this.lhAPI + '/' + this.lopHocID + '/hoc-luc', { search })
+      .map(res => res.json()).subscribe(_res => {
+        this.apiData = _res;
+        console.log(this.apiData);
+        this.isLoading = false;
+      }, error => {
+        this.toasterService.pop('error', 'Lỗi!', error);
+        this.isLoading = false;
+      })
   }
 
   /**
-   * Kiểm tra quyền điểm danh
+   * Kiểm tra quyền vào điểm
    * + Tài khoản được phân quyền 'diem-danh'
-   * + Hạn điểm danh còn hiệu lực trong phần cấu hình Khóa Học
+   * hoặc
+   * + Đợt kiểm tra hiện tại trong khóa học phải được mở
    */
   hasPerm() {
     if (this.curAuth.phan_quyen.includes('diem-danh')) {
       return true;
     }
 
-    if (this.apiData) {
-      const eventStartTime = new Date(this.apiData.sunday);
-      const eventEndTime = new Date(new Date().toJSON().slice(0, 10));
-      const duration = (eventEndTime.valueOf() - eventStartTime.valueOf()) / (60 * 60 * 24 * 1000);
-      if (duration < this.curAuth.khoa_hoc_hien_tai.ngung_diem_danh) {
-        return true;
-      }
+    if (this.dotKTHienTai &&
+      this.dotKTKhoaHoc &&
+      this.dotKTHienTai.toString() === this.dotKTKhoaHoc.toString()) {
+      return true;
     }
 
     return false;
+  }
+
+  openForm(_lan) {
+    this.lanKTHienTai = _lan;
+    this.tab = 'form';
   }
 
   update(_info) {

@@ -7,8 +7,8 @@
     </div>
     <div class="row m-b-sm">
       <div class="col-xs-offset-3 col-xs-6">
-        <select [(ngModel)]="dotKTHienTai" class="form-control input-sm">
-          <option *ngFor="let _item of dotKTArr" [value]="_item">Lần {{_item|json}}</option>
+        <select (change)="loadData()" [(ngModel)]="dotKTHienTai" class="form-control input-sm">
+          <option *ngFor="let _item of dotKTArr" [value]="_item">Lần {{_item}}</option>
         </select>
       </div>
     </div>
@@ -17,19 +17,17 @@
         <table class="table table-hover table-bordered">
           <thead>
             <tr *ngIf="apiData">
-              <th colspan="4" class="text-center">Lần: {{apiData.sunday | ngay}}</th>
+              <th colspan="4" class="text-center">Lần: {{apiData.dot}}</th>
             </tr>
             <tr>
               <th class="text-center">Tên</th>
               <th *ngFor="let _item of lanKTArr" class="text-center">Đợt {{_item}}</th>
-              <th class="text-center">Ghi Chú</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let _item of thieuNhiArr | paginate: pagingTN; let _i = index">
               <td> {{_item.ho_va_ten}}</td>
               <td *ngFor="let _item of lanKTArr" class="text-center"></td>
-              <td></td>
             </tr>
           </tbody>
         </table>
@@ -55,10 +53,10 @@
     </div>
   </div>
   <div class="ibox-footer" *ngIf="hasPerm() && !isLoading">
-    <button (click)="tab = 'form'" class="btn btn-default btn-sm m-l-lg">Sửa</button>
+    <button *ngFor="let _item of lanKTArr" (click)="openForm(_item)" class="btn btn-default btn-sm m-l-lg">Sửa Đợt {{_item}}</button>
   </div>
 </ng-container>
 
 <ng-container *ngIf="tab === 'form'" class="ibox">
-  <app-form-diem-danh [thieuNhiArr]="thieuNhiArr" [apiData]="apiData" (updateInfo)="update($event)"></app-form-diem-danh>
+  <app-form-diem-so [thieuNhiArr]="thieuNhiArr" [apiData]="apiData" [lanKT]="lanKTHienTai" (updateInfo)="update($event)"></app-form-diem-so>
 </ng-container>

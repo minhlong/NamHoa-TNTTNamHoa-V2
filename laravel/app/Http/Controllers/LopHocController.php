@@ -251,27 +251,30 @@ class LopHocController extends Controller
         return response()->json($request);
     }
 
-    // public function getHocLuc(LopHoc $lopHoc, DiemSo $diemSo)
-    // {
-    //     $arrHocVien = $lopHoc->hoc_vien()->pluck('tai_khoan_id')->toArray();
-    //     $tmpDot = \Request::get('dot');
-    //     $arrOptions = [
-    //         'lop_hoc_id' => $lopHoc->id,
-    //         'dotKT'      => $tmpDot,
-    //     ];
-    //     $result = array_merge([
-    //         'data' => $diemSo->getHocLuc($arrHocVien, $lopHoc->khoa_hoc, $tmpDot)
-    //     ], \Auth::user()->getPhanQuyen($arrOptions));
+    public function getHocLuc(LopHoc $lopHoc, Request $request, DiemSo $diemSo)
+    {
+        $arrHocVien = $lopHoc->hoc_vien()->pluck('tai_khoan_id')->toArray();
+        // $tmpDot = \Request::get('dot');
+        // $arrOptions = [
+        //     'lop_hoc_id' => $lopHoc->id,
+        //     'dotKT'      => $tmpDot,
+        // ];
+        // $result = array_merge([
+            
+        // ], \Auth::user()->getPhanQuyen($arrOptions));
 
-    //     return response()->json(empty($result) ? null : $result);
-    // }
+        return response()->json([
+            'data' => $diemSo->getHocLuc($arrHocVien, $lopHoc->khoa_hoc, $request->dot),
+            'dot' => $request->dot,
+        ]);
+    }
 
-    // public function postHocLuc(LopHoc $lopHoc, DiemSo $diemSo)
-    // {
-    //     $diemSo->luuHocLuc($lopHoc);
+    public function postHocLuc(LopHoc $lopHoc, Request $request, DiemSo $diemSo)
+    {
+        $diemSo->luuHocLuc($lopHoc, $request->thieu_nhi, $request->dot, $request->lan);
 
-    //     return response()->json(true);
-    // }
+        return response()->json(true);
+    }
 
     // public function postXepHang(LopHoc $lopHoc, tmpItem $tmpItem)
     // {

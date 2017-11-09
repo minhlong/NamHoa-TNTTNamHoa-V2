@@ -26,16 +26,16 @@
             </tr>
             <tr>
               <th class="text-center">Tên</th>
-              <th class="text-center">Đi Học</th>
               <th class="text-center">Đi Lễ</th>
+              <th class="text-center">Đi Học</th>
               <th class="text-center">Ghi Chú</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let _item of thieuNhiArr | paginate: pagingTN; let _i = index">
               <td> {{_item.ho_va_ten}}</td>
-              <td class="text-center">{{findChuyenCan(_item).di_hoc}}</td>
               <td class="text-center">{{findChuyenCan(_item).di_le}}</td>
+              <td class="text-center">{{findChuyenCan(_item).di_hoc}}</td>
               <td>{{findChuyenCan(_item).ghi_chu}}</td>
             </tr>
           </tbody>
