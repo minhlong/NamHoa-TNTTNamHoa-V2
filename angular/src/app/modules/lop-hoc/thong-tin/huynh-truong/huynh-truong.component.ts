@@ -24,7 +24,7 @@ export class HuynhTruongComponent implements OnDestroy {
 
   @Output() updateInfo = new EventEmitter();
 
-  lopHocID: null;
+  lopHocID: number;
   khoaHienTaiID: any;
   isLoading: boolean;
   error: any;

@@ -7,8 +7,6 @@ import { URLSearchParams } from '@angular/http';
 import { JwtAuthHttp } from '../../../services/http-auth.service';
 import { environment } from './../../../../environments/environment';
 import { AppState } from './../../../store/reducers/index';
-import { GetLopInfoSucc } from '../../../store/actions/lop-hoc.action';
-import { ngay } from '../../shared/convert-type.pipe';
 
 @Component({
   selector: 'app-diem-so',
@@ -27,7 +25,7 @@ export class DiemSoComponent implements OnDestroy {
     currentPage: 1,
   }
 
-  lopHocID: null;
+  lopHocID: number;
   curAuth: any;
   lanKTHienTai: number;
   dotKTHienTai: number;
@@ -52,14 +50,23 @@ export class DiemSoComponent implements OnDestroy {
   ) {
 
     this.sub$ = this.activeRoute.parent.params.subscribe(params => {
-      this.lopHocID = params['id'];
+      this.lopHocID = params['id']; // Lấy ID Lớp từ URL
     });
+
+    /**
+     * Lấy thông tin khóa học
+     * + Các ràng buộc hạn chế về về đợt, lần, điểm danh
+     */
     this.subAuth$ = this.store.select((state: AppState) => state.auth).subscribe(res => {
       this.curAuth = res;
       this.dotKTHienTai = this.dotKTKhoaHoc = res.khoa_hoc_hien_tai.cap_nhat_dot_kiem_tra;
       this.dotKTArr = Array(res.khoa_hoc_hien_tai.so_dot_kiem_tra).fill(null).map((x, i) => i + 1);
       this.lanKTArr = Array(res.khoa_hoc_hien_tai.so_lan_kiem_tra).fill(null).map((x, i) => i + 1);
     });
+
+    /**
+     * Lấy thông tin thiếu nhi từ lớp học
+     */
     this.subTn$ = this.store.select((state: AppState) => state.lop_hoc.thieu_nhi).subscribe(res => {
       this.thieuNhiArr = res;
       if (this.thieuNhiArr.length) {
@@ -74,6 +81,9 @@ export class DiemSoComponent implements OnDestroy {
     this.subTn$.unsubscribe();
   }
 
+  /**
+   * Lấy dữ liệu điêm từ server
+   */
   loadData() {
     if (!this.dotKTHienTai) {
       return;
@@ -86,7 +96,6 @@ export class DiemSoComponent implements OnDestroy {
     this._http.get(this.lhAPI + '/' + this.lopHocID + '/hoc-luc', { search })
       .map(res => res.json()).subscribe(_res => {
         this.apiData = _res;
-        console.log(this.apiData);
         this.isLoading = false;
       }, error => {
         this.toasterService.pop('error', 'Lỗi!', error);
@@ -98,14 +107,16 @@ export class DiemSoComponent implements OnDestroy {
    * Kiểm tra quyền vào điểm
    * + Tài khoản được phân quyền 'diem-danh'
    * hoặc
-   * + Đợt kiểm tra hiện tại trong khóa học phải được mở
+   * + Chỉ được điểm danh lớp của mình
+   *   và Đợt kiểm tra hiện tại trong khóa học phải được mở
    */
   hasPerm() {
     if (this.curAuth.phan_quyen.includes('diem-danh')) {
       return true;
     }
 
-    if (this.dotKTHienTai &&
+    if (this.curAuth.lop_hoc_hien_tai_id.toString() === this.lopHocID.toString() &&
+      this.dotKTHienTai &&
       this.dotKTKhoaHoc &&
       this.dotKTHienTai.toString() === this.dotKTKhoaHoc.toString()) {
       return true;
@@ -114,6 +125,10 @@ export class DiemSoComponent implements OnDestroy {
     return false;
   }
 
+  /**
+   * Mở form để chỉnh sửa
+   * @param _lan Lần kiểm tra thứ x
+   */
   openForm(_lan) {
     this.lanKTHienTai = _lan;
     this.tab = 'form';
@@ -124,5 +139,21 @@ export class DiemSoComponent implements OnDestroy {
     if (_info) {
       this.loadData();
     }
+  }
+
+  /**
+   * Tìm dữ liệu điểm của học viên ở lần kiểm tra x
+   * @param _tn Học viên
+   * @param _lan Lần kiểm tra
+   */
+  findDiemSo(_tn, _lan) {
+    let res;
+    if (this.apiData) {
+      res = this.apiData.data.find(c => c.tai_khoan_id === _tn.id && c.lan === _lan);
+      if (res) {
+        return res;
+      }
+    }
+    return res ? res : {};
   }
 }

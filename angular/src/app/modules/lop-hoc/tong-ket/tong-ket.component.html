@@ -1,3 +1,86 @@
-<p>
-  tong-ket works!
-</p>
+<ng-container *ngIf="tab === 'thong-tin'">
+  <div class="ibox-content" [class.sk-loading]="isLoading">
+    <div class="sk-spinner sk-spinner-three-bounce">
+      <div class="sk-bounce1"></div>
+      <div class="sk-bounce2"></div>
+      <div class="sk-bounce3"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th rowspan="2">Họ và Tên</th>
+              <th rowspan="2">Học Lực</th>
+              <th rowspan="2">Chuyên Cần</th>
+              <th rowspan="2">(HL+CC)/2</th>
+              <th rowspan="2">Xếp Hạng</th>
+              <ng-container *ngIf="apiData">
+                <!-- Kiểm Tra  -->
+                <th class="text-center" [colSpan]="apiData.SoLan.length" *ngFor="let _dot of apiData.SoDot">K/Tra Lần {{_dot}}</th>
+                <!-- Chuyên Cần  -->
+                <th class="text-center" colspan="2" *ngFor="let _obj of apiData.DiemDanh | objectKeys">{{_obj.key | ngay}}</th>
+              </ng-container>
+            </tr>
+            <tr>
+              <ng-container *ngIf="apiData">
+                <!-- Kiểm Tra  -->
+                <ng-container *ngFor="let _dot of apiData.SoDot">
+                  <th class="text-center" *ngFor="let _lan of apiData.SoLan">Đợt {{_lan}}</th>
+                </ng-container>
+                <!-- Chuyên Cần  -->
+                <ng-container *ngFor="let _obj of apiData.DiemDanh | objectKeys">
+                  <th class="text-center">Đi Lễ</th>
+                  <th class="text-center">Đi Học</th>
+                </ng-container>
+              </ng-container>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let _item of thieuNhiArr | paginate: pagingTN; let _i = index">
+              <td>{{_item.ho_va_ten}}</td>
+              <td>{{findTongKet(_item).hoc_luc}}</td>
+              <td>{{findTongKet(_item).chuyen_can}}</td>
+              <td>{{findTongKet(_item).trung_binh_cong}}</td>
+              <td>{{findTongKet(_item).xep_hang | xepHang}}</td>
+              <ng-container *ngIf="apiData">
+                <!-- Kiểm Tra  -->
+                <ng-container *ngFor="let _dot of apiData.SoDot">
+                  <td class="text-center" *ngFor="let _lan of apiData.SoLan">
+                    <!-- {{findDiemSo(_item,_dot,_lan)}} -->
+                    {{apiData.DiemSo[_item.id][_dot][_lan]}}
+                  </td>
+                </ng-container>
+                <!-- Chuyên Cần  -->
+                <ng-container *ngFor="let _obj of apiData.DiemDanh | objectKeys">
+                  <td class="text-center">{{_obj.val[_item.id]['di_le']}}</td>
+                  <td class="text-center">{{_obj.val[_item.id]['di_hoc']}}</td>
+                </ng-container>
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <pagination-template #ep="paginationApi" [id]="pagingTN.id" (pageChange)="pagingTN.currentPage = $event;">
+          <div class="text-center">
+            <div class="btn-group">
+              <button *ngIf="ep.isFirstPage()" type="button" class="btn btn-sm btn-white disabled"><i class="fa fa-chevron-left"></i></button>
+              <button (click)="ep.previous()" *ngIf="!ep.isFirstPage()" type="button" class="btn btn-sm btn-white"><i class="fa fa-chevron-left"></i></button>
+              <ng-container *ngFor="let page of ep.pages">
+                <button *ngIf="ep.getCurrent() !== page.value" (click)="ep.setCurrent(page.value)" class="btn btn-sm btn-white">{{ page.label }}</button>
+                <button *ngIf="ep.getCurrent() === page.value" class="btn btn-sm btn-white active">{{ page.label }}</button>
+              </ng-container>
+              <button *ngIf="ep.isLastPage()" type="button" class="btn btn-sm btn-white disabled"><i class="fa fa-chevron-right"></i></button>
+              <button (click)="ep.next()" *ngIf="!ep.isLastPage()" type="button" class="btn btn-sm btn-white"><i class="fa fa-chevron-right"></i></button>
+            </div>
+          </div>
+        </pagination-template>
+      </div>
+    </div>
+  </div>
+  <div class="ibox-footer">
+  </div>
+</ng-container>

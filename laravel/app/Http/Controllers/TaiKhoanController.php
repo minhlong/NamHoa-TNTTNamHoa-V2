@@ -205,8 +205,6 @@ class TaiKhoanController extends Controller
      */
     public function getTongKet(LopHoc $lopHoc, Request $request)
     {
-        $khoaHoc = KhoaHoc::findOrFail($request->get('khoa'));
-
         $arrResult = [
             'Data'     => [],
             'DiemDanh' => [],
@@ -216,7 +214,15 @@ class TaiKhoanController extends Controller
         ];
         $arrHocVien = collect();
 
-        $arrLop = LopHoc::locDuLieu()->get();
+        if($lopHoc->id) {
+            $khoaID = $lopHoc->khoa_hoc_id;
+            $arrLop[] = $lopHoc;
+        } else {
+            $khoaID = $request->get('khoa');
+            $arrLop = LopHoc::locDuLieu()->get();
+        }
+        $khoaHoc = KhoaHoc::findOrFail($khoaID);
+
         foreach ($arrLop as $lopHoc) {
             $arrTmp = $lopHoc->hoc_vien()->locDuLieu()->get();
             $tenLop = $lopHoc->taoTen(true);

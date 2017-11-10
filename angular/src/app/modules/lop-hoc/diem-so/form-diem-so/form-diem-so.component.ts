@@ -27,7 +27,7 @@ export class FormDiemSoComponent implements OnInit, OnDestroy {
     currentPage: 1,
   }
 
-  lopHocID: null;
+  lopHocID: number;
   isLoading: boolean;
   formGroup: FormGroup;
   error: any;
@@ -46,7 +46,7 @@ export class FormDiemSoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(this.lanKT, this.apiData);
+    // Tạo form để submit lên server
     this.formGroup = this._fb.group({
       dot: this.apiData.dot,
       lan: this.lanKT,
@@ -58,10 +58,13 @@ export class FormDiemSoComponent implements OnInit, OnDestroy {
     this.sub$.unsubscribe();
   }
 
+  /**
+   * Tạo form cho từng học viên
+   */
   private initHocLuc() {
     const tmpArr = [];
     this.thieuNhiArr.forEach(_tn => {
-      const tmpTn = this.findChuyenCan(_tn);
+      const tmpTn = this.findHocLuc(_tn);
       tmpArr.push(this._fb.group({
         id: _tn.id,
         ho_va_ten: _tn.ho_va_ten,
@@ -72,7 +75,11 @@ export class FormDiemSoComponent implements OnInit, OnDestroy {
     return tmpArr;
   }
 
-  private findChuyenCan(tn) {
+  /**
+   * Tìm học viên để fill dữ liệu vào form
+   * @param tn Thiếu Nhi
+   */
+  private findHocLuc(tn) {
     let res;
     if (this.apiData) {
       res = this.apiData.data.find(c => c.tai_khoan_id === tn.id && c.lan === this.lanKT);
@@ -80,6 +87,24 @@ export class FormDiemSoComponent implements OnInit, OnDestroy {
     return res ? res : {};
   }
 
+  /**
+   * Chỉ cho nhập số
+   */
+  _keyPress(event: any) {
+    const pattern = /[0-9\.]/;
+    const inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      // invalid character, prevent input
+      event.preventDefault();
+    }
+  }
+
+  /**
+   * Lưu điểm
+   *    Nếu OK -> quay lại trang chính
+   *    Nếu lỗi -> hiện lỗi
+   */
   save() {
     const _url = this.urlAPI + '/' + this.lopHocID + '/hoc-luc';
     this.isLoading = true;
@@ -104,6 +129,9 @@ export class FormDiemSoComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Thoát -> quay lại trang chính
+   */
   cancel() {
     this.updateInfo.emit(null);
   }

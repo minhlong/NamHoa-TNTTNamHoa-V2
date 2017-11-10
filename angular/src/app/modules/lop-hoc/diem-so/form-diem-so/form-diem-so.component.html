@@ -10,10 +10,10 @@
         <table class="table table-hover table-bordered">
           <thead>
             <tr *ngIf="apiData">
-              <th colspan="4" class="text-center">Lần: {{apiData.dot}}</th>
+              <th colspan="4" class="text-center">Kiểm Tra Lần: {{apiData.dot}}</th>
             </tr>
             <tr>
-              <th class="text-center">Tên</th>
+              <th>Họ và Tên</th>
               <th class="text-center">Đợt {{lanKT}}</th>
             </tr>
           </thead>
@@ -22,7 +22,7 @@
               <tr [formGroupName]="((pagingTN.currentPage - 1) * pagingTN.itemsPerPage ) + _i">
                 <td> {{_item.get('ho_va_ten').value}}</td>
                 <td class="text-center">
-                  <input type="text" name="diem" formControlName="diem" class="form-control input-sm">
+                  <input type="text" name="diem" formControlName="diem" (keypress)="_keyPress($event)" class="form-control input-sm">
                 </td>
               </tr>
             </ng-container>

@@ -26,7 +26,7 @@ export class FormDiemDanhComponent implements OnInit, OnDestroy {
     currentPage: 1,
   }
 
-  lopHocID: null;
+  lopHocID: number;
   isLoading: boolean;
   formGroup: FormGroup;
   error: any;

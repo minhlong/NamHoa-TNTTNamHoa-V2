@@ -7,7 +7,6 @@ import { URLSearchParams } from '@angular/http';
 import { JwtAuthHttp } from '../../../services/http-auth.service';
 import { environment } from './../../../../environments/environment';
 import { AppState } from './../../../store/reducers/index';
-import { GetLopInfoSucc } from '../../../store/actions/lop-hoc.action';
 import { ngay } from '../../shared/convert-type.pipe';
 
 @Component({
@@ -32,7 +31,7 @@ export class DiemDanhComponent implements OnDestroy {
     guide: true,
   }
 
-  lopHocID: null;
+  lopHocID: number;
   ngayHoc: string;
 
   curAuth: any;
@@ -90,10 +89,17 @@ export class DiemDanhComponent implements OnDestroy {
       })
   }
 
+  /**
+   * Tìm đữ liệu cho học viên
+   * @param tn Học Viên
+   */
   findChuyenCan(tn) {
     let res;
     if (this.apiData) {
       res = this.apiData.data.find(c => c.tai_khoan_id === tn.id);
+      if (res) {
+        return res;
+      }
     }
     return res ? res : {};
   }
@@ -102,14 +108,16 @@ export class DiemDanhComponent implements OnDestroy {
    * Kiểm tra quyền điểm danh
    * + Tài khoản được phân quyền 'diem-danh'
    * hoặc
-   * + Hạn điểm danh còn hiệu lực trong phần cấu hình Khóa Học
+   * + Chỉ được điểm danh lớp của mình
+   *   và
+   *   Hạn điểm danh còn hiệu lực trong phần cấu hình Khóa Học
    */
   hasPerm() {
     if (this.curAuth.phan_quyen.includes('diem-danh')) {
       return true;
     }
 
-    if (this.apiData) {
+    if (this.curAuth.lop_hoc_hien_tai_id.toString() === this.lopHocID.toString() && this.apiData) {
       const eventStartTime = new Date(this.apiData.sunday);
       const eventEndTime = new Date(new Date().toJSON().slice(0, 10));
       const duration = (eventEndTime.valueOf() - eventStartTime.valueOf()) / (60 * 60 * 24 * 1000);
