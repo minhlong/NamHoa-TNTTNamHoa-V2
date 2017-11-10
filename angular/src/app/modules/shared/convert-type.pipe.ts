@@ -23,6 +23,23 @@ export class XepHang implements PipeTransform {
 }
 
 @Pipe({
+  name: 'xepLoai'
+})
+export class XepLoai implements PipeTransform {
+
+  transform(value: any, args?: string): any {
+    if (value === 'GIOI' && args === 'ChuyenCan') {
+      value = 'TOT';
+    }
+    const _tmp = appConst.find(el => el.loai_du_lieu === 'XEP_LOAI' && el.ky_hieu === value);
+    if (_tmp) {
+      return _tmp.ten
+    }
+    return value;
+  }
+}
+
+@Pipe({
   name: 'loaiTK'
 })
 export class LoaiTK implements PipeTransform {

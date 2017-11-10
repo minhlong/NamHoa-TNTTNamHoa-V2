@@ -38,10 +38,16 @@ export const appConst = [
 
   { loai_du_lieu: 'XEP_HANG', ky_hieu: 'O_LAI_LOP', 'ten': 'Ở Lại' },
   { loai_du_lieu: 'XEP_HANG', ky_hieu: 'LEN_LOP', 'ten': 'Lên Lớp' },
-  { loai_du_lieu: 'XEP_HANG', ky_hieu: 'KHUYEN_KHICH', 'ten': 'Khuyến Khích' },
-  { loai_du_lieu: 'XEP_HANG', ky_hieu: 'III', 'ten': 'Hạng III' },
-  { loai_du_lieu: 'XEP_HANG', ky_hieu: 'II', 'ten': 'Hạng II' },
-  { loai_du_lieu: 'XEP_HANG', ky_hieu: 'I', 'ten': 'Hạng I' },
+  { loai_du_lieu: 'XEP_HANG', ky_hieu: 'KHUYEN_KHICH', 'ten': 'Hạng Khuyến Khích' },
+  { loai_du_lieu: 'XEP_HANG', ky_hieu: 'III', 'ten': 'Hạng 3' },
+  { loai_du_lieu: 'XEP_HANG', ky_hieu: 'II', 'ten': 'Hạng 2' },
+  { loai_du_lieu: 'XEP_HANG', ky_hieu: 'I', 'ten': 'Hạng 1' },
+
+  { loai_du_lieu: 'XEP_LOAI', ky_hieu: 'YEU', 'ten': 'Yếu' },
+  { loai_du_lieu: 'XEP_LOAI', ky_hieu: 'TB', 'ten': 'Trung Bình' },
+  { loai_du_lieu: 'XEP_LOAI', ky_hieu: 'KHA', 'ten': 'Khá' },
+  { loai_du_lieu: 'XEP_LOAI', ky_hieu: 'TOT', 'ten': 'Tốt' },
+  { loai_du_lieu: 'XEP_LOAI', ky_hieu: 'GIOI', 'ten': 'Giỏi' },
 
   { loai_du_lieu: 'PHIEU', ky_hieu: 'K', 'ten': 'Vắng không phép' },
   { loai_du_lieu: 'PHIEU', ky_hieu: 'P', 'ten': 'Vắng có phép' },

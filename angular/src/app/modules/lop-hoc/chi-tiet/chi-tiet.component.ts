@@ -14,11 +14,10 @@ import * as LopHocAction from './../../../store/actions/lop-hoc.action';
 export class ChiTietComponent implements OnDestroy {
 
   isLoading = true;
-  lopHocID: string;
   lopHocInfo: any = {};
 
-  parSub: any;
-  lhSub: any;
+  sub$: any;
+  subLH$: any;
 
   constructor(
     private router: Router,
@@ -26,20 +25,19 @@ export class ChiTietComponent implements OnDestroy {
     private toasterService: ToasterService,
     private activatedRoute: ActivatedRoute
   ) {
-    this.parSub = this.activatedRoute.params.subscribe(params => {
-      this.lopHocID = params['id'];
-      this.store.dispatch(new LopHocAction.GetLopInfo(this.lopHocID));
+    this.sub$ = this.activatedRoute.params.subscribe(params => {
+      this.store.dispatch(new LopHocAction.GetLopInfo(params['id']));
     })
 
-    this.lhSub = this.store.select((state: AppState) => state.lop_hoc.thong_tin).subscribe(res => {
+    this.subLH$ = this.store.select((state: AppState) => state.lop_hoc.thong_tin).subscribe(res => {
       this.lopHocInfo = res;
       this.isLoading = false;
     });
   }
 
   ngOnDestroy() {
-    this.parSub.unsubscribe();
-    this.lhSub.unsubscribe();
+    this.sub$.unsubscribe();
+    this.subLH$.unsubscribe();
   }
 
   activeRoute(routename: string): boolean {

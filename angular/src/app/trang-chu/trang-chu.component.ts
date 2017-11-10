@@ -14,7 +14,7 @@ import { AppState } from './../store/reducers/index';
   styleUrls: ['./trang-chu.component.scss']
 })
 export class TrangChuComponent implements OnDestroy {
-  sub: any;
+  sub$: any;
   khoaHienTai: any;
   urlAPI = environment.apiURL + '/trang-chu';
   isLoading = true;
@@ -37,8 +37,9 @@ export class TrangChuComponent implements OnDestroy {
     this.resetData();
     this.loadData();
 
-    this.sub = this.store.select((state: AppState) => state.auth.khoa_hoc_hien_tai).subscribe(x => {
-      this.khoaHienTai = x;
+    // Lấy thông số cơ cấu điểm và ràng buộc từ thông tin khóa học
+    this.sub$ = this.store.select((state: AppState) => state.auth.khoa_hoc_hien_tai).subscribe(res => {
+      this.khoaHienTai = res;
     });
   }
 
@@ -84,6 +85,6 @@ export class TrangChuComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    this.sub$.unsubscribe();
   }
 }

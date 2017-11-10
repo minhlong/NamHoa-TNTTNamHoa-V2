@@ -43,7 +43,7 @@
               <td>{{_item.ho_va_ten}}</td>
               <td>{{findTongKet(_item).hoc_luc}}</td>
               <td>{{findTongKet(_item).chuyen_can}}</td>
-              <td>{{findTongKet(_item).trung_binh_cong}}</td>
+              <td>{{findTongKet(_item).tb_canam}}</td>
               <td>{{findTongKet(_item).xep_hang | xepHang}}</td>
               <td *ngIf="ckbGhiChu">{{findTongKet(_item).ghi_chu}}</td>
               <td *ngIf="ckbGhiChu">{{findTongKet(_item).nhan_xet}}</td>
@@ -102,5 +102,5 @@
   <app-form-nhan-xet [thieuNhiArr]="thieuNhiArr" [apiData]="apiData" (updateInfo)="update($event)"></app-form-nhan-xet>
 </ng-container>
 <ng-container *ngIf="tab === 'phieu-lien-lac'" class="ibox">
-  <app-phieu-lien-lac [thieuNhiArr]="thieuNhiArr" [apiData]="apiData" (updateInfo)="update($event)"></app-phieu-lien-lac>
+  <app-phieu-lien-lac [apiData]="apiData" (updateInfo)="update($event)"></app-phieu-lien-lac>
 </ng-container>

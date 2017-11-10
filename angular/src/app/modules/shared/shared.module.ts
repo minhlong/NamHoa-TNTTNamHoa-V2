@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   NewlinePipe,
-  XepHang, LoaiTK, TrangThai, Nganh, Cap, Doi, GioiTinh,
+  XepLoai, XepHang, LoaiTK, TrangThai, Nganh, Cap, Doi, GioiTinh,
   HienThiNgay, ObjectKeysPipe, Phieu
 } from './convert-type.pipe';
 
@@ -11,6 +11,7 @@ import {
     CommonModule,
   ],
   declarations: [
+    XepLoai,
     XepHang,
     LoaiTK,
     TrangThai,
@@ -24,6 +25,7 @@ import {
     ObjectKeysPipe,
   ],
   exports: [
+    XepLoai,
     XepHang,
     LoaiTK,
     TrangThai,

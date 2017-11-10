@@ -103,8 +103,6 @@ export class TongKetComponent implements OnDestroy {
     if (this.apiData) {
       res = this.apiData.Data.find(c => c.id === tn.id);
       if (res) {
-        res.pivot.trung_binh_cong = (res.pivot.hoc_luc + res.pivot.chuyen_can) / 2;
-        res.pivot.trung_binh_cong = Math.round(res.pivot.trung_binh_cong * 1000) / 1000;
         return res.pivot;
       }
     }
@@ -118,7 +116,6 @@ export class TongKetComponent implements OnDestroy {
   hasPermXepHang() {
     if (this.curAuth.phan_quyen.includes('danh-gia-cuoi-nam') ||
       this.curAuth.lop_hoc_hien_tai_id.toString() === this.lopHocID.toString()) {
-
       return true;
     }
     return false;
