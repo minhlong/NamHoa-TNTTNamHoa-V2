@@ -102,5 +102,5 @@
   <app-form-nhan-xet [thieuNhiArr]="thieuNhiArr" [apiData]="apiData" (updateInfo)="update($event)"></app-form-nhan-xet>
 </ng-container>
 <ng-container *ngIf="tab === 'phieu-lien-lac'" class="ibox">
-  <app-phieu-lien-lac (updateInfo)="update($event)"></app-phieu-lien-lac>
+  <app-phieu-lien-lac [thieuNhiArr]="thieuNhiArr" [apiData]="apiData" (updateInfo)="update($event)"></app-phieu-lien-lac>
 </ng-container>

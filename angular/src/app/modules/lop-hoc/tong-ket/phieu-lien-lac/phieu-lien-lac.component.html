@@ -1,6 +1,267 @@
-<p>
-  phieu-lien-lac works!
-</p>
-<div class="ibox-footer" *ngIf="!isLoading">
+<div class="ibox-content hidden-print">
+  <form class="form-horizontal">
+    <div class="form-group form-group-sm">
+      <label class="col-sm-4 control-label">Linh Mục</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control">
+      </div>
+    </div>
+    <div class="form-group form-group-sm">
+      <label class="col-sm-4 control-label">Xứ Đoàn Trưởng</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control">
+      </div>
+    </div>
+    <div class="form-group form-group-sm">
+      <label class="col-sm-4 control-label">Ngày Xét Duyệt</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control">
+      </div>
+    </div>
+    <div class="form-group form-group-sm">
+      <label class="col-sm-4 control-label">Huynh Trưởng</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control">
+      </div>
+    </div>
+  </form>
+</div>
+<div class="ibox-footer hidden-print" *ngIf="!isLoading">
   <button (click)="cancel()" class="btn btn-default btn-sm m-l-lg">Thoát</button>
+  <button (click)="print();" class="btn btn-primary btn-sm m-l-lg">In</button>
+</div>
+<div class="ibox-content">
+  <div class="break-page"></div>
+  <ng-container *ngFor="let _item of thieuNhiArr | paginate: pagingTN; let _i = index">
+    <div class="row">
+      <div class="invoice col-md-12">
+        <div class="row invoice-logo">
+          <div class="col-xs-12">
+            <div class="invoice-logo-space">
+              <img src="/assets/images/logo.png" class="img-responsive" alt="">
+            </div>
+            <div class="organ-name">
+              Giáo xứ Nam Hòa
+              <br> Đoàn TNTT Chúa Chiên Lành
+            </div>
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="col-xs-12">
+            <h1 class="bold">PHIẾU BÁO KẾT QUẢ HỌC GIÁO LÝ</h1>
+            <h2 class="bold">Năm học: 2017 - 2018</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-9">
+            <ul class="list-unstyled profile-content">
+              <li class="ng-binding">
+                Em Đaminh Nguyễn Nguyên Chương
+              </li>
+              <li class="ng-binding">
+                Khóa Học 2017 - Ngành Nghĩa Sĩ - Cấp 4 - Đội 2
+              </li>
+              <li class="ng-binding">
+                Huynh trưởng phụ trách:
+              </li>
+            </ul>
+          </div>
+          <div class="col-xs-3 text-center">
+            <div class="profile-image">
+              <img src="http://res.cloudinary.com/tnttnamhoa/image/upload/d_default.png/c_crop,g_face,h_400,r_max,w_400/c_scale,w_200/v1/profile/ht028" alt="ht028">
+              <button type="button" class="btn btn-circle btn-default">14432</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <h4>Chuyên Cần</h4>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th colspan="4" class="text-center">
+                    Đi Lễ
+                    <span class="sub-title">(Số Đợt|Điểm)</span>
+                  </th>
+                  <th colspan="2" class="text-center">
+                    Đi Học
+                    <span class="sub-title">(Số Đợt|Điểm)</span>
+                  </th>
+                  <th rowspan="2" class="text-center">Tổng (10)</th>
+                  <th rowspan="2" class="text-center">Xếp Loại</th>
+                </tr>
+                <tr>
+                  <td class="text-center" style="white-space: inherit">
+                    Phiếu Trắng
+                  </td>
+                  <td class="text-center" style="white-space: inherit">
+                    Phiếu Hồng
+                  </td>
+                  <td class="text-center" style="white-space: inherit">
+                    Vắng Không Phép
+                  </td>
+                  <td class="text-center" style="white-space: inherit">
+                    Vắng Có Phép
+                  </td>
+                  <td class="text-center" style="white-space: inherit">
+                    Vắng Không Phép
+                  </td>
+                  <td class="text-center" style="white-space: inherit">
+                    Vắng Có Phép
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-center no-wrap">
+                    0 | 0
+                  </td>
+                  <td class="text-center no-wrap">
+                    0 | 0
+                  </td>
+                  <td class="text-center no-wrap">
+                    1 | -0.5
+                  </td>
+                  <td class="text-center no-wrap">
+                    0 | 0
+                  </td>
+                  <td class="text-center no-wrap">
+                    1 | -0.5
+                  </td>
+                  <td class="text-center no-wrap">
+                    0 | 0
+                  </td>
+                  <td class="text-center no-wrap">
+                    9
+                  </td>
+                  <td class="text-center no-wrap">
+                    Tốt
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <h4>Học Lực</h4>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th colspan="2" class="text-center">
+                    Lần 1
+                  </th>
+                  <th rowspan="2" class="text-center">TB</th>
+                  <th rowspan="2" class="text-center">Xếp Loại</th>
+                </tr>
+                <tr>
+                  <td class="text-center">
+                    Đợt 1
+                  </td>
+                  <td class="text-center">
+                    Đợt 2
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-center no-wrap">
+                    9
+                  </td>
+                  <td class="text-center no-wrap">
+
+                  </td>
+                  <td class="text-center no-wrap">
+                    9
+                  </td>
+                  <td class="text-center no-wrap">
+                    Giỏi
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row" style="margin-bottom: 30px">
+          <div class="col-xs-12">
+            <h4>Trung Bình Chuyên Cần và Học Lực: <strong class="ng-binding">9</strong></h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-7">
+            <p class="comment-title">
+              Nhận xét của Huynh trưởng hướng dẫn
+            </p>
+            <div style="padding-right: 50px">
+              <p ng-show="TaiKhoan.pivot.nhan_xet" style="text-indent: 50px;" class="ng-binding ng-hide">
+              </p>
+              <hr class="dashed-line" ng-hide="TaiKhoan.pivot.nhan_xet">
+              <hr class="dashed-line" ng-hide="TaiKhoan.pivot.nhan_xet">
+              <hr class="dashed-line" ng-hide="TaiKhoan.pivot.nhan_xet">
+            </div>
+          </div>
+          <div class="col-xs-5">
+            <p class="comment-title">
+              Quyết định của Đoàn TNTT
+            </p>
+            <ul class="list-unstyled profile-content">
+              <li ng-show="TaiKhoan.pivot.xep_hang == 'LEN_LOP'">
+                <i class="fa fa-check-square-o"></i> Được lên lớp
+              </li>
+              <!-- <li ng-show="TaiKhoan.pivot.xep_hang == 'O_LAI_LOP'" class="ng-hide">
+                <i class="fa fa-check-square-o"></i> Ở lại lớp
+              </li>
+              <li ng-show="TaiKhoan.pivot.xep_hang == 'I'" class="ng-hide">
+                <i class="fa fa-check-square-o"></i> Được lãnh thưởng hạng <span class="bold">"Nhất"</span>
+              </li>
+              <li ng-show="TaiKhoan.pivot.xep_hang == 'II'" class="ng-hide">
+                <i class="fa fa-check-square-o"></i> Được lãnh thưởng hạng <span class="bold">"Nhì"</span>
+              </li>
+              <li ng-show="TaiKhoan.pivot.xep_hang == 'III'" class="ng-hide">
+                <i class="fa fa-check-square-o"></i> Được lãnh thưởng hạng <span class="bold">"Ba"</span>
+              </li>
+              <li ng-show="TaiKhoan.pivot.xep_hang == 'KHUYEN_KHICH'" class="ng-hide">
+                <i class="fa fa-check-square-o"></i> Được lãnh thưởng hạng <span class="bold">"Khuyến Khích"</span>
+              </li> -->
+            </ul>
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="col-xs-offset-6 col-xs-6">
+
+          </div>
+        </div>
+        <div class="row text-center bold m-t-lg">
+          <div class="col-xs-6">
+            <p>DUYỆT<br> LM Chánh xứ</p>
+            <p class="sign-name">
+            </p>
+          </div>
+          <div class="col-xs-6">
+            <p>TM. Đoàn TNTT<br> Xứ Đoàn Trưởng</p>
+            <p class="sign-name"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="break-page"></div>
+  </ng-container>
+  <div class="row hidden-print">
+    <div class="col-md-12">
+      <pagination-template #ep="paginationApi" [id]="pagingTN.id" (pageChange)="pagingTN.currentPage = $event;">
+        <div class="text-center">
+          <div class="btn-group">
+            <button *ngIf="ep.isFirstPage()" type="button" class="btn btn-sm btn-white disabled"><i class="fa fa-chevron-left"></i></button>
+            <button (click)="ep.previous()" *ngIf="!ep.isFirstPage()" type="button" class="btn btn-sm btn-white"><i class="fa fa-chevron-left"></i></button>
+            <ng-container *ngFor="let page of ep.pages">
+              <button *ngIf="ep.getCurrent() !== page.value" (click)="ep.setCurrent(page.value)" class="btn btn-sm btn-white">{{ page.label }}</button>
+              <button *ngIf="ep.getCurrent() === page.value" class="btn btn-sm btn-white active">{{ page.label }}</button>
+            </ng-container>
+            <button *ngIf="ep.isLastPage()" type="button" class="btn btn-sm btn-white disabled"><i class="fa fa-chevron-right"></i></button>
+            <button (click)="ep.next()" *ngIf="!ep.isLastPage()" type="button" class="btn btn-sm btn-white"><i class="fa fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </pagination-template>
+    </div>
+  </div>
 </div>

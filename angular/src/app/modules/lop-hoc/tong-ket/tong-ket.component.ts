@@ -15,7 +15,7 @@ import { AppState } from './../../../store/reducers/index';
 export class TongKetComponent implements OnDestroy {
   private lhAPI = environment.apiURL + '/lop-hoc';
 
-  tab = 'thong-tin'
+  tab = 'phieu-lien-lac'
   isLoading = false;
   ckbGhiChu = false;
 

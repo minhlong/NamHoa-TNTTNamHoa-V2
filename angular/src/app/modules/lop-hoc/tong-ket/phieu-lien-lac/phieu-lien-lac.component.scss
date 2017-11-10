@@ -1,0 +1,120 @@
+/***
+Invoice page
+***/
+
+span.sub-title {
+    font-weight: normal;
+    font-size: 8pt;
+}
+
+
+/* Logo - Start */
+
+.invoice .invoice-logo-space {
+    float: left;
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.invoice .invoice-logo-space img {
+    width: 60pt;
+}
+
+.invoice .invoice-logo .organ-name {
+    margin-top: 20px !important;
+}
+
+
+/* Profile Content */
+
+.profile-content {
+    margin: 20px 0;
+}
+
+.profile-content li {
+    margin: 10px 0 !important;
+}
+
+
+/* Profile Image */
+
+.invoice .profile-image {
+    margin-bottom: 5px;
+}
+
+.invoice .profile-image img {
+    max-height: 150px;
+}
+
+.btn-circle {
+    border: none!important;
+    // padding: 0px 5px !important;
+    width: 100px;
+}
+
+/* Table */
+
+.invoice table {
+    margin: 0px 0 15px 0;
+}
+
+.invoice table thead th {
+    vertical-align: middle;
+}
+
+.invoice h1 {
+    font-size: 16pt
+}
+
+.invoice h2 {
+    font-size: 12pt
+}
+
+.invoice h4 {
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
+
+/* Comment */
+
+hr.dashed-line {
+    border-top: 1.3pt dashed darkgray !important;
+    margin: 35px 0 0 !important;
+}
+
+.comment-title {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.invoice .list-unstyled li {
+    margin: 5px 0;
+}
+
+
+/* Sign Name */
+
+.sign-name {
+    padding-top: 75px;
+}
+
+
+/************/
+
+.invoice .invoice-payment strong {
+    margin-right: 5px;
+}
+
+.invoice .invoice-block {
+    text-align: right;
+}
+
+.invoice .invoice-block .amounts {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.break-page {
+    page-break-before: always
+}
