@@ -276,14 +276,31 @@ class LopHocController extends Controller
         return response()->json(true);
     }
 
-    // public function postXepHang(LopHoc $lopHoc, tmpItem $tmpItem)
-    // {
-    //     $hocVien = $lopHoc->hoc_vien()
-    //         ->where('tai_khoan_id', $tmpItem->id)
-    //         ->first();
-    //     $hocVien->pivot->xep_hang = \Request::get('hang');
-    //     $hocVien->pivot->ghi_chu = \Request::get('ghi_chu_hang');
-    //     $hocVien->pivot->nhan_xet = \Request::get('nhan_xet');
-    //     $hocVien->pivot->save();
-    // }
+    public function postXepHang(LopHoc $lopHoc, Request $request)
+    {
+        foreach ($request->thieu_nhi as $arrTmp) {
+            $hocVien = $lopHoc->hoc_vien()
+                ->where('tai_khoan_id', $arrTmp['id'])
+                ->first();
+
+            $hocVien->pivot->xep_hang = $arrTmp['xep_hang'];
+            $hocVien->pivot->ghi_chu = $arrTmp['ghi_chu'];
+            $hocVien->pivot->save();
+        }
+
+        return response()->json(true);
+    }
+
+    public function postNhanXet(LopHoc $lopHoc, Request $request)
+    {
+        foreach ($request->thieu_nhi as $arrTmp) {
+            $hocVien = $lopHoc->hoc_vien()
+                ->where('tai_khoan_id', $arrTmp['id'])
+                ->first();
+
+            $hocVien->pivot->nhan_xet = $arrTmp['nhan_xet'];
+            $hocVien->pivot->save();
+        }
+        return response()->json(true);
+    }
 }

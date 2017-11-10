@@ -17,6 +17,7 @@ export class TongKetComponent implements OnDestroy {
 
   tab = 'thong-tin'
   isLoading = false;
+  ckbGhiChu = false;
 
   pagingTN = {
     id: 'tnTable',
@@ -106,5 +107,38 @@ export class TongKetComponent implements OnDestroy {
       }
     }
     return res ? res : {};
+  }
+
+  /**
+   * Kiểm tra quyền điểm danh
+   * + Tài khoản được phân quyền 'danh-gia-cuoi-nam'
+   */
+  hasPermXepHang() {
+    if (this.curAuth.phan_quyen.includes('danh-gia-cuoi-nam') ||
+      this.curAuth.lop_hoc_hien_tai_id.toString() === this.lopHocID.toString()) {
+
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Kiểm tra quyền điểm danh
+   * + Tài khoản được phân quyền 'nhan-xet'
+   * hoặc
+   * + Đang dạy chính lớp này
+   */
+  hasPermNhanXet() {
+    if (this.curAuth.phan_quyen.includes('nhan-xet')) {
+      return true;
+    }
+    return false;
+  }
+
+  update(_info) {
+    this.tab = 'thong-tin';
+    if (_info) {
+      this.loadData();
+    }
   }
 }

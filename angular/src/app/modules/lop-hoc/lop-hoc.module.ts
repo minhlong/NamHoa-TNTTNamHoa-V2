@@ -18,6 +18,9 @@ import { FormThongTinComponent } from './thong-tin/form/form.component';
 import { HuynhTruongComponent } from './thong-tin/huynh-truong/huynh-truong.component';
 import { ThieuNhiComponent } from './thong-tin/thieu-nhi/thieu-nhi.component';
 import { FormDiemSoComponent } from './diem-so/form-diem-so/form-diem-so.component';
+import { FormXepHangComponent } from './tong-ket/form-xep-hang/form-xep-hang.component';
+import { FormNhanXetComponent } from './tong-ket/form-nhan-xet/form-nhan-xet.component';
+import { PhieuLienLacComponent } from './tong-ket/phieu-lien-lac/phieu-lien-lac.component';
 
 @NgModule({
   imports: [
@@ -51,6 +54,9 @@ import { FormDiemSoComponent } from './diem-so/form-diem-so/form-diem-so.compone
     DiemDanhComponent, FormDiemDanhComponent,
     TaoMoiComponent,
     FormDiemSoComponent,
+    FormXepHangComponent,
+    FormNhanXetComponent,
+    PhieuLienLacComponent,
   ]
 })
 export class LopHocModule { }

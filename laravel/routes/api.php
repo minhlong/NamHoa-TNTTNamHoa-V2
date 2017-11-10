@@ -53,7 +53,8 @@ Route::group(['middleware' => 'auth-jwt'], function () {
         Route::post('{LopHoc}/hoc-luc', 'LopHocController@postHocLuc'); // Fix: Update permission
 
         Route::get('{LopHoc}/tong-ket', 'TaiKhoanController@getTongKet');
-
+        Route::post('{LopHoc}/tong-ket/xep-hang', 'LopHocController@postXepHang');  // Fix: Update permission
+        Route::post('{LopHoc}/tong-ket/nhan-xet', 'LopHocController@postNhanXet');  // Fix: Update permission
     });
 
     /* Khoa Hoc */

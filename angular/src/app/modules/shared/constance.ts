@@ -39,8 +39,8 @@ export const appConst = [
   { loai_du_lieu: 'XEP_HANG', ky_hieu: 'O_LAI_LOP', 'ten': 'Ở Lại' },
   { loai_du_lieu: 'XEP_HANG', ky_hieu: 'LEN_LOP', 'ten': 'Lên Lớp' },
   { loai_du_lieu: 'XEP_HANG', ky_hieu: 'KHUYEN_KHICH', 'ten': 'Khuyến Khích' },
-  { loai_du_lieu: 'XEP_HANG', ky_hieu: 'III', 'ten': 'Hạng I' },
-  { loai_du_lieu: 'XEP_HANG', ky_hieu: 'II', 'ten': 'Hạng I' },
+  { loai_du_lieu: 'XEP_HANG', ky_hieu: 'III', 'ten': 'Hạng III' },
+  { loai_du_lieu: 'XEP_HANG', ky_hieu: 'II', 'ten': 'Hạng II' },
   { loai_du_lieu: 'XEP_HANG', ky_hieu: 'I', 'ten': 'Hạng I' },
 
   { loai_du_lieu: 'PHIEU', ky_hieu: 'K', 'ten': 'Vắng không phép' },

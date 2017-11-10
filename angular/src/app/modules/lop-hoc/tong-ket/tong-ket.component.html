@@ -15,6 +15,8 @@
               <th rowspan="2">Chuyên Cần</th>
               <th rowspan="2">(HL+CC)/2</th>
               <th rowspan="2">Xếp Hạng</th>
+              <th *ngIf="ckbGhiChu" rowspan="2">Ghi Chú</th>
+              <th *ngIf="ckbGhiChu" rowspan="2">Nhận Xét</th>
               <ng-container *ngIf="apiData">
                 <!-- Kiểm Tra  -->
                 <th class="text-center" [colSpan]="apiData.SoLan.length" *ngFor="let _dot of apiData.SoDot">K/Tra Lần {{_dot}}</th>
@@ -43,6 +45,8 @@
               <td>{{findTongKet(_item).chuyen_can}}</td>
               <td>{{findTongKet(_item).trung_binh_cong}}</td>
               <td>{{findTongKet(_item).xep_hang | xepHang}}</td>
+              <td *ngIf="ckbGhiChu">{{findTongKet(_item).ghi_chu}}</td>
+              <td *ngIf="ckbGhiChu">{{findTongKet(_item).nhan_xet}}</td>
               <ng-container *ngIf="apiData">
                 <!-- Kiểm Tra  -->
                 <ng-container *ngFor="let _dot of apiData.SoDot">
@@ -81,6 +85,22 @@
       </div>
     </div>
   </div>
-  <div class="ibox-footer">
+  <div class="ibox-footer" *ngIf="!isLoading">
+    <button (click)="tab = 'form-xep-hang'" *ngIf="hasPermXepHang()" class="btn btn-default btn-sm m-l-lg">Sửa Xếp Hạng</button>
+    <button (click)="tab = 'form-nhan-xet'" *ngIf="hasPermNhanXet()" class="btn btn-default btn-sm m-l-lg">Sửa Nhận Xét</button>
+    <button (click)="tab = 'phieu-lien-lac'" class="btn btn-default btn-sm m-l-lg">Xem Phiếu Liên Lạc</button>
+    <div class="checkbox m-l-lg">
+      <label><input type="checkbox" [(ngModel)]="ckbGhiChu"> Hiện Ghi/Chú và Nhận/Xét</label>
+    </div>
   </div>
+</ng-container>
+
+<ng-container *ngIf="tab === 'form-xep-hang'" class="ibox">
+  <app-form-xep-hang [thieuNhiArr]="thieuNhiArr" [apiData]="apiData" (updateInfo)="update($event)"></app-form-xep-hang>
+</ng-container>
+<ng-container *ngIf="tab === 'form-nhan-xet'" class="ibox">
+  <app-form-nhan-xet [thieuNhiArr]="thieuNhiArr" [apiData]="apiData" (updateInfo)="update($event)"></app-form-nhan-xet>
+</ng-container>
+<ng-container *ngIf="tab === 'phieu-lien-lac'" class="ibox">
+  <app-phieu-lien-lac (updateInfo)="update($event)"></app-phieu-lien-lac>
 </ng-container>

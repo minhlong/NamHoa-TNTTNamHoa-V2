@@ -9,38 +9,17 @@
       <form [formGroup]="formGroup">
         <table class="table table-hover table-bordered">
           <thead>
-            <tr *ngIf="apiData">
-              <th colspan="4" class="text-center">Ngày: {{apiData.sunday | ngay}}</th>
-            </tr>
             <tr>
               <th>Họ và Tên</th>
-              <th>Đi Lễ</th>
-              <th>Đi Học</th>
-              <th>Ghi Chú</th>
+              <th>Nhận Xét</th>
             </tr>
           </thead>
           <tbody formArrayName="thieu_nhi">
             <ng-container *ngFor="let _item of formGroup.controls.thieu_nhi.controls | paginate: pagingTN; let _i = index">
               <tr [formGroupName]="((pagingTN.currentPage - 1) * pagingTN.itemsPerPage ) + _i">
                 <td> {{_item.get('ho_va_ten').value}}</td>
-                <td class="text-center">
-                  <select name="di_le" formControlName="di_le" class="form-control input-sm">
-                    <option [ngValue]="null"></option>
-                    <option value="K">K</option>
-                    <option value="P">P</option>
-                    <option value="T">T</option>
-                    <option value="H">H</option>
-                  </select>
-                </td>
-                <td class="text-center">
-                  <select name="di_hoc" formControlName="di_hoc" class="form-control input-sm">
-                    <option [ngValue]="null"></option>
-                    <option value="K">K</option>
-                    <option value="P">P</option>
-                  </select>
-                </td>
                 <td>
-                  <input type="text" name="ghi_chu" formControlName="ghi_chu" class="form-control input-sm">
+                  <input type="text" name="nhan_xet" formControlName="nhan_xet" class="form-control input-sm">
                 </td>
               </tr>
             </ng-container>
