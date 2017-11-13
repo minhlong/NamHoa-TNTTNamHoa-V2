@@ -7,7 +7,7 @@ import { environment } from './../environments/environment';
  * detectBody() - detect windows size
  * smoothlyMenu() - add smooth fade in/out on navigation show/hide
  */
-declare const jQuery: any;
+declare var jQuery: any;
 
 export function correctHeight() {
   const pageWrapper = jQuery('#page-wrapper');

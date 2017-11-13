@@ -15,7 +15,6 @@ import { AppState } from './../../../../store/reducers/index';
 })
 export class FormXepHangComponent implements OnInit, OnDestroy {
   @Input() apiData;
-  @Input() thieuNhiArr;
   @Output() updateInfo = new EventEmitter();
 
   private urlAPI = environment.apiURL + '/lop-hoc';
@@ -56,25 +55,16 @@ export class FormXepHangComponent implements OnInit, OnDestroy {
 
   private initXepHang() {
     const tmpArr = [];
-    this.thieuNhiArr.forEach(_tn => {
-      const tmpTn = this.findHocVien(_tn);
+    this.apiData.Data.forEach(_tn => {
       tmpArr.push(this._fb.group({
         id: _tn.id,
         ho_va_ten: _tn.ho_va_ten,
-        xep_hang: tmpTn.pivot.xep_hang,
-        ghi_chu: tmpTn.pivot.ghi_chu,
+        xep_hang: _tn.pivot.xep_hang,
+        ghi_chu: _tn.pivot.ghi_chu,
       }));
     });
 
     return tmpArr;
-  }
-
-  private findHocVien(tn) {
-    let res;
-    if (this.apiData) {
-      res = this.apiData.Data.find(c => c.id === tn.id);
-    }
-    return res ? res : {};
   }
 
   save() {

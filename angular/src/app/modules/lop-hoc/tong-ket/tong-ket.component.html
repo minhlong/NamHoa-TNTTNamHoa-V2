@@ -7,7 +7,7 @@
     </div>
     <div class="row">
       <div class="col-md-12 table-responsive">
-        <table class="table table-hover table-bordered">
+        <table *ngIf="apiData" class="table table-hover table-bordered tooltip-tongket">
           <thead>
             <tr>
               <th rowspan="2" class="text-center">#</th>
@@ -18,7 +18,7 @@
               <th rowspan="2">Xếp Hạng</th>
               <th *ngIf="ckbGhiChu" rowspan="2">Ghi Chú</th>
               <th *ngIf="ckbGhiChu" rowspan="2">Nhận Xét</th>
-              <ng-container *ngIf="apiData">
+              <ng-container>
                 <!-- Kiểm Tra  -->
                 <th class="text-center" [colSpan]="apiData.SoLan.length" *ngFor="let _dot of apiData.SoDot">K/Tra Lần {{_dot}}</th>
                 <!-- Chuyên Cần  -->
@@ -26,7 +26,7 @@
               </ng-container>
             </tr>
             <tr>
-              <ng-container *ngIf="apiData">
+              <ng-container>
                 <!-- Kiểm Tra  -->
                 <ng-container *ngFor="let _dot of apiData.SoDot">
                   <th class="text-center" *ngFor="let _lan of apiData.SoLan">Đợt {{_lan}}</th>
@@ -40,29 +40,29 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let _item of thieuNhiArr | paginate: pagingTN; let _i = index">
+            <tr *ngFor="let _item of apiData.Data | paginate: pagingTN; let _i = index">
               <td class="text-center">
                 {{((pagingTN.currentPage - 1) * pagingTN.itemsPerPage ) + _i + 1}}
               </td>
               <td>{{_item.ho_va_ten}}</td>
-              <td>{{findTongKet(_item).hoc_luc}}</td>
-              <td>{{findTongKet(_item).chuyen_can}}</td>
-              <td>{{findTongKet(_item).tb_canam}}</td>
-              <td>{{findTongKet(_item).xep_hang | xepHang}}</td>
-              <td *ngIf="ckbGhiChu">{{findTongKet(_item).ghi_chu}}</td>
-              <td *ngIf="ckbGhiChu">{{findTongKet(_item).nhan_xet}}</td>
-              <ng-container *ngIf="apiData">
+              <td>{{_item.pivot.hoc_luc}}</td>
+              <td>{{_item.pivot.chuyen_can}}</td>
+              <td>{{tbCaNam(_item)}}</td>
+              <td data-toggle="tooltip" data-placement="left" title="{{_item.ten_thanh + ' ' + _item.ho_va_ten}}">{{_item.pivot.xep_hang | xepHang}}</td>
+              <td data-toggle="tooltip" data-placement="left" title="{{_item.ten_thanh + ' ' + _item.ho_va_ten}}" *ngIf="ckbGhiChu">{{_item.pivot.ghi_chu}}</td>
+              <td data-toggle="tooltip" data-placement="left" title="{{_item.ten_thanh + ' ' + _item.ho_va_ten}}" *ngIf="ckbGhiChu">{{_item.pivot.nhan_xet}}</td>
+              <ng-container>
                 <!-- Kiểm Tra  -->
                 <ng-container *ngFor="let _dot of apiData.SoDot">
-                  <td class="text-center" *ngFor="let _lan of apiData.SoLan">
+                  <td data-toggle="tooltip" data-placement="left" title="{{_item.ten_thanh + ' ' + _item.ho_va_ten}}" class="text-center" *ngFor="let _lan of apiData.SoLan">
                     <!-- {{findDiemSo(_item,_dot,_lan)}} -->
                     {{apiData.DiemSo[_item.id][_dot][_lan]}}
                   </td>
                 </ng-container>
                 <!-- Chuyên Cần  -->
                 <ng-container *ngFor="let _obj of apiData.DiemDanh | objectKeys">
-                  <td class="text-center">{{_obj.val[_item.id]['di_le']}}</td>
-                  <td class="text-center">{{_obj.val[_item.id]['di_hoc']}}</td>
+                  <td data-toggle="tooltip" data-placement="left" title="{{_item.ten_thanh + ' ' + _item.ho_va_ten}}" class="text-center">{{_obj.val[_item.id]['di_le']}}</td>
+                  <td data-toggle="tooltip" data-placement="left" title="{{_item.ten_thanh + ' ' + _item.ho_va_ten}}" class="text-center">{{_obj.val[_item.id]['di_hoc']}}</td>
                 </ng-container>
               </ng-container>
             </tr>
@@ -100,10 +100,10 @@
 </ng-container>
 
 <ng-container *ngIf="tab === 'form-xep-hang'" class="ibox">
-  <app-form-xep-hang [thieuNhiArr]="thieuNhiArr" [apiData]="apiData" (updateInfo)="update($event)"></app-form-xep-hang>
+  <app-form-xep-hang [apiData]="apiData" (updateInfo)="update($event)"></app-form-xep-hang>
 </ng-container>
 <ng-container *ngIf="tab === 'form-nhan-xet'" class="ibox">
-  <app-form-nhan-xet [thieuNhiArr]="thieuNhiArr" [apiData]="apiData" (updateInfo)="update($event)"></app-form-nhan-xet>
+  <app-form-nhan-xet [apiData]="apiData" (updateInfo)="update($event)"></app-form-nhan-xet>
 </ng-container>
 <ng-container *ngIf="tab === 'phieu-lien-lac'" class="ibox">
   <app-phieu-lien-lac [apiData]="apiData" (updateInfo)="update($event)"></app-phieu-lien-lac>

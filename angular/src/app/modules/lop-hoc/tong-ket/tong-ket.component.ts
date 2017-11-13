@@ -1,5 +1,5 @@
 import { ToasterService } from 'angular2-toaster';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -7,12 +7,14 @@ import { JwtAuthHttp } from '../../../services/http-auth.service';
 import { environment } from './../../../../environments/environment';
 import { AppState } from './../../../store/reducers/index';
 
+declare var jQuery: any;
+
 @Component({
   selector: 'app-tong-ket',
   templateUrl: './tong-ket.component.html',
   styleUrls: ['./tong-ket.component.scss']
 })
-export class TongKetComponent implements OnDestroy {
+export class TongKetComponent implements AfterViewInit, OnDestroy {
   private lhAPI = environment.apiURL + '/lop-hoc';
 
   // tab = 'phieu-lien-lac'
@@ -29,7 +31,6 @@ export class TongKetComponent implements OnDestroy {
 
   lopHocID: number;
   curAuth: any;
-  thieuNhiArr = [];
   apiData: {
     Data: any[],
     DiemDanh: {},
@@ -40,7 +41,6 @@ export class TongKetComponent implements OnDestroy {
 
   sub$: any;
   subAuth$: any;
-  subTn$: any;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -61,21 +61,15 @@ export class TongKetComponent implements OnDestroy {
       this.curAuth = res;
     });
 
-    /**
-     * Lấy thông tin thiếu nhi từ lớp học
-     */
-    this.subTn$ = this.store.select((state: AppState) => state.lop_hoc.thieu_nhi).subscribe(res => {
-      this.thieuNhiArr = res;
-      if (this.thieuNhiArr.length) {
-        this.loadData();
-      }
-    });
+    this.loadData();
+  }
+
+  ngAfterViewInit() {
   }
 
   ngOnDestroy() {
     this.sub$.unsubscribe();
     this.subAuth$.unsubscribe();
-    this.subTn$.unsubscribe();
   }
 
   /**
@@ -88,6 +82,14 @@ export class TongKetComponent implements OnDestroy {
       .map(res => res.json()).subscribe(_res => {
         this.apiData = _res;
         this.isLoading = false;
+
+        // Tooltips
+        setTimeout(() => {
+          jQuery('.tooltip-tongket').tooltip({
+            selector: '[data-toggle=tooltip]',
+            container: 'body'
+          });
+        }, 0);
       }, error => {
         this.toasterService.pop('error', 'Lỗi!', error);
         this.isLoading = false;
@@ -95,27 +97,11 @@ export class TongKetComponent implements OnDestroy {
   }
 
   /**
-   * Tìm đữ liệu cho học viên
-   * @param tn Học Viên
-   */
-  findTongKet(tn) {
-    let res;
-    if (this.apiData) {
-      res = this.apiData.Data.find(c => c.id === tn.id);
-      if (res) {
-        return res.pivot;
-      }
-    }
-    return res ? res : {};
-  }
-
-  /**
    * Kiểm tra quyền điểm danh
    * + Tài khoản được phân quyền 'danh-gia-cuoi-nam'
    */
   hasPermXepHang() {
-    if (this.curAuth.phan_quyen.includes('danh-gia-cuoi-nam') ||
-      this.curAuth.lop_hoc_hien_tai_id.toString() === this.lopHocID.toString()) {
+    if (this.curAuth.phan_quyen.includes('danh-gia-cuoi-nam')) {
       return true;
     }
     return false;
@@ -128,7 +114,8 @@ export class TongKetComponent implements OnDestroy {
    * + Đang dạy chính lớp này
    */
   hasPermNhanXet() {
-    if (this.curAuth.phan_quyen.includes('nhan-xet')) {
+    if (this.curAuth.phan_quyen.includes('nhan-xet') ||
+      this.curAuth.lop_hoc_hien_tai_id.toString() === this.lopHocID.toString()) {
       return true;
     }
     return false;
@@ -139,5 +126,9 @@ export class TongKetComponent implements OnDestroy {
     if (_info) {
       this.loadData();
     }
+  }
+
+  tbCaNam(_tn) {
+    return Math.round(_tn.pivot.tb_canam * 100) / 100;
   }
 }

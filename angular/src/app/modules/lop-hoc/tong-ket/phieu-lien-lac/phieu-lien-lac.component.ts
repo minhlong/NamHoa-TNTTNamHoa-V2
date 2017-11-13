@@ -115,4 +115,8 @@ export class PhieuLienLacComponent implements OnInit, OnDestroy {
       c.loai === _loai &&
       c.phieu === _phieu).length
   }
+
+  tbCaNam(_tn) {
+    return Math.round(_tn.pivot.tb_canam * 100) / 100;
+  }
 }

@@ -15,7 +15,6 @@ import { AppState } from './../../../../store/reducers/index';
 })
 export class FormNhanXetComponent implements OnInit, OnDestroy {
   @Input() apiData;
-  @Input() thieuNhiArr;
   @Output() updateInfo = new EventEmitter();
 
   private urlAPI = environment.apiURL + '/lop-hoc';
@@ -56,24 +55,15 @@ export class FormNhanXetComponent implements OnInit, OnDestroy {
 
   private initXepHang() {
     const tmpArr = [];
-    this.thieuNhiArr.forEach(_tn => {
-      const tmpTn = this.findHocVien(_tn);
+    this.apiData.Data.forEach(_tn => {
       tmpArr.push(this._fb.group({
         id: _tn.id,
         ho_va_ten: _tn.ho_va_ten,
-        nhan_xet: tmpTn.pivot.nhan_xet,
+        nhan_xet: _tn.pivot.nhan_xet,
       }));
     });
 
     return tmpArr;
-  }
-
-  private findHocVien(tn) {
-    let res;
-    if (this.apiData) {
-      res = this.apiData.Data.find(c => c.id === tn.id);
-    }
-    return res ? res : {};
   }
 
   save() {
