@@ -21,7 +21,7 @@
             </tr>
           </thead>
           <tbody formArrayName="thieu_nhi">
-            <ng-container *ngFor="let _item of formGroup.controls.thieu_nhi.controls | paginate: pagingTN; let _i = index">
+            <ng-container *ngFor="let _item of formThieuNhi.controls | paginate: pagingTN; let _i = index">
               <tr [formGroupName]="((pagingTN.currentPage - 1) * pagingTN.itemsPerPage ) + _i">
                 <td class="text-center">
                   {{((pagingTN.currentPage - 1) * pagingTN.itemsPerPage ) + _i + 1}}

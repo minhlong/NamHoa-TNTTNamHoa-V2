@@ -2,7 +2,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 
 import { JwtAuthHttp } from './../../../../services/http-auth.service';
 import { environment } from './../../../../../environments/environment';
@@ -27,6 +27,8 @@ export class FormXepHangComponent implements OnInit, OnDestroy {
 
   lopHocID: number;
   isLoading: boolean;
+
+  formThieuNhi: FormArray;
   formGroup: FormGroup;
   error: any;
   sub$: any;
@@ -44,8 +46,9 @@ export class FormXepHangComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.formThieuNhi = this._fb.array(this.initXepHang());
     this.formGroup = this._fb.group({
-      thieu_nhi: this._fb.array(this.initXepHang()),
+      thieu_nhi: this.formThieuNhi,
     });
   }
 

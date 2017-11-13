@@ -2,7 +2,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 
 import { JwtAuthHttp } from './../../../../services/http-auth.service';
 import { environment } from './../../../../../environments/environment';
@@ -29,6 +29,8 @@ export class FormDiemSoComponent implements OnInit, OnDestroy {
 
   lopHocID: number;
   isLoading: boolean;
+
+  formThieuNhi: FormArray;
   formGroup: FormGroup;
   error: any;
   sub$: any;
@@ -47,10 +49,11 @@ export class FormDiemSoComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // Tạo form để submit lên server
+    this.formThieuNhi = this._fb.array(this.initHocLuc());
     this.formGroup = this._fb.group({
       dot: this.apiData.dot,
       lan: this.lanKT,
-      thieu_nhi: this._fb.array(this.initHocLuc()),
+      thieu_nhi: this.formThieuNhi,
     });
   }
 
