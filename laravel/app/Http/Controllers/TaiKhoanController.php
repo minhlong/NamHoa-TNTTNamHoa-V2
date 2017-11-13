@@ -62,11 +62,7 @@ class TaiKhoanController extends Controller
             $arrData = $this->getTongKet($lopHoc, $request);
             $arrRow = $this->generateTongKetData($arrData, $library);
             $excel->sheet('Tổng Kết - Khóa ' . $khoaID, function ($sheet) use ($arrRow) {
-                $sheet->fromArray($arrRow)
-                    ->setMergeColumn([
-                        'columns' => range('A', 'L'),
-                        'rows'    => [[1, 2],]
-                    ])->setFreeze('D3');
+                $sheet->fromArray($arrRow)->setFreeze('D4');
             });
 
         })->store('xlsx', '/tmp', true);

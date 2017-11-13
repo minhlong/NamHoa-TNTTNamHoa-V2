@@ -58,6 +58,11 @@ export class DanhSachComponent implements OnDestroy {
     this.searchData();
   }
 
+  ngOnDestroy() {
+    this.sub.unsubscribe()
+    this.authSub.unsubscribe()
+  }
+
   private resetPageState() {
     this.cookieState = JSON.parse(JSON.stringify(defaultPageState));
     this.cookieState.Fkhoa = this.khoaHienTaiID;
@@ -150,10 +155,5 @@ export class DanhSachComponent implements OnDestroy {
       this.isLoadingExport = false;
       this.toasterService.pop('error', 'Lỗi!', error);
     });
-  }
-
-  ngOnDestroy() {
-    this.sub.unsubscribe()
-    this.authSub.unsubscribe()
   }
 }

@@ -6,6 +6,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 import { SharedModule } from '../shared/shared.module';
+
 import { DanhSachComponent } from './danh-sach/danh-sach.component';
 import { ChiTietComponent } from './chi-tiet/chi-tiet.component';
 import { DiemDanhComponent } from './diem-danh/diem-danh.component';

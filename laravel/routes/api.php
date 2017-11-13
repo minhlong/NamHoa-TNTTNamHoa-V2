@@ -58,16 +58,25 @@ Route::group(['middleware' => 'auth-jwt'], function () {
     });
 
     /* Khoa Hoc */
-    Route::get('khoa-hoc', function () {
-        return response()->json([
-            'data' => \App\KhoaHoc::all(),
-        ]);
+    Route::group(['prefix' => 'khoa-hoc'], function () {
+        Route::get(null, 'KhoaHocController@getDanhSach');
+        Route::post(null, 'KhoaHocController@postTaoMoi'); // Fix: Update permission
+        Route::group(['prefix' => '{KhoaHoc}'], function () {
+            Route::get(null, 'KhoaHocController@getThongTin');
+            // Route::post(null, 'KhoaHocController@post'); // Fix: Update permission
+        });
     });
-    Route::get('khoa-hoc/{KhoaHoc}', function ($obj) {
-        return response()->json([
-            'data' => $obj,
-        ]);
-    });
+
+    // Route::get('khoa-hoc', function () {
+    //     return response()->json([
+    //         'data' => \App\KhoaHoc::all(),
+    //     ]);
+    // });
+    // Route::get('khoa-hoc/{KhoaHoc}', function ($obj) {
+    //     return response()->json([
+    //         'data' => $obj,
+    //     ]);
+    // });
 });
 
 Route::bind('TaiKhoan', function ($value) {

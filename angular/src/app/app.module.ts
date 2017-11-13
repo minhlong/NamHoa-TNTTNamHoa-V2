@@ -33,7 +33,6 @@ import { LogoutComponent } from './components/logout.component';
 
 // Pipe
 import { environment } from '../environments/environment';
-import { KhoaHocComponent } from './khoa-hoc/khoa-hoc.component';
 import { TrangChuComponent } from './trang-chu/trang-chu.component';
 
 @NgModule({
@@ -41,7 +40,6 @@ import { TrangChuComponent } from './trang-chu/trang-chu.component';
     AppComponent,
     LoginComponent,
     LogoutComponent,
-    KhoaHocComponent,
     TrangChuComponent,
   ],
   imports: [
