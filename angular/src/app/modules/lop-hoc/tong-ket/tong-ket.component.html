@@ -61,8 +61,8 @@
                 </ng-container>
                 <!-- Chuyên Cần  -->
                 <ng-container *ngFor="let _obj of apiData.DiemDanh | objectKeys">
-                  <td data-toggle="tooltip" data-placement="left" title="{{_item.ten_thanh + ' ' + _item.ho_va_ten}}" class="text-center">{{_obj.val[_item.id]['di_le']}}</td>
-                  <td data-toggle="tooltip" data-placement="left" title="{{_item.ten_thanh + ' ' + _item.ho_va_ten}}" class="text-center">{{_obj.val[_item.id]['di_hoc']}}</td>
+                  <td data-toggle="tooltip" data-placement="left" title="{{_item.ten_thanh + ' ' + _item.ho_va_ten}}" class="text-center">{{_obj.val[_item.id] ? _obj.val[_item.id]['di_le'] : null }}</td>
+                  <td data-toggle="tooltip" data-placement="left" title="{{_item.ten_thanh + ' ' + _item.ho_va_ten}}" class="text-center">{{_obj.val[_item.id] ? _obj.val[_item.id]['di_hoc'] : null }}</td>
                 </ng-container>
               </ng-container>
             </tr>
