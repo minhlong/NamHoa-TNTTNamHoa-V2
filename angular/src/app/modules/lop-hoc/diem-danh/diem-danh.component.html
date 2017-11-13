@@ -22,9 +22,10 @@
         <table class="table table-hover table-bordered">
           <thead>
             <tr *ngIf="apiData">
-              <th colspan="4" class="text-center">Ngày: {{apiData.sunday | ngay}}</th>
+              <th colspan="5" class="text-center">Ngày: {{apiData.sunday | ngay}}</th>
             </tr>
             <tr>
+              <th class="text-center">#</th>
               <th>Họ và Tên</th>
               <th class="text-center">Đi Lễ</th>
               <th class="text-center">Đi Học</th>
@@ -33,6 +34,9 @@
           </thead>
           <tbody>
             <tr *ngFor="let _item of thieuNhiArr | paginate: pagingTN; let _i = index">
+              <td class="text-center">
+                {{((pagingTN.currentPage - 1) * pagingTN.itemsPerPage ) + _i + 1}}
+              </td>
               <td> {{_item.ho_va_ten}}</td>
               <td class="text-center">{{findChuyenCan(_item).di_le}}</td>
               <td class="text-center">{{findChuyenCan(_item).di_hoc}}</td>

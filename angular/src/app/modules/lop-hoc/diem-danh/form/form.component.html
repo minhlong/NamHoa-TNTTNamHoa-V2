@@ -10,9 +10,10 @@
         <table class="table table-hover table-bordered">
           <thead>
             <tr *ngIf="apiData">
-              <th colspan="4" class="text-center">Ngày: {{apiData.sunday | ngay}}</th>
+              <th colspan="5" class="text-center">Ngày: {{apiData.sunday | ngay}}</th>
             </tr>
             <tr>
+              <th class="text-center">#</th>
               <th>Họ và Tên</th>
               <th>Đi Lễ</th>
               <th>Đi Học</th>
@@ -22,6 +23,9 @@
           <tbody formArrayName="thieu_nhi">
             <ng-container *ngFor="let _item of formGroup.controls.thieu_nhi.controls | paginate: pagingTN; let _i = index">
               <tr [formGroupName]="((pagingTN.currentPage - 1) * pagingTN.itemsPerPage ) + _i">
+                <td class="text-center">
+                  {{((pagingTN.currentPage - 1) * pagingTN.itemsPerPage ) + _i + 1}}
+                </td>
                 <td> {{_item.get('ho_va_ten').value}}</td>
                 <td class="text-center">
                   <select name="di_le" formControlName="di_le" class="form-control input-sm">

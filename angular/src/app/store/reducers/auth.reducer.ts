@@ -20,7 +20,7 @@ export const defaultState: AuthState = {
   loading: false,
   tai_khoan: null,
   phan_quyen: [],
-  lop_hoc_hien_tai_id: -1, // Một số tài khoản không được xếp lớp. Vd: Ban Chấp Hành
+  lop_hoc_hien_tai_id: 0, // Một số tài khoản không được xếp lớp. Vd: Ban Chấp Hành
   khoa_hoc_hien_tai: {
     id: null
   },
@@ -42,7 +42,7 @@ export function reducer(state = defaultState, action: Action): AuthState {
       return Object.assign({}, defaultState, {
         tai_khoan: action.payload.tai_khoan,
         phan_quyen: action.payload.phan_quyen,
-        lop_hoc_hien_tai_id: action.payload.lop_hoc_hien_tai_id ? action.payload.lop_hoc_hien_tai_id : -1,
+        lop_hoc_hien_tai_id: action.payload.lop_hoc_hien_tai_id ? action.payload.lop_hoc_hien_tai_id : 0,
         khoa_hoc_hien_tai: {
           id: action.payload.khoa_hoc_hien_tai_id
         },

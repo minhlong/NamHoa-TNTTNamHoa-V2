@@ -10,6 +10,7 @@
         <table class="table table-hover table-bordered">
           <thead>
             <tr>
+              <th rowspan="2" class="text-center">#</th>
               <th rowspan="2">Họ và Tên</th>
               <th rowspan="2">Học Lực</th>
               <th rowspan="2">Chuyên Cần</th>
@@ -40,6 +41,9 @@
           </thead>
           <tbody>
             <tr *ngFor="let _item of thieuNhiArr | paginate: pagingTN; let _i = index">
+              <td class="text-center">
+                {{((pagingTN.currentPage - 1) * pagingTN.itemsPerPage ) + _i + 1}}
+              </td>
               <td>{{_item.ho_va_ten}}</td>
               <td>{{findTongKet(_item).hoc_luc}}</td>
               <td>{{findTongKet(_item).chuyen_can}}</td>

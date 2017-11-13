@@ -1,5 +1,11 @@
-table th {
-    vertical-align: middle;
+table {
+    th {
+        vertical-align: middle;
+    }
+    td,
+    th {
+        white-space: nowrap;
+    }
 }
 
 div.checkbox {
