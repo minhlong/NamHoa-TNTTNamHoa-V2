@@ -21,7 +21,6 @@ import { FormComponent } from './chi-tiet/form/form.component';
     TextMaskModule,
     NgxPaginationModule,
 
-    // Routes
     RouterModule.forChild([
       { path: '', component: DanhSachComponent },
       { path: 'chi-tiet/:id', component: ChiTietComponent },

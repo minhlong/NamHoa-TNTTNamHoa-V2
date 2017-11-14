@@ -8,6 +8,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from '../shared/shared.module';
 
 import { DanhSachComponent } from './danh-sach/danh-sach.component';
+import { ChiTietComponent } from './chi-tiet/chi-tiet.component';
 
 @NgModule({
   imports: [
@@ -18,22 +19,11 @@ import { DanhSachComponent } from './danh-sach/danh-sach.component';
     TextMaskModule,
     NgxPaginationModule,
 
-    // Routes
     RouterModule.forChild([
       { path: '', component: DanhSachComponent },
-      // { path: 'tao-moi', component: TaoMoiComponent },
-      // {
-      //   path: 'chi-tiet/:id', component: ChiTietComponent,
-      //   children: [
-      //     { path: '', redirectTo: 'thong-tin', pathMatch: 'full' },
-      //     { path: 'thong-tin', component: ThongTinComponent },
-      //     { path: 'diem-danh', component: DiemDanhComponent },
-      //     { path: 'diem-so', component: DiemSoComponent },
-      //     { path: 'tong-ket', component: TongKetComponent },
-      //   ],
-      // },
+      { path: 'chi-tiet/:id', component: ChiTietComponent },
     ]),
   ],
-  declarations: [DanhSachComponent]
+  declarations: [DanhSachComponent, ChiTietComponent]
 })
 export class KhoaHocModule { }

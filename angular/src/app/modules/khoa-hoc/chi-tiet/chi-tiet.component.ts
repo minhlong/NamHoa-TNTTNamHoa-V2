@@ -10,26 +10,18 @@ import { AppState } from './../../../store/reducers/index';
 @Component({
   selector: 'app-chi-tiet',
   templateUrl: './chi-tiet.component.html',
-  styleUrls: ['./chi-tiet.component.scss']
+  styleUrls: ['./chi-tiet.component.scss'],
 })
 export class ChiTietComponent implements OnDestroy {
-  urlAPI = environment.apiURL + '/tai-khoan';
-  tab = 'chi-tiet'; // form, mat-khau
-  itemSelected = null;
+  urlAPI = environment.apiURL + '/khoa-hoc';
+  tab = 'chi-tiet'; // form
   isLoading = true;
 
-  pState = {
-    // Paging
-    id: 'TaiKhoan-ChiTiet-Page',
-    itemsPerPage: 3,
-    currentPage: 1,
-  }
-
-  taiKhoanID: string;
-  taiKhoanInfo: any;
+  khoaID: number;
+  khoaInfo: any;
 
   sub$: any;
-  subAuth$: any;
+  subAuth: any;
   curAuth: any;
 
   constructor(
@@ -40,45 +32,42 @@ export class ChiTietComponent implements OnDestroy {
     private activatedRoute: ActivatedRoute
   ) {
     this.sub$ = this.activatedRoute.params.subscribe(params => {
-      this.taiKhoanID = params['id'];
+      this.khoaID = +params['id'];
 
-      // Lấy thông tin từ server
-      this._http.get(this.urlAPI + '/' + this.taiKhoanID)
-        .map(res => res.json()).subscribe(res => {
+      this._http.get(this.urlAPI + '/' + this.khoaID)
+        .map(res => res.json().data).subscribe(res => {
           this.isLoading = false;
-          this.taiKhoanInfo = res;
+          this.khoaInfo = res;
         }, error => {
           this.isLoading = false;
           this.toasterService.pop('error', 'Lỗi!', error);
         });
     })
 
-    this.subAuth$ = this.store.select((state: AppState) => state.auth).subscribe(res => {
+    this.subAuth = this.store.select((state: AppState) => state.auth).subscribe(res => {
       this.curAuth = res;
     });
   }
 
   ngOnDestroy() {
     this.sub$.unsubscribe();
-    this.subAuth$.unsubscribe();
+    this.subAuth.unsubscribe();
   }
 
   /**
    * Kiểm tra phân quyền
    *    Tài khoản có quyền 'tai-khoan'
-   *    Hoặc
-   *    Tài khoản này chính là tài khoản của người dùng đăng nhập
+   *    và
+   *    Khóa học này chính là khóa khọc hiện tại hoặc khóa học tiếp theo
    */
   hasPerm() {
-    if (this.curAuth.phan_quyen.includes('tai-khoan') || this.taiKhoanID.toUpperCase() === this.curAuth.tai_khoan.id) {
+    if (
+      // this.curAuth.phan_quyen.includes('he-thong') &&
+      this.curAuth.khoa_hoc_hien_tai &&
+      this.curAuth.khoa_hoc_hien_tai.id <= this.khoaID) {
       return true;
     }
     return false;
-  }
-
-  // Xem tài khoản khác
-  xemTaiKhoan(taiKhoan) {
-    this.router.navigate(['/tai-khoan/chi-tiet/', taiKhoan.id]);
   }
 
   /**
@@ -91,6 +80,6 @@ export class ChiTietComponent implements OnDestroy {
     if (!_info) {
       return; // Click Thoát
     }
-    this.taiKhoanInfo = _info;
+    this.khoaInfo = _info;
   }
 }
