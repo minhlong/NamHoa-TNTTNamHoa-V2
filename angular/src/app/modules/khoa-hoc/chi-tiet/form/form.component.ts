@@ -34,10 +34,13 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
     this.infoFB = this.formBuilder.group({
-      // id: this.khoaInfo.id,
-      // ten_thanh: this.khoaInfo.ten_thanh,
-      // ho_va_ten: this.khoaInfo.ho_va_ten,
-      // trang_thai: this.khoaInfo.trang_thai,
+      id: this.khoaInfo.id,
+      ngay_bat_dau: this.khoaInfo.ngay_bat_dau,
+      ngay_ket_thuc: this.khoaInfo.ngay_ket_thuc,
+      so_dot_kiem_tra: this.khoaInfo.so_dot_kiem_tra,
+      so_lan_kiem_tra: this.khoaInfo.so_lan_kiem_tra,
+      cap_nhat_dot_kiem_tra: this.khoaInfo.cap_nhat_dot_kiem_tra,
+      ngung_diem_danh: this.khoaInfo.ngung_diem_danh,
       // loai_tai_khoan: this.khoaInfo.loai_tai_khoan,
       // gioi_tinh: this.khoaInfo.gioi_tinh,
       // ngay_sinh: ngay(this.khoaInfo.ngay_sinh),

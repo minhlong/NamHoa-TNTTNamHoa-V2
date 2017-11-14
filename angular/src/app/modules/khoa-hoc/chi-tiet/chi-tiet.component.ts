@@ -38,6 +38,7 @@ export class ChiTietComponent implements OnDestroy {
         .map(res => res.json().data).subscribe(res => {
           this.isLoading = false;
           this.khoaInfo = res;
+          console.log(this.khoaInfo);
         }, error => {
           this.isLoading = false;
           this.toasterService.pop('error', 'Lỗi!', error);
