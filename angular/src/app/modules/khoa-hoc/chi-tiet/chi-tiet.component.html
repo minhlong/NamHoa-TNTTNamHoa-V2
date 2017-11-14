@@ -60,8 +60,7 @@
       <button class="btn btn-default btn-sm m-l-lg" (click)="tab = 'form'">Sửa</button>
     </div>
   </div>
-
-  <div class="row" *ngIf="khoaInfo">
+  <div class="row" *ngIf="tab === 'chi-tiet' && khoaInfo">
     <div class="col-md-6">
       <div class="ibox">
         <div class="ibox-title">
@@ -121,7 +120,7 @@
       </div>
     </div>
   </div>
-  <div class="row" *ngIf="khoaInfo && khoaInfo.xep_loai">
+  <div class="row" *ngIf="tab === 'chi-tiet' && khoaInfo && khoaInfo.xep_loai">
     <div class="col-xs-12">
       <div class="ibox">
         <div class="ibox-title">
@@ -187,7 +186,7 @@
       </div>
     </div>
   </div>
-  <div class="row" *ngIf="khoaInfo && khoaInfo.xep_hang">
+  <div class="row" *ngIf="tab === 'chi-tiet' && khoaInfo && khoaInfo.xep_hang">
     <div class="col-xs-12">
       <div class="ibox">
         <div class="ibox-title">
@@ -288,5 +287,8 @@
         </div>
       </div>
     </div>
+  </div>
+  <div *ngIf="tab === 'form'" class="ibox">
+    <app-form (updateInfo)="update($event)" [khoaInfo]="khoaInfo"></app-form>
   </div>
 </div>

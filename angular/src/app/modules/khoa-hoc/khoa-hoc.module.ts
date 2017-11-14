@@ -9,6 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 
 import { DanhSachComponent } from './danh-sach/danh-sach.component';
 import { ChiTietComponent } from './chi-tiet/chi-tiet.component';
+import { FormComponent } from './chi-tiet/form/form.component';
 
 @NgModule({
   imports: [
@@ -24,6 +25,6 @@ import { ChiTietComponent } from './chi-tiet/chi-tiet.component';
       { path: 'chi-tiet/:id', component: ChiTietComponent },
     ]),
   ],
-  declarations: [DanhSachComponent, ChiTietComponent]
+  declarations: [DanhSachComponent, ChiTietComponent, FormComponent]
 })
 export class KhoaHocModule { }

@@ -56,7 +56,7 @@ export class ChiTietComponent implements OnDestroy {
 
   /**
    * Kiểm tra phân quyền
-   *    Tài khoản có quyền 'tai-khoan'
+   *    Tài khoản có quyền 'he-thong'
    *    và
    *    Khóa học này chính là khóa khọc hiện tại hoặc khóa học tiếp theo
    */
