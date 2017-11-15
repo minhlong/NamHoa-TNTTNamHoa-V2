@@ -18,6 +18,10 @@ class KhoaHocController extends Controller
         return response()->json(KhoaHoc::hienTaiHoacTaoMoi());
     }
 
+
+    /**
+      * Lấy thông tin chi tiết
+      */
     public function getThongTin(KhoaHoc $khoaHoc)
     {
         return response()->json([
@@ -25,7 +29,10 @@ class KhoaHocController extends Controller
         ]);
     }
 
-    public function post(KhoaHoc $khoaHoc, Requests\KhoaHocFormRequest $khoaHocFormRequest)
+    /**
+      * Cập nhật thông tin
+      */
+    public function postThongTin(KhoaHoc $khoaHoc, Requests\KhoaHocFormRequest $khoaHocFormRequest)
     {
         $khoaHoc->fill($khoaHocFormRequest->input());
         $khoaHoc->save();

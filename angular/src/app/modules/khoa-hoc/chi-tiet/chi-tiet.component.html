@@ -44,7 +44,8 @@
           <div class="form-group col-sm-6">
             <label class="col-sm-8 control-label">Cho phép cập nhật điểm:</label>
             <div class="col-sm-4">
-              <p class="form-control-static">Lần {{khoaInfo.cap_nhat_dot_kiem_tra}}</p>
+              <p class="form-control-static" *ngIf="khoaInfo.cap_nhat_dot_kiem_tra == 0">Ngưng cập nhật</p>
+              <p class="form-control-static" *ngIf="khoaInfo.cap_nhat_dot_kiem_tra != 0">Lần {{khoaInfo.cap_nhat_dot_kiem_tra}}</p>
             </div>
           </div>
           <div class="form-group col-sm-6">

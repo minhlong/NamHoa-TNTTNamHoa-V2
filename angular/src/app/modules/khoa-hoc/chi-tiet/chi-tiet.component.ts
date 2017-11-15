@@ -1,5 +1,5 @@
 import { ToasterService } from 'angular2-toaster';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -11,6 +11,7 @@ import { AppState } from './../../../store/reducers/index';
   selector: 'app-chi-tiet',
   templateUrl: './chi-tiet.component.html',
   styleUrls: ['./chi-tiet.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ChiTietComponent implements OnDestroy {
   urlAPI = environment.apiURL + '/khoa-hoc';
@@ -38,7 +39,6 @@ export class ChiTietComponent implements OnDestroy {
         .map(res => res.json().data).subscribe(res => {
           this.isLoading = false;
           this.khoaInfo = res;
-          console.log(this.khoaInfo);
         }, error => {
           this.isLoading = false;
           this.toasterService.pop('error', 'Lỗi!', error);
@@ -63,7 +63,7 @@ export class ChiTietComponent implements OnDestroy {
    */
   hasPerm() {
     if (
-      // this.curAuth.phan_quyen.includes('he-thong') &&
+      this.curAuth.phan_quyen.includes('he-thong') &&
       this.curAuth.khoa_hoc_hien_tai &&
       this.curAuth.khoa_hoc_hien_tai.id <= this.khoaID) {
       return true;
