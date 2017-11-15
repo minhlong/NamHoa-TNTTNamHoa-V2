@@ -114,14 +114,22 @@
           <pagination-template #ep="paginationApi" [id]="pState.id" (pageChange)="pState.currentPage = $event;">
             <div class="text-center">
               <div class="btn-group">
-                <button *ngIf="ep.isFirstPage()" type="button" class="btn btn-sm btn-white disabled"><i class="fa fa-chevron-left"></i></button>
-                <button (click)="ep.previous()" *ngIf="!ep.isFirstPage()" type="button" class="btn btn-sm btn-white"><i class="fa fa-chevron-left"></i></button>
+                <button *ngIf="ep.isFirstPage()" type="button" class="btn btn-sm btn-white disabled">
+                  <i class="fa fa-chevron-left"></i>
+                </button>
+                <button (click)="ep.previous()" *ngIf="!ep.isFirstPage()" type="button" class="btn btn-sm btn-white">
+                  <i class="fa fa-chevron-left"></i>
+                </button>
                 <ng-container *ngFor="let page of ep.pages">
                   <button *ngIf="ep.getCurrent() !== page.value" (click)="ep.setCurrent(page.value)" class="btn btn-sm btn-white">{{ page.label }}</button>
                   <button *ngIf="ep.getCurrent() === page.value" class="btn btn-sm btn-white active">{{ page.label }}</button>
                 </ng-container>
-                <button *ngIf="ep.isLastPage()" type="button" class="btn btn-sm btn-white disabled"><i class="fa fa-chevron-right"></i></button>
-                <button (click)="ep.next()" *ngIf="!ep.isLastPage()" type="button" class="btn btn-sm btn-white"><i class="fa fa-chevron-right"></i></button>
+                <button *ngIf="ep.isLastPage()" type="button" class="btn btn-sm btn-white disabled">
+                  <i class="fa fa-chevron-right"></i>
+                </button>
+                <button (click)="ep.next()" *ngIf="!ep.isLastPage()" type="button" class="btn btn-sm btn-white">
+                  <i class="fa fa-chevron-right"></i>
+                </button>
               </div>
             </div>
           </pagination-template>
@@ -216,13 +224,16 @@
                     <i class="fa fa-trophy"></i> &lt; {{khoaHienTai.xep_loai.CHUYEN_CAN.TB}}
                   </td>
                   <td>
-                    {{khoaHienTai.xep_loai.CHUYEN_CAN.TB}} ≤ <i class="fa fa-trophy"></i>
+                    {{khoaHienTai.xep_loai.CHUYEN_CAN.TB}} ≤
+                    <i class="fa fa-trophy"></i>
                   </td>
                   <td>
-                    {{khoaHienTai.xep_loai.CHUYEN_CAN.KHA}} ≤ <i class="fa fa-trophy"></i>
+                    {{khoaHienTai.xep_loai.CHUYEN_CAN.KHA}} ≤
+                    <i class="fa fa-trophy"></i>
                   </td>
                   <td>
-                    {{khoaHienTai.xep_loai.CHUYEN_CAN.GIOI}} ≤ <i class="fa fa-trophy"></i>
+                    {{khoaHienTai.xep_loai.CHUYEN_CAN.GIOI}} ≤
+                    <i class="fa fa-trophy"></i>
                   </td>
                 </tr>
                 <tr>
@@ -233,13 +244,16 @@
                     <i class="fa fa-trophy"></i> &lt; {{khoaHienTai.xep_loai.HOC_LUC.TB}}
                   </td>
                   <td>
-                    {{khoaHienTai.xep_loai.HOC_LUC.TB}} ≤ <i class="fa fa-trophy"></i>
+                    {{khoaHienTai.xep_loai.HOC_LUC.TB}} ≤
+                    <i class="fa fa-trophy"></i>
                   </td>
                   <td>
-                    {{khoaHienTai.xep_loai.HOC_LUC.KHA}} ≤ <i class="fa fa-trophy"></i>
+                    {{khoaHienTai.xep_loai.HOC_LUC.KHA}} ≤
+                    <i class="fa fa-trophy"></i>
                   </td>
                   <td>
-                    {{khoaHienTai.xep_loai.HOC_LUC.GIOI}} ≤ <i class="fa fa-trophy"></i>
+                    {{khoaHienTai.xep_loai.HOC_LUC.GIOI}} ≤
+                    <i class="fa fa-trophy"></i>
                   </td>
                 </tr>
               </tbody>
@@ -278,19 +292,24 @@
                     <i class="fa fa-user"></i> &lt; {{khoaHienTai.xep_hang.CHUYEN_CAN.LEN_LOP}}
                   </td>
                   <td>
-                    {{khoaHienTai.xep_hang.CHUYEN_CAN.LEN_LOP}} ≤ <i class="fa fa-user"></i>
+                    {{khoaHienTai.xep_hang.CHUYEN_CAN.LEN_LOP}} ≤
+                    <i class="fa fa-user"></i>
                   </td>
                   <td>
-                    {{khoaHienTai.xep_hang.CHUYEN_CAN.KHUYEN_KHICH}} ≤ <i class="fa fa-user"></i>
+                    {{khoaHienTai.xep_hang.CHUYEN_CAN.KHUYEN_KHICH}} ≤
+                    <i class="fa fa-user"></i>
                   </td>
                   <td>
-                    {{khoaHienTai.xep_hang.CHUYEN_CAN.III}} ≤ <i class="fa fa-user"></i>
+                    {{khoaHienTai.xep_hang.CHUYEN_CAN.III}} ≤
+                    <i class="fa fa-user"></i>
                   </td>
                   <td>
-                    {{khoaHienTai.xep_hang.CHUYEN_CAN.II}} ≤ <i class="fa fa-user"></i>
+                    {{khoaHienTai.xep_hang.CHUYEN_CAN.II}} ≤
+                    <i class="fa fa-user"></i>
                   </td>
                   <td>
-                    {{khoaHienTai.xep_hang.CHUYEN_CAN.I}} ≤ <i class="fa fa-user"></i>
+                    {{khoaHienTai.xep_hang.CHUYEN_CAN.I}} ≤
+                    <i class="fa fa-user"></i>
                   </td>
                 </tr>
                 <tr>
@@ -301,19 +320,24 @@
                     <i class="fa fa-user"></i> &lt; {{khoaHienTai.xep_hang.HOC_LUC.LEN_LOP}}
                   </td>
                   <td>
-                    {{khoaHienTai.xep_hang.HOC_LUC.LEN_LOP}} ≤ <i class="fa fa-user"></i>
+                    {{khoaHienTai.xep_hang.HOC_LUC.LEN_LOP}} ≤
+                    <i class="fa fa-user"></i>
                   </td>
                   <td>
-                    {{khoaHienTai.xep_hang.HOC_LUC.KHUYEN_KHICH}} ≤ <i class="fa fa-user"></i>
+                    {{khoaHienTai.xep_hang.HOC_LUC.KHUYEN_KHICH}} ≤
+                    <i class="fa fa-user"></i>
                   </td>
                   <td>
-                    {{khoaHienTai.xep_hang.HOC_LUC.III}} ≤ <i class="fa fa-user"></i>
+                    {{khoaHienTai.xep_hang.HOC_LUC.III}} ≤
+                    <i class="fa fa-user"></i>
                   </td>
                   <td>
-                    {{khoaHienTai.xep_hang.HOC_LUC.II}} ≤ <i class="fa fa-user"></i>
+                    {{khoaHienTai.xep_hang.HOC_LUC.II}} ≤
+                    <i class="fa fa-user"></i>
                   </td>
                   <td>
-                    {{khoaHienTai.xep_hang.HOC_LUC.I}} ≤ <i class="fa fa-user"></i>
+                    {{khoaHienTai.xep_hang.HOC_LUC.I}} ≤
+                    <i class="fa fa-user"></i>
                   </td>
                 </tr>
                 <tr>
@@ -348,9 +372,9 @@
       <div class="modal-content animated bounceInRight">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">
-          <span aria-hidden="true">&times;</span>
-          <span class="sr-only">Close</span>
-        </button>
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
           <h4 class="modal-title">
             {{itemSelected.ten}}
           </h4>
@@ -378,8 +402,8 @@
                 </td>
                 <td>
                   <a (click)="closeModalBtn.click(); xemTaiKhoan(_item)" class="btn btn-xs btn-default">
-                  Xem
-                </a>
+                    Xem
+                  </a>
                 </td>
               </tr>
             </tbody>

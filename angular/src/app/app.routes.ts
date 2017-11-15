@@ -24,11 +24,12 @@ const hasAuth: Routes = [
     path: '', component: BasicComponent,
     children: [
       { path: '', redirectTo: 'trang-chu', pathMatch: 'full' },
+      { path: 'dang-xuat', component: LogoutComponent },
       { path: 'trang-chu', component: TrangChuComponent },
       { path: 'tai-khoan', loadChildren: './modules/tai-khoan/tai-khoan.module#TaiKhoanModule' },
       { path: 'lop-hoc', loadChildren: './modules/lop-hoc/lop-hoc.module#LopHocModule' },
       { path: 'khoa-hoc', loadChildren: './modules/khoa-hoc/khoa-hoc.module#KhoaHocModule' },
-      { path: 'dang-xuat', component: LogoutComponent },
+      { path: 'phan-quyen', loadChildren: './modules/phan-quyen/phan-quyen.module#PhanQuyenModule' },
     ],
     canActivateChild: [AuthGuard]
   },

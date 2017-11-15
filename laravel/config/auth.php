@@ -63,11 +63,13 @@ return [
     | Supported: "database", "eloquent"
     |
     */
+    'model' => App\TaiKhoan::class, // HMLong - Fix Trail Role - Nhom Tai Khoan
 
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\TaiKhoan::class,
+            'table' => 'tai_khoan',
         ],
 
         // 'users' => [

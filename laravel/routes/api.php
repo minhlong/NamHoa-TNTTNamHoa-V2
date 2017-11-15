@@ -67,6 +67,20 @@ Route::group(['middleware' => 'auth-jwt'], function () {
             Route::post(null, 'KhoaHocController@postThongTin'); // Fix: Update permission
         });
     });
+
+    /* Phân Quyền */
+    Route::group(['prefix' => 'phan-quyen'], function () {
+        Route::get(null, 'PhanQuyenController@getDanhSach');
+        Route::post('{PhanQuyen}', 'PhanQuyenController@postThongTin');  // Fix: Chỉ mình tài khoảng Hồ Minh Long
+        Route::post('{PhanQuyen}/nhom', 'PhanQuyenController@postThemNhom');  // Fix: Update permission
+    });
+
+    /* Phân Nhóm */
+    Route::group(['prefix' => 'nhom-tai-khoan'], function () {
+        Route::get(null, 'NhomTaiKhoanController@get');
+        Route::post('{NhomTaiKhoan?}', 'NhomTaiKhoanController@post'); // Fix: Update permissio
+        Route::delete('{NhomTaiKhoan?}', 'NhomTaiKhoanController@delete'); // Fix: Update permissio
+    });
 });
 
 Route::bind('TaiKhoan', function ($value) {
@@ -77,4 +91,10 @@ Route::bind('LopHoc', function ($value) {
 });
 Route::bind('KhoaHoc', function ($value) {
     return \App\KhoaHoc::findOrFail($value);
+});
+Route::bind('PhanQuyen', function ($value) {
+    return \App\PhanQuyen::findOrFail($value);
+});
+Route::bind('NhomTaiKhoan', function ($value) {
+    return \App\NhomTaiKhoan::findOrFail($value);
 });

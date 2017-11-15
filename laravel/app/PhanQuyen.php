@@ -5,6 +5,11 @@ use Zizaco\Entrust\EntrustPermission;
 
 class PhanQuyen extends EntrustPermission
 {
+    protected $fillable = [
+        'ten_hien_thi',
+        'ghi_chu',
+    ];
+
     /**
      * Get the phan_quyen's name. Fix for Entrus
      *

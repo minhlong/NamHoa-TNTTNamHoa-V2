@@ -159,5 +159,4 @@ export class HuynhTruongComponent implements OnDestroy {
   cancel() {
     this.updateInfo.emit(null);
   }
-
 }
