@@ -8,7 +8,7 @@ import { GuestGuard } from './services/guards/guest-guard.service';
 
 import { LogoutComponent } from './components/logout.component';
 import { LoginComponent } from './components/login/login.component';
-import { TrangChuComponent } from './trang-chu/trang-chu.component';
+import { TrangChuComponent } from './components/trang-chu/trang-chu.component';
 
 const noAuth: Routes = [
   {

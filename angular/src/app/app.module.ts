@@ -30,10 +30,10 @@ import { reducer } from './store/reducers/index';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout.component';
+import { TrangChuComponent } from './components/trang-chu/trang-chu.component';
 
 // Pipe
 import { environment } from '../environments/environment';
-import { TrangChuComponent } from './trang-chu/trang-chu.component';
 
 @NgModule({
   declarations: [

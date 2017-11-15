@@ -7,21 +7,27 @@ import { NgxPaginationModule } from 'ngx-pagination';
 
 import { SharedModule } from '../shared/shared.module';
 
-import { DanhSachComponent } from './danh-sach/danh-sach.component';
+// Chi Tiet
 import { ChiTietComponent } from './chi-tiet/chi-tiet.component';
-import { DiemDanhComponent } from './diem-danh/diem-danh.component';
-import { FormDiemDanhComponent } from './diem-danh/form/form.component';
-import { DiemSoComponent } from './diem-so/diem-so.component';
-import { TongKetComponent } from './tong-ket/tong-ket.component';
+// Thong Tin
+import { ThongTinComponent } from './chi-tiet/thong-tin/thong-tin.component';
+import { FormThongTinComponent } from './chi-tiet/thong-tin/form/form.component';
+import { HuynhTruongComponent } from './chi-tiet/thong-tin/huynh-truong/huynh-truong.component';
+import { ThieuNhiComponent } from './chi-tiet/thong-tin/thieu-nhi/thieu-nhi.component';
+// Diem Danh
+import { DiemDanhComponent } from './chi-tiet/diem-danh/diem-danh.component';
+import { FormDiemDanhComponent } from './chi-tiet/diem-danh/form/form.component';
+// Diem So
+import { DiemSoComponent } from './chi-tiet/diem-so/diem-so.component';
+import { FormDiemSoComponent } from './chi-tiet/diem-so/form-diem-so/form-diem-so.component';
+// Tong Ket
+import { TongKetComponent } from './chi-tiet/tong-ket/tong-ket.component';
+import { FormXepHangComponent } from './chi-tiet/tong-ket/form-xep-hang/form-xep-hang.component';
+import { FormNhanXetComponent } from './chi-tiet/tong-ket/form-nhan-xet/form-nhan-xet.component';
+import { PhieuLienLacComponent } from './chi-tiet/tong-ket/phieu-lien-lac/phieu-lien-lac.component';
+
+import { DanhSachComponent } from './danh-sach/danh-sach.component';
 import { TaoMoiComponent } from './tao-moi/tao-moi.component';
-import { ThongTinComponent } from './thong-tin/thong-tin.component';
-import { FormThongTinComponent } from './thong-tin/form/form.component';
-import { HuynhTruongComponent } from './thong-tin/huynh-truong/huynh-truong.component';
-import { ThieuNhiComponent } from './thong-tin/thieu-nhi/thieu-nhi.component';
-import { FormDiemSoComponent } from './diem-so/form-diem-so/form-diem-so.component';
-import { FormXepHangComponent } from './tong-ket/form-xep-hang/form-xep-hang.component';
-import { FormNhanXetComponent } from './tong-ket/form-nhan-xet/form-nhan-xet.component';
-import { PhieuLienLacComponent } from './tong-ket/phieu-lien-lac/phieu-lien-lac.component';
 
 @NgModule({
   imports: [
@@ -50,14 +56,12 @@ import { PhieuLienLacComponent } from './tong-ket/phieu-lien-lac/phieu-lien-lac.
   ],
   declarations: [
     DanhSachComponent,
-    ChiTietComponent, DiemSoComponent, TongKetComponent,
+    TaoMoiComponent,
+    ChiTietComponent,
     ThongTinComponent, FormThongTinComponent, HuynhTruongComponent, ThieuNhiComponent,
     DiemDanhComponent, FormDiemDanhComponent,
-    TaoMoiComponent,
-    FormDiemSoComponent,
-    FormXepHangComponent,
-    FormNhanXetComponent,
-    PhieuLienLacComponent,
+    DiemSoComponent, FormDiemSoComponent,
+    TongKetComponent, FormXepHangComponent, FormNhanXetComponent, PhieuLienLacComponent,
   ]
 })
 export class LopHocModule { }

@@ -2,20 +2,19 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 
-import { JwtAuthHttp } from './../../../../services/http-auth.service';
-import { environment } from './../../../../../environments/environment';
-import { AppState } from './../../../../store/reducers/index';
+import { JwtAuthHttp } from './../../../../../services/http-auth.service';
+import { environment } from './../../../../../../environments/environment';
+import { AppState } from './../../../../../store/reducers/index';
 
 @Component({
-  selector: 'app-form-diem-so',
-  templateUrl: './form-diem-so.component.html',
-  styleUrls: ['./form-diem-so.component.scss']
+  selector: 'app-form-diem-danh',
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.scss']
 })
-export class FormDiemSoComponent implements OnInit, OnDestroy {
+export class FormDiemDanhComponent implements OnInit, OnDestroy {
   @Input() apiData;
-  @Input() lanKT;
   @Input() thieuNhiArr;
   @Output() updateInfo = new EventEmitter();
 
@@ -48,11 +47,9 @@ export class FormDiemSoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // Tạo form để submit lên server
-    this.formThieuNhi = this._fb.array(this.initHocLuc());
+    this.formThieuNhi = this._fb.array(this.initChuyenCan());
     this.formGroup = this._fb.group({
-      dot: this.apiData.dot,
-      lan: this.lanKT,
+      ngay: this.apiData.sunday,
       thieu_nhi: this.formThieuNhi,
     });
   }
@@ -61,55 +58,32 @@ export class FormDiemSoComponent implements OnInit, OnDestroy {
     this.sub$.unsubscribe();
   }
 
-  /**
-   * Tạo form cho từng học viên
-   */
-  private initHocLuc() {
+  private initChuyenCan() {
     const tmpArr = [];
     this.thieuNhiArr.forEach(_tn => {
-      const tmpTn = this.findHocLuc(_tn);
+      const tmpTn = this.findChuyenCan(_tn);
       tmpArr.push(this._fb.group({
         id: _tn.id,
         ho_va_ten: _tn.ho_va_ten,
-        diem: tmpTn.diem,
+        di_le: tmpTn.di_le,
+        di_hoc: tmpTn.di_hoc,
+        ghi_chu: tmpTn.ghi_chu,
       }));
     });
 
     return tmpArr;
   }
 
-  /**
-   * Tìm học viên để fill dữ liệu vào form
-   * @param tn Thiếu Nhi
-   */
-  private findHocLuc(tn) {
+  private findChuyenCan(tn) {
     let res;
     if (this.apiData) {
-      res = this.apiData.data.find(c => c.tai_khoan_id === tn.id && c.lan === this.lanKT);
+      res = this.apiData.data.find(c => c.tai_khoan_id === tn.id);
     }
     return res ? res : {};
   }
 
-  /**
-   * Chỉ cho nhập số
-   */
-  _keyPress(event: any) {
-    const pattern = /[0-9\.]/;
-    const inputChar = String.fromCharCode(event.charCode);
-
-    if (!pattern.test(inputChar)) {
-      // invalid character, prevent input
-      event.preventDefault();
-    }
-  }
-
-  /**
-   * Lưu điểm
-   *    Nếu OK -> quay lại trang chính
-   *    Nếu lỗi -> hiện lỗi
-   */
   save() {
-    const _url = this.urlAPI + '/' + this.lopHocID + '/hoc-luc';
+    const _url = this.urlAPI + '/' + this.lopHocID + '/chuyen-can';
     this.isLoading = true;
 
     this._http.post(_url, this.formGroup.value).map(res => res.json()).subscribe(res => {
@@ -132,9 +106,6 @@ export class FormDiemSoComponent implements OnInit, OnDestroy {
     });
   }
 
-  /**
-   * Thoát -> quay lại trang chính
-   */
   cancel() {
     this.updateInfo.emit(null);
   }

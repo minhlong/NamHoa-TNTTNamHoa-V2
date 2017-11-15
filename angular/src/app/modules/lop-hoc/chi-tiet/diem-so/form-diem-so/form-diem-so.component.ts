@@ -4,17 +4,19 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angu
 import { ToasterService } from 'angular2-toaster';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 
-import { JwtAuthHttp } from './../../../../services/http-auth.service';
-import { environment } from './../../../../../environments/environment';
-import { AppState } from './../../../../store/reducers/index';
+import { JwtAuthHttp } from './../../../../../services/http-auth.service';
+import { environment } from './../../../../../../environments/environment';
+import { AppState } from './../../../../../store/reducers/index';
 
 @Component({
-  selector: 'app-form-xep-hang',
-  templateUrl: './form-xep-hang.component.html',
-  styleUrls: ['./form-xep-hang.component.scss']
+  selector: 'app-form-diem-so',
+  templateUrl: './form-diem-so.component.html',
+  styleUrls: ['./form-diem-so.component.scss']
 })
-export class FormXepHangComponent implements OnInit, OnDestroy {
+export class FormDiemSoComponent implements OnInit, OnDestroy {
   @Input() apiData;
+  @Input() lanKT;
+  @Input() thieuNhiArr;
   @Output() updateInfo = new EventEmitter();
 
   private urlAPI = environment.apiURL + '/lop-hoc';
@@ -46,8 +48,11 @@ export class FormXepHangComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.formThieuNhi = this._fb.array(this.initXepHang());
+    // Tạo form để submit lên server
+    this.formThieuNhi = this._fb.array(this.initHocLuc());
     this.formGroup = this._fb.group({
+      dot: this.apiData.dot,
+      lan: this.lanKT,
       thieu_nhi: this.formThieuNhi,
     });
   }
@@ -56,22 +61,55 @@ export class FormXepHangComponent implements OnInit, OnDestroy {
     this.sub$.unsubscribe();
   }
 
-  private initXepHang() {
+  /**
+   * Tạo form cho từng học viên
+   */
+  private initHocLuc() {
     const tmpArr = [];
-    this.apiData.Data.forEach(_tn => {
+    this.thieuNhiArr.forEach(_tn => {
+      const tmpTn = this.findHocLuc(_tn);
       tmpArr.push(this._fb.group({
         id: _tn.id,
         ho_va_ten: _tn.ho_va_ten,
-        xep_hang: _tn.pivot.xep_hang,
-        ghi_chu: _tn.pivot.ghi_chu,
+        diem: tmpTn.diem,
       }));
     });
 
     return tmpArr;
   }
 
+  /**
+   * Tìm học viên để fill dữ liệu vào form
+   * @param tn Thiếu Nhi
+   */
+  private findHocLuc(tn) {
+    let res;
+    if (this.apiData) {
+      res = this.apiData.data.find(c => c.tai_khoan_id === tn.id && c.lan === this.lanKT);
+    }
+    return res ? res : {};
+  }
+
+  /**
+   * Chỉ cho nhập số
+   */
+  _keyPress(event: any) {
+    const pattern = /[0-9\.]/;
+    const inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      // invalid character, prevent input
+      event.preventDefault();
+    }
+  }
+
+  /**
+   * Lưu điểm
+   *    Nếu OK -> quay lại trang chính
+   *    Nếu lỗi -> hiện lỗi
+   */
   save() {
-    const _url = this.urlAPI + '/' + this.lopHocID + '/tong-ket/xep-hang';
+    const _url = this.urlAPI + '/' + this.lopHocID + '/hoc-luc';
     this.isLoading = true;
 
     this._http.post(_url, this.formGroup.value).map(res => res.json()).subscribe(res => {
@@ -94,6 +132,9 @@ export class FormXepHangComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Thoát -> quay lại trang chính
+   */
   cancel() {
     this.updateInfo.emit(null);
   }

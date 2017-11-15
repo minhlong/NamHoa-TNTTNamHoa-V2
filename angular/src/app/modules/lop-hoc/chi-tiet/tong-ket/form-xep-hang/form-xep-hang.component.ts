@@ -2,20 +2,19 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
-import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 
-import { JwtAuthHttp } from './../../../../services/http-auth.service';
-import { environment } from './../../../../../environments/environment';
-import { AppState } from './../../../../store/reducers/index';
+import { JwtAuthHttp } from './../../../../../services/http-auth.service';
+import { environment } from './../../../../../../environments/environment';
+import { AppState } from './../../../../../store/reducers/index';
 
 @Component({
-  selector: 'app-form-diem-danh',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss']
+  selector: 'app-form-xep-hang',
+  templateUrl: './form-xep-hang.component.html',
+  styleUrls: ['./form-xep-hang.component.scss']
 })
-export class FormDiemDanhComponent implements OnInit, OnDestroy {
+export class FormXepHangComponent implements OnInit, OnDestroy {
   @Input() apiData;
-  @Input() thieuNhiArr;
   @Output() updateInfo = new EventEmitter();
 
   private urlAPI = environment.apiURL + '/lop-hoc';
@@ -47,9 +46,8 @@ export class FormDiemDanhComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.formThieuNhi = this._fb.array(this.initChuyenCan());
+    this.formThieuNhi = this._fb.array(this.initXepHang());
     this.formGroup = this._fb.group({
-      ngay: this.apiData.sunday,
       thieu_nhi: this.formThieuNhi,
     });
   }
@@ -58,32 +56,22 @@ export class FormDiemDanhComponent implements OnInit, OnDestroy {
     this.sub$.unsubscribe();
   }
 
-  private initChuyenCan() {
+  private initXepHang() {
     const tmpArr = [];
-    this.thieuNhiArr.forEach(_tn => {
-      const tmpTn = this.findChuyenCan(_tn);
+    this.apiData.Data.forEach(_tn => {
       tmpArr.push(this._fb.group({
         id: _tn.id,
         ho_va_ten: _tn.ho_va_ten,
-        di_le: tmpTn.di_le,
-        di_hoc: tmpTn.di_hoc,
-        ghi_chu: tmpTn.ghi_chu,
+        xep_hang: _tn.pivot.xep_hang,
+        ghi_chu: _tn.pivot.ghi_chu,
       }));
     });
 
     return tmpArr;
   }
 
-  private findChuyenCan(tn) {
-    let res;
-    if (this.apiData) {
-      res = this.apiData.data.find(c => c.tai_khoan_id === tn.id);
-    }
-    return res ? res : {};
-  }
-
   save() {
-    const _url = this.urlAPI + '/' + this.lopHocID + '/chuyen-can';
+    const _url = this.urlAPI + '/' + this.lopHocID + '/tong-ket/xep-hang';
     this.isLoading = true;
 
     this._http.post(_url, this.formGroup.value).map(res => res.json()).subscribe(res => {

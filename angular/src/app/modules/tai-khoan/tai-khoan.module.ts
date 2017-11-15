@@ -7,7 +7,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 
 import { DanhSachComponent } from './danh-sach/danh-sach.component';
 import { TaoMoiComponent } from './tao-moi/tao-moi.component';
-import { MatKhauComponent } from './mat-khau/mat-khau.component';
+import { MatKhauComponent } from './chi-tiet/mat-khau/mat-khau.component';
 import { SharedModule } from '../shared/shared.module';
 import { ChiTietComponent } from './chi-tiet/chi-tiet.component';
 import { FormComponent } from './chi-tiet/form/form.component';

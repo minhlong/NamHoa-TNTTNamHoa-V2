@@ -61,6 +61,7 @@ Route::group(['middleware' => 'auth-jwt'], function () {
     Route::group(['prefix' => 'khoa-hoc'], function () {
         Route::get(null, 'KhoaHocController@getDanhSach');
         Route::post(null, 'KhoaHocController@postTaoMoi'); // Fix: Update permission
+
         Route::group(['prefix' => '{KhoaHoc}'], function () {
             Route::get(null, 'KhoaHocController@getThongTin');
             Route::post(null, 'KhoaHocController@postThongTin'); // Fix: Update permission

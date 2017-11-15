@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { JwtAuthHttp } from '../services/http-auth.service';
-import { environment } from './../../environments/environment';
-import { defaultPageState } from '../modules/tai-khoan/danh-sach/defaultPageState';
-import { AppState } from './../store/reducers/index';
+import { JwtAuthHttp } from './../../services/http-auth.service';
+import { environment } from './../../../environments/environment';
+import { defaultPageState } from './../../modules/tai-khoan/danh-sach/defaultPageState';
+import { AppState } from './../../store/reducers/index';
 
 @Component({
   selector: 'app-trang-chu',
