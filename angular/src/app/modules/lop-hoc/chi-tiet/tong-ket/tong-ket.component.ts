@@ -97,7 +97,6 @@ export class TongKetComponent implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Kiểm tra quyền điểm danh
    * + Tài khoản được phân quyền 'danh-gia-cuoi-nam'
    */
   hasPermXepHang() {
@@ -108,7 +107,6 @@ export class TongKetComponent implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Kiểm tra quyền điểm danh
    * + Tài khoản được phân quyền 'nhan-xet'
    * hoặc
    * + Đang dạy chính lớp này

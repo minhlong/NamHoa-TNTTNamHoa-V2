@@ -53,18 +53,18 @@ Route::group(['middleware' => 'auth-jwt'], function () {
         Route::post('{LopHoc}/hoc-luc', 'LopHocController@postHocLuc'); // Fix: Update permission
 
         Route::get('{LopHoc}/tong-ket', 'TaiKhoanController@getTongKet');
-        Route::post('{LopHoc}/tong-ket/xep-hang', 'LopHocController@postXepHang');  // Fix: Update permission
-        Route::post('{LopHoc}/tong-ket/nhan-xet', 'LopHocController@postNhanXet');  // Fix: Update permission
+        Route::post('{LopHoc}/tong-ket/xep-hang', 'LopHocController@postXepHang')->middleware(['permission:danh-gia-cuoi-nam']);
+        Route::post('{LopHoc}/tong-ket/nhan-xet', 'LopHocController@postNhanXet')->middleware(['permission:nhan-xet']);
     });
 
     /* Khoa Hoc */
     Route::group(['prefix' => 'khoa-hoc'], function () {
         Route::get(null, 'KhoaHocController@getDanhSach');
-        Route::post(null, 'KhoaHocController@postTaoMoi'); // Fix: Update permission
+        Route::post(null, 'KhoaHocController@postTaoMoi')->middleware(['permission:he-thong']);
 
         Route::group(['prefix' => '{KhoaHoc}'], function () {
             Route::get(null, 'KhoaHocController@getThongTin');
-            Route::post(null, 'KhoaHocController@postThongTin'); // Fix: Update permission
+            Route::post(null, 'KhoaHocController@postThongTin')->middleware(['permission:he-thong']);  // Fix: Năm hiện tại hoặc về sau
         });
     });
 
@@ -78,10 +78,12 @@ Route::group(['middleware' => 'auth-jwt'], function () {
     /* Phân Nhóm */
     Route::group(['prefix' => 'nhom-tai-khoan'], function () {
         Route::get(null, 'NhomTaiKhoanController@get');
-        Route::post('{NhomTaiKhoan?}', 'NhomTaiKhoanController@post'); // Fix: Update permission
-        Route::post('{NhomTaiKhoan}/tai-khoan', 'NhomTaiKhoanController@postThem'); // Fix: Update permission
-        Route::post('{NhomTaiKhoan}/xoa-tai-khoan', 'NhomTaiKhoanController@postXoa'); // Fix: Update permission
-        Route::delete('{NhomTaiKhoan}', 'NhomTaiKhoanController@delete'); // Fix: Update permission
+        Route::post('{NhomTaiKhoan?}', 'NhomTaiKhoanController@post')->middleware(['permission:phan-quyen']);
+        Route::group(['prefix' => '{NhomTaiKhoan}', 'middleware' => ['permission:phan-quyen']], function () {
+            Route::post('tai-khoan', 'NhomTaiKhoanController@postThem');
+            Route::post('xoa-tai-khoan', 'NhomTaiKhoanController@postXoa');
+            Route::delete(null, 'NhomTaiKhoanController@delete');
+        });
     });
 });
 
