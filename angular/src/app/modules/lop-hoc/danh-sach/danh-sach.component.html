@@ -99,7 +99,7 @@
               <td>
                 <button class="btn btn-xs btn-default" [routerLink]="['/lop-hoc/chi-tiet', _item.id]">Lớp</button>
                 <button class="btn btn-xs btn-default" (click)="itemSelected = _item; openModalBtn.click()">H/Trưởng</button>
-                <button class="btn btn-xs btn-danger" (click)="itemSelected = _item; openConfimModel.click()" *ngIf="hasPermXoa(_item)">Xóa</button>
+                <button class="btn btn-xs btn-danger" (click)="itemSelected = _item; confimModelBtn.click()" *ngIf="hasPermXoa(_item)">Xóa</button>
               </td>
             </tr>
           </tbody>
@@ -173,7 +173,7 @@
   </div>
 </div>
 
-<a class="btn-open-modal" data-toggle="modal" data-target="#confimModel" #openConfimModel></a>
+<a class="btn-open-modal" data-toggle="modal" data-target="#confimModel" #confimModelBtn></a>
 <div class="modal inmodal" id="confimModel" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog" *ngIf="itemSelected">
     <div class="modal-content animated bounceInRight">

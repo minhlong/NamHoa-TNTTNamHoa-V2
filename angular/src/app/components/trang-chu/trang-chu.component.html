@@ -99,7 +99,7 @@
               </thead>
               <tbody>
                 <tr *ngIf="!chuaDiemDanh.lop.length">
-                  <td colspan="10" class="text-center">Chưa có dữ liệu.</td>
+                  <td colspan="2" class="text-center">Chưa có dữ liệu.</td>
                 </tr>
                 <tr *ngFor="let _item of chuaDiemDanh.lop| paginate: pState; let _i = index">
                   <td>{{_item.ten}}</td>

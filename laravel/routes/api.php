@@ -78,8 +78,10 @@ Route::group(['middleware' => 'auth-jwt'], function () {
     /* Phân Nhóm */
     Route::group(['prefix' => 'nhom-tai-khoan'], function () {
         Route::get(null, 'NhomTaiKhoanController@get');
-        Route::post('{NhomTaiKhoan?}', 'NhomTaiKhoanController@post'); // Fix: Update permissio
-        Route::delete('{NhomTaiKhoan?}', 'NhomTaiKhoanController@delete'); // Fix: Update permissio
+        Route::post('{NhomTaiKhoan?}', 'NhomTaiKhoanController@post'); // Fix: Update permission
+        Route::post('{NhomTaiKhoan}/tai-khoan', 'NhomTaiKhoanController@postThem'); // Fix: Update permission
+        Route::post('{NhomTaiKhoan}/xoa-tai-khoan', 'NhomTaiKhoanController@postXoa'); // Fix: Update permission
+        Route::delete('{NhomTaiKhoan}', 'NhomTaiKhoanController@delete'); // Fix: Update permission
     });
 });
 

@@ -7,7 +7,7 @@ import { Subject } from 'rxjs/Rx';
 
 import { JwtAuthHttp } from 'app/services/http-auth.service';
 import { AppState } from 'app/store/reducers';
-import { environment } from 'environments/environment.prod';
+import { environment } from 'environments/environment';
 import { bodauTiengViet } from '../../../../_helpers';
 
 @Component({

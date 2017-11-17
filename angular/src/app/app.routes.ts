@@ -30,6 +30,7 @@ const hasAuth: Routes = [
       { path: 'lop-hoc', loadChildren: './modules/lop-hoc/lop-hoc.module#LopHocModule' },
       { path: 'khoa-hoc', loadChildren: './modules/khoa-hoc/khoa-hoc.module#KhoaHocModule' },
       { path: 'phan-quyen', loadChildren: './modules/phan-quyen/phan-quyen.module#PhanQuyenModule' },
+      { path: 'phan-nhom', loadChildren: './modules/phan-nhom/phan-nhom.module#PhanNhomModule' },
     ],
     canActivateChild: [AuthGuard]
   },

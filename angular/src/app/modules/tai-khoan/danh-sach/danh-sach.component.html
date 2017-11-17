@@ -7,7 +7,8 @@
           Tạo Mới
         </button>
         <button *ngIf="!isLoadingExport" class="btn btn-xs btn-default m-r-lg" (click)="exportData()">
-          Xuất Danh Sách <span *ngIf="cookieState.Fkhoa">& Tình Hình Học Tập</span>
+          Xuất Danh Sách
+          <span *ngIf="cookieState.Fkhoa">& Tình Hình Học Tập</span>
         </button>
         <button class="btn btn-xs btn-default" (click)="cookieState.FmoRong = !cookieState.FmoRong;">
           {{cookieState.FmoRong ? 'Thu gọn' : 'Mở rộng'}}
@@ -20,61 +21,61 @@
           <div *ngIf="checkHidden(cookieState.Fkhoa)" class="form-group col-sm-4 col-md-3 form-group-sm">
             <label>Khóa</label>
             <select name="khoa" [(ngModel)]="cookieState.Fkhoa" class="form-control">
-                <option [ngValue]="null"></option>
-                <option [ngValue]="khoaHienTaiID">Hiện tại ({{khoaHienTaiID}})</option>
-                <option [ngValue]="khoaHienTaiID - 1">{{khoaHienTaiID - 1}}</option>
-                <option [ngValue]="khoaHienTaiID - 2">{{khoaHienTaiID - 2}}</option> 
+              <option [ngValue]="null"></option>
+              <option [ngValue]="khoaHienTaiID">Hiện tại ({{khoaHienTaiID}})</option>
+              <option [ngValue]="khoaHienTaiID - 1">{{khoaHienTaiID - 1}}</option>
+              <option [ngValue]="khoaHienTaiID - 2">{{khoaHienTaiID - 2}}</option>
             </select>
           </div>
           <div *ngIf="checkHidden(cookieState.Fnganh)" class="form-group col-sm-4 col-md-3 form-group-sm">
             <label>Ngành</label>
             <select name="nganh" [(ngModel)]="cookieState.Fnganh" class="form-control">
-                <option [ngValue]="null"></option>
-                <option value="AU_NHI">{{'AU_NHI' | nganh}}</option>
-                <option value="THIEU_NHI">{{'THIEU_NHI' | nganh}}</option>
-                <option value="NGHIA_SI">{{'NGHIA_SI' | nganh}}</option>
-                <option value="HT_DU_BI">{{'HT_DU_BI' | nganh}}</option>
+              <option [ngValue]="null"></option>
+              <option value="AU_NHI">{{'AU_NHI' | nganh}}</option>
+              <option value="THIEU_NHI">{{'THIEU_NHI' | nganh}}</option>
+              <option value="NGHIA_SI">{{'NGHIA_SI' | nganh}}</option>
+              <option value="HT_DU_BI">{{'HT_DU_BI' | nganh}}</option>
             </select>
           </div>
           <div *ngIf="checkHidden(cookieState.Fcap)" class="form-group col-sm-4 col-md-3 form-group-sm">
             <label>Cấp</label>
             <select name="cap" [(ngModel)]="cookieState.Fcap" class="form-control">
-                <option [ngValue]="null"></option>
-                <option value="CHIEN_CON">{{'CHIEN_CON' | cap}}</option>
-                <option value="1">{{'1' | cap}}</option>
-                <option value="2">{{'2' | cap}}</option>
-                <option value="3">{{'3' | cap}}</option>
-                <option value="4">{{'4' | cap}}</option>
-                <option value="5">{{'5' | cap}}</option>
-                <option value="6">{{'6' | cap}}</option>
+              <option [ngValue]="null"></option>
+              <option value="CHIEN_CON">{{'CHIEN_CON' | cap}}</option>
+              <option value="1">{{'1' | cap}}</option>
+              <option value="2">{{'2' | cap}}</option>
+              <option value="3">{{'3' | cap}}</option>
+              <option value="4">{{'4' | cap}}</option>
+              <option value="5">{{'5' | cap}}</option>
+              <option value="6">{{'6' | cap}}</option>
             </select>
           </div>
           <div *ngIf="checkHidden(cookieState.Fdoi)" class="form-group col-sm-4 col-md-3 form-group-sm">
             <label>Đội</label>
             <select name="doi" [(ngModel)]="cookieState.Fdoi" class="form-control">
-                <option [ngValue]="null"></option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
+              <option [ngValue]="null"></option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
             </select>
           </div>
           <div *ngIf="checkHidden(cookieState.Ftrang_thai)" class="form-group col-sm-4 col-md-3 form-group-sm">
             <label>Trạng Thái</label>
             <select name="trang_thai" [(ngModel)]="cookieState.Ftrang_thai" class="form-control">
-                <option [ngValue]="null"></option>
-                <option value="HOAT_DONG">{{'HOAT_DONG' | trangThai}}</option>
-                <option value="TAM_NGUNG">{{'TAM_NGUNG' | trangThai}}</option>
+              <option [ngValue]="null"></option>
+              <option value="HOAT_DONG">{{'HOAT_DONG' | trangThai}}</option>
+              <option value="TAM_NGUNG">{{'TAM_NGUNG' | trangThai}}</option>
             </select>
           </div>
           <div *ngIf="checkHidden(cookieState.Floai_tai_khoan)" class="form-group col-sm-4 col-md-3 form-group-sm">
             <label>Loại Tài Khoản</label>
             <select name="loai_tai_khoan" [(ngModel)]="cookieState.Floai_tai_khoan" class="form-control">
-                <option [ngValue]="null"></option>
-                <option value="THIEU_NHI">{{'THIEU_NHI' | loaiTK}}</option>
-                <option value="HUYNH_TRUONG">{{'HUYNH_TRUONG' | loaiTK}}</option>
-                <option value="SOEUR">{{'SOEUR' | loaiTK}}</option>
-                <option value="LINH_MUC">{{'LINH_MUC' | loaiTK}}</option>
-              </select>
+              <option [ngValue]="null"></option>
+              <option value="THIEU_NHI">{{'THIEU_NHI' | loaiTK}}</option>
+              <option value="HUYNH_TRUONG">{{'HUYNH_TRUONG' | loaiTK}}</option>
+              <option value="SOEUR">{{'SOEUR' | loaiTK}}</option>
+              <option value="LINH_MUC">{{'LINH_MUC' | loaiTK}}</option>
+            </select>
           </div>
           <div *ngIf="checkHidden(cookieState.Fid)" class="form-group col-sm-4 col-md-3 form-group-sm">
             <label>Mã Số</label>
@@ -82,7 +83,7 @@
           </div>
           <div class="form-group col-sm-4 col-md-3 form-group-sm">
             <label>Họ và Tên</label>
-            <input [(ngModel)]="cookieState.Fho_va_ten" name="ho_va_ten"  (keyup.enter)="searchData()" type="text" class="form-control">
+            <input [(ngModel)]="cookieState.Fho_va_ten" name="ho_va_ten" (keyup.enter)="searchData()" type="text" class="form-control">
           </div>
         </div>
         <div class="row">
@@ -121,92 +122,106 @@
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
             <li>
               <div class="checkbox">
-                <label> 
-                <input type="checkbox" [(ngModel)]="cookieState.num" (change)="updateState()">
-                  #
+                <label>
+                  <input type="checkbox" [(ngModel)]="cookieState.num" (change)="updateState()"> #
                 </label>
               </div>
             </li>
             <li>
-              <div class="checkbox"><label> 
-                <input type="checkbox" [(ngModel)]="cookieState.anh" (change)="updateState()">
-                  Ảnh
-                </label></div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" [(ngModel)]="cookieState.anh" (change)="updateState()"> Ảnh
+                </label>
+              </div>
             </li>
             <li>
-              <div class="checkbox"><label> 
-                <input type="checkbox" [(ngModel)]="cookieState.ma_so" (change)="updateState()">
-                  Mã Số
-                </label></div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" [(ngModel)]="cookieState.ma_so" (change)="updateState()"> Mã Số
+                </label>
+              </div>
             </li>
             <li>
-              <div class="checkbox"><label> 
-                <input type="checkbox" [(ngModel)]="cookieState.ten_thanh" (change)="updateState()">
-                  Tên Thánh
-                </label></div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" [(ngModel)]="cookieState.ten_thanh" (change)="updateState()"> Tên Thánh
+                </label>
+              </div>
             </li>
             <li>
-              <div class="checkbox"><label> 
-                <input type="checkbox" [(ngModel)]="cookieState.ho_va_ten" (change)="updateState()">
-                  Họ và Tên
-                </label></div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" [(ngModel)]="cookieState.ho_va_ten" (change)="updateState()"> Họ và Tên
+                </label>
+              </div>
             </li>
             <li>
-              <div class="checkbox"><label> 
-                <input type="checkbox" [(ngModel)]="cookieState.ten" (change)="updateState()">
-                  Tên
-                </label></div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" [(ngModel)]="cookieState.ten" (change)="updateState()"> Tên
+                </label>
+              </div>
             </li>
             <li>
-              <div class="checkbox"><label> 
-                <input type="checkbox" [(ngModel)]="cookieState.trang_thai" (change)="updateState()">
-                  Trạng Thái
-                </label></div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" [(ngModel)]="cookieState.trang_thai" (change)="updateState()"> Trạng Thái
+                </label>
+              </div>
             </li>
             <li>
-              <div class="checkbox"><label> 
-                <input type="checkbox" [(ngModel)]="cookieState.loai_tai_khoan" (change)="updateState()">
-                  Loại Tài Khoản
-                </label></div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" [(ngModel)]="cookieState.loai_tai_khoan" (change)="updateState()"> Loại Tài Khoản
+                </label>
+              </div>
             </li>
             <li>
-              <div class="checkbox"><label> 
-                <input type="checkbox" [(ngModel)]="cookieState.ngay_sinh" (change)="updateState()">
-                  Ngày Sinh
-                </label></div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" [(ngModel)]="cookieState.ngay_sinh" (change)="updateState()"> Ngày Sinh
+                </label>
+              </div>
             </li>
             <li>
-              <div class="checkbox"><label> 
-                <input type="checkbox" [(ngModel)]="cookieState.ngay_rua_toi" (change)="updateState()">
-                  Ngày Rửa Tội
-                </label></div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" [(ngModel)]="cookieState.ngay_rua_toi" (change)="updateState()"> Ngày Rửa Tội
+                </label>
+              </div>
             </li>
             <li>
-              <div class="checkbox"><label> 
-                <input type="checkbox" [(ngModel)]="cookieState.ngay_ruoc_le" (change)="updateState()">
-                  Ngày Rước Lễ
-                </label></div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" [(ngModel)]="cookieState.ngay_ruoc_le" (change)="updateState()"> Ngày Rước Lễ
+                </label>
+              </div>
             </li>
             <li>
-              <div class="checkbox"><label> 
-                <input type="checkbox" [(ngModel)]="cookieState.ngay_them_suc" (change)="updateState()">
-                  Ngày Thêm Sức
-                </label></div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" [(ngModel)]="cookieState.ngay_them_suc" (change)="updateState()"> Ngày Thêm Sức
+                </label>
+              </div>
             </li>
             <li>
-              <div class="checkbox"><label> 
-                <input type="checkbox" [(ngModel)]="cookieState.dien_thoai" (change)="updateState()">
-                  Điện Thoại
-                </label></div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" [(ngModel)]="cookieState.dien_thoai" (change)="updateState()"> Điện Thoại
+                </label>
+              </div>
             </li>
             <li>
-              <div class="checkbox"><label> 
-                <input type="checkbox" [(ngModel)]="cookieState.thao_tac" (change)="updateState()">
-                  Thao Tác
-                </label></div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" [(ngModel)]="cookieState.thao_tac" (change)="updateState()"> Thao Tác
+                </label>
+              </div>
             </li>
             <li role="separator" class="divider"></li>
-            <li><a (click)="resetCookieState()">Mặc định</a></li>
+            <li>
+              <a (click)="resetCookieState()">Mặc định</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -263,7 +278,7 @@
               <td *ngIf="cookieState.dien_thoai">{{_item.dien_thoai}}</td>
               <td *ngIf="cookieState.thao_tac">
                 <button class="btn btn-xs btn-default" [routerLink]="['/tai-khoan/chi-tiet', _item.id]">Xem</button>
-                <button class="btn btn-xs btn-danger" (click)="itemSelected = _item; openConfimModel.click()" *ngIf="hasPermXoa(_item)">Xóa</button>
+                <button class="btn btn-xs btn-danger" (click)="itemSelected = _item; confimModelBtn.click()" *ngIf="hasPermXoa(_item)">Xóa</button>
               </td>
             </tr>
           </tbody>
@@ -272,14 +287,22 @@
       <pagination-template #ep="paginationApi" [id]="cookieState.id" (pageChange)="cookieState.currentPage = $event; updateState();">
         <div class="text-center">
           <div class="btn-group">
-            <button *ngIf="ep.isFirstPage()" type="button" class="btn btn-sm btn-white disabled"><i class="fa fa-chevron-left"></i></button>
-            <button (click)="ep.previous()" *ngIf="!ep.isFirstPage()" type="button" class="btn btn-sm btn-white"><i class="fa fa-chevron-left"></i></button>
+            <button *ngIf="ep.isFirstPage()" type="button" class="btn btn-sm btn-white disabled">
+              <i class="fa fa-chevron-left"></i>
+            </button>
+            <button (click)="ep.previous()" *ngIf="!ep.isFirstPage()" type="button" class="btn btn-sm btn-white">
+              <i class="fa fa-chevron-left"></i>
+            </button>
             <ng-container *ngFor="let page of ep.pages">
               <button *ngIf="ep.getCurrent() !== page.value" (click)="ep.setCurrent(page.value)" class="btn btn-sm btn-white">{{ page.label }}</button>
               <button *ngIf="ep.getCurrent() === page.value" class="btn btn-sm btn-white active">{{ page.label }}</button>
             </ng-container>
-            <button *ngIf="ep.isLastPage()" type="button" class="btn btn-sm btn-white disabled"><i class="fa fa-chevron-right"></i></button>
-            <button (click)="ep.next()" *ngIf="!ep.isLastPage()" type="button" class="btn btn-sm btn-white"><i class="fa fa-chevron-right"></i></button>
+            <button *ngIf="ep.isLastPage()" type="button" class="btn btn-sm btn-white disabled">
+              <i class="fa fa-chevron-right"></i>
+            </button>
+            <button (click)="ep.next()" *ngIf="!ep.isLastPage()" type="button" class="btn btn-sm btn-white">
+              <i class="fa fa-chevron-right"></i>
+            </button>
           </div>
         </div>
       </pagination-template>
@@ -287,7 +310,7 @@
   </div>
 </div>
 
-<a class="btn-open-modal" data-toggle="modal" data-target="#confimModel" #openConfimModel></a>
+<a class="btn-open-modal" data-toggle="modal" data-target="#confimModel" #confimModelBtn></a>
 <div class="modal inmodal" id="confimModel" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog" *ngIf="itemSelected">
     <div class="modal-content animated bounceInRight">

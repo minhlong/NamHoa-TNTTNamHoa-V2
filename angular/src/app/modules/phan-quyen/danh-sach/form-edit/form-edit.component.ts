@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 
 import { JwtAuthHttp } from 'app/services/http-auth.service';
 import { AppState } from 'app/store/reducers';
-import { environment } from 'environments/environment.prod';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-form-edit',
@@ -28,7 +28,6 @@ export class FormEditComponent implements OnInit, OnDestroy {
     private toasterService: ToasterService,
     private _fb: FormBuilder,
     private _http: JwtAuthHttp,
-
   ) { }
 
   ngOnInit() {
@@ -42,8 +41,8 @@ export class FormEditComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
   }
+
   /**
-   * Lưu điểm
    *    Nếu OK -> quay lại trang chính
    *    Nếu lỗi -> hiện lỗi
    */
