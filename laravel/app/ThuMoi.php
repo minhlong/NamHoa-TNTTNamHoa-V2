@@ -41,11 +41,9 @@ class ThuMoi extends BaseModel
             });
         }
         if ($q = \Request::get('tu_ngay')) {
-            $q = $library->chuanHoaNgay($q);
             $query->where('ngay', '>=', $q);
         }
         if ($q = \Request::get('den_ngay')) {
-            $q = $library->chuanHoaNgay($q);
             $query->where('ngay', '<=', $q);
         }
         $query->orderBy('ngay', 'desc');

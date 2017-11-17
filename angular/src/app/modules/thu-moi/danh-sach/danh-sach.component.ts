@@ -17,16 +17,14 @@ import { AuthState } from './../../../store/reducers/auth.reducer';
   styleUrls: ['./danh-sach.component.scss']
 })
 export class DanhSachComponent implements OnDestroy {
-  webAPI = environment.webURL + '/download';
-  urlAPI = environment.apiURL + '/tai-khoan';
+  urlAPI = environment.apiURL + '/thu-moi';
   maskOption = {
     mask: [/[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/],
     guide: true,
   }
 
   isLoading = true;
-  isLoadingExport = false;
-  khoaHienTaiID = 0;
+  khoaHienTai: any;
   dataArr = [];
 
   itemSelected: any;
@@ -41,10 +39,8 @@ export class DanhSachComponent implements OnDestroy {
     private store: Store<AppState>,
     private _http: JwtAuthHttp,
   ) {
-    consoleLog('TaiKhoan Danh Sach: constructor');
-
     this.sub$ = this.store.select((state: AppState) => state.auth.khoa_hoc_hien_tai).subscribe(res => {
-      this.khoaHienTaiID = res.id;
+      this.khoaHienTai = res;
     });
 
     this.subAuth$ = this.store.select((state: AppState) => state.auth).subscribe(res => {
@@ -53,7 +49,6 @@ export class DanhSachComponent implements OnDestroy {
 
     // Update current page state
     this.resetPageState();
-
     this.searchData();
   }
 
@@ -64,7 +59,7 @@ export class DanhSachComponent implements OnDestroy {
 
   private resetPageState() {
     this.cookieState = JSON.parse(JSON.stringify(defaultPageState));
-    this.cookieState.Fkhoa = this.khoaHienTaiID;
+    this.cookieState.Ftu_ngay = ngay(this.khoaHienTai.ngay_bat_dau);
 
     Object.assign(this.cookieState, JSON.parse(localStorage.getItem(this.cookieState.id)));
   }
@@ -91,33 +86,17 @@ export class DanhSachComponent implements OnDestroy {
 
   private getFilter() {
     const search = new URLSearchParams();
-    search.set('khoa', this.cookieState.Fkhoa);
-    search.set('nganh', this.cookieState.Fnganh);
-    search.set('cap', this.cookieState.Fcap);
-    search.set('doi', this.cookieState.Fdoi);
-    search.set('trang_thai', this.cookieState.Ftrang_thai);
-    search.set('loai_tai_khoan', this.cookieState.Floai_tai_khoan);
-    search.set('id', this.cookieState.Fid);
+    search.set('tai_khoan_id', this.cookieState.Ftai_khoan_id);
     search.set('ho_va_ten', this.cookieState.Fho_va_ten);
-    search.set('ngay_sinh_tu', ngay(this.cookieState.Fngay_sinh_tu));
-    search.set('ngay_sinh_den', ngay(this.cookieState.Fngay_sinh_den));
-    search.set('ngay_tao_tu', ngay(this.cookieState.Fngay_tao_tu));
-    search.set('ngay_tao_den', ngay(this.cookieState.Fngay_tao_den));
+    search.set('tu_ngay', ngay(this.cookieState.Ftu_ngay));
+    search.set('den_ngay', ngay(this.cookieState.Fden_ngay));
     return search;
   }
 
   hasPermTaoMoi() {
-    if (this.curAuth.phan_quyen.includes('tai-khoan')) {
-      return true;
-    }
-    return false;
   }
 
   hasPermXoa(_item) {
-    if (this.curAuth.phan_quyen.includes('tai-khoan') && _item.trang_thai === 'TAM_NGUNG') {
-      return true;
-    }
-    return false;
   }
 
   xoa(_item) {
@@ -136,23 +115,5 @@ export class DanhSachComponent implements OnDestroy {
     localStorage.removeItem(this.cookieState.id);
     this.resetPageState();
     this.searchData();
-  }
-
-  checkHidden(_val): boolean {
-    return this.cookieState.FmoRong || _val;
-  }
-
-  exportData() {
-    this.isLoadingExport = true;
-    const search = this.getFilter();
-    this.toasterService.pop('info', 'Đang tải');
-
-    this._http.get(this.urlAPI + '/export', { search }).map(res => res.json()).subscribe(res => {
-      this.isLoadingExport = false;
-      window.open(this.webAPI + '/' + res.data);
-    }, error => {
-      this.isLoadingExport = false;
-      this.toasterService.pop('error', 'Lỗi!', error);
-    });
   }
 }

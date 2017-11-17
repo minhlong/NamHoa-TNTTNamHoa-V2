@@ -89,19 +89,19 @@
         <div class="row">
           <div *ngIf="checkHidden(cookieState.Fngay_sinh_tu)" class="form-group col-sm-6 col-md-3 form-group-sm">
             <label>Ngày Sinh (Từ ngày)</label>
-            <input [(ngModel)]="cookieState.Fngay_sinh_tu" name="ngay_sinh_tu" [textMask]="maskOption" type="text" class="form-control" placeholder="vd: 31-12-2000">
+            <input [(ngModel)]="cookieState.Fngay_sinh_tu" name="ngay_sinh_tu" [textMask]="maskOption" type="text" class="form-control" placeholder="Vd: 31-12-2000">
           </div>
           <div *ngIf="checkHidden(cookieState.Fngay_sinh_den)" class="form-group col-sm-6 col-md-3 form-group-sm">
             <label>Ngày Sinh (Đến ngày)</label>
-            <input [(ngModel)]="cookieState.Fngay_sinh_den" name="ngay_sinh_den" [textMask]="maskOption" type="text" class="form-control" placeholder="vd: 31-12-2000">
+            <input [(ngModel)]="cookieState.Fngay_sinh_den" name="ngay_sinh_den" [textMask]="maskOption" type="text" class="form-control" placeholder="Vd: 31-12-2000">
           </div>
           <div *ngIf="checkHidden(cookieState.Fngay_tao_tu)" class="form-group col-sm-6 col-md-3 form-group-sm">
             <label>Ngày Tạo (Từ ngày)</label>
-            <input [(ngModel)]="cookieState.Fngay_tao_tu" name="ngay_tao_tu" [textMask]="maskOption" type="text" class="form-control" placeholder="vd: 31-12-2000">
+            <input [(ngModel)]="cookieState.Fngay_tao_tu" name="ngay_tao_tu" [textMask]="maskOption" type="text" class="form-control" placeholder="Vd: 31-12-2000">
           </div>
           <div *ngIf="checkHidden(cookieState.Fngay_tao_den)" class="form-group col-sm-6 col-md-3 form-group-sm">
             <label>Ngày Tạo (Đến ngày)</label>
-            <input [(ngModel)]="cookieState.Fngay_tao_den" name="ngay_tao_den" [textMask]="maskOption" type="text" class="form-control" placeholder="vd: 31-12-2000">
+            <input [(ngModel)]="cookieState.Fngay_tao_den" name="ngay_tao_den" [textMask]="maskOption" type="text" class="form-control" placeholder="Vd: 31-12-2000">
           </div>
         </div>
       </form>
@@ -114,6 +114,9 @@
     <div class="ibox-title">
       <h5>Danh Sách</h5>
       <div class="ibox-tools">
+        <button (click)="resetCookieState()" class="btn btn-xs btn-default m-r-lg">
+          Mặc Định
+        </button>
         <div class="dropdown pull-right">
           <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             Tùy chỉnh cột
@@ -217,10 +220,6 @@
                   <input type="checkbox" [(ngModel)]="cookieState.thao_tac" (change)="updateState()"> Thao Tác
                 </label>
               </div>
-            </li>
-            <li role="separator" class="divider"></li>
-            <li>
-              <a (click)="resetCookieState()">Mặc định</a>
             </li>
           </ul>
         </div>

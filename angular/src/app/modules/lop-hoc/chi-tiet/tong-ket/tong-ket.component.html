@@ -55,8 +55,9 @@
                 <!-- Kiểm Tra  -->
                 <ng-container *ngFor="let _dot of apiData.SoDot">
                   <td data-toggle="tooltip" data-placement="left" title="{{_item.ten_thanh + ' ' + _item.ho_va_ten}}" class="text-center" *ngFor="let _lan of apiData.SoLan">
-                    <!-- {{findDiemSo(_item,_dot,_lan)}} -->
-                    {{apiData.DiemSo[_item.id][_dot][_lan]}}
+                    <ng-container *ngIf="apiData.DiemSo[_item.id] && apiData.DiemSo[_item.id][_dot] && apiData.DiemSo[_item.id][_dot][_lan]">
+                      {{apiData.DiemSo[_item.id][_dot][_lan]}}
+                    </ng-container>
                   </td>
                 </ng-container>
                 <!-- Chuyên Cần  -->

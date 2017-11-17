@@ -57,6 +57,14 @@ Route::group(['middleware' => 'auth-jwt'], function () {
         Route::post('{LopHoc}/tong-ket/nhan-xet', 'LopHocController@postNhanXet')->middleware(['permission:nhan-xet']);
     });
 
+    /* Thu Moi */
+    Route::group(['prefix' => 'thu-moi'], function () {
+        Route::get(null, 'ThuMoiController@getDanhSach');
+        Route::get('{ThuMoi}', 'ThuMoiController@getThongTin');
+        Route::delete('{ThuMoi}', 'ThuMoiController@delete');
+        Route::post('{ThuMoi?}', 'ThuMoiController@post');
+    });
+
     /* Khoa Hoc */
     Route::group(['prefix' => 'khoa-hoc'], function () {
         Route::get(null, 'KhoaHocController@getDanhSach');
