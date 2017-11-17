@@ -9,6 +9,9 @@
         <button *ngIf="!isLoadingExport" (click)="exportData()" class="btn btn-xs btn-default m-r-lg">
           Xuất Danh Sách & Tình Hình Học Tập
         </button>
+        <button (click)="resetCookieState()" class="btn btn-xs btn-default m-r-lg">
+          Mặc Định
+        </button>
       </div>
     </div>
     <div class="ibox-content">
@@ -17,41 +20,41 @@
           <div class="form-group col-sm-6 col-md-3 form-group-sm">
             <label>Khóa</label>
             <select name="khoa" [(ngModel)]="cookieState.Fkhoa" class="form-control">
-                <option [ngValue]="khoaHienTaiID">Hiện tại ({{khoaHienTaiID}})</option>
-                <option [ngValue]="khoaHienTaiID - 1">{{khoaHienTaiID - 1}}</option>
-                <option [ngValue]="khoaHienTaiID - 2">{{khoaHienTaiID - 2}}</option> 
+              <option [ngValue]="khoaHienTaiID">Hiện tại ({{khoaHienTaiID}})</option>
+              <option [ngValue]="khoaHienTaiID - 1">{{khoaHienTaiID - 1}}</option>
+              <option [ngValue]="khoaHienTaiID - 2">{{khoaHienTaiID - 2}}</option>
             </select>
           </div>
           <div class="form-group col-sm-6 col-md-3 form-group-sm">
             <label>Ngành</label>
             <select name="nganh" [(ngModel)]="cookieState.Fnganh" class="form-control">
-                <option [ngValue]="null"></option>
-                <option value="AU_NHI">{{'AU_NHI' | nganh}}</option>
-                <option value="THIEU_NHI">{{'THIEU_NHI' | nganh}}</option>
-                <option value="NGHIA_SI">{{'NGHIA_SI' | nganh}}</option>
-                <option value="HT_DU_BI">{{'HT_DU_BI' | nganh}}</option>
+              <option [ngValue]="null"></option>
+              <option value="AU_NHI">{{'AU_NHI' | nganh}}</option>
+              <option value="THIEU_NHI">{{'THIEU_NHI' | nganh}}</option>
+              <option value="NGHIA_SI">{{'NGHIA_SI' | nganh}}</option>
+              <option value="HT_DU_BI">{{'HT_DU_BI' | nganh}}</option>
             </select>
           </div>
           <div class="form-group col-sm-6 col-md-3 form-group-sm">
             <label>Cấp</label>
             <select name="cap" [(ngModel)]="cookieState.Fcap" class="form-control">
-                <option [ngValue]="null"></option>
-                <option value="CHIEN_CON">{{'CHIEN_CON' | cap}}</option>
-                <option value="1">{{'1' | cap}}</option>
-                <option value="2">{{'2' | cap}}</option>
-                <option value="3">{{'3' | cap}}</option>
-                <option value="4">{{'4' | cap}}</option>
-                <option value="5">{{'5' | cap}}</option>
-                <option value="6">{{'6' | cap}}</option>
+              <option [ngValue]="null"></option>
+              <option value="CHIEN_CON">{{'CHIEN_CON' | cap}}</option>
+              <option value="1">{{'1' | cap}}</option>
+              <option value="2">{{'2' | cap}}</option>
+              <option value="3">{{'3' | cap}}</option>
+              <option value="4">{{'4' | cap}}</option>
+              <option value="5">{{'5' | cap}}</option>
+              <option value="6">{{'6' | cap}}</option>
             </select>
           </div>
           <div class="form-group col-sm-6 col-md-3 form-group-sm">
             <label>Đội</label>
             <select name="doi" [(ngModel)]="cookieState.Fdoi" class="form-control">
-                <option [ngValue]="null"></option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
+              <option [ngValue]="null"></option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
             </select>
           </div>
         </div>
@@ -64,11 +67,6 @@
   <div class="ibox">
     <div class="ibox-title">
       <h5>Danh Sách</h5>
-      <div class="ibox-tools">
-        <button (click)="resetCookieState()" class="btn btn-xs btn-default m-r-lg">
-          Mặc Định
-        </button>
-      </div>
     </div>
     <div class="ibox-content" [class.sk-loading]="isLoading">
       <div class="sk-spinner sk-spinner-three-bounce">

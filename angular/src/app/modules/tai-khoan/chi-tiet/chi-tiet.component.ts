@@ -14,7 +14,7 @@ import { AppState } from './../../../store/reducers/index';
 })
 export class ChiTietComponent implements OnDestroy {
   urlAPI = environment.apiURL + '/tai-khoan';
-  tab = 'chi-tiet'; // form, mat-khau
+  tab = 'chi-tiet';
   itemSelected = null;
   isLoading = true;
 

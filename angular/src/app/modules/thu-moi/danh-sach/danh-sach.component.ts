@@ -23,6 +23,7 @@ export class DanhSachComponent implements OnDestroy {
     guide: true,
   }
 
+  tab = 'danh-sach';
   isLoading = true;
   khoaHienTai: any;
   dataArr = [];
@@ -93,17 +94,18 @@ export class DanhSachComponent implements OnDestroy {
     return search;
   }
 
-  hasPermTaoMoi() {
-  }
-
-  hasPermXoa(_item) {
+  hasPerm(_item) {
+    if (this.curAuth.phan_quyen.includes('lop-hoc')) {
+      return true;
+    }
+    return false;
   }
 
   xoa(_item) {
     this.isLoading = true;
     const _url = this.urlAPI + '/' + _item.id;
     this._http.delete(_url, null).map(res => res.json()).subscribe(res => {
-      this.toasterService.pop('success', 'Đã xóa ' + _item.id + ' ' + _item.ten_thanh + ' ' + _item.ho_va_ten);
+      this.toasterService.pop('success', 'Đã xóa');
       this.searchData();
     }, _err => {
       this.toasterService.pop('error', 'Lỗi!', _err);
@@ -115,5 +117,16 @@ export class DanhSachComponent implements OnDestroy {
     localStorage.removeItem(this.cookieState.id);
     this.resetPageState();
     this.searchData();
+  }
+
+  /**
+   * Xử lý thông tin sau khi cập nhật thành-công/thất-bại
+   * @param _info dữ liệu trả về từ cập nhật
+   */
+  update(_info) {
+    this.tab = 'danh-sach';
+    if (_info) {
+      this.searchData();
+    }
   }
 }

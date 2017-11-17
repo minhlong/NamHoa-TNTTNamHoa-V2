@@ -10,7 +10,10 @@
           Xuất Danh Sách
           <span *ngIf="cookieState.Fkhoa">& Tình Hình Học Tập</span>
         </button>
-        <button class="btn btn-xs btn-default" (click)="cookieState.FmoRong = !cookieState.FmoRong;">
+        <button (click)="resetCookieState()" class="btn btn-xs btn-default m-r-lg">
+          Mặc Định
+        </button>
+        <button class="btn btn-xs btn-default m-r-lg" (click)="cookieState.FmoRong = !cookieState.FmoRong;">
           {{cookieState.FmoRong ? 'Thu gọn' : 'Mở rộng'}}
         </button>
       </div>
@@ -114,9 +117,6 @@
     <div class="ibox-title">
       <h5>Danh Sách</h5>
       <div class="ibox-tools">
-        <button (click)="resetCookieState()" class="btn btn-xs btn-default m-r-lg">
-          Mặc Định
-        </button>
         <div class="dropdown pull-right">
           <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             Tùy chỉnh cột

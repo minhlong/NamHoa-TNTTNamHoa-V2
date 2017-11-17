@@ -61,8 +61,8 @@ Route::group(['middleware' => 'auth-jwt'], function () {
     Route::group(['prefix' => 'thu-moi'], function () {
         Route::get(null, 'ThuMoiController@getDanhSach');
         Route::get('{ThuMoi}', 'ThuMoiController@getThongTin');
-        Route::delete('{ThuMoi}', 'ThuMoiController@delete');
-        Route::post('{ThuMoi?}', 'ThuMoiController@post');
+        Route::delete('{ThuMoi}', 'ThuMoiController@delete')->middleware(['permission:lop-hoc']);
+        Route::post('{ThuMoi?}', 'ThuMoiController@post')->middleware(['permission:lop-hoc']);
     });
 
     /* Khoa Hoc */
@@ -113,4 +113,7 @@ Route::bind('PhanQuyen', function ($value) {
 });
 Route::bind('NhomTaiKhoan', function ($value) {
     return \App\NhomTaiKhoan::findOrFail($value);
+});
+Route::bind('ThuMoi', function ($value) {
+    return \App\ThuMoi::findOrFail($value);
 });

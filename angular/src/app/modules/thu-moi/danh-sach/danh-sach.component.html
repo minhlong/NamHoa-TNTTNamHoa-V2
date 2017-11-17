@@ -1,11 +1,14 @@
 <div class="wrapper wrapper-content animated fadeInRight">
-  <div class="ibox">
+  <div class="ibox" *ngIf="tab === 'danh-sach'">
     <div class="ibox-title">
       <h5>Lọc</h5>
       <div class="ibox-tools">
-        <!-- <button *ngIf="hasPermTaoMoi()" routerLink="/thu-moi/tao-moi" class="btn btn-xs btn-default m-r-lg">
+        <button *ngIf="hasPerm()" (click)="itemSelected = _item; tab = 'form-create'" class="btn btn-xs btn-default m-r-lg">
           Tạo Mới
-        </button> -->
+        </button>
+        <button (click)="resetCookieState()" class="btn btn-xs btn-default m-r-lg">
+          Mặc Định
+        </button>
       </div>
     </div>
     <div class="ibox-content">
@@ -34,14 +37,9 @@
       <button class="btn btn-default btn-sm" (click)="searchData()">Tìm kiếm</button>
     </div>
   </div>
-  <div class="ibox">
+  <div class="ibox" *ngIf="tab === 'danh-sach'">
     <div class="ibox-title">
       <h5>Danh Sách</h5>
-      <div class="ibox-tools">
-        <button (click)="resetCookieState()" class="btn btn-xs btn-default m-r-lg">
-          Mặc Định
-        </button>
-      </div>
     </div>
     <div class="ibox-content" [class.sk-loading]="isLoading">
       <div class="sk-spinner sk-spinner-three-bounce">
@@ -85,7 +83,8 @@
               <td class="text-center">{{_item.ngay | ngay}}</td>
               <td>
                 <button class="btn btn-xs btn-default" (click)="itemSelected = _item; openModalBtn.click()">Xem</button>
-                <button class="btn btn-xs btn-danger" *ngIf="hasPermXoa(_item)">Xóa</button>
+                <button class="btn btn-xs btn-default" (click)="itemSelected = _item; tab = 'form-edit'">Sửa</button>
+                <button class="btn btn-xs btn-danger" (click)="itemSelected = _item; confimModelBtn.click()" *ngIf="hasPerm(_item)">Xóa</button>
               </td>
             </tr>
           </tbody>
@@ -94,6 +93,14 @@
       <app-paging [id]="cookieState.id" (pageChange)="cookieState.currentPage = $event; updateState();"></app-paging>
     </div>
   </div>
+
+  <ng-container *ngIf="tab === 'form-edit'">
+    <app-form-edit [thuMoi]="itemSelected" (updateInfo)="update($event)"></app-form-edit>
+  </ng-container>
+
+  <ng-container *ngIf="tab === 'form-create'">
+    <app-form-tao-moi (updateInfo)="update($event)"></app-form-tao-moi>
+  </ng-container>
 </div>
 
 <a class="btn-open-modal" data-toggle="modal" data-target="#tmpModel" #openModalBtn></a>
@@ -113,7 +120,7 @@
         </h5>
       </div>
       <div class="modal-body">
-        <form action="#" class="row form-horizontal">
+        <form action="#" class="form-horizontal">
           <div class="form-group">
             <label class="col-md-2 control-label">Ngày</label>
             <div class="col-md-10">
@@ -130,6 +137,27 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" #closeModalBtn>Thoát</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a class="btn-open-modal" data-toggle="modal" data-target="#confimModel" #confimModelBtn></a>
+<div class="modal inmodal" id="confimModel" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" *ngIf="itemSelected">
+    <div class="modal-content animated bounceInRight">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <h4>
+          Bạn muốn xóa {{itemSelected.tai_khoan.ho_va_ten}} ngày {{itemSelected.ngay | ngay}} ?
+        </h4>
+      </div>
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-w-m btn-warning" data-dismiss="modal" #closeConfimModel>Không</button>
+        <button type="button" class="btn btn-w-m btn-primary" (click)="closeConfimModel.click(); xoa(itemSelected);">Có</button>
       </div>
     </div>
   </div>

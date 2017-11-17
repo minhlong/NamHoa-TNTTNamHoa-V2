@@ -16,7 +16,7 @@ import { AppState } from './../../../store/reducers/index';
 export class DanhSachComponent implements OnDestroy {
   urlAPI = environment.apiURL + '/phan-quyen';
 
-  tab = 'danh-sach'; // form, mat-khau
+  tab = 'danh-sach';
   dataArr = [];
   isLoading = false;
   curAuth: AuthState;

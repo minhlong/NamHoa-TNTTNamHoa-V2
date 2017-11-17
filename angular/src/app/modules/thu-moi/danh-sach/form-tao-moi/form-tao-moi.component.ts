@@ -13,12 +13,11 @@ import { bodauTiengViet } from '../../../../_helpers';
 import { ngay } from '../../../shared/convert-type.pipe';
 
 @Component({
-  selector: 'app-form-edit',
-  templateUrl: './form-edit.component.html',
-  styleUrls: ['./form-edit.component.scss']
+  selector: 'app-form-tao-moi',
+  templateUrl: './form-tao-moi.component.html',
+  styleUrls: ['./form-tao-moi.component.scss']
 })
-export class FormEditComponent implements OnInit {
-  @Input() thuMoi;
+export class FormTaoMoiComponent implements OnInit {
   @Output() updateInfo = new EventEmitter();
 
   private urlAPI = environment.apiURL + '/thu-moi';
@@ -26,6 +25,9 @@ export class FormEditComponent implements OnInit {
     mask: [/[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/],
     guide: true,
   }
+
+  arrayOfStrings: string[] = ['this', 'is', 'array', 'of', 'text'];
+  model1: any;
 
   isLoading = false;
 
@@ -43,8 +45,9 @@ export class FormEditComponent implements OnInit {
   ngOnInit() {
     // Tạo form để submit lên server
     this.formGroup = this._fb.group({
-      ngay: ngay(this.thuMoi.ngay),
-      ghi_chu: this.thuMoi.ghi_chu,
+      ngay: null,
+      tai_khoan_id: null,
+      ghi_chu: null,
     });
   }
 
@@ -58,7 +61,7 @@ export class FormEditComponent implements OnInit {
       ngay: ngay(this.formGroup.value.ngay),
     });
 
-    this._http.post(this.urlAPI + '/' + this.thuMoi.id, _par).map(res => res.json()).subscribe(res => {
+    this._http.post(this.urlAPI, _par).map(res => res.json()).subscribe(res => {
       this.isLoading = false;
       this.updateInfo.emit(true);
     }, _err => {
