@@ -33,20 +33,7 @@
   </div>
 </div>
 <div class="ibox-content hidden-print" *ngIf="apiData">
-  <pagination-template #ep="paginationApi" [id]="pagingTN.id" (pageChange)="pagingTN.currentPage = $event;">
-    <div class="text-center">
-      <div class="btn-group">
-        <button *ngIf="ep.isFirstPage()" type="button" class="btn btn-sm btn-white disabled"><i class="fa fa-chevron-left"></i></button>
-        <button (click)="ep.previous()" *ngIf="!ep.isFirstPage()" type="button" class="btn btn-sm btn-white"><i class="fa fa-chevron-left"></i></button>
-        <ng-container *ngFor="let page of ep.pages">
-          <button *ngIf="ep.getCurrent() !== page.value" (click)="ep.setCurrent(page.value)" class="btn btn-sm btn-white">{{ page.label }}</button>
-          <button *ngIf="ep.getCurrent() === page.value" class="btn btn-sm btn-white active">{{ page.label }}</button>
-        </ng-container>
-        <button *ngIf="ep.isLastPage()" type="button" class="btn btn-sm btn-white disabled"><i class="fa fa-chevron-right"></i></button>
-        <button (click)="ep.next()" *ngIf="!ep.isLastPage()" type="button" class="btn btn-sm btn-white"><i class="fa fa-chevron-right"></i></button>
-      </div>
-    </div>
-  </pagination-template>
+  <app-paging [id]="pagingTN.id" (pageChange)="pagingTN.currentPage = $event;"></app-paging>
 </div>
 <div class="ibox-content" *ngIf="apiData">
   <div class="break-page"></div>
@@ -58,7 +45,8 @@
             <div class="invoice-logo-space">
               <img src="/assets/images/logo.png" class="img-responsive" alt="Logo">
             </div>
-            <div class="organ-name">Giáo xứ Nam Hòa<br> Đoàn TNTT Chúa Chiên Lành</div>
+            <div class="organ-name">Giáo xứ Nam Hòa
+              <br> Đoàn TNTT Chúa Chiên Lành</div>
           </div>
         </div>
         <div class="row text-center">
@@ -88,8 +76,12 @@
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th colspan="4" class="text-center">Đi Lễ <span class="sub-title">(Số Lần|Điểm)</span></th>
-                  <th colspan="2" class="text-center">Đi Học <span class="sub-title">(Số Lần|Điểm)</span></th>
+                  <th colspan="4" class="text-center">Đi Lễ
+                    <span class="sub-title">(Số Lần|Điểm)</span>
+                  </th>
+                  <th colspan="2" class="text-center">Đi Học
+                    <span class="sub-title">(Số Lần|Điểm)</span>
+                  </th>
                   <th rowspan="2" class="text-center">Tổng (10)</th>
                   <th rowspan="2" class="text-center">Xếp Loại</th>
                 </tr>
@@ -158,7 +150,9 @@
         </div>
         <div class="row" style="margin-bottom: 30px">
           <div class="col-xs-12">
-            <h4>Trung Bình Chuyên Cần và Học Lực: <strong>{{tbCaNam(_tn)}}</strong></h4>
+            <h4>Trung Bình Chuyên Cần và Học Lực:
+              <strong>{{tbCaNam(_tn)}}</strong>
+            </h4>
           </div>
         </div>
         <div class="row">
@@ -191,13 +185,15 @@
         </div>
         <div class="row text-center bold">
           <div class="col-xs-6">
-            <p>DUYỆT<br> LM Chánh xứ</p>
+            <p>DUYỆT
+              <br> LM Chánh xứ</p>
             <p class="sign-name">
               {{linhMuc}}
             </p>
           </div>
           <div class="col-xs-6">
-            <p>TM. Đoàn TNTT<br> Xứ Đoàn Trưởng</p>
+            <p>TM. Đoàn TNTT
+              <br> Xứ Đoàn Trưởng</p>
             <p class="sign-name">
               {{xuDoanTruong}}
             </p>

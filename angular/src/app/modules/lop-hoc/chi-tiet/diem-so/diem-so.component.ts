@@ -60,6 +60,9 @@ export class DiemSoComponent implements OnDestroy {
     this.subAuth$ = this.store.select((state: AppState) => state.auth).subscribe(res => {
       this.curAuth = res;
       this.dotKTHienTai = this.dotKTKhoaHoc = res.khoa_hoc_hien_tai.cap_nhat_dot_kiem_tra;
+      if (this.dotKTHienTai <= 0) {
+        this.dotKTHienTai = 1;
+      }
       this.dotKTArr = Array(res.khoa_hoc_hien_tai.so_dot_kiem_tra).fill(null).map((x, i) => i + 1);
       this.lanKTArr = Array(res.khoa_hoc_hien_tai.so_lan_kiem_tra).fill(null).map((x, i) => i + 1);
     });

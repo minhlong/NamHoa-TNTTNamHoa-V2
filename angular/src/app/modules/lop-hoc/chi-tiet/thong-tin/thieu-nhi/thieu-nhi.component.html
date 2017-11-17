@@ -11,41 +11,41 @@
     <div class="form-group col-sm-6 col-md-3 form-group-sm">
       <label>Khóa</label>
       <select [(ngModel)]="searchForm.khoa" class="form-control">
-          <option [ngValue]="null"></option>
-          <option [ngValue]="khoaHienTaiID - 1">{{khoaHienTaiID - 1}}</option>
-          <option [ngValue]="khoaHienTaiID - 2">{{khoaHienTaiID - 2}}</option> 
+        <option [ngValue]="null"></option>
+        <option [ngValue]="khoaHienTaiID - 1">{{khoaHienTaiID - 1}}</option>
+        <option [ngValue]="khoaHienTaiID - 2">{{khoaHienTaiID - 2}}</option>
       </select>
     </div>
     <div class="form-group col-sm-6 col-md-3 form-group-sm">
       <label>Ngành</label>
       <select [(ngModel)]="searchForm.nganh" name="nganh" class="form-control">
-          <option [ngValue]="null"></option>
-          <option value="AU_NHI">{{'AU_NHI' | nganh}}</option>
-          <option value="THIEU_NHI">{{'THIEU_NHI' | nganh}}</option>
-          <option value="NGHIA_SI">{{'NGHIA_SI' | nganh}}</option>
-          <option value="HT_DU_BI">{{'HT_DU_BI' | nganh}}</option>
+        <option [ngValue]="null"></option>
+        <option value="AU_NHI">{{'AU_NHI' | nganh}}</option>
+        <option value="THIEU_NHI">{{'THIEU_NHI' | nganh}}</option>
+        <option value="NGHIA_SI">{{'NGHIA_SI' | nganh}}</option>
+        <option value="HT_DU_BI">{{'HT_DU_BI' | nganh}}</option>
       </select>
     </div>
     <div class="form-group col-sm-6 col-md-3 form-group-sm">
       <label>Cấp</label>
       <select [(ngModel)]="searchForm.cap" name="cap" class="form-control">
-          <option [ngValue]="null"></option>
-          <option value="CHIEN_CON">{{'CHIEN_CON' | cap}}</option>
-          <option value="1">{{'1' | cap}}</option>
-          <option value="2">{{'2' | cap}}</option>
-          <option value="3">{{'3' | cap}}</option>
-          <option value="4">{{'4' | cap}}</option>
-          <option value="5">{{'5' | cap}}</option>
-          <option value="6">{{'6' | cap}}</option>
+        <option [ngValue]="null"></option>
+        <option value="CHIEN_CON">{{'CHIEN_CON' | cap}}</option>
+        <option value="1">{{'1' | cap}}</option>
+        <option value="2">{{'2' | cap}}</option>
+        <option value="3">{{'3' | cap}}</option>
+        <option value="4">{{'4' | cap}}</option>
+        <option value="5">{{'5' | cap}}</option>
+        <option value="6">{{'6' | cap}}</option>
       </select>
     </div>
     <div class="form-group col-sm-6 col-md-3 form-group-sm">
       <label>Đội</label>
       <select [(ngModel)]="searchForm.doi" name="doi" class="form-control">
-          <option [ngValue]="null"></option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
+        <option [ngValue]="null"></option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
       </select>
     </div>
   </div>
@@ -103,20 +103,7 @@
           </tbody>
         </table>
       </div>
-      <pagination-template #ep="paginationApi" [id]="pagingHT.id" (pageChange)="pagingHT.currentPage = $event;">
-        <div class="text-center">
-          <div class="btn-group">
-            <button *ngIf="ep.isFirstPage()" type="button" class="btn btn-sm btn-white disabled"><i class="fa fa-chevron-left"></i></button>
-            <button (click)="ep.previous()" *ngIf="!ep.isFirstPage()" type="button" class="btn btn-sm btn-white"><i class="fa fa-chevron-left"></i></button>
-            <ng-container *ngFor="let page of ep.pages">
-              <button *ngIf="ep.getCurrent() !== page.value" (click)="ep.setCurrent(page.value)" class="btn btn-sm btn-white">{{ page.label }}</button>
-              <button *ngIf="ep.getCurrent() === page.value" class="btn btn-sm btn-white active">{{ page.label }}</button>
-            </ng-container>
-            <button *ngIf="ep.isLastPage()" type="button" class="btn btn-sm btn-white disabled"><i class="fa fa-chevron-right"></i></button>
-            <button (click)="ep.next()" *ngIf="!ep.isLastPage()" type="button" class="btn btn-sm btn-white"><i class="fa fa-chevron-right"></i></button>
-          </div>
-        </div>
-      </pagination-template>
+      <app-paging [id]="pagingHT.id" (pageChange)="pagingHT.currentPage = $event;"></app-paging>
     </div>
     <div class="col-md-6 m-t-sm" *ngIf="taiKhoanArr.length">
       <div class="table-responsive">
@@ -150,20 +137,7 @@
           </tbody>
         </table>
       </div>
-      <pagination-template #ep="paginationApi" [id]="pagingTN.id" (pageChange)="pagingTN.currentPage = $event;">
-        <div class="text-center">
-          <div class="btn-group">
-            <button *ngIf="ep.isFirstPage()" type="button" class="btn btn-sm btn-white disabled"><i class="fa fa-chevron-left"></i></button>
-            <button (click)="ep.previous()" *ngIf="!ep.isFirstPage()" type="button" class="btn btn-sm btn-white"><i class="fa fa-chevron-left"></i></button>
-            <ng-container *ngFor="let page of ep.pages">
-              <button *ngIf="ep.getCurrent() !== page.value" (click)="ep.setCurrent(page.value)" class="btn btn-sm btn-white">{{ page.label }}</button>
-              <button *ngIf="ep.getCurrent() === page.value" class="btn btn-sm btn-white active">{{ page.label }}</button>
-            </ng-container>
-            <button *ngIf="ep.isLastPage()" type="button" class="btn btn-sm btn-white disabled"><i class="fa fa-chevron-right"></i></button>
-            <button (click)="ep.next()" *ngIf="!ep.isLastPage()" type="button" class="btn btn-sm btn-white"><i class="fa fa-chevron-right"></i></button>
-          </div>
-        </div>
-      </pagination-template>
+      <app-paging [id]="pagingTN.id" (pageChange)="pagingTN.currentPage = $event;"></app-paging>
     </div>
   </div>
 </div>

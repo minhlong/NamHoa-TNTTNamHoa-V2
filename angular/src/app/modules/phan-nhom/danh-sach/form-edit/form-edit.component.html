@@ -83,28 +83,7 @@
             </tbody>
           </table>
         </div>
-        <pagination-template #ep="paginationApi" [id]="pagingT1.id" (pageChange)="pagingT1.currentPage = $event;">
-          <div class="text-center">
-            <div class="btn-group">
-              <button *ngIf="ep.isFirstPage()" type="button" class="btn btn-sm btn-white disabled">
-                <i class="fa fa-chevron-left"></i>
-              </button>
-              <button (click)="ep.previous()" *ngIf="!ep.isFirstPage()" type="button" class="btn btn-sm btn-white">
-                <i class="fa fa-chevron-left"></i>
-              </button>
-              <ng-container *ngFor="let page of ep.pages">
-                <button *ngIf="ep.getCurrent() !== page.value" (click)="ep.setCurrent(page.value)" class="btn btn-sm btn-white">{{ page.label }}</button>
-                <button *ngIf="ep.getCurrent() === page.value" class="btn btn-sm btn-white active">{{ page.label }}</button>
-              </ng-container>
-              <button *ngIf="ep.isLastPage()" type="button" class="btn btn-sm btn-white disabled">
-                <i class="fa fa-chevron-right"></i>
-              </button>
-              <button (click)="ep.next()" *ngIf="!ep.isLastPage()" type="button" class="btn btn-sm btn-white">
-                <i class="fa fa-chevron-right"></i>
-              </button>
-            </div>
-          </div>
-        </pagination-template>
+        <app-paging [id]="pagingT1.id" (pageChange)="pagingT1.currentPage = $event;"></app-paging>
       </div>
       <div class="col-md-6 m-t-sm">
         <div class="table-responsive">
@@ -138,28 +117,7 @@
             </tbody>
           </table>
         </div>
-        <pagination-template #pg1="paginationApi" [id]="pagingT2.id" (pageChange)="pagingT2.currentPage = $event;">
-          <div class="text-center">
-            <div class="btn-group">
-              <button *ngIf="pg1.isFirstPage()" type="button" class="btn btn-sm btn-white disabled">
-                <i class="fa fa-chevron-left"></i>
-              </button>
-              <button (click)="pg1.previous()" *ngIf="!pg1.isFirstPage()" type="button" class="btn btn-sm btn-white">
-                <i class="fa fa-chevron-left"></i>
-              </button>
-              <ng-container *ngFor="let page of pg1.pages">
-                <button *ngIf="pg1.getCurrent() !== page.value" (click)="pg1.setCurrent(page.value)" class="btn btn-sm btn-white">{{ page.label }}</button>
-                <button *ngIf="pg1.getCurrent() === page.value" class="btn btn-sm btn-white active">{{ page.label }}</button>
-              </ng-container>
-              <button *ngIf="pg1.isLastPage()" type="button" class="btn btn-sm btn-white disabled">
-                <i class="fa fa-chevron-right"></i>
-              </button>
-              <button (click)="pg1.next()" *ngIf="!pg1.isLastPage()" type="button" class="btn btn-sm btn-white">
-                <i class="fa fa-chevron-right"></i>
-              </button>
-            </div>
-          </div>
-        </pagination-template>
+        <app-paging [id]="pagingT2.id" (pageChange)="pagingT2.currentPage = $event;"></app-paging>
       </div>
     </div>
   </div>

@@ -284,28 +284,7 @@
           </tbody>
         </table>
       </div>
-      <pagination-template #ep="paginationApi" [id]="cookieState.id" (pageChange)="cookieState.currentPage = $event; updateState();">
-        <div class="text-center">
-          <div class="btn-group">
-            <button *ngIf="ep.isFirstPage()" type="button" class="btn btn-sm btn-white disabled">
-              <i class="fa fa-chevron-left"></i>
-            </button>
-            <button (click)="ep.previous()" *ngIf="!ep.isFirstPage()" type="button" class="btn btn-sm btn-white">
-              <i class="fa fa-chevron-left"></i>
-            </button>
-            <ng-container *ngFor="let page of ep.pages">
-              <button *ngIf="ep.getCurrent() !== page.value" (click)="ep.setCurrent(page.value)" class="btn btn-sm btn-white">{{ page.label }}</button>
-              <button *ngIf="ep.getCurrent() === page.value" class="btn btn-sm btn-white active">{{ page.label }}</button>
-            </ng-container>
-            <button *ngIf="ep.isLastPage()" type="button" class="btn btn-sm btn-white disabled">
-              <i class="fa fa-chevron-right"></i>
-            </button>
-            <button (click)="ep.next()" *ngIf="!ep.isLastPage()" type="button" class="btn btn-sm btn-white">
-              <i class="fa fa-chevron-right"></i>
-            </button>
-          </div>
-        </div>
-      </pagination-template>
+      <app-paging [id]="cookieState.id" (pageChange)="cookieState.currentPage = $event; updateState();"></app-paging>
     </div>
   </div>
 </div>
