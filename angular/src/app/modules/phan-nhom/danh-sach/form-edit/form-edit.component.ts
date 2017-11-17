@@ -177,7 +177,7 @@ export class FormEditComponent implements OnInit {
       this.nhom = _res.data;
       this.loadTaiKhoan();
 
-      this.toasterService.pop('success', 'Đã thêm!');
+      this.toasterService.pop('success', 'Đã Xóa!');
       this.isLoadingTK = false;
     }, error => {
       this.toasterService.pop('error', 'Lỗi!', error);

@@ -21,12 +21,23 @@ class PhanQuyenController extends Controller
         $phanQuyen->fill($request->input());
         $phanQuyen->save();
 
-        return response()->json($phanQuyen);
+        return response()->json(true);
     }
 
     public function postThemNhom(PhanQuyen $phanQuyen)
     {
-        $nhomTaiKhoan = array_keys(array_filter(\Request::get('NhomTaiKhoan')));
+        $IdArr = \Request::has('IDs') ? \Request::get('IDs') : [];
+        $phanQuyen->role_nhom()->attach($IdArr);
+        $phanQuyen->load(['role_nhom', 'role_taikhoan']);
+
+        return response()->json([
+            'data' => $phanQuyen,
+        ]);
+    }
+
+    public function postThemTaiKhoan(PhanQuyen $phanQuyen)
+    {
+        $nhomTaiKhoan = [];
         foreach (\Request::get('TaiKhoan') as $taiKhoan) {
             $newRoles = NhomTaiKhoan::firstOrCreate([
                 'loai' => 'TAI_KHOAN',
@@ -37,9 +48,22 @@ class PhanQuyenController extends Controller
             $newRoles->tai_khoan()->sync([$taiKhoan['id']]);
             $nhomTaiKhoan[] = $newRoles->id;
         }
-        $phanQuyen->role_nhom()->sync($nhomTaiKhoan);
+        $phanQuyen->role_nhom()->attach($nhomTaiKhoan);
         $phanQuyen->load(['role_nhom', 'role_taikhoan']);
 
-        return response()->json($phanQuyen);
+        return response()->json([
+            'data' => $phanQuyen,
+        ]);
+    }
+
+    public function postXoa(PhanQuyen $phanQuyen)
+    {
+        $IdArr = \Request::has('IDs') ? \Request::get('IDs') : [];
+        $phanQuyen->role_nhom()->detach($IdArr);
+        $phanQuyen->load(['role_nhom', 'role_taikhoan']);
+
+        return response()->json([
+            'data' => $phanQuyen,
+        ]);
     }
 }

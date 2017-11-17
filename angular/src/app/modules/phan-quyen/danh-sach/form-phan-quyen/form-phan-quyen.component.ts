@@ -19,20 +19,35 @@ export class FormPhanQuyenComponent implements OnInit, OnDestroy {
   @Input() quyenInfo;
   @Output() updateInfo = new EventEmitter();
 
-  private urlAPI = environment.apiURL + '/phan-quyen/nhom';
+  private urlAPI = environment.apiURL + '/phan-quyen';
   private tkAPI = environment.apiURL + '/tai-khoan';
+  private nhomAPI = environment.apiURL + '/nhom-tai-khoan';
   private taiKhoanSrcArr = [];
 
-  isLoadingTK: boolean;
+  isLoading = false;
 
-  huynhTruongArr = [];
   taiKhoanArr = [];
+  nhomArr = [];
   filter$ = new Subject<any>();
 
-  pagingHT = {
-    // Paging
-    id: 'phan-quyen-edit-page',
-    itemsPerPage: 10,
+  pagingNhom1 = {
+    id: 'nhom1-phan-quyen-edit-page',
+    itemsPerPage: 5,
+    currentPage: 1,
+  }
+  pagingNhom2 = {
+    id: 'nhom2-phan-quyen-edit-page',
+    itemsPerPage: 5,
+    currentPage: 1,
+  }
+  pagingHT1 = {
+    id: 'ht1-phan-quyen-edit-page',
+    itemsPerPage: 5,
+    currentPage: 1,
+  }
+  pagingHT2 = {
+    id: 'ht2-phan-quyen-edit-page',
+    itemsPerPage: 5,
     currentPage: 1,
   }
 
@@ -41,13 +56,11 @@ export class FormPhanQuyenComponent implements OnInit, OnDestroy {
     private toasterService: ToasterService,
     private _http: JwtAuthHttp,
   ) {
-    this.loadTaiKhoan();
-
     // Xử lý tìm kiếm tài khoản
     this.filter$.debounceTime(400).subscribe((_str) => {
       this.taiKhoanArr = this.taiKhoanSrcArr.filter(el => {
         // Loại bỏ tài khoản đã phân quyền
-        return !this.huynhTruongArr.find(c => c.ten === el.id)
+        return !this.quyenInfo.role_taikhoan.find(c => c.ten === el.id)
       }).filter(el => {
         // Bỏ dấu để lọc theo tên
         const _tmpA = bodauTiengViet(el.ho_va_ten);
@@ -55,10 +68,12 @@ export class FormPhanQuyenComponent implements OnInit, OnDestroy {
         return _tmpA.toLowerCase().indexOf(_tmpB.toLowerCase()) !== -1
       });
     });
+
+    this.loadTaiKhoan();
+    this.loadNhom();
   }
 
   ngOnInit() {
-    this.huynhTruongArr = this.quyenInfo.role_taikhoan;
   }
 
   ngOnDestroy() {
@@ -69,7 +84,7 @@ export class FormPhanQuyenComponent implements OnInit, OnDestroy {
    * Load dữ liệu từ server
    */
   private loadTaiKhoan() {
-    this.isLoadingTK = true;
+    this.isLoading = true;
 
     /**
      * Chỉ lọc tài khoản còn hoạt động và là huynh trưởng
@@ -79,41 +94,176 @@ export class FormPhanQuyenComponent implements OnInit, OnDestroy {
     search.set('loai_tai_khoan', 'HUYNH_TRUONG,SOEUR,LINH_MUC');
 
     this._http.get(this.tkAPI, { search }).map(res => res.json()).subscribe(res => {
-      this.isLoadingTK = false;
+      this.isLoading = false;
       this.taiKhoanSrcArr = res.data;
 
       // Sau khi lấy dữ liệu về thì lọc tìm kiếm
       this.filter$.next('');
     }, error => {
-      this.isLoadingTK = false;
+      this.isLoading = false;
       this.toasterService.pop('error', 'Lỗi!', error);
     })
   }
 
-  checkAll(_arr: any[], _event) {
+  /**
+   * Load dữ liệu từ server
+   */
+  private loadNhom() {
+    this.isLoading = true;
+
+    this._http.get(this.nhomAPI).map(res => res.json()).subscribe(res => {
+      this.isLoading = false;
+      this.nhomArr = res.data.filter(el => {
+        // Loại bỏ nhóm đã phân quyền
+        return !this.quyenInfo.role_nhom.find(c => c.id === el.id)
+      });
+    }, error => {
+      this.isLoading = false;
+      this.toasterService.pop('error', 'Lỗi!', error);
+    })
+  }
+
+  /**
+   * Click "Check All" -> check tất cả
+   * @param _arr Arr
+   * @param _event checked
+   */
+  checkAllTK(_arr: any[], _event) {
     _arr.forEach(_el => {
       _el.checked = _event.target.checked
     });
   }
 
-  getChecked(_arr: any[]) {
+  /**
+   * Lấy những phần tử được chọn
+   * @param _arr Arr
+   */
+  getCheckedTK(_arr: any[]) {
     return _arr.filter((_el) => {
       return _el.checked === true;
     }).length;
   }
 
-  them() {
+  /**
+   * Thêm tài khoản vào nhóm quyền
+   *    + Thêm từng tài khoản
+   *    hoặc
+   *    + Thêm nhiều tài khoản 1 lúc
+   * @param _tk Tai khoan
+   */
+  themTK(_tk = null) {
+    this.isLoading = true;
+    const _tmpArr = [];
+    if (_tk) {
+      _tmpArr.push({
+        id: _tk.id,
+        ho_va_ten: _tk.ho_va_ten,
+      });
+    } else {
+      this.taiKhoanArr.filter((_el) => {
+        return _el.checked === true;
+      }).forEach(_el => {
+        _tmpArr.push({
+          id: _el.id,
+          ho_va_ten: _el.ho_va_ten,
+        });
+      });
+    }
 
+    this._http.post(this.urlAPI + '/' + this.quyenInfo.id + '/tai-khoan', {
+      TaiKhoan: _tmpArr
+    }).map(res => res.json()).subscribe(_res => {
+      this.quyenInfo = _res.data;
+      this.loadTaiKhoan();
+
+      this.toasterService.pop('success', 'Đã thêm!');
+      this.isLoading = false;
+    }, error => {
+      this.toasterService.pop('error', 'Lỗi!', error);
+      this.isLoading = false;
+    })
   }
 
-  xoa() {
+  /**
+   * Thêm nhóm tài khoản vào nhóm quyền
+   *    + Thêm từng nhóm
+   *    hoặc
+   *    + Thêm nhiều nhóm 1 lúc
+   * @param _id Nhóm ID
+   */
+  themNhom(_id = null) {
+    this.isLoading = true;
+    const _tmpArr = [];
+    if (_id) {
+      _tmpArr.push(_id);
+    } else {
+      this.nhomArr.filter((_el) => {
+        return _el.checked === true;
+      }).forEach(_el => {
+        _tmpArr.push(_el.id);
+      });
+    }
 
+    this._http.post(this.urlAPI + '/' + this.quyenInfo.id + '/nhom', {
+      IDs: _tmpArr
+    }).map(res => res.json()).subscribe(_res => {
+      this.quyenInfo = _res.data;
+      this.loadNhom();
+
+      this.toasterService.pop('success', 'Đã thêm!');
+      this.isLoading = false;
+    }, error => {
+      this.toasterService.pop('error', 'Lỗi!', error);
+      this.isLoading = false;
+    })
+  }
+
+  /**
+   * Xóa tài-khoản/nhóm trong nhóm quyền
+   *    + Xóa từng tài-khoản/nhóm
+   *    hoặc
+   *    + Xóa nhiều tài-khoản/nhóm 1 lúc
+   * @param _tk Tai khoan
+   */
+  xoa(_id = null, _nhom = false, loading) {
+    this.isLoading = true;
+    const _tmpArr = [];
+    if (_id) {
+      _tmpArr.push(_id);
+    } else if (_nhom) {
+      // Xóa Nhóm
+      this.quyenInfo.role_nhom.filter((_el) => {
+        return _el.checked === true;
+      }).forEach(_el => {
+        _tmpArr.push(_el.id);
+      });
+    } else {
+      // Xóa Tài Khoản
+      this.quyenInfo.role_taikhoan.filter((_el) => {
+        return _el.checked === true;
+      }).forEach(_el => {
+        _tmpArr.push(_el.id);
+      });
+    }
+
+    this._http.post(this.urlAPI + '/' + this.quyenInfo.id + '/xoa', {
+      IDs: _tmpArr
+    }).map(res => res.json()).subscribe(_res => {
+      this.quyenInfo = _res.data;
+      this.loadTaiKhoan();
+
+      this.toasterService.pop('success', 'Đã Xóa!');
+      this.isLoading = false;
+    }, error => {
+      this.toasterService.pop('error', 'Lỗi!', error);
+      this.isLoading = false;
+    })
   }
 
   /**
    * Thoát -> quay lại trang chính
    */
   cancel() {
-    this.updateInfo.emit(null);
+    this.updateInfo.emit(true);
   }
 }

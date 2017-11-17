@@ -72,7 +72,11 @@ Route::group(['middleware' => 'auth-jwt'], function () {
     Route::group(['prefix' => 'phan-quyen'], function () {
         Route::get(null, 'PhanQuyenController@getDanhSach');
         Route::post('{PhanQuyen}', 'PhanQuyenController@postThongTin');  // Fix: Chỉ mình tài khoảng Hồ Minh Long
-        Route::post('{PhanQuyen}/nhom', 'PhanQuyenController@postThemNhom');  // Fix: Update permission
+        Route::group(['prefix' => '{PhanQuyen}', 'middleware' => ['permission:phan-quyen']], function () {
+            Route::post('/nhom', 'PhanQuyenController@postThemNhom');
+            Route::post('/tai-khoan', 'PhanQuyenController@postThemTaiKhoan');
+            Route::post('/xoa', 'PhanQuyenController@postXoa');
+        });
     });
 
     /* Phân Nhóm */
