@@ -38,7 +38,7 @@ class ThuMoiController extends Controller
         $thuMoi->fill(\Request::all());
         $thuMoi->save();
 
-        return $this->getThongTin($thuMoi, $library);
+        return response()->json(true);
     }
 
     public function getThongTin(ThuMoi $thuMoi, Library $library)

@@ -17,22 +17,34 @@ import { ngay } from '../../../shared/convert-type.pipe';
   templateUrl: './form-tao-moi.component.html',
   styleUrls: ['./form-tao-moi.component.scss']
 })
-export class FormTaoMoiComponent implements OnInit {
+export class FormTaoMoiComponent implements OnInit, OnDestroy {
   @Output() updateInfo = new EventEmitter();
 
+  private tkAPI = environment.apiURL + '/tai-khoan';
   private urlAPI = environment.apiURL + '/thu-moi';
+  private taiKhoanSrcArr = [];
   maskOption = {
     mask: [/[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/],
     guide: true,
   }
 
-  arrayOfStrings: string[] = ['this', 'is', 'array', 'of', 'text'];
-  model1: any;
-
   isLoading = false;
+  selectedItem = null;
 
   formGroup: FormGroup;
   error: any;
+
+  khoaHienTaiID: any;
+  taiKhoanArr = [];
+  filter$ = new Subject<any>();
+
+  pagingTN = {
+    id: 'tnTable',
+    itemsPerPage: 5,
+    currentPage: 1,
+  }
+
+  subKhoa$: any;
 
   constructor(
     private store: Store<AppState>,
@@ -40,6 +52,23 @@ export class FormTaoMoiComponent implements OnInit {
     private _fb: FormBuilder,
     private _http: JwtAuthHttp,
   ) {
+    this.subKhoa$ = this.store.select((state: AppState) => state.auth.khoa_hoc_hien_tai).subscribe(_khoa => {
+      this.khoaHienTaiID = _khoa.id;
+      this.loadTaiKhoan();
+    });
+
+    this.filter$.debounceTime(400).subscribe((_str) => {
+      this.taiKhoanArr = this.taiKhoanSrcArr.filter(el => {
+        const _tmpA = bodauTiengViet(el.ho_va_ten);
+        const _tmpB = bodauTiengViet(_str);
+        return _tmpA.toLowerCase().indexOf(_tmpB.toLowerCase()) !== -1
+      });
+    });
+  }
+
+  ngOnDestroy() {
+    this.filter$.complete();
+    this.subKhoa$.unsubscribe();
   }
 
   ngOnInit() {
@@ -51,6 +80,23 @@ export class FormTaoMoiComponent implements OnInit {
     });
   }
 
+  private loadTaiKhoan() {
+    this.isLoading = true;
+    const search = new URLSearchParams();
+    search.set('khoa', this.khoaHienTaiID);
+    search.set('trang_thai', 'HOAT_DONG');
+    search.set('loai_tai_khoan', 'THIEU_NHI');
+    search.set('loadLopHoc', 'true');
+    this._http.get(this.tkAPI, { search }).map(res => res.json()).subscribe(res => {
+      this.isLoading = false;
+      this.taiKhoanSrcArr = res.data;
+      this.filter$.next(''); // Trigger Search
+    }, error => {
+      this.isLoading = false;
+      this.toasterService.pop('error', 'Lỗi!', error);
+    })
+  }
+
   /**
    *    Nếu OK -> quay lại trang chính
    *    Nếu lỗi -> hiện lỗi
@@ -59,6 +105,8 @@ export class FormTaoMoiComponent implements OnInit {
     this.isLoading = true;
     const _par = Object.assign({}, this.formGroup.value, {
       ngay: ngay(this.formGroup.value.ngay),
+      tai_khoan_id: this.selectedItem.id,
+      ghi_chu: this.formGroup.value.ghi_chu,
     });
 
     this._http.post(this.urlAPI, _par).map(res => res.json()).subscribe(res => {

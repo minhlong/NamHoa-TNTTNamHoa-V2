@@ -24,7 +24,6 @@
     "@ngrx/effects": "^4.0.5",
     "@ngrx/store": "^4.0.3",
     "@ngrx/store-devtools": "^4.0.0",
-    "@ngui/auto-complete": "^0.16.0",
     "angular2-jwt": "^0.2.3",
     "angular2-text-mask": "^8.0.4",
     "angular2-toaster": "^4.0.1",

@@ -18,13 +18,13 @@
       <div [class.has-error]="error && error.ngay_bat_dau" class="form-group form-group-sm col-sm-6">
         <label class="col-sm-8 control-label">Từ ngày</label>
         <div class="col-sm-4">
-          <input formControlName="ngay_bat_dau" [textMask]="maskOption" class="form-control" type="text">
+          <input formControlName="ngay_bat_dau" placeholder="Vd: 31-12-2000" [textMask]="maskOption" class="form-control" type="text">
         </div>
       </div>
       <div [class.has-error]="error && error.ngay_ket_thuc" class="form-group form-group-sm col-sm-6">
         <label class="col-sm-8 control-label">Đến ngày</label>
         <div class="col-sm-4">
-          <input formControlName="ngay_ket_thuc" [textMask]="maskOption" class="form-control" type="text">
+          <input formControlName="ngay_ket_thuc" placeholder="Vd: 31-12-2000" [textMask]="maskOption" class="form-control" type="text">
         </div>
       </div>
       <div [class.has-error]="error && error.so_dot_kiem_tra" class="form-group form-group-sm col-sm-6">

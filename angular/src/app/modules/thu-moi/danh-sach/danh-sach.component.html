@@ -83,7 +83,7 @@
               <td class="text-center">{{_item.ngay | ngay}}</td>
               <td>
                 <button class="btn btn-xs btn-default" (click)="itemSelected = _item; openModalBtn.click()">Xem</button>
-                <button class="btn btn-xs btn-default" (click)="itemSelected = _item; tab = 'form-edit'">Sửa</button>
+                <button class="btn btn-xs btn-default" (click)="itemSelected = _item; tab = 'form-edit'" *ngIf="hasPerm()">Sửa</button>
                 <button class="btn btn-xs btn-danger" (click)="itemSelected = _item; confimModelBtn.click()" *ngIf="hasPerm(_item)">Xóa</button>
               </td>
             </tr>

@@ -19,9 +19,22 @@ class TaiKhoanController extends Controller
      * @param Library $library
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getDanhSach(TaiKhoan $taiKhoan)
+    public function getDanhSach(TaiKhoan $taiKhoan, Request $request)
     {
         $taiKhoan = $taiKhoan->locDuLieu()->withTrashed()->get();
+
+        // Thư mời - tạo mới - Tìm kiếm thông tin nên hiển thị luôn lớp học
+        if ($request->has('loadLopHoc') && $request->has('khoa')) {
+            $taiKhoan->load(['lop_hoc' => function ($query) use ($request) {
+                $query->where('khoa_hoc_id', $request->khoa);
+            }])->map(function ($c) {
+                $c['lop_hoc']->map(function ($d) {
+                    $d->ten = $d->taoTen(true);
+                    return $d;
+                });
+                return $c;
+            });
+        }
 
         return response()->json([
             'data' => $taiKhoan,
