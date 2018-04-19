@@ -13,8 +13,8 @@ export class PhieuLienLacComponent implements OnInit, OnDestroy {
   @Input() apiData;
   @Output() updateInfo = new EventEmitter();
 
-  linhMuc = 'Họ_và_Tên';
-  xuDoanTruong = 'Họ_và_Tên';
+  linhMuc = 'Phanxicô Xaviê Đậu Nguyễn Hoàng Linh';
+  xuDoanTruong = 'Gioan Baotixita Hoàng Quang Đại';
   htPhuTrach: string;
   ngayXetDuyet: string;
 
@@ -106,7 +106,7 @@ export class PhieuLienLacComponent implements OnInit, OnDestroy {
     if (this.khoaHienTai[_loai][_phieu]) {
       _minus = _count * this.khoaHienTai[_loai][_phieu];
     }
-    return _count + ' | ' + _minus;
+    return _count + ' | ' + (Math.round(_minus * 100) / 100);
   }
 
   private countPhieu(_tn, _loai, _phieu) {

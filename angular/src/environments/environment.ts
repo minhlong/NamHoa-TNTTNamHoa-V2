@@ -6,5 +6,7 @@
 import { environment as envProd } from './environment.prod';
 
 envProd.production = false;
+envProd.webURL = 'http://192.168.10.10:81';
+envProd.apiURL = 'http://192.168.10.10:81/v1';
 
 export const environment = envProd

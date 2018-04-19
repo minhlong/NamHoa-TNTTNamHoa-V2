@@ -138,7 +138,9 @@
                   <!-- Kiểm Tra  -->
                   <ng-container *ngFor="let _dot of apiData.SoDot">
                     <td class="text-center no-wrap" *ngFor="let _lan of apiData.SoLan">
-                      {{apiData.DiemSo[_tn.id][_dot][_lan]}}
+                      <ng-container *ngIf="apiData.DiemSo[_tn.id][_dot] && apiData.DiemSo[_tn.id][_dot][_lan]">
+                        {{apiData.DiemSo[_tn.id][_dot][_lan]}}
+                      </ng-container>
                     </td>
                   </ng-container>
                   <td class="text-center no-wrap">{{_tn.pivot.hoc_luc}}</td>
