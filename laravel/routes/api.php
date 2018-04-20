@@ -54,7 +54,7 @@ Route::group(['middleware' => 'auth-jwt'], function () {
 
         Route::get('{LopHoc}/tong-ket', 'TaiKhoanController@getTongKet');
         Route::post('{LopHoc}/tong-ket/xep-hang', 'LopHocController@postXepHang')->middleware(['permission:danh-gia-cuoi-nam']);
-        Route::post('{LopHoc}/tong-ket/nhan-xet', 'LopHocController@postNhanXet')->middleware(['permission:nhan-xet']);
+        Route::post('{LopHoc}/tong-ket/nhan-xet', 'LopHocController@postNhanXet'); // Fix: Update permission ->middleware(['permission:nhan-xet']);
     });
 
     /* Thu Moi */
