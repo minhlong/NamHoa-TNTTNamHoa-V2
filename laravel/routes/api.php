@@ -23,6 +23,8 @@ Route::group(['middleware' => 'auth-jwt'], function () {
     Route::group(['prefix' => 'tai-khoan'], function () {
         Route::get(null, 'TaiKhoanController@getDanhSach');
         Route::get('export', 'TaiKhoanController@generateExcelFile');
+        Route::post('ngay-them-suc', 'TaiKhoanController@postThemSuc')->middleware(['permission:lop-hoc']);
+        Route::post('ngay-ruoc-le', 'TaiKhoanController@postRuocLe')->middleware(['permission:lop-hoc']);
 
         Route::post('tap-tin', 'TaiKhoanController@postTapTin')->middleware(['permission:tai-khoan']);
         Route::post('tap-tin/tao', 'TaiKhoanController@postTao')->middleware(['permission:tai-khoan']);
@@ -72,14 +74,14 @@ Route::group(['middleware' => 'auth-jwt'], function () {
 
         Route::group(['prefix' => '{KhoaHoc}'], function () {
             Route::get(null, 'KhoaHocController@getThongTin');
-            Route::post(null, 'KhoaHocController@postThongTin')->middleware(['permission:he-thong']);  // Fix: Năm hiện tại hoặc về sau
+            Route::post(null, 'KhoaHocController@postThongTin')->middleware(['permission:he-thong']);  // Fix: Chỉ cho cap nhat Năm hiện tại hoặc về sau
         });
     });
 
     /* Phân Quyền */
     Route::group(['prefix' => 'phan-quyen'], function () {
         Route::get(null, 'PhanQuyenController@getDanhSach');
-        Route::post('{PhanQuyen}', 'PhanQuyenController@postThongTin');  // Fix: Chỉ mình tài khoảng Hồ Minh Long
+        Route::post('{PhanQuyen}', 'PhanQuyenController@postThongTin');
         Route::group(['prefix' => '{PhanQuyen}', 'middleware' => ['permission:phan-quyen']], function () {
             Route::post('/nhom', 'PhanQuyenController@postThemNhom');
             Route::post('/tai-khoan', 'PhanQuyenController@postThemTaiKhoan');

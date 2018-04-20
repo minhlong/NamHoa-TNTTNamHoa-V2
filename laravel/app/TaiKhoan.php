@@ -168,32 +168,11 @@ class TaiKhoan extends BaseModel implements AuthenticatableContracts
 
     public function getPhanQuyen($arrOptions = null)
     {
+        // return \App\PhanQuyen::get()->pluck('ten')->toArray();
         $arrPerms = [];
         foreach ($this->nhom_tai_khoan()->get() as $nhom) {
             $arrPerms = array_merge($arrPerms, $nhom->perms()->pluck('ten')->toArray());
         }
-        // Nếu không có quyền điểm danh thì
-        //    + Chỉ được điểm danh các lớp mình đang dạy của Khóa hiện tại
-        //    + Chỉ được vào điểm các lớp mình đang dạy của Khóa hiện tại
-        // $perName = 'diem-danh';
-        // if (!in_array($perName, $arrPerms) && !empty($arrOptions)) {
-        //     $arrOptions = array_merge([
-        //         'lop_hoc_id' => '',
-        //         'ngay_hoc'   => '',
-        //         'dotKT'      => '',
-        //     ], $arrOptions);
-        //     $lopHoc = \Auth::user()->lop_hoc()
-        //         ->where('lop_hoc_id', $arrOptions['lop_hoc_id'])
-        //         ->first();
-        //     if ($lopHoc) {
-        //         if ($arrOptions['ngay_hoc'] && $arrOptions['ngay_hoc'] == $this->kiemtraNgayDiemDanh($lopHoc->khoa_hoc->ngung_diem_danh)) {
-        //             // Chi duoc phep cap nhat sau mot so ngay quy dinh theo Khoa Hoc
-        //             $arrPerms[] = $perName;
-        //         } elseif ($arrOptions['dotKT'] && $arrOptions['dotKT'] == $lopHoc->khoa_hoc->cap_nhat_dot_kiem_tra) {
-        //             $arrPerms[] = $perName;
-        //         }
-        //     }
-        // }
 
         return $arrPerms;
     }

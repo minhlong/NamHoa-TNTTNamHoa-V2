@@ -33,9 +33,6 @@ class DangNhapController extends Controller
                 'lop_hoc_hien_tai_id' => $lopHoc ? $lopHoc->id : null,
                 'khoa_hoc_hien_tai_id' => $khoaHoc ? $khoaHoc->id : null,
             ]),
-            // 'tes' => [
-            //     'phan_quyen' => \Auth::user()->getPhanQuyen(),
-            // ]
         ]);
     }
 }

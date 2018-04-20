@@ -292,6 +292,30 @@ class TaiKhoanController extends Controller
         return $arrResult;
     }
 
+    public function postThemSuc(Request $request) {
+        try {
+            TaiKhoan::whereIn('id', $request->get('tai_khoan'))->update(['ngay_them_suc' => $request->get('ngay_them_suc')]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Sai định dạng ngày'
+            ], 400);
+        }
+
+        return response()->json();
+    }
+
+    public function postRuocLe(Request $request) {
+        try {
+            TaiKhoan::whereIn('id', $request->get('tai_khoan'))->update(['ngay_ruoc_le' => $request->get('ngay_ruoc_le')]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Sai định dạng ngày'
+            ], 400);
+        }
+
+        return response()->json();
+    }
+
     /**
      * Luu Thong Tin Tai Khoan.
      * @param TaiKhoan $taiKhoan

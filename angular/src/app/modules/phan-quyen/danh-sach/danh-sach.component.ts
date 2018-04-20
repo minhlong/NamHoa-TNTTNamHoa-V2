@@ -69,11 +69,7 @@ export class DanhSachComponent implements OnDestroy {
    * Chỉ những ai có quyền 'phan-quyen' mới được cập nhật
    */
   hasPerm() {
-    if (this.curAuth.phan_quyen.includes('phan-quyen')) {
-      return true;
-    }
-
-    return false;
+    return this.curAuth.phan_quyen.includes('phan-quyen');
   }
 
   update(_info) {

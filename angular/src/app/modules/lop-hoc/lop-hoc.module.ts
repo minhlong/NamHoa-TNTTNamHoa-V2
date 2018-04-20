@@ -28,6 +28,8 @@ import { PhieuLienLacComponent } from './chi-tiet/tong-ket/phieu-lien-lac/phieu-
 
 import { DanhSachComponent } from './danh-sach/danh-sach.component';
 import { TaoMoiComponent } from './tao-moi/tao-moi.component';
+import { NgayThemSucComponent } from './chi-tiet/thong-tin/ngay-them-suc/ngay-them-suc.component';
+import { NgayRuocLeComponent } from './chi-tiet/thong-tin/ngay-ruoc-le/ngay-ruoc-le.component';
 
 @NgModule({
   imports: [
@@ -61,7 +63,7 @@ import { TaoMoiComponent } from './tao-moi/tao-moi.component';
     ThongTinComponent, FormThongTinComponent, HuynhTruongComponent, ThieuNhiComponent,
     DiemDanhComponent, FormDiemDanhComponent,
     DiemSoComponent, FormDiemSoComponent,
-    TongKetComponent, FormXepHangComponent, FormNhanXetComponent, PhieuLienLacComponent,
+    TongKetComponent, FormXepHangComponent, FormNhanXetComponent, PhieuLienLacComponent, NgayThemSucComponent, NgayRuocLeComponent,
   ]
 })
 export class LopHocModule { }

@@ -56,6 +56,8 @@
     <button (click)="tab = 'form'" class="btn btn-default btn-sm m-l-lg m-r-lg">Sửa Thông Tin</button>
     <button (click)="tab = 'huynh-truong'" class="btn btn-default btn-sm m-r-lg">C/Nhật H/Trưởng</button>
     <button (click)="tab = 'thieu-nhi'" class="btn btn-default btn-sm m-r-lg">C/Nhật T/Nhi</button>
+    <button (click)="tab = 'ngay-ruoc-le'" class="btn btn-default btn-sm m-r-lg">C/Nhật Ngày R/Lễ</button>
+    <button (click)="tab = 'ngay-them-suc'" class="btn btn-default btn-sm m-r-lg">C/Nhật Ngày T/Sức</button>
   </div>
 </ng-container>
 
@@ -67,4 +69,10 @@
 </ng-container>
 <ng-container *ngIf="tab === 'thieu-nhi'" class="ibox">
   <app-thieu-nhi (updateInfo)="update($event)"></app-thieu-nhi>
+</ng-container>
+<ng-container *ngIf="tab === 'ngay-them-suc'" class="ibox">
+  <app-ngay-them-suc (updateInfo)="update($event)"></app-ngay-them-suc>
+</ng-container>
+<ng-container *ngIf="tab === 'ngay-ruoc-le'" class="ibox">
+  <app-ngay-ruoc-le (updateInfo)="update($event)"></app-ngay-ruoc-le>
 </ng-container>
