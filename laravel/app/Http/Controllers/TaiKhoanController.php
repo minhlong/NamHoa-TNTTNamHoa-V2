@@ -256,7 +256,9 @@ class TaiKhoanController extends Controller
                 if ($hocVien->pivot->hoc_luc >= $khoaHoc->xep_loai['HOC_LUC'][$loai]) {
                     $hocVien->pivot->loaiHocLuc = $loai;
                 }
-                $hocVien->pivot->tb_canam = ($hocVien->pivot->chuyen_can + $hocVien->pivot->hoc_luc) / 2;
+                $hocVien->pivot->chuyen_can = round($hocVien->pivot->chuyen_can, 2);
+                $hocVien->pivot->hoc_luc = round($hocVien->pivot->hoc_luc, 2);
+                $hocVien->pivot->tb_canam = round(($hocVien->pivot->chuyen_can + $hocVien->pivot->hoc_luc) / 2, 2);
             }
         }
         $arrResult['Data'] = $arrHocVien->toArray();

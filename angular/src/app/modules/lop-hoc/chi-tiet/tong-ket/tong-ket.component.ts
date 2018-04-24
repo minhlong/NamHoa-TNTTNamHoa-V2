@@ -125,8 +125,4 @@ export class TongKetComponent implements AfterViewInit, OnDestroy {
       this.loadData();
     }
   }
-
-  tbCaNam(_tn) {
-    return Math.round(_tn.pivot.tb_canam * 100) / 100;
-  }
 }
