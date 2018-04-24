@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::post('dang-nhap', 'DangNhapController@postDangNhap');
+Route::post('auto-pull', 'PullGitController@postAutoPull');
 
 Route::group(['middleware' => 'auth-jwt'], function () {
     /* Trang Chu */

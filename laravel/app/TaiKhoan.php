@@ -166,9 +166,11 @@ class TaiKhoan extends BaseModel implements AuthenticatableContracts
         }
     }
 
+    /**
+     * Lấy danh sách được phân quyền cho tài khoản hiện tại
+     */
     public function getPhanQuyen($arrOptions = null)
     {
-        // return \App\PhanQuyen::get()->pluck('ten')->toArray();
         $arrPerms = [];
         foreach ($this->nhom_tai_khoan()->get() as $nhom) {
             $arrPerms = array_merge($arrPerms, $nhom->perms()->pluck('ten')->toArray());
