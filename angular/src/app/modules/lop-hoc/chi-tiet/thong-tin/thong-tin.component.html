@@ -52,12 +52,12 @@
       </div>
     </div>
   </div>
-  <div class="ibox-footer" *ngIf="hasPerm() && !isLoading">
-    <button (click)="tab = 'form'" class="btn btn-default btn-sm m-l-lg m-r-lg">Sửa Thông Tin</button>
-    <button (click)="tab = 'huynh-truong'" class="btn btn-default btn-sm m-r-lg">C/Nhật H/Trưởng</button>
-    <button (click)="tab = 'thieu-nhi'" class="btn btn-default btn-sm m-r-lg">C/Nhật T/Nhi</button>
-    <button (click)="tab = 'ngay-ruoc-le'" class="btn btn-default btn-sm m-r-lg">C/Nhật Ngày R/Lễ</button>
-    <button (click)="tab = 'ngay-them-suc'" class="btn btn-default btn-sm m-r-lg">C/Nhật Ngày T/Sức</button>
+  <div class="ibox-footer" *ngIf="!isLoading">
+    <button *ngIf="hasPerm()" (click)="tab = 'form'" class="btn btn-default btn-sm m-l-lg m-r-lg">Sửa Thông Tin</button>
+    <button *ngIf="hasPerm()" (click)="tab = 'huynh-truong'" class="btn btn-default btn-sm m-r-lg">C/Nhật H/Trưởng</button>
+    <button *ngIf="hasPerm()" (click)="tab = 'thieu-nhi'" class="btn btn-default btn-sm m-r-lg">C/Nhật T/Nhi</button>
+    <button *ngIf="hasPermNgay()" (click)="tab = 'ngay-ruoc-le'" class="btn btn-default btn-sm m-r-lg">C/Nhật Ngày R/Lễ</button>
+    <button *ngIf="hasPermNgay()" (click)="tab = 'ngay-them-suc'" class="btn btn-default btn-sm m-r-lg">C/Nhật Ngày T/Sức</button>
   </div>
 </ng-container>
 

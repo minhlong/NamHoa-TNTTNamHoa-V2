@@ -73,6 +73,10 @@ export class ThongTinComponent implements OnDestroy {
     return false;
   }
 
+  hasPermNgay() {
+    return this.curAuth.phan_quyen.includes('lop-hoc');
+  }
+
   update(_info) {
     this.tab = 'thong-tin';
     if (_info) {
