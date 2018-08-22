@@ -72,6 +72,7 @@ class LopHoc extends BaseModel
     {
         $query = $this->thanh_vien()
             ->where('loai_tai_khoan', 'THIEU_NHI')
+            ->where('tai_khoan.trang_thai', 'HOAT_DONG')
             ->withPivot('chuyen_can', 'hoc_luc', 'xep_hang', 'ghi_chu', 'nhan_xet', 'tai_khoan_cap_nhat');
         if ($orderName) {
             return $query->orderBy('ten');

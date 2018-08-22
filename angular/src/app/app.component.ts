@@ -1,5 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { correctHeight, detectBody, consoleLog } from './_helpers';
+import { correctHeight, detectBody } from './_helpers';
 import { Store } from '@ngrx/store';
 import { ToasterConfig } from 'angular2-toaster';
 
@@ -24,7 +24,6 @@ export class AppComponent implements AfterViewInit {
   constructor(
     private store: Store<AppState>
   ) {
-    consoleLog('AppComponent: constructor');
     this.store.dispatch(new AuthAction.ValidateToken());
   }
 

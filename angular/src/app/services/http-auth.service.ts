@@ -5,7 +5,6 @@ import { Observable } from 'rxjs/Rx';
 import { Store } from '@ngrx/store';
 
 import { AppState } from './../store/reducers/index';
-import { consoleLog } from '../_helpers';
 import * as AuthAction from '../store/actions/auth.action';
 
 @Injectable()

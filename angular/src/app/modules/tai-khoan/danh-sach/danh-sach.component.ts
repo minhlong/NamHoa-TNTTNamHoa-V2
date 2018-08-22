@@ -7,7 +7,6 @@ import { defaultPageState } from './defaultPageState';
 import { AppState } from './../../../store/reducers/index';
 import { environment } from '../../../../environments/environment';
 import { JwtAuthHttp } from '../../../services/http-auth.service';
-import { consoleLog } from '../../../_helpers';
 import { ngay } from '../../shared/convert-type.pipe';
 import { AuthState } from './../../../store/reducers/auth.reducer';
 
@@ -41,8 +40,6 @@ export class DanhSachComponent implements OnDestroy {
     private store: Store<AppState>,
     private _http: JwtAuthHttp,
   ) {
-    consoleLog('TaiKhoan Danh Sach: constructor');
-
     this.sub$ = this.store.select((state: AppState) => state.auth.khoa_hoc_hien_tai).subscribe(res => {
       this.khoaHienTaiID = res.id;
     });

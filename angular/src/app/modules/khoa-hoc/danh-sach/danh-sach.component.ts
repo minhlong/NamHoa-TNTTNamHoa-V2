@@ -2,7 +2,6 @@ import { Store } from '@ngrx/store';
 import { ToasterService } from 'angular2-toaster';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { consoleLog } from '../../../_helpers';
 import { JwtAuthHttp } from './../../../services/http-auth.service';
 import { environment } from './../../../../environments/environment';
 import { AuthState } from '../../../store/reducers/auth.reducer';
@@ -36,8 +35,6 @@ export class DanhSachComponent implements OnDestroy {
     private store: Store<AppState>,
     private _http: JwtAuthHttp,
   ) {
-    consoleLog('Khoa Hoc Danh Sach Component: constructor');
-
     this.sub$ = this.store.select((state: AppState) => state.auth.khoa_hoc_hien_tai).subscribe(res => {
       this.khoaHienTaiID = res.id;
     });

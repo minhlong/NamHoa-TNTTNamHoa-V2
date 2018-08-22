@@ -3,7 +3,6 @@ import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 
 import { JwtAuthHttp } from './http-auth.service';
 import { environment } from './../../environments/environment';
-import { consoleLog } from '../_helpers';
 
 @Injectable()
 export class AuthService {
@@ -22,8 +21,6 @@ export class AuthService {
    * @param password
    */
   authenticate(id: string, password: string) {
-    consoleLog('AuthService: authenticate');
-
     return this._http.post(this.urlAPI, {
       'id': id,
       'password': password
@@ -43,7 +40,6 @@ export class AuthService {
   }
 
   logout() {
-    consoleLog('AuthService: logout');
     localStorage.clear();
   }
 }
