@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\App;
@@ -16,7 +17,8 @@ class TaiKhoanController extends Controller
 {
     /**
      * @param TaiKhoan $taiKhoan
-     * @param Library $library
+     * @param Library  $library
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function getDanhSach(TaiKhoan $taiKhoan, Request $request)
@@ -43,7 +45,9 @@ class TaiKhoanController extends Controller
 
     /**
      * Lấy Thông Tin Cá Nhân.
+     *
      * @param TaiKhoan $taiKhoan
+     *
      * @return mixed
      */
     public function getThongTin(TaiKhoan $taiKhoan)
@@ -73,7 +77,7 @@ class TaiKhoanController extends Controller
             }
 
             $arrData = $this->getTongKet($lopHoc, $request);
-            $arrRow = $this->generateTongKetData($arrData, $library);
+            $arrRow  = $this->generateTongKetData($arrData, $library);
             $excel->sheet('Tổng Kết - Khóa ' . $khoaID, function ($sheet) use ($arrRow) {
                 $sheet->fromArray($arrRow)->setFreeze('D4');
             });
@@ -85,11 +89,12 @@ class TaiKhoanController extends Controller
         ]);
     }
 
-    protected function generateTaiKhoanData($taiKhoan, $khoaID, $library) {
+    protected function generateTaiKhoanData($taiKhoan, $khoaID, $library)
+    {
         $taiKhoan = $taiKhoan->locDuLieu()->withTrashed();
 
         if ($khoaID) {
-            $taiKhoan->with(['lop_hoc' => function ($q) use ($khoaID){
+            $taiKhoan->with(['lop_hoc' => function ($q) use ($khoaID) {
                 $q->locDuLieu();
             }]);
         }
@@ -145,11 +150,12 @@ class TaiKhoanController extends Controller
     /**
      * @param $arrData
      * @param $library
+     *
      * @return array
      */
     protected function generateTongKetData($arrData, $library)
     {
-        $arrRow = [];
+        $arrRow         = [];
         $arrHeaderLine1 = $arrHeaderLine2 = [
             'Mã Số',
             'Tên Thánh',
@@ -195,7 +201,7 @@ class TaiKhoanController extends Controller
             $arrHeaderLine2[] = 'Đi Lễ';
             $arrHeaderLine2[] = 'Đi Học';
             foreach ($arrRow as $id => &$info) {
-                $info[$ngay . ' - Di Le'] = isset($item[$id]['di_le']) ? $item[$id]['di_le'] : null;
+                $info[$ngay . ' - Di Le']  = isset($item[$id]['di_le']) ? $item[$id]['di_le'] : null;
                 $info[$ngay . ' - Di Hoc'] = isset($item[$id]['di_hoc']) ? $item[$id]['di_hoc'] : null;
             }
         }
@@ -210,11 +216,12 @@ class TaiKhoanController extends Controller
 
     /**
      * @param LopHoc $lopHoc Nếu không có lớp cụ thể, sẽ export toàn bộ học viên của khóa hiện tại
+     *
      * @return array
      */
     public function getTongKet(LopHoc $lopHoc, Request $request)
     {
-        $arrResult = [
+        $arrResult  = [
             'Data'     => [],
             'DiemDanh' => [],
             'DiemSo'   => [],
@@ -223,8 +230,8 @@ class TaiKhoanController extends Controller
         ];
         $arrHocVien = collect();
 
-        if($lopHoc->id) {
-            $khoaID = $lopHoc->khoa_hoc_id;
+        if ($lopHoc->id) {
+            $khoaID   = $lopHoc->khoa_hoc_id;
             $arrLop[] = $lopHoc;
         } else {
             $khoaID = $request->get('khoa');
@@ -237,7 +244,7 @@ class TaiKhoanController extends Controller
             $tenLop = $lopHoc->taoTen(true);
             foreach ($arrTmp as &$hocVien) {
                 $hocVien->pivot->tenLop = $tenLop;
-                $arrHocVien[] = $hocVien;
+                $arrHocVien[]           = $hocVien;
             }
         }
 
@@ -257,8 +264,8 @@ class TaiKhoanController extends Controller
                     $hocVien->pivot->loaiHocLuc = $loai;
                 }
                 $hocVien->pivot->chuyen_can = round($hocVien->pivot->chuyen_can, 2);
-                $hocVien->pivot->hoc_luc = round($hocVien->pivot->hoc_luc, 2);
-                $hocVien->pivot->tb_canam = round(($hocVien->pivot->chuyen_can + $hocVien->pivot->hoc_luc) / 2, 2);
+                $hocVien->pivot->hoc_luc    = round($hocVien->pivot->hoc_luc, 2);
+                $hocVien->pivot->tb_canam   = round(($hocVien->pivot->chuyen_can + $hocVien->pivot->hoc_luc) / 2, 2);
             }
         }
         $arrResult['Data'] = $arrHocVien->toArray();
@@ -285,8 +292,8 @@ class TaiKhoanController extends Controller
             ->get();
         foreach ($arrDiemSo as $item) {
             $arrResult['DiemSo'] [$item->tai_khoan_id] [$item->dot] [$item->lan] = $item->diem;
-            $arrResult['SoDot'][$item->dot] = $item->dot;
-            $arrResult['SoLan'][$item->lan] = $item->lan;
+            $arrResult['SoDot'][$item->dot]                                      = $item->dot;
+            $arrResult['SoLan'][$item->lan]                                      = $item->lan;
         }
         $arrResult['SoDot'] = array_values($arrResult['SoDot']);
         $arrResult['SoLan'] = array_values($arrResult['SoLan']);
@@ -294,24 +301,26 @@ class TaiKhoanController extends Controller
         return $arrResult;
     }
 
-    public function postThemSuc(Request $request) {
+    public function postThemSuc(Request $request)
+    {
         try {
             TaiKhoan::whereIn('id', $request->get('tai_khoan'))->update(['ngay_them_suc' => $request->get('ngay_them_suc')]);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Sai định dạng ngày'
+                'error' => 'Sai định dạng ngày',
             ], 400);
         }
 
         return response()->json();
     }
 
-    public function postRuocLe(Request $request) {
+    public function postRuocLe(Request $request)
+    {
         try {
             TaiKhoan::whereIn('id', $request->get('tai_khoan'))->update(['ngay_ruoc_le' => $request->get('ngay_ruoc_le')]);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Sai định dạng ngày'
+                'error' => 'Sai định dạng ngày',
             ], 400);
         }
 
@@ -320,13 +329,15 @@ class TaiKhoanController extends Controller
 
     /**
      * Luu Thong Tin Tai Khoan.
-     * @param TaiKhoan $taiKhoan
+     *
+     * @param TaiKhoan            $taiKhoan
      * @param TaiKhoanFormRequest $taiKhoanFormRequest
+     *
      * @return string
      */
     public function postUpdate(TaiKhoan $taiKhoan, TaiKhoanFormRequest $taiKhoanFormRequest)
     {
-        if(!\Entrust::can('tai-khoan') && $taiKhoan->id != \Auth::user()->id) {
+        if (!\Entrust::can('tai-khoan') && $taiKhoan->id != \Auth::user()->id) {
             abort(403);
         }
 
@@ -344,7 +355,7 @@ class TaiKhoanController extends Controller
 
     public function postMatKhau(TaiKhoan $taiKhoan)
     {
-        if(!\Entrust::can('tai-khoan') && $taiKhoan->id != \Auth::user()->id) {
+        if (!\Entrust::can('tai-khoan') && $taiKhoan->id != \Auth::user()->id) {
             abort(403);
         }
 
@@ -360,42 +371,43 @@ class TaiKhoanController extends Controller
             $taiKhoan->forceDelete();
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Liên hệ quản trị'
+                'error' => 'Liên hệ quản trị',
             ], 400);
         }
-        
+
         return response()->json();
     }
 
-    public function postTapTin(Request $request, Library $library) {
-        if(!$request->hasFile('file')) {
-           return response()->json([
+    public function postTapTin(Request $request, Library $library)
+    {
+        if (!$request->hasFile('file')) {
+            return response()->json([
                 'error' => 'Không tìm thấy tập tin.',
-           ], 400);
+            ], 400);
         }
 
-        $file = $request->file('file');
+        $file    = $request->file('file');
         $results = \Excel::load($file->getRealPath())->get();
 
         try {
             $tmpCollect = $results[0];
-            $arrTmp = [];
-            $khoaHocID = KhoaHoc::hienTaiHoacTaoMoi()->id;
+            $arrTmp     = [];
+            $khoaHocID  = KhoaHoc::hienTaiHoacTaoMoi()->id;
             $lopHocColl = LopHoc::where('khoa_hoc_id', $khoaHocID)->get();
-            $tmpRule = [
-                'ho_va_ten' => 'required',
-                'ngay_sinh' => 'required|required|date_format:Y-m-d',
-                'ngay_rua_toi' => 'nullable|date_format:Y-m-d',
-                'ngay_ruoc_le' => 'nullable|date_format:Y-m-d',
+            $tmpRule    = [
+                'ho_va_ten'     => 'required',
+                'ngay_sinh'     => 'required|required|date_format:Y-m-d',
+                'ngay_rua_toi'  => 'nullable|date_format:Y-m-d',
+                'ngay_ruoc_le'  => 'nullable|date_format:Y-m-d',
                 'ngay_them_suc' => 'nullable|date_format:Y-m-d',
             ];
 
             $tmpCollect = $tmpCollect->filter(function ($c) {
                 return $c->ho_va_ten && $c->ngay_sinh;
             })->map(function ($c) use ($library) {
-                $c['ngay_sinh'] = $library->chuanHoaNgay($c['ngay_sinh']);
-                $c['ngay_rua_toi'] = $c['ngay_rua_toi'] ? $library->chuanHoaNgay($c['ngay_rua_toi']) : null;
-                $c['ngay_ruoc_le'] = $c['ngay_ruoc_le'] ? $library->chuanHoaNgay($c['ngay_ruoc_le']) : null;
+                $c['ngay_sinh']     = $library->chuanHoaNgay($c['ngay_sinh']);
+                $c['ngay_rua_toi']  = $c['ngay_rua_toi'] ? $library->chuanHoaNgay($c['ngay_rua_toi']) : null;
+                $c['ngay_ruoc_le']  = $c['ngay_ruoc_le'] ? $library->chuanHoaNgay($c['ngay_ruoc_le']) : null;
                 $c['ngay_them_suc'] = $c['ngay_them_suc'] ? $library->chuanHoaNgay($c['ngay_them_suc']) : null;
 
                 return $c;
@@ -405,47 +417,48 @@ class TaiKhoanController extends Controller
                 $validator = \Validator::make($c->toArray(), $tmpRule);
                 if ($validator->fails()) {
                     return response()->json([
-                        'error' => $validator->errors()
+                        'error' => $validator->errors(),
                     ], 400);
                 }
 
-                $tmpLop = $lopHocColl->filter( function ($lh) use ($c) {
+                $tmpLop = $lopHocColl->filter(function ($lh) use ($c) {
                     return $lh->nganh == $c->nganh && $lh->cap == $c->cap && $lh->doi == $c->doi;
                 })->first();
 
                 if ($tmpLop) {
-                    $c['lop_hoc_id'] = $tmpLop->id;
+                    $c['lop_hoc_id']  = $tmpLop->id;
                     $c['lop_hoc_ten'] = $tmpLop->taoTen();
                 }
             }
 
             return response()->json([
-                'data' => array_merge([],$tmpCollect->toArray()),
+                'data' => array_merge([], $tmpCollect->toArray()),
             ]);
         } catch (\Exception $e) {
-           return response()->json([
+            return response()->json([
                 'error' => 'Kiểm tra lại định dạng tập tin.',
-           ], 400);        
+            ], 400);
         }
     }
 
-    public function postTao(Request $request, Library $library) {
-        if(!$request->has('data')) {
-           return response()->json([
+    public function postTao(Request $request, Library $library)
+    {
+        if (!$request->has('data')) {
+            return response()->json([
                 'error' => 'Không thấy dữ liệu.',
-           ], 400);
+            ], 400);
         }
 
-        $resultArr = [];
+        $resultArr   = [];
         $taiKhoanArr = $request->data;
-        $khoaHocID = KhoaHoc::hienTaiHoacTaoMoi()->id;
-        $lopHocColl = LopHoc::where('khoa_hoc_id', $khoaHocID)->get();
+        $khoaHocID   = KhoaHoc::hienTaiHoacTaoMoi()->id;
+        $lopHocColl  = LopHoc::where('khoa_hoc_id', $khoaHocID)->get();
 
         \DB::beginTransaction();
         foreach ($taiKhoanArr as $taiKhoan) {
             $newItem = TaiKhoan::taoTaiKhoan($taiKhoan);
             if (isset($taiKhoan['lop_hoc_id'])) {
-                $tmpLop = $lopHocColl->filter( function ($lh) use ($taiKhoan) {
+                $tmpLop = $lopHocColl->filter(function ($lh) use ($taiKhoan) {
                     return $lh->id == $taiKhoan['lop_hoc_id'];
                 })->first();
 
@@ -456,7 +469,7 @@ class TaiKhoanController extends Controller
             }
             $resultArr[] = $newItem;
         }
-        
+
         $arrRow[] = [
             'Mã Số',
             'Họ và Tên',
