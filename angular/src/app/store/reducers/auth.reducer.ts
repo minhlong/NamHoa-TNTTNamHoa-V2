@@ -1,4 +1,4 @@
-import { AppState } from './index';
+import { AppState } from '.';
 import { ActionReducer } from '@ngrx/store';
 import * as authAction from '../actions/auth.action';
 

@@ -4,10 +4,10 @@ import { ToasterService } from 'angular2-toaster';
 import { URLSearchParams } from '@angular/http';
 
 import { defaultPageState } from './defaultPageState';
-import { AppState } from './../../../store/reducers/index';
-import { environment } from '../../../../environments/environment';
+import { AppState } from '../../../store/reducers';
+import { environment } from 'environments/environment';
 import { JwtAuthHttp } from '../../../services/http-auth.service';
-import { AuthState } from './../../../store/reducers/auth.reducer';
+import { AuthState } from '../../../store/reducers/auth.reducer';
 import { Router } from '@angular/router';
 
 @Component({

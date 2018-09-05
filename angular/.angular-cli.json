@@ -10,6 +10,7 @@
       "assets": [
         "assets/template-file",
         "assets/images",
+        "version.json",
         "favicon.ico"
       ],
       "index": "index.html",

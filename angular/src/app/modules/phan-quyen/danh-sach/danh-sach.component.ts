@@ -2,10 +2,10 @@ import { Store } from '@ngrx/store';
 import { ToasterService } from 'angular2-toaster';
 import { Component, OnDestroy } from '@angular/core';
 
-import { JwtAuthHttp } from './../../../services/http-auth.service';
-import { environment } from './../../../../environments/environment';
+import { JwtAuthHttp } from '../../../services/http-auth.service';
+import { environment } from 'environments/environment';
 import { AuthState } from '../../../store/reducers/auth.reducer';
-import { AppState } from './../../../store/reducers/index';
+import { AppState } from '../../../store/reducers';
 
 @Component({
   selector: 'app-danh-sach',

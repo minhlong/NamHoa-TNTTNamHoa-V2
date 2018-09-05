@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Headers, RequestOptions, URLSearchParams } from '@angular/http';
 
 import { JwtAuthHttp } from '../../../services/http-auth.service';
-import { environment } from '../../../../environments/environment';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-tao-moi',

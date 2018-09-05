@@ -3,7 +3,7 @@ import { Router, CanActivate, CanActivateChild } from '@angular/router';
 import { tokenNotExpired } from 'angular2-jwt';
 import { Store } from '@ngrx/store';
 
-import { AppState } from '../../store/reducers/index';
+import { AppState } from '../../store/reducers';
 
 @Injectable()
 export class GuestGuard implements CanActivate, CanActivateChild {

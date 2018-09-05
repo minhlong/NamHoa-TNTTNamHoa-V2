@@ -4,8 +4,8 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angu
 import { ToasterService } from 'angular2-toaster';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 
-import { JwtAuthHttp } from 'app/services/http-auth.service';
-import { AppState } from 'app/store/reducers';
+import { JwtAuthHttp } from '../../../../services/http-auth.service';
+import { AppState } from '../../../../store/reducers';
 import { environment } from 'environments/environment';
 
 @Component({

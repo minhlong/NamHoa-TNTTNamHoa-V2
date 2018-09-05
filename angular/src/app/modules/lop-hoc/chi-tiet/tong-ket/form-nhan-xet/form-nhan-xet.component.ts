@@ -4,9 +4,9 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angu
 import { ToasterService } from 'angular2-toaster';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 
-import { JwtAuthHttp } from './../../../../../services/http-auth.service';
-import { environment } from './../../../../../../environments/environment';
-import { AppState } from './../../../../../store/reducers/index';
+import { JwtAuthHttp } from '../../../../../services/http-auth.service';
+import { environment } from 'environments/environment';
+import { AppState } from '../../../../../store/reducers';
 
 @Component({
   selector: 'app-form-nhan-xet',

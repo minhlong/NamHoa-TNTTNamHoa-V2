@@ -1,8 +1,8 @@
 import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Rx';
-import { AppState } from '../../../store/reducers/index';
+import { AppState } from '../../../store/reducers';
+import { environment } from 'environments/environment';
 
 declare var jQuery: any;
 
@@ -15,6 +15,7 @@ declare var jQuery: any;
 export class NavigationComponent implements AfterViewInit, OnDestroy {
   sub: any;
   phanQuyen: any = {};
+  env = environment;
 
   constructor(
     private router: Router,

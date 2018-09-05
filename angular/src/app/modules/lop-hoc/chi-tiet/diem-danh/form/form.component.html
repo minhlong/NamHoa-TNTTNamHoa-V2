@@ -4,16 +4,16 @@
     <div class="sk-bounce2"></div>
     <div class="sk-bounce3"></div>
   </div>
-  <div class="row">
-    <div class="col-md-12 table-responsive">
-      <form [formGroup]="formGroup">
+  <form [formGroup]="formGroup">
+    <div class="row">
+      <div class="col-md-12 table-responsive">
         <table class="table table-hover table-bordered">
           <thead>
             <tr *ngIf="apiData">
               <th colspan="5" class="text-center">Ngày {{apiData.sunday | ngay}}</th>
             </tr>
             <tr>
-              <th class="text-center">#</th>
+              <th class="hidden-xs hidden-sm text-center">#</th>
               <th>Họ và Tên</th>
               <th>Đi Lễ</th>
               <th>Đi Học</th>
@@ -23,7 +23,7 @@
           <tbody formArrayName="thieu_nhi">
             <ng-container *ngFor="let _item of formThieuNhi.controls | paginate: pagingTN; let _i = index">
               <tr [formGroupName]="((pagingTN.currentPage - 1) * pagingTN.itemsPerPage ) + _i">
-                <td class="text-center">
+                <td class="hidden-xs hidden-sm text-center">
                   {{((pagingTN.currentPage - 1) * pagingTN.itemsPerPage ) + _i + 1}}
                 </td>
                 <td> {{_item.get('ho_va_ten').value}}</td>
@@ -44,15 +44,15 @@
                   </select>
                 </td>
                 <td>
-                  <input type="text" name="ghi_chu" formControlName="ghi_chu" class="form-control input-sm">
+                  <input type="text" name="ghi_chu" formControlName="ghi_chu" class="form-control input-sm ghi-chu">
                 </td>
               </tr>
             </ng-container>
           </tbody>
         </table>
-      </form>
+      </div>
     </div>
-  </div>
+  </form>
   <div class="row">
     <div class="col-md-12">
       <app-paging [id]="pagingTN.id" (pageChange)="pagingTN.currentPage = $event;"></app-paging>

@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, toPayload } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import 'rxjs/Rx';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/do';
 
 import * as AuthAction from '../actions/auth.action';
 import { AuthService } from '../../services/auth-service.service';
 import { JwtAuthHttp } from '../../services/http-auth.service';
-import { environment } from '../../../environments/environment';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class AuthEffect {

@@ -4,13 +4,13 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angu
 import { ToasterService } from 'angular2-toaster';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
-import { Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs';
 
-import { JwtAuthHttp } from './../../../../../services/http-auth.service';
-import { environment } from './../../../../../../environments/environment';
-import { AppState } from './../../../../../store/reducers/index';
-import { bodauTiengViet } from './../../../../../_helpers';
-import { GetLopInfoSucc } from './../../../../../store/actions/lop-hoc.action';
+import { JwtAuthHttp } from '../../../../../services/http-auth.service';
+import { environment } from 'environments/environment';
+import { AppState } from '../../../../../store/reducers';
+import { bodauTiengViet } from '../../../../../_helpers';
+import { GetLopInfoSucc } from '../../../../../store/actions/lop-hoc.action';
 
 @Component({
   selector: 'app-huynh-truong',

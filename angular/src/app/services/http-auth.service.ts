@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http, Request, Response, RequestOptionsArgs } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { AppState } from './../store/reducers/index';
+import { AppState } from '../store/reducers';
 import * as AuthAction from '../store/actions/auth.action';
 
 @Injectable()

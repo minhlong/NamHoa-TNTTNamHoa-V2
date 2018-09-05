@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 
-import { AppState } from '../../store/reducers/index';
+import { AppState } from '../../store/reducers';
 import * as AuthAction from '../../store/actions/auth.action';
 
 @Component({

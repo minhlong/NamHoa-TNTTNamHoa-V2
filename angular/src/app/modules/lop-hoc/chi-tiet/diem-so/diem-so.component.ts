@@ -4,9 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { URLSearchParams } from '@angular/http';
 
-import { JwtAuthHttp } from './../../../../services/http-auth.service';
-import { environment } from './../../../../../environments/environment';
-import { AppState } from './../../../../store/reducers/index';
+import { JwtAuthHttp } from '../../../../services/http-auth.service';
+import { environment } from 'environments/environment';
+import { AppState } from '../../../../store/reducers';
 
 @Component({
   selector: 'app-diem-so',

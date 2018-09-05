@@ -3,10 +3,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { JwtAuthHttp } from './../../../../services/http-auth.service';
-import { environment } from './../../../../../environments/environment';
-import { AppState } from './../../../../store/reducers/index';
-import { GetLopInfoSucc } from './../../../../store/actions/lop-hoc.action';
+import { JwtAuthHttp } from '../../../../services/http-auth.service';
+import { environment } from 'environments/environment';
+import { AppState } from '../../../../store/reducers';
+import { GetLopInfoSucc } from '../../../../store/actions/lop-hoc.action';
 
 @Component({
   selector: 'app-thong-tin',

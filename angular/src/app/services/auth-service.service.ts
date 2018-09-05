@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 
 import { JwtAuthHttp } from './http-auth.service';
-import { environment } from './../../environments/environment';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class AuthService {

@@ -3,10 +3,10 @@ import { URLSearchParams } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ToasterService } from 'angular2-toaster';
-import { Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs';
 
-import { JwtAuthHttp } from 'app/services/http-auth.service';
-import { AppState } from 'app/store/reducers';
+import { JwtAuthHttp } from '../../../../services/http-auth.service';
+import { AppState } from '../../../../store/reducers';
 import { environment } from 'environments/environment';
 import { bodauTiengViet } from '../../../../_helpers';
 

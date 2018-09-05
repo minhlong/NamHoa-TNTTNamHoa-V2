@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { AppState } from './../../../../../store/reducers/index';
-import { ngay } from './../../../../shared/convert-type.pipe';
+import { AppState } from '../../../../../store/reducers';
+import { ngay } from '../../../../shared/convert-type.pipe';
 
 @Component({
   selector: 'app-phieu-lien-lac',

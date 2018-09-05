@@ -3,11 +3,11 @@ import { Store } from '@ngrx/store';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs';
 import { URLSearchParams } from '@angular/http';
 
-import { JwtAuthHttp } from 'app/services/http-auth.service';
-import { AppState } from 'app/store/reducers';
+import { JwtAuthHttp } from '../../../../services/http-auth.service';
+import { AppState } from '../../../../store/reducers';
 import { environment } from 'environments/environment';
 import { bodauTiengViet } from '../../../../_helpers';
 

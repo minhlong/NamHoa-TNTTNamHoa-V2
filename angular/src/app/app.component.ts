@@ -3,9 +3,9 @@ import { correctHeight, detectBody } from './_helpers';
 import { Store } from '@ngrx/store';
 import { ToasterConfig } from 'angular2-toaster';
 
-import { AppState } from './store/reducers/index';
+import { AppState } from './store/reducers';
 import * as AuthAction from './store/actions/auth.action';
-
+import { VersionHandlerService } from './services/version-handler.service';
 
 declare var jQuery: any;
 
@@ -22,9 +22,11 @@ export class AppComponent implements AfterViewInit {
   });
 
   constructor(
+    private versionCheck: VersionHandlerService,
     private store: Store<AppState>
   ) {
     this.store.dispatch(new AuthAction.ValidateToken());
+    this.versionCheck.initVersionCheck();
   }
 
   ngAfterViewInit() {

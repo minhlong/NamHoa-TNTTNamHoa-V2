@@ -10,6 +10,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'; // Have to remove on
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ToasterModule } from 'angular2-toaster';
 import { TextMaskModule } from 'angular2-text-mask';
+import { HttpClientModule } from '@angular/common/http';
 
 import { ROUTES } from './app.routes';
 
@@ -18,13 +19,13 @@ import { LayoutsModule } from './modules/layouts/layouts.module';
 import { SharedModule } from './modules/shared/shared.module';
 
 // Services
-import { providers } from './services/index';
+import { providers } from './services';
 
 // Redux - Effects
 import { AuthEffect } from './store/effects/auth.effect';
 import { LopHocEffect } from './store/effects/lop-hoc.effect';
 // Redux - Reducer
-import { reducer } from './store/reducers/index';
+import { reducer } from './store/reducers';
 
 // Components
 import { AppComponent } from './app.component';
@@ -33,7 +34,7 @@ import { LogoutComponent } from './components/logout.component';
 import { TrangChuComponent } from './components/trang-chu/trang-chu.component';
 
 // Pipe
-import { environment } from '../environments/environment';
+import { environment } from 'environments/environment';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { environment } from '../environments/environment';
     ToasterModule,
     TextMaskModule,
     SharedModule,
+    HttpClientModule,
 
     // Layout
     LayoutsModule,

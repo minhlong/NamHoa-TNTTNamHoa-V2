@@ -4,8 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { JwtAuthHttp } from '../../../services/http-auth.service';
-import { environment } from './../../../../environments/environment';
-import { AppState } from './../../../store/reducers/index';
+import { environment } from 'environments/environment';
+import { AppState } from '../../../store/reducers';
 
 @Component({
   selector: 'app-chi-tiet',

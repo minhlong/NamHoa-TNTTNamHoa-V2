@@ -2,8 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { JwtAuthHttp } from './../../../../services/http-auth.service';
-import { environment } from './../../../../../environments/environment';
+import { JwtAuthHttp } from '../../../../services/http-auth.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-mat-khau',

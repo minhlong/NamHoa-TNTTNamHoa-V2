@@ -3,8 +3,8 @@ import { Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { smoothlyMenu } from '../../../_helpers';
-import { AppState } from '../../../store/reducers/index';
-import { Observable } from 'rxjs/Rx';
+import { AppState } from '../../../store/reducers';
+import { Observable } from 'rxjs';
 
 declare var jQuery: any;
 

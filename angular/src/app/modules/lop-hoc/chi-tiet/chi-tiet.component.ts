@@ -3,8 +3,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { AppState } from './../../../store/reducers/index';
-import * as LopHocAction from './../../../store/actions/lop-hoc.action';
+import { AppState } from '../../../store/reducers';
+import * as LopHocAction from '../../../store/actions/lop-hoc.action';
 
 @Component({
   selector: 'app-chi-tiet',

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { AppState } from '../store/reducers/index';
+import { AppState } from '../store/reducers';
 import * as AuthAction from '../store/actions/auth.action';
 
 @Component({
