@@ -9,32 +9,6 @@ use App\KhoaHoc;
 
 class DangNhapController extends Controller
 {
-
-    /**
-     * @SWG\Post(
-     *   path="/dang-nhap",
-     *   summary="Đăng Nhập",
-     *   @SWG\Parameter(
-     *     name="id",
-     *     in="body",
-     *     description="Mã Số",
-     *     required=true,
-     *     @SWG\Schema(type="string")
-     *   ),
-     *   @SWG\Parameter(
-     *     name="password",
-     *     in="body",
-     *     description="Mật Khẩu",
-     *     required=true,
-     *     @SWG\Schema(type="string")
-     *   ),
-     *   @SWG\Response(
-     *     response=200,
-     *     description="Successful operation",
-     *   )
-     * )
-     *
-     */
     public function postDangNhap(Request $request)
     {
         $credentials = $request->only('id', 'password');

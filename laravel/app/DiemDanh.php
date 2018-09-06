@@ -63,11 +63,11 @@ class DiemDanh extends BaseModel
 
     protected function daDiemDanh($date, $lopHocID)
     {
-        \Cache::put("chuyen-can.{$date}.{$lopHocID}", true, 20160);
+        \Cache::store('file')->put("chuyen-can.{$date}.{$lopHocID}", true, 20160);
     }
 
     protected function chuaDiemDanh($date, $lopHocID)
     {
-        return \Cache::has("chuyen-can.{$date}.{$lopHocID}");
+        return \Cache::store('file')->has("chuyen-can.{$date}.{$lopHocID}");
     }
 }

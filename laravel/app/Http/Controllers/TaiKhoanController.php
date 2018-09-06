@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\App;
-use App\Http\Requests\MatKhauFormRequest;
 use App\Http\Requests\TaiKhoanFormRequest;
 use Illuminate\Http\Request;
 use App\Services\Library;
