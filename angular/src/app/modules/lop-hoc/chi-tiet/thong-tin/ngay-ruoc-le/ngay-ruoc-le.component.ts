@@ -10,7 +10,7 @@ import { JwtAuthHttp } from '../../../../../services/http-auth.service';
 import { environment } from 'environments/environment';
 import { AppState } from '../../../../../store/reducers';
 import { bodauTiengViet } from '../../../../../_helpers';
-import { ngay } from '../../../../shared/convert-type.pipe';
+import { ngay } from '../../../../shared/utities.pipe';
 import { GetLopInfo } from '../../../../../store/actions/lop-hoc.action';
 
 @Component({

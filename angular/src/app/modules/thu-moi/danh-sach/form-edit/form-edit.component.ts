@@ -10,7 +10,7 @@ import { JwtAuthHttp } from '../../../../services/http-auth.service';
 import { AppState } from '../../../../store/reducers';
 import { environment } from 'environments/environment';
 import { bodauTiengViet } from '../../../../_helpers';
-import { ngay } from '../../../shared/convert-type.pipe';
+import { ngay } from '../../../shared/utities.pipe';
 
 @Component({
   selector: 'app-form-edit',

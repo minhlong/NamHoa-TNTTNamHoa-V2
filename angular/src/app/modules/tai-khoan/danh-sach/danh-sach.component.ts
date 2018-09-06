@@ -7,7 +7,7 @@ import { defaultPageState } from './defaultPageState';
 import { AppState } from '../../../store/reducers';
 import { environment } from 'environments/environment';
 import { JwtAuthHttp } from '../../../services/http-auth.service';
-import { ngay } from '../../shared/convert-type.pipe';
+import { ngay } from '../../shared/utities.pipe';
 import { AuthState } from '../../../store/reducers/auth.reducer';
 
 @Component({

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angu
 import { Store } from '@ngrx/store';
 
 import { AppState } from '../../../../../store/reducers';
-import { ngay } from '../../../../shared/convert-type.pipe';
+import { ngay } from '../../../../shared/utities.pipe';
 
 @Component({
   selector: 'app-phieu-lien-lac',

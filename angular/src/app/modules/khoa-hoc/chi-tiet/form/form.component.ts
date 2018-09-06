@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 
 import { JwtAuthHttp } from '../../../../services/http-auth.service';
 import { environment } from 'environments/environment';
-import { ngay } from '../../../shared/convert-type.pipe';
+import { ngay } from '../../../shared/utities.pipe';
 
 @Component({
   selector: 'app-form',

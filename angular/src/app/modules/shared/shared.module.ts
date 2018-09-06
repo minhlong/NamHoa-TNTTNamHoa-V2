@@ -7,7 +7,7 @@ import {
   NewlinePipe,
   Phieu, XepLoai, XepHang, LoaiTK, TrangThai, Nganh, Cap, Doi, GioiTinh,
   HienThiNgay, ObjectKeysPipe,
-} from './convert-type.pipe';
+} from './utities.pipe';
 
 @NgModule({
   imports: [

@@ -7,7 +7,7 @@ import { URLSearchParams } from '@angular/http';
 import { JwtAuthHttp } from '../../../../services/http-auth.service';
 import { environment } from 'environments/environment';
 import { AppState } from '../../../../store/reducers';
-import { ngay } from '../../../shared/convert-type.pipe';
+import { ngay } from '../../../shared/utities.pipe';
 
 @Component({
   selector: 'app-diem-danh',

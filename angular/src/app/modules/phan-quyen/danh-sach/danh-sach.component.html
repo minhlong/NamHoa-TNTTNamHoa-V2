@@ -21,11 +21,7 @@
           <tbody>
             <tr *ngFor="let _item of dataArr; let _i = index">
               <td>{{_item.ten_hien_thi}}</td>
-              <td>
-                <p class="line-breaker">
-                  {{_item.ghi_chu}}
-                </p>
-              </td>
+              <td [innerHtml]="_item.ghi_chu | newline"></td>
               <td>
                 <button (click)="itemSelected = _item; openModalBtn.click()" class="btn btn-xs btn-default">Xem</button>
                 <button (click)="itemSelected = _item; tab = 'form-phan-quyen'" *ngIf="hasPerm()" class="btn btn-xs btn-default">Phân Quyền</button>
