@@ -1,0 +1,82 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="ibox">
+    <div class="ibox-title">
+      <h5>Danh Sách Thiết Bị</h5>
+    </div>
+    <div class="ibox-content" [class.sk-loading]="isLoading">
+      <div class="sk-spinner sk-spinner-three-bounce">
+        <div class="sk-bounce1"></div>
+        <div class="sk-bounce2"></div>
+        <div class="sk-bounce3"></div>
+      </div>
+      <div class="row m-b">
+        <div class="col-sm-6">
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label (click)="filterTT = ''; changFilter$.next(filterTT)" class="btn btn-sm btn-white" [ngClass]="{active: filterTT == ''}">Tất Cả</label>
+            <label (click)="filterTT = 'DANG_MUON'; changFilter$.next(filterTT)" class="btn btn-sm btn-white" [ngClass]="{active: filterTT == 'DANG_MUON'}">Đang Mượn</label>
+            <label (click)="filterTT = 'DA_TRA'; changFilter$.next(filterTT)" class="btn btn-sm btn-white" [ngClass]="{active: filterTT == 'DA_TRA'}">Đã Trả</label>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <input (keyup)="search$.next($event.target.value)" placeholder="Tìm" type="text" name=" class" [(ngModel)]="_item" class="form-control form-control-sm">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 table-responsive">
+          <table *ngIf="thietBiArr.length" class="table table-hover table-bordered tooltip-thietbi">
+            <thead>
+              <tr>
+                <th class="text-center">#</th>
+                <th>Tên Thiết Bị</th>
+                <th>Trạng Thái</th>
+                <th>Huynh Trưởng</th>
+                <th>Ngày Mượn</th>
+                <th>Ngày Trả</th>
+                <th>Ghi chú</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let _item of thietBiArr | paginate: pagingTN; let _i = index">
+                <tr>
+                  <td class="text-center">
+                    {{((pagingTN.currentPage - 1) * pagingTN.itemsPerPage ) + _i + 1}}
+                  </td>
+                  <td>{{_item.ten}}</td>
+                  <td>
+                    <select name="trang_thai" [(ngModel)]="_item.trang_thai" class="form-control">
+                      <option value=""></option>
+                      <option [selected]="_item.trang_thai === 'DANG_MUON'" value="DANG_MUON">Đang Mượn</option>
+                      <option [selected]="_item.trang_thai === 'DA_TRA'" value="DA_TRA">Đã Trả</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input type="text" name="ten_tai_khoan" [(ngModel)]="_item.ten_tai_khoan" class="form-control">
+                  </td>
+                  <td>
+                    <input type="text" name="ngay_muon" [(ngModel)]="_item.ngay_muon" class="form-control" [textMask]="maskOption" placeholder="Vd: 31-12-2000">
+                  </td>
+                  <td>
+                    <input type="text" name="ngay_tra" [(ngModel)]="_item.ngay_tra" class="form-control" [textMask]="maskOption" placeholder="Vd: 31-12-2000">
+                  </td>
+                  <td>
+                    <textarea rows="1" name="ghi_chu" [(ngModel)]="_item.ghi_chu" class="form-control input-xs"></textarea>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <app-paging [id]="pagingTN.id" (pageChange)="pagingTN.currentPage = $event;"></app-paging>
+        </div>
+      </div>
+    </div>
+
+    <div class="ibox-footer">
+      <a [routerLink]="['../']" class="btn btn-default btn-sm m-l-lg">Thoát</a>
+      <button (click)="save()" class="btn btn-primary btn-sm m-l-lg">Lưu</button>
+    </div>
+  </div>
+</div>

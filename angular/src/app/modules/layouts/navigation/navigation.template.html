@@ -39,6 +39,12 @@
           <span class="nav-label">Thư Mời</span>
         </a>
       </li>
+      <li [ngClass]="{active: activeRoute('/thiet-bi')}">
+        <a routerLink="/thiet-bi">
+          <i class="fa fa fa-laptop"></i>
+          <span class="nav-label">Thiết Bị</span>
+        </a>
+      </li>
       <li [ngClass]="{active: activeRoute('/khoa-hoc')}">
         <a routerLink="/khoa-hoc">
           <i class="fa fa fa-bookmark"></i>

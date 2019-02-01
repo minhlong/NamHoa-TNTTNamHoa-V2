@@ -28,6 +28,7 @@ const hasAuth: Routes = [
       { path: 'trang-chu', component: TrangChuComponent },
       { path: 'tai-khoan', loadChildren: './modules/tai-khoan/tai-khoan.module#TaiKhoanModule' },
       { path: 'lop-hoc', loadChildren: './modules/lop-hoc/lop-hoc.module#LopHocModule' },
+      { path: 'thiet-bi', loadChildren: './modules/thiet-bi/thiet-bi.module#ThietBiModule' },
       { path: 'thu-moi', loadChildren: './modules/thu-moi/thu-moi.module#ThuMoiModule' },
       { path: 'khoa-hoc', loadChildren: './modules/khoa-hoc/khoa-hoc.module#KhoaHocModule' },
       { path: 'phan-quyen', loadChildren: './modules/phan-quyen/phan-quyen.module#PhanQuyenModule' },
