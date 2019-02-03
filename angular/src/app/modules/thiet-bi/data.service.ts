@@ -34,8 +34,6 @@ Date.prototype.toISO = function () {
 
 @Injectable()
 export class DataService {
-
-  private sampleData = [];
   private commonPipe = pipe(
     // Generate sundays array
     map((res: any) => {
@@ -66,57 +64,75 @@ export class DataService {
   constructor(
     private _http: JwtAuthHttp,
   ) {
-    this.sampleData.push({
+  }
+
+  private generateData(): any[] {
+    const data = [];
+    data.push({
       id: 11,
       ten: 'Thiet Bi x',
       ngay_muon: '2019-01-03',
       ngay_tra: '2019-01-13',
+      tai_khoan_id: 'HT028',
       ten_tai_khoan: 'Giuse Testing',
       trang_thai: 'DA_TRA',
     })
 
-    this.sampleData.push({
+    data.push({
       id: 12,
       ten: 'Thiet Bi x1',
       ngay_muon: '2019-01-05',
       ngay_tra: '2019-01-27',
+      tai_khoan_id: 'HT028',
       ten_tai_khoan: 'Giuse Hồ Minh Long',
       trang_thai: 'DA_TRA',
     })
 
     for (let _i = 0; _i < 10; _i++) {
-      this.sampleData.push({
+      data.push({
         id: _i + 1,
         ten: 'Thiet Bi ' + (_i + 1),
         ngay_muon: '2019-01-15',
         ngay_tra: '2019-02-10',
+        tai_khoan_id: 'HT028',
         ten_tai_khoan: 'Giuse Hồ Minh Long',
         trang_thai: 'DANG_MUON',
         ghi_chu: 'Lorem',
       })
     }
+    return data;
   }
 
-  xoa(id): Observable<any> {
-    this.sampleData = this.sampleData.filter(c => c.id !== id)
+  delete(id): Observable<any> {
+    const sampleData = this.generateData().filter(c => c.id !== id);
     return Observable.create(observer => {
-      observer.next(this.sampleData);
+      observer.next(sampleData);
       observer.complete();
     }).let(this.commonPipe);
   }
 
-  themMoi(item): Observable<any> {
+  addNew(item): Observable<any> {
     item.trang_thai = 'DA_TRA';
-    this.sampleData.push(item)
+    const sampleData = this.generateData();
+    sampleData.push(item)
     return Observable.create(observer => {
-      observer.next(this.sampleData);
+      observer.next(sampleData);
+      observer.complete();
+    }).let(this.commonPipe);
+  }
+
+  updateList(dataArrr: any[]): Observable<any[]> {
+    return Observable.create(observer => {
+      const sampleData = this.generateData();
+      observer.next(sampleData);
       observer.complete();
     }).let(this.commonPipe);
   }
 
   getList(): Observable<any> {
     return Observable.create(observer => {
-      observer.next(this.sampleData);
+      const sampleData = this.generateData();
+      observer.next(sampleData);
       observer.complete();
     }).let(this.commonPipe);
   }

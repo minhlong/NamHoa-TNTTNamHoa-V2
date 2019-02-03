@@ -3,12 +3,15 @@
     <div class="ibox-title">
       <h5>Danh Sách Thiết Bị</h5>
       <div class="ibox-tools" *ngIf="hasPerm()">
-        <button (click)="itemSelected = {}; openModalBtn.click();" class="btn btn-xs btn-default m-r-lg">
+        <button (click)="itemSelected = {}; newModelBtn.click();" class="btn btn-xs btn-default m-r-lg">
           Thêm Thiết Bị
         </button>
-        <button [routerLink]="['cap-nhat']" class="btn btn-xs btn-default m-r-lg" *ngIf="hasPerm()">
-          Cập Nhật
+        <button (click)="itemSelected = {}; newModelBtn.click();" class="btn btn-xs btn-default m-r-lg">
+          Đăng Ký Mượn
         </button>
+        <!-- <button [routerLink]="['cap-nhat']" class="btn btn-xs btn-default m-r-lg" *ngIf="hasPerm()">
+          Đăng Ký Mượn
+        </button> -->
       </div>
     </div>
     <div class="ibox-content" [class.sk-loading]="isLoading">
@@ -37,7 +40,7 @@
                 <th class="text-center">#</th>
                 <th>Tên Thiết Bị</th>
                 <th class="text-center" *ngFor="let _ngay of ngayArr"> {{ _ngay | ngay }} </th>
-                <th class="text-center">Thao Tác</th>
+                <th>Thao Tác</th>
               </tr>
             </thead>
             <tbody>
@@ -46,7 +49,17 @@
                   <td class="text-center">
                     {{((pagingTN.currentPage - 1) * pagingTN.itemsPerPage ) + _i + 1}}
                   </td>
-                  <td>{{_item.ten}}</td>
+                  <td>
+                    {{_item.ten}}
+                    <ng-container *ngIf="_item.trang_thai === 'DANG_MUON'">
+                      <br />
+                      <small>
+                        <a [routerLink]="['../tai-khoan/chi-tiet', _item.tai_khoan_id]">
+                          {{_item.ten_tai_khoan}}
+                        </a>
+                      </small>
+                    </ng-container>
+                  </td>
                   <ng-container *ngFor="let _ngay of ngayArr">
                     <td class="text-center checked" data-toggle="tooltip" data-placement="left" title="{{_item.ten}}">
                       <ng-container *ngIf="_item.trang_thai === 'DANG_MUON' && _ngay <= _item.ngay_tra && _ngay >= _item.ngay_muon">
@@ -54,8 +67,9 @@
                       </ng-container>
                     </td>
                   </ng-container>
-                  <td class="text-center">
-                    <button class="btn btn-xs btn-default" (click)="itemSelected = _item; openModalBtn.click();">Xem</button>
+                  <td>
+                    <button class="btn btn-xs btn-default" (click)="itemSelected = _item; viewModelBtn.click();">Xem</button>
+                    <button class="btn btn-xs btn-default" (click)="itemSelected = _item; newModelBtn.click();" *ngIf="hasPerm()">Sửa</button>
                     <button class="btn btn-xs btn-danger" (click)="itemSelected = _item; confimModelBtn.click()" *ngIf="hasPerm()">Xóa</button>
                   </td>
                 </tr>
@@ -94,8 +108,8 @@
   </div>
 </div>
 
-<a class="btn-open-modal" data-toggle="modal" data-target="#tmpModel" #openModalBtn></a>
-<div class="modal inmodal" id="tmpModel" tabindex="-1" role="dialog" aria-hidden="true">
+<a class="btn-open-modal" data-toggle="modal" data-target="#tmpNewModel" #newModelBtn></a>
+<div class="modal inmodal" id="tmpNewModel" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog" *ngIf="itemSelected">
     <div class="modal-content animated bounceInRight">
       <div class="modal-header">
@@ -109,51 +123,104 @@
       </div>
       <div class="modal-body">
         <form action="#" class="form-horizontal">
-          <ng-container *ngIf="!itemSelected.id">
-            <div class="form-group">
-              <label class="col-md-2 control-label">Tên</label>
-              <div class="col-md-10">
-                <input type="text" name="ten" class="form-control" [(ngModel)]="itemSelected.ten">
-              </div>
+          <div class="form-group">
+            <label class="col-xs-4 control-label">Tên Thiết Bị:</label>
+            <div class="col-xs-8">
+              <input type="text" class="form-control input-xs" name="ten" [(ngModel)]="itemSelected.ten" />
             </div>
-          </ng-container>
-          <ng-container *ngIf="itemSelected.id">
-            <div *ngIf="itemSelected.ten" class="form-group">
-              <label class="col-xs-4 control-label">Tên thiết bị:</label>
-              <div class="col-xs-8">
-                <p class="form-control-static">{{itemSelected.ten}}</p>
-              </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-4 control-label">Trạng Thái:</label>
+            <div class="col-xs-8">
+              <select name="trang_thai" [(ngModel)]="itemSelected.trang_thai" class="form-control">
+                <option [selected]="itemSelected.trang_thai === 'DA_TRA'" value="DA_TRA">Đã Trả</option>
+                <option [selected]="itemSelected.trang_thai === 'DANG_MUON'" value="DANG_MUON">Đang Mượn</option>
+              </select>
             </div>
-            <div *ngIf="itemSelected.ten_tai_khoan" class="form-group">
-              <label class="col-xs-4 control-label">Huynh Trưởng:</label>
-              <div class="col-xs-8">
-                <p class="form-control-static">{{itemSelected.ten_tai_khoan}}</p>
-              </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-4 control-label">Huynh Trưởng:</label>
+            <div class="col-xs-8">
+              <input type="text" class="form-control input-xs" name="ten_tai_khoan" [(ngModel)]="itemSelected.ten_tai_khoan" />
             </div>
-            <div *ngIf="itemSelected.ngay_muon" class="form-group">
-              <label class="col-xs-4 control-label">Ngày Mượn:</label>
-              <div class="col-xs-8">
-                <p class="form-control-static">{{itemSelected.ngay_muon | ngay}}</p>
-              </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-4 control-label">Ngày Mượn:</label>
+            <div class="col-xs-8">
+              <input type="text" class="form-control input-xs" [textMask]="maskOption" placeholder="Vd: 31-12-2000" name="ngay_muon" [ngModel]="itemSelected.ngay_muon | ngay" (ngModelChange)="itemSelected.ngay_muon = convertDay($event)" />
             </div>
-            <div *ngIf="itemSelected.ngay_tra" class="form-group">
-              <label class="col-xs-4 control-label">Ngày Trả:</label>
-              <div class="col-xs-8">
-                <p class="form-control-static">{{itemSelected.ngay_tra | ngay}}</p>
-              </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-4 control-label">Ngày Trả:</label>
+            <div class="col-xs-8">
+              <input type="text" class="form-control input-xs" [textMask]="maskOption" placeholder="Vd: 31-12-2000" name="ngay_tra" [ngModel]="itemSelected.ngay_tra | ngay" (ngModelChange)="itemSelected.ngay_tra = convertDay($event)" />
             </div>
-            <div *ngIf="itemSelected.ghi_chu" class="form-group">
-              <label class="col-xs-4 control-label">Ghi chú:</label>
-              <div class="col-xs-8">
-                <p class="form-control-static line-breake">{{itemSelected.ghi_chu}}</p>
-              </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-4 control-label">Ghi chú:</label>
+            <div class="col-xs-8">
+              <textarea rows="2" name="ghi_chu" [(ngModel)]="itemSelected.ghi_chu" class="form-control input-xs"></textarea>
             </div>
-          </ng-container>
+          </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" #closeCreateModel>Thoát</button>
-        <button *ngIf="!itemSelected.id" (click)="closeCreateModel.click(); luu(itemSelected);" type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Lưu</button>
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" #closeNewModel>Thoát</button>
+        <button (click)="closeNewModel.click(); luu(itemSelected);" type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Lưu</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a class="btn-open-modal" data-toggle="modal" data-target="#tmpViewModel" #viewModelBtn></a>
+<div class="modal inmodal" id="tmpViewModel" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" *ngIf="itemSelected">
+    <div class="modal-content animated bounceInRight">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title">
+          Thiết Bị
+        </h4>
+      </div>
+      <div class="modal-body">
+        <form action="#" class="form-horizontal">
+          <div *ngIf="itemSelected.ten" class="form-group">
+            <label class="col-xs-4 control-label">Tên thiết bị:</label>
+            <div class="col-xs-8">
+              <p class="form-control-static">{{itemSelected.ten}}</p>
+            </div>
+          </div>
+          <div *ngIf="itemSelected.ten_tai_khoan" class="form-group">
+            <label class="col-xs-4 control-label">Huynh Trưởng:</label>
+            <div class="col-xs-8">
+              <p class="form-control-static">{{itemSelected.ten_tai_khoan}}</p>
+            </div>
+          </div>
+          <div *ngIf="itemSelected.ngay_muon" class="form-group">
+            <label class="col-xs-4 control-label">Ngày Mượn:</label>
+            <div class="col-xs-8">
+              <p class="form-control-static">{{itemSelected.ngay_muon | ngay}}</p>
+            </div>
+          </div>
+          <div *ngIf="itemSelected.ngay_tra" class="form-group">
+            <label class="col-xs-4 control-label">Ngày Trả:</label>
+            <div class="col-xs-8">
+              <p class="form-control-static">{{itemSelected.ngay_tra | ngay}}</p>
+            </div>
+          </div>
+          <div *ngIf="itemSelected.ghi_chu" class="form-group">
+            <label class="col-xs-4 control-label">Ghi chú:</label>
+            <div class="col-xs-8">
+              <p class="form-control-static line-breake">{{itemSelected.ghi_chu}}</p>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Thoát</button>
       </div>
     </div>
   </div>

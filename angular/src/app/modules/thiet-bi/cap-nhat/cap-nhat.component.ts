@@ -66,8 +66,8 @@ export class CapNhatComponent implements OnDestroy {
         this.loadData$.pipe(
           map(([res, ngayArr]) => {
             const data = res.map(c => {
-              // c.ngay_muon = c.ngay_muon.replace(/(.+)[-|\/](.+)[-|\/](.+)/i, '$3-$2-$1')
-              // c.ngay_tra = c.ngay_tra.replace(/(.+)[-|\/](.+)[-|\/](.+)/i, '$3-$2-$1')
+              c.ngay_muon = this.convertDay(c.ngay_muon);
+              c.ngay_tra = this.convertDay(c.ngay_tra);
               return c;
             });
             return data;
@@ -115,10 +115,15 @@ export class CapNhatComponent implements OnDestroy {
   }
 
   save() {
+    this.isLoading = true;
     console.log(this.thietBiArr);
-    // this.dataServ.themMoi(item).subscribe(res => {
-    //   this.loadData$.next(res);
-    // }).unsubscribe();
+    this.dataServ.updateList(this.thietBiArr).subscribe(res => {
+      this.loadData$.next(res);
+    }).unsubscribe();
     // this.router.navigate(['/thiet-bi']);
+  }
+
+  convertDay(day) {
+    return day.replace(/(.+)[-|\/](.+)[-|\/](.+)/i, '$3-$2-$1');
   }
 }

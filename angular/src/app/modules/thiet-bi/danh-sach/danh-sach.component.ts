@@ -23,15 +23,20 @@ export class DanhSachComponent implements OnDestroy {
 
   isLoading = true;
   filterTT = '';
-  itemSelected: any;
+  itemSelected: any = {};
   curAuth: AuthState;
   thietBiArr = []
   ngayArr = []
 
   pagingTN = {
-    id: 'thietbiTable',
+    id: 'thietbi-ds-Table',
     itemsPerPage: 10,
     currentPage: 1,
+  }
+
+  maskOption = {
+    mask: [/[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/],
+    guide: true,
   }
 
   constructor(
@@ -117,14 +122,19 @@ export class DanhSachComponent implements OnDestroy {
   }
 
   xoa(item) {
-    this.dataServ.xoa(item.id).subscribe(res => {
+    this.dataServ.delete(item.id).subscribe(res => {
       this.loadData$.next(res);
     }).unsubscribe();
   }
 
   luu(item) {
-    this.dataServ.themMoi(item).subscribe(res => {
+    console.log(item);
+    this.dataServ.addNew(item).subscribe(res => {
       this.loadData$.next(res);
     }).unsubscribe();
+  }
+
+  convertDay(value) {
+    return value.replace(/(.+)[-|\/](.+)[-|\/](.+)/i, '$3-$2-$1');
   }
 }
