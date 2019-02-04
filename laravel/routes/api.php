@@ -68,6 +68,14 @@ Route::group(['middleware' => 'auth-jwt'], function () {
         Route::post('{ThuMoi?}', 'ThuMoiController@post')->middleware(['permission:lop-hoc']);
     });
 
+    /* Thu Moi */
+    Route::group(['prefix' => 'thiet-bi'], function () {
+        Route::get(null, 'ThietBiController@getDanhSach');
+        Route::post('dang-ky', 'ThietBiController@postDangKy')->middleware(['permission:thiet-bi']);
+        Route::delete('{ThietBi}', 'ThietBiController@delete')->middleware(['permission:thiet-bi']);
+        Route::post('{ThietBi?}', 'ThietBiController@post')->middleware(['permission:thiet-bi']);
+    });
+
     /* Khoa Hoc */
     Route::group(['prefix' => 'khoa-hoc'], function () {
         Route::get(null, 'KhoaHocController@getDanhSach');
@@ -119,4 +127,7 @@ Route::bind('NhomTaiKhoan', function ($value) {
 });
 Route::bind('ThuMoi', function ($value) {
     return \App\ThuMoi::findOrFail($value);
+});
+Route::bind('ThietBi', function ($value) {
+    return \App\ThietBi::findOrFail($value);
 });

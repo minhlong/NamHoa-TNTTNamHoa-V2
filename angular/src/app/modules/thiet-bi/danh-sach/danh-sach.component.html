@@ -6,7 +6,7 @@
         <button (click)="itemSelected = {}; newModelBtn.click();" class="btn btn-xs btn-default m-r-lg">
           Thêm Thiết Bị
         </button>
-        <button (click)="itemSelected = {}; newModelBtn.click();" class="btn btn-xs btn-default m-r-lg">
+        <button *ngIf="thietBiDaTraArr.length" (click)="itemSelected = {}; registModelBtn.click();" class="btn btn-xs btn-default m-r-lg">
           Đăng Ký Mượn
         </button>
         <!-- <button [routerLink]="['cap-nhat']" class="btn btn-xs btn-default m-r-lg" *ngIf="hasPerm()">
@@ -55,9 +55,13 @@
                       <br />
                       <small>
                         <a [routerLink]="['../tai-khoan/chi-tiet', _item.tai_khoan_id]">
-                          {{_item.ten_tai_khoan}}
+                          {{_item.tai_khoan_ten}}
                         </a>
                       </small>
+                    </ng-container>
+                    <ng-container *ngIf="_item.trang_thai !== 'DANG_MUON'">
+                      <br />
+                      <span class="badge">Đã Trả</span>
                     </ng-container>
                   </td>
                   <ng-container *ngFor="let _ngay of ngayArr">
@@ -68,7 +72,7 @@
                     </td>
                   </ng-container>
                   <td>
-                    <button class="btn btn-xs btn-default" (click)="itemSelected = _item; viewModelBtn.click();">Xem</button>
+                    <button class="btn btn-xs btn-default" (click)="itemSelected = _item; ViewModelBtn.click();">Xem</button>
                     <button class="btn btn-xs btn-default" (click)="itemSelected = _item; newModelBtn.click();" *ngIf="hasPerm()">Sửa</button>
                     <button class="btn btn-xs btn-danger" (click)="itemSelected = _item; confimModelBtn.click()" *ngIf="hasPerm()">Xóa</button>
                   </td>
@@ -141,7 +145,12 @@
           <div class="form-group">
             <label class="col-xs-4 control-label">Huynh Trưởng:</label>
             <div class="col-xs-8">
-              <input type="text" class="form-control input-xs" name="ten_tai_khoan" [(ngModel)]="itemSelected.ten_tai_khoan" />
+              <ng-container *ngIf="itemSelected.tai_khoan_id">
+                <ng-select #select1 [allowClear]="true" [items]="taiKhoanArr" (selected)="selectedHuynhTruong(itemSelected, $event)" [active]="[{id: itemSelected.tai_khoan_id, text: itemSelected.tai_khoan_ten}]"></ng-select>
+              </ng-container>
+              <ng-container *ngIf="!itemSelected.tai_khoan_id">
+                <ng-select #select2 [allowClear]="true" [items]="taiKhoanArr" (selected)="selectedHuynhTruong(itemSelected, $event)"></ng-select>
+              </ng-container>
             </div>
           </div>
           <div class="form-group">
@@ -172,7 +181,66 @@
   </div>
 </div>
 
-<a class="btn-open-modal" data-toggle="modal" data-target="#tmpViewModel" #viewModelBtn></a>
+<a class="btn-open-modal" data-toggle="modal" data-target="#tmpRegModel" #registModelBtn></a>
+<div class="modal inmodal" id="tmpRegModel" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" *ngIf="itemSelected">
+    <div class="modal-content animated bounceInRight">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title">
+          Mượn Thiết Bị
+        </h4>
+      </div>
+      <div class="modal-body">
+        <form action="#" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-xs-4 control-label">Huynh Trưởng:</label>
+            <div class="col-xs-8">
+              <ng-select #select3 *ngIf="true" [allowClear]="true" [items]="taiKhoanArr" (selected)="selectedHuynhTruong(itemSelected, $event)"></ng-select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-4 control-label">Ngày Mượn:</label>
+            <div class="col-xs-8">
+              <input type="text" class="form-control input-xs" [textMask]="maskOption" placeholder="Vd: 31-12-2000" name="ngay_muon" [ngModel]="itemSelected.ngay_muon | ngay" (ngModelChange)="itemSelected.ngay_muon = convertDay($event)" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-4 control-label">Ngày Trả:</label>
+            <div class="col-xs-8">
+              <input type="text" class="form-control input-xs" [textMask]="maskOption" placeholder="Vd: 31-12-2000" name="ngay_tra" [ngModel]="itemSelected.ngay_tra | ngay" (ngModelChange)="itemSelected.ngay_tra = convertDay($event)" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-4 control-label">Tên Thiết Bị:</label>
+            <div class="col-xs-8">
+              <div class="row">
+                <div class="col-xs-6" *ngFor="let __item of thietBiDaTraArr">
+                  <div><label class="title-checkbox"> <input type="checkbox" (change)="checkboxChange(__item.id, $event.target.checked)"> {{__item.ten}}</label></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-4 control-label">Ghi chú:</label>
+            <div class="col-xs-8">
+              <textarea rows="2" name="ghi_chu" [(ngModel)]="itemSelected.ghi_chu" class="form-control input-xs"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" #closeRegModel>Thoát</button>
+        <button (click)="closeRegModel.click(); dangKy(itemSelected);" type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Đăng Ký</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a class="btn-open-modal" data-toggle="modal" data-target="#tmpViewModel" #ViewModelBtn></a>
 <div class="modal inmodal" id="tmpViewModel" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog" *ngIf="itemSelected">
     <div class="modal-content animated bounceInRight">
@@ -193,10 +261,10 @@
               <p class="form-control-static">{{itemSelected.ten}}</p>
             </div>
           </div>
-          <div *ngIf="itemSelected.ten_tai_khoan" class="form-group">
+          <div *ngIf="itemSelected.tai_khoan_ten" class="form-group">
             <label class="col-xs-4 control-label">Huynh Trưởng:</label>
             <div class="col-xs-8">
-              <p class="form-control-static">{{itemSelected.ten_tai_khoan}}</p>
+              <p class="form-control-static">{{itemSelected.tai_khoan_ten}}</p>
             </div>
           </div>
           <div *ngIf="itemSelected.ngay_muon" class="form-group">

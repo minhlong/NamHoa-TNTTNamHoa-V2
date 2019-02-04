@@ -11,6 +11,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ToasterModule } from 'angular2-toaster';
 import { TextMaskModule } from 'angular2-text-mask';
 import { HttpClientModule } from '@angular/common/http';
+import {SelectModule} from 'ng2-select';
 
 import { ROUTES } from './app.routes';
 
@@ -54,6 +55,7 @@ import { environment } from 'environments/environment';
     TextMaskModule,
     SharedModule,
     HttpClientModule,
+    SelectModule,
 
     // Layout
     LayoutsModule,

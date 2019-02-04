@@ -395,7 +395,7 @@ class TaiKhoanController extends Controller
             $lopHocColl = LopHoc::where('khoa_hoc_id', $khoaHocID)->get();
             $tmpRule    = [
                 'ho_va_ten'     => 'required',
-                'ngay_sinh'     => 'required|required|date_format:Y-m-d',
+                'ngay_sinh'     => 'required|date_format:Y-m-d',
                 'ngay_rua_toi'  => 'nullable|date_format:Y-m-d',
                 'ngay_ruoc_le'  => 'nullable|date_format:Y-m-d',
                 'ngay_them_suc' => 'nullable|date_format:Y-m-d',

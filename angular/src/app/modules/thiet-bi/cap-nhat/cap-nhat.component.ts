@@ -74,7 +74,6 @@ export class CapNhatComponent implements OnDestroy {
           }),
         ),
       ).pipe(
-        // tap(c => console.log(c)),
         // Map for search string
         map(([searchStr, filterStatus, thietbiArr]) => {
           let data = thietbiArr;
@@ -116,10 +115,9 @@ export class CapNhatComponent implements OnDestroy {
 
   save() {
     this.isLoading = true;
-    console.log(this.thietBiArr);
-    this.dataServ.updateList(this.thietBiArr).subscribe(res => {
-      this.loadData$.next(res);
-    }).unsubscribe();
+    // this.dataServ.updateList(this.thietBiArr).subscribe(res => {
+    //   this.loadData$.next(res);
+    // }).unsubscribe();
     // this.router.navigate(['/thiet-bi']);
   }
 
