@@ -8,7 +8,6 @@ import {SelectModule} from 'ng2-select';
 
 import { SharedModule } from '../shared/shared.module';
 import { DanhSachComponent } from './danh-sach/danh-sach.component';
-import { CapNhatComponent } from './cap-nhat/cap-nhat.component';
 
 import { DataService } from './data.service';
 
@@ -24,12 +23,10 @@ import { DataService } from './data.service';
 
     RouterModule.forChild([
       { path: '', component: DanhSachComponent },
-      { path: 'cap-nhat', component: CapNhatComponent },
     ]),
   ],
   declarations: [
     DanhSachComponent,
-    CapNhatComponent,
   ],
   providers: [
     DataService
