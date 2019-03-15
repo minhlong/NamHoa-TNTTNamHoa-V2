@@ -89,8 +89,14 @@ export class DanhSachComponent implements OnDestroy {
           let data = thietbiArr;
           if (searchStr) {
             data = thietbiArr.filter(item => {
-              return item.ten.toLowerCase().indexOf(searchStr.toLowerCase()) !== -1 ||
-                item.tai_khoan_ten.toLowerCase().indexOf(searchStr.toLowerCase()) !== -1;
+              if (item.ten.toLowerCase().indexOf(searchStr.toLowerCase()) !== -1) {
+                return true;
+              }
+
+              if (item.hasOwnProperty('tai_khoan_ten') && item.tai_khoan_ten.toLowerCase().indexOf(searchStr.toLowerCase()) !== -1) {
+                return true;
+              }
+              return false;
             })
           }
           return [searchStr, filterStatus, data, ngayArr];
