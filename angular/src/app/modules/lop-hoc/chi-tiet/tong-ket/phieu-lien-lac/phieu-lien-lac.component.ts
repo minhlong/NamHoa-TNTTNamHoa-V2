@@ -13,7 +13,7 @@ export class PhieuLienLacComponent implements OnInit, OnDestroy {
   @Input() apiData;
   @Output() updateInfo = new EventEmitter();
 
-  linhMuc = 'Phanxicô Xaviê Đậu Nguyễn Hoàng Linh';
+  linhMuc = 'LM Tuyên Úy - Hiêrônimô Trần Anh Nhật';
   xuDoanTruong = 'Gioan Baotixita Hoàng Quang Đại';
   htPhuTrach: string;
   ngayXetDuyet: string;
