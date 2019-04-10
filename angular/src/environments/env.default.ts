@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
   versionCheckURL: '/version.json',
-  version: '2.2.2',
+  version: '2.2.3',
 
   // Auto check and refresh browser after 60 seconds
   versionFrequency: 1000 * 60,
