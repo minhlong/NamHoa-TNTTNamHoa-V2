@@ -87,12 +87,6 @@ hr.dashed-line {
     margin: 5px 0;
 }
 
-/* Sign Name */
-
-.sign-name {
-    padding-top: 75px;
-}
-
 /************/
 
 .invoice .invoice-payment strong {
@@ -110,4 +104,32 @@ hr.dashed-line {
 
 .break-page {
     page-break-before: always
+}
+
+// HMLong
+/* Sign Name */
+.sign-name {
+    // padding-top: 75px;
+}
+
+.img-sign {
+    position: relative;
+    top: 0;
+    left: 0;
+    .sign {
+        position: relative;
+        top: 0;
+        left: 75px;
+        width: 3.6cm
+    }
+    .sign-Cha {
+        position: absolute;
+        top: 30px;
+        left: 40px;
+        width: 7cm
+    }
+}
+.sign-ADai {
+    width: 5cm;
+    margin: 35px 0;
 }

@@ -2,6 +2,12 @@
   <div class="ibox-content">
     <form class="form-horizontal">
       <div class="form-group form-group-sm">
+        <label class="col-sm-4 control-label">Chức Danh Linh Mục</label>
+        <div class="col-sm-6">
+          <input type="text" [(ngModel)]="chucDanhLinhMuc" name="chucDanhLinhMuc" class="form-control">
+        </div>
+      </div>
+      <div class="form-group form-group-sm">
         <label class="col-sm-4 control-label">Linh Mục</label>
         <div class="col-sm-6">
           <input type="text" [(ngModel)]="linhMuc" name="linhMuc" class="form-control">
@@ -65,7 +71,9 @@
           </div>
           <div class="col-xs-3 text-center">
             <div class="profile-image">
-              <img src="http://res.cloudinary.com/tnttnamhoa/image/upload/d_default.png/c_crop,g_face,h_400,r_max,w_400/c_scale,w_200/v1/profile/{{_tn.id}}" alt="{{_tn.id}}">
+              <img
+                src="http://res.cloudinary.com/tnttnamhoa/image/upload/d_default.png/c_crop,g_face,h_400,r_max,w_400/c_scale,w_200/v1/profile/{{_tn.id}}"
+                alt="{{_tn.id}}">
               <button type="button" class="btn btn-circle btn-default">{{_tn.id}}</button>
             </div>
           </div>
@@ -138,7 +146,8 @@
                   <!-- Kiểm Tra  -->
                   <ng-container *ngFor="let _dot of apiData.SoDot">
                     <td class="text-center no-wrap" *ngFor="let _lan of apiData.SoLan">
-                      <ng-container *ngIf="apiData.DiemSo[_tn.id] && apiData.DiemSo[_tn.id][_dot] && apiData.DiemSo[_tn.id][_dot][_lan] !== null">
+                      <ng-container
+                        *ngIf="apiData.DiemSo[_tn.id] && apiData.DiemSo[_tn.id][_dot] && apiData.DiemSo[_tn.id][_dot][_lan] !== null">
                         {{apiData.DiemSo[_tn.id][_dot][_lan]}}
                       </ng-container>
                     </td>
@@ -187,18 +196,25 @@
         </div>
         <div class="row text-center bold">
           <div class="col-xs-6">
-            <p>DUYỆT
-              <br>LM Tuyên Úy</p>
-            <p class="sign-name">
-              {{linhMuc}}
+            <p>
+              DUYỆT
+              <br>
+              {{chucDanhLinhMuc}}
             </p>
+            <div class="img-sign">
+                <img src="/assets/images/sign-Cha.png" class="sign-Cha" alt="Logo">
+                <img src="/assets/images/sign.png" class="sign" alt="Logo">
+            </div>
+            <p class="sign-name">{{linhMuc}}</p>
           </div>
           <div class="col-xs-6">
-            <p>TM. Đoàn TNTT
-              <br> Xứ Đoàn Trưởng</p>
-            <p class="sign-name">
-              {{xuDoanTruong}}
+            <p>
+              TM. Đoàn TNTT
+              <br>
+              Xứ Đoàn Trưởng
             </p>
+            <img src="/assets/images/sign-ADai.png" class="img-sign sign-ADai" alt="Logo">
+            <p class="sign-name">{{xuDoanTruong}}</p>
           </div>
         </div>
       </div>
