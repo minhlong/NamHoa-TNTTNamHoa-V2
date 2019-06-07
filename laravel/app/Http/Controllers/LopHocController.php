@@ -295,4 +295,39 @@ class LopHocController extends Controller
         }
         return response()->json(true);
     }
+
+    public function getLanhThuongImage(LopHoc $lopHoc)
+    {
+        $data = $lopHoc->where('khoa_hoc_id', 2018)->get()
+            ->load(['hoc_vien' =>  function ($query) {
+                $query->whereIn('xep_hang', [
+                    'I',
+                    'II',
+                    'III',
+                    'KHUYEN_KHICH',
+                ]);
+            }]);
+
+        $res = [];
+        foreach ($data as $lop) {
+            $tenLop = $lop->taoTen(true);
+
+            foreach ($lop->hoc_vien as $tai_khoan) {
+                $hang = $tai_khoan->pivot->xep_hang;
+                $fileName = "$tenLop - Hạng $hang - ID $tai_khoan->id - $tai_khoan->ten_thanh $tai_khoan->ho_va_ten.png";
+
+                $res[] = [
+                    "id" => $tai_khoan->id,
+                    "file_name" => $fileName,
+                ];
+
+                // Download Image
+                $url = "http://res.cloudinary.com/tnttnamhoa/image/upload/d_default.png/v1/profile/$tai_khoan->id";
+                $img =  base_path() . "/images/$fileName";
+                file_put_contents($img, file_get_contents($url));
+            }
+        }
+
+        return response()->json($res);
+    }
 }

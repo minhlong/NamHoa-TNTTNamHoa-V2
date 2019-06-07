@@ -38,6 +38,7 @@ Route::group(['middleware' => 'auth-jwt'], function () {
 
     /* Lop Hoc */
     Route::group(['prefix' => 'lop-hoc'], function () {
+        Route::get('lanh-thuong', 'LopHocController@getLanhThuongImage');
         Route::get('khoa-{khoaID}', 'LopHocController@getDanhSachTheoKhoa');
         Route::get('{LopHoc}', 'LopHocController@getThongTin');
 
@@ -68,7 +69,7 @@ Route::group(['middleware' => 'auth-jwt'], function () {
         Route::post('{ThuMoi?}', 'ThuMoiController@post')->middleware(['permission:lop-hoc']);
     });
 
-    /* Thu Moi */
+    /* Thiet Bi */
     Route::group(['prefix' => 'thiet-bi'], function () {
         Route::get(null, 'ThietBiController@getDanhSach');
         Route::post('dang-ky', 'ThietBiController@postDangKy')->middleware(['permission:thiet-bi']);
