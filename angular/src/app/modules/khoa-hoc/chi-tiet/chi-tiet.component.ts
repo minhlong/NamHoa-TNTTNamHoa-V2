@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { JwtAuthHttp } from '../../../services/http-auth.service';
 import { environment } from 'environments/environment';
 import { AppState } from '../../../store/reducers';
+import { switchMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-chi-tiet',
@@ -32,17 +33,19 @@ export class ChiTietComponent implements OnDestroy {
     private _http: JwtAuthHttp,
     private activatedRoute: ActivatedRoute
   ) {
-    this.sub$ = this.activatedRoute.params.subscribe(params => {
-      this.khoaID = +params['id'];
-
-      this._http.get(this.urlAPI + '/' + this.khoaID)
-        .map(res => res.json().data).subscribe(res => {
-          this.isLoading = false;
-          this.khoaInfo = res;
-        }, error => {
-          this.isLoading = false;
-          this.toasterService.pop('error', 'Lỗi!', error);
-        });
+    this.sub$ = this.activatedRoute.params.pipe(
+      switchMap((params) => {
+        this.khoaID = +params['id'];
+        return this._http.get(this.urlAPI + '/' + this.khoaID)
+          .map(response => response.json());
+      }),
+      map((res: any) => res.data),
+    ).subscribe(res => {
+      this.isLoading = false;
+      this.khoaInfo = res;
+    }, error => {
+      this.isLoading = false;
+      this.toasterService.pop('error', 'Lỗi!', error);
     })
 
     this.subAuth = this.store.select((state: AppState) => state.auth).subscribe(res => {

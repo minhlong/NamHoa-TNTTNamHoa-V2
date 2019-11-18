@@ -13,9 +13,14 @@ export class PhieuLienLacComponent implements OnInit, OnDestroy {
   @Input() apiData;
   @Output() updateInfo = new EventEmitter();
 
+  logoImg = 'http://tnttnamhoa.org/assets/images/logo.png';
   chucDanhLinhMuc = 'LM Chánh Xứ';
   linhMuc = 'Phanxico Xavier Đậu Nguyễn Hoàng Linh';
-  xuDoanTruong = 'Gioan Baotixita Hoàng Quang Đại';
+  linhMucImg = 'http://tnttnamhoa.org/assets/images/sign-Cha.png';
+
+  xuDoanTruong = 'Giuse Đinh Hoàng Thiên';
+  doanTruongImg = 'http://tnttnamhoa.org/assets/images/sign-AThien.png';
+
   htPhuTrach: string;
   ngayXetDuyet: string;
 

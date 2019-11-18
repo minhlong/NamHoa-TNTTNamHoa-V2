@@ -1,34 +1,76 @@
 <div class="ibox hidden-print">
   <div class="ibox-content">
     <form class="form-horizontal">
-      <div class="form-group form-group-sm">
-        <label class="col-sm-4 control-label">Chức Danh Linh Mục</label>
-        <div class="col-sm-6">
-          <input type="text" [(ngModel)]="chucDanhLinhMuc" name="chucDanhLinhMuc" class="form-control">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-4 control-label">Logo Đoàn</label>
+            <div class="col-sm-6">
+              <input type="text" [(ngModel)]="logoImg" name="logoImg" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-4 control-label">Chức Danh Linh Mục</label>
+            <div class="col-sm-6">
+              <input type="text" [(ngModel)]="chucDanhLinhMuc" name="chucDanhLinhMuc" class="form-control">
+            </div>
+          </div>
         </div>
       </div>
-      <div class="form-group form-group-sm">
-        <label class="col-sm-4 control-label">Linh Mục</label>
-        <div class="col-sm-6">
-          <input type="text" [(ngModel)]="linhMuc" name="linhMuc" class="form-control">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-4 control-label">Linh Mục</label>
+            <div class="col-sm-6">
+              <input type="text" [(ngModel)]="linhMuc" name="linhMuc" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-4 control-label">Chữ Ký Linh Mục</label>
+            <div class="col-sm-6">
+              <input type="text" [(ngModel)]="linhMucImg" name="linhMucImg" class="form-control">
+            </div>
+          </div>
         </div>
       </div>
-      <div class="form-group form-group-sm">
-        <label class="col-sm-4 control-label">Xứ Đoàn Trưởng</label>
-        <div class="col-sm-6">
-          <input type="text" [(ngModel)]="xuDoanTruong" name="xuDoanTruong" class="form-control">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-4 control-label">Xứ Đoàn Trưởng</label>
+            <div class="col-sm-6">
+              <input type="text" [(ngModel)]="xuDoanTruong" name="xuDoanTruong" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-4 control-label">Chữ Ký Đoàn Trưởng</label>
+            <div class="col-sm-6">
+              <input type="text" [(ngModel)]="doanTruongImg" name="doanTruongImg" class="form-control">
+            </div>
+          </div>
         </div>
       </div>
-      <div class="form-group form-group-sm">
-        <label class="col-sm-4 control-label">Huynh Trưởng</label>
-        <div class="col-sm-6">
-          <input type="text" [(ngModel)]="htPhuTrach" name="htPhuTrach" class="form-control">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-4 control-label">Huynh Trưởng</label>
+            <div class="col-sm-6">
+              <input type="text" [(ngModel)]="htPhuTrach" name="htPhuTrach" class="form-control">
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="form-group form-group-sm">
-        <label class="col-sm-4 control-label">Ngày Xét Duyệt</label>
-        <div class="col-sm-6">
-          <input type="text" [(ngModel)]="ngayXetDuyet" name="ngayXetDuyet" class="form-control">
+        <div class="col-md-6">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-4 control-label">Ngày Xét Duyệt</label>
+            <div class="col-sm-6">
+              <input type="text" [(ngModel)]="ngayXetDuyet" name="ngayXetDuyet" class="form-control">
+            </div>
+          </div>
         </div>
       </div>
     </form>
@@ -49,7 +91,7 @@
         <div class="row invoice-logo">
           <div class="col-xs-12">
             <div class="invoice-logo-space">
-              <img src="/assets/images/logo.png" class="img-responsive" alt="Logo">
+              <img src="{{logoImg}}" class="img-responsive" alt="Logo">
             </div>
             <div class="organ-name">Giáo xứ Nam Hòa
               <br> Đoàn TNTT Chúa Chiên Lành</div>
@@ -202,8 +244,8 @@
               {{chucDanhLinhMuc}}
             </p>
             <div class="img-sign">
-                <img src="/assets/images/sign-Cha.png" class="sign-Cha" alt="Logo">
-                <img src="/assets/images/sign.png" class="sign" alt="Logo">
+              <img src="{{linhMucImg}}" class="sign-Cha" alt="Logo">
+              <img src="/assets/images/sign.png" class="sign" alt="Logo">
             </div>
             <p class="sign-name">{{linhMuc}}</p>
           </div>
@@ -213,7 +255,7 @@
               <br>
               Xứ Đoàn Trưởng
             </p>
-            <img src="/assets/images/sign-ADai.png" class="img-sign sign-ADai" alt="Logo">
+            <img src="{{doanTruongImg}}" class="img-sign sign-ADai" alt="Logo">
             <p class="sign-name">{{xuDoanTruong}}</p>
           </div>
         </div>
