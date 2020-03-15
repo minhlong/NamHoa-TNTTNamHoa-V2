@@ -1,0 +1,62 @@
+openapi: 3.0.0
+info:
+  description: >-
+    Quản lý thông tin học viên tại Đoàn Thiếu Nhi Thánh Thể - Giáo Xứ Nam Hoà - Việt Nam.
+  version: 2.2.6
+  title: TNTT Nam Hoà
+  contact:
+    email: timmy88.it@gmail.com
+tags:
+  - name: Đăng Nhập
+    description: Json Web Token protocol
+  - name: Trang Chủ
+    description: Hiển thị thông tin chung
+paths:
+  /dang-nhap:
+    post:
+      tags:
+        - Đăng Nhập
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                id:
+                  type: string
+                password:
+                  type: string
+              required:
+                - id
+                - password
+            example:
+              id: HT000
+              password: 123456
+      responses:
+        '200':
+          description: OK
+  /trang-chu:
+    get:
+      tags:
+        - Trang Chủ
+      security:
+        - bearer Auth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/components/responses/NoToken'
+components:
+  securitySchemes:
+    bearer Auth: 
+        type: http
+        scheme: bearer
+        bearerFormat: JWT
+  responses:
+    NoToken:
+      description: Access token is missing or invalid
+externalDocs:
+  description: Front-end Site
+  url: 'http://tnttnamhoa.org'
+servers:
+  - url: 'http://new-api.tnttnamhoa.org/v1'
