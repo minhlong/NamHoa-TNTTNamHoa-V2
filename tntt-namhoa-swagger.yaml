@@ -1,0 +1,316 @@
+openapi: 3.0.0
+info:
+  description: >-
+    Quản lý thông tin học viên tại Đoàn Thiếu Nhi Thánh Thể - Giáo Xứ Nam Hoà - Việt Nam
+  version: 2.2.6
+  title: TNTT Nam Hoà
+  contact:
+    email: timmy88.it@gmail.com
+externalDocs:
+  description: Front-end Site
+  url: "http://tnttnamhoa.org"
+servers:
+  - url: "http://new-api.tnttnamhoa.org/v1"
+tags:
+  - name: Đăng Nhập
+    description: Json Web Token protocol
+  - name: Trang Chủ
+    description: Báo cáo chung cho hệ thống
+  - name: Tài Khoản
+    description: Xử lý thông tin tài khoản
+  - name: Lớp Học
+    description: Xử lý thông tin lớp học
+  - name: Khoá Học
+    description: Xử lý thông tin khoá học
+  - name: Lỗi
+    description: Các lỗi hệ thống
+paths:
+  /dang-nhap:
+    post:
+      tags:
+        - Đăng Nhập
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Auth"
+      responses:
+        200:
+          $ref: "#/components/responses/Success"
+  /trang-chu:
+    get:
+      tags:
+        - Trang Chủ
+      security:
+        - httpBearer: []
+      responses:
+        200:
+          $ref: "#/components/responses/Success"
+        400:
+          $ref: "#/components/responses/NoToken"
+
+  # TAI KHOAN
+  /tai-khoan:
+    get:
+      tags:
+        - Tài Khoản
+      summary: Lấy thông tin cơ bản
+      security:
+        - httpBearer: []
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+            example: HT000
+      responses:
+        200:
+          $ref: "#/components/responses/Success"
+        400:
+          $ref: "#/components/responses/NoToken"
+  /tai-khoan/{id}:
+    get:
+      tags:
+        - Tài Khoản
+      summary: Lấy thông tin chi tiết
+      security:
+        - httpBearer: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            example: 15002
+          required: true
+          description: ID tài khoản cần tìm
+      responses:
+        200:
+          $ref: "#/components/responses/Success"
+        400:
+          $ref: "#/components/responses/NoToken"
+  /tai-khoan/export:
+    get:
+      tags:
+        - Tài Khoản
+      security:
+        - httpBearer: []
+      summary: Export danh sách
+      responses:
+        200:
+          $ref: "#/components/responses/Success"
+        400:
+          $ref: "#/components/responses/NoToken"
+        403:
+          $ref: "#/components/responses/AccessDenied"
+  /download/{file-name}:
+    get:
+      tags:
+        - Tài Khoản
+      security:
+        - httpBearer: []
+      parameters:
+        - in: path
+          name: file-name
+          schema:
+            type: string
+            example: Danh Sach Tai Khoan_16-03-2020.xlsx
+          required: true
+          description: Tên file cần download
+      summary: Download file
+      responses:
+        200:
+          $ref: "#/components/responses/Success"
+      servers:
+        - url: http://new-api.tnttnamhoa.org
+  /nhom-tai-khoan:
+    get:
+      tags:
+        - Tài Khoản
+      security:
+        - httpBearer: []
+      summary: Lấy danh sách nhóm
+      responses:
+        200:
+          $ref: "#/components/responses/Success"
+        400:
+          $ref: "#/components/responses/NoToken"
+        403:
+          $ref: "#/components/responses/AccessDenied"
+
+  # KHOA HOC
+  /khoa-hoc:
+    get:
+      tags:
+        - Khoá Học
+      security:
+        - httpBearer: []
+      summary: Lấy danh sách các khoá học
+      responses:
+        200:
+          $ref: "#/components/responses/Success"
+        400:
+          $ref: "#/components/responses/NoToken"
+        403:
+          $ref: "#/components/responses/AccessDenied"
+  /khoa-hoc/{year}:
+    get:
+      tags:
+        - Khoá Học
+      security:
+        - httpBearer: []
+      summary: Lấy thông tin khoá học - Cấu hình hệ thống
+      parameters:
+        - in: path
+          name: year
+          schema:
+            type: string
+            example: 2018
+          required: true
+          description: Năm học
+      responses:
+        200:
+          $ref: "#/components/responses/Success"
+        400:
+          $ref: "#/components/responses/NoToken"
+        403:
+          $ref: "#/components/responses/AccessDenied"
+
+  # LOP HOC
+  /lop-hoc/{id}:
+    get:
+      tags:
+        - Lớp Học
+      security:
+        - httpBearer: []
+      summary: Lấy thông tin chi tiết của 1 lớp học
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            example: 95
+          required: true
+          description: Mã lớp học
+      responses:
+        200:
+          $ref: "#/components/responses/Success"
+        400:
+          $ref: "#/components/responses/NoToken"
+        403:
+          $ref: "#/components/responses/AccessDenied"
+  /lop-hoc/{id}/chuyen-can:
+    get:
+      tags:
+        - Lớp Học
+      security:
+        - httpBearer: []
+      summary: Lấy thông tin điểm danh trong 1 ngày của lớp
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            example: 95
+          required: true
+          description: Mã lớp học
+        - name: ngay_hoc
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "2017-09-03"
+      responses:
+        200:
+          $ref: "#/components/responses/Success"
+        400:
+          $ref: "#/components/responses/NoToken"
+        403:
+          $ref: "#/components/responses/AccessDenied"
+  /lop-hoc/{id}/tong-ket:
+    get:
+      tags:
+        - Lớp Học
+      security:
+        - httpBearer: []
+      summary: Thông tin tổng kết 1 lớp học
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            example: 95
+          required: true
+          description: Mã lớp học
+      responses:
+        200:
+          $ref: "#/components/responses/Success"
+        400:
+          $ref: "#/components/responses/NoToken"
+        403:
+          $ref: "#/components/responses/AccessDenied"
+  /lop-hoc/khoa-{year}:
+    get:
+      tags:
+        - Lớp Học
+      security:
+        - httpBearer: []
+      summary: Lấy danh sách trong 1 năm
+      parameters:
+        - in: path
+          name: year
+          schema:
+            type: string
+            example: 2018
+          required: true
+          description: Năm học
+      responses:
+        200:
+          $ref: "#/components/responses/Success"
+        400:
+          $ref: "#/components/responses/NoToken"
+        403:
+          $ref: "#/components/responses/AccessDenied"
+
+  # ERROR
+  /page-not-found:
+    get:
+      tags:
+        - Lỗi
+      summary: Không tìm thấy trang
+      responses:
+        200:
+          $ref: "#/components/responses/Success"
+        404:
+          $ref: "#/components/responses/PageNotFound"
+
+components:
+  schemas:
+    Auth:
+      title: Auth
+      required:
+        - id
+        - password
+      type: object
+      properties:
+        id:
+          type: string
+        password:
+          type: string
+      example:
+        id: HT000
+        password: 123456
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    NoToken:
+      description: Access token bị thiếu hoặc lỗi
+    PageNotFound:
+      description: Trang không tồn tại
+    Success:
+      description: Xử lý thành công
+    AccessDenied:
+      description: Tài khoản bị giới hạn quyền thao tác
