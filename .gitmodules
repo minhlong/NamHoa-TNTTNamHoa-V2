@@ -1,4 +1,3 @@
-[submodule "laravel/laradock-tntt"]
-	path = laravel/laradock-tntt
+[submodule "dev-laradock"]
+	path = dev-laradock
 	url = https://github.com/Laradock/laradock.git
-	ignore = dirty
