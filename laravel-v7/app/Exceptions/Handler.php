@@ -2,7 +2,11 @@
 
 namespace App\Exceptions;
 
+use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -29,10 +33,10 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Throwable  $exception
+     * @param  Throwable  $exception
      * @return void
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function report(Throwable $exception)
     {
@@ -42,14 +46,45 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Throwable  $exception
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param  Request  $request
+     * @param  Throwable  $exception
+     * @return Response
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof ModelNotFoundException ||
+            $exception instanceof MethodNotAllowedHttpException ||
+            $exception instanceof NotFoundHttpException) {
+            return response()->json([
+                'error' => 'Không tìm thấy.',
+            ], 404);
+        }
+
+        if ($exception instanceof ValidationException) {
+            return response()->json([
+                'error' => $exception->errors(),
+            ], 400);
+        }
+
+        if ($this->isHttpException($exception)) {
+            switch ($exception->getStatusCode()) {
+                case 403:
+                    return response()->json([
+                        'error' => 'Bạn chưa được phân quyền cho thao tác này!',
+                    ], $exception->getStatusCode());
+                    break;
+                case 401:
+                    return response()->json([
+                        'error' => "Hết phiên đăng nhập, vui lòng đăng nhập lại.",
+                    ], $exception->getStatusCode());
+                    break;
+                default:
+                    break;
+            }
+        }
+
         return parent::render($request, $exception);
     }
 }

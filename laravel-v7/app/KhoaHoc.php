@@ -2,10 +2,11 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class KhoaHoc extends Model
+class KhoaHoc extends BaseModel
 {
+    /**
+     * @var array
+     */
     protected $fillable = [
         'id',
         'ngay_bat_dau',
@@ -20,55 +21,47 @@ class KhoaHoc extends Model
         'di_hoc',
     ];
 
+    /**
+     * @var array
+     */
     protected $casts = [
         'xep_hang' => 'array',
         'xep_loai' => 'array',
         'di_le'    => 'array',
         'di_hoc'   => 'array',
     ];
+    protected $table = 'khoa_hoc';
 
     /**
-     * @param array $attributes
+     * @param  null  $date
+     * @return mixed
      */
-    public function __construct(array $attributes = [])
+    public static function hienTai($date = null)
     {
-        parent::__construct($attributes);
-        self::setTable('khoa_hoc');
-    }
-
-    /**
-     * @param null $ngayHienTai
-     * @return static
-     */
-    public static function hienTaiHoacTaoMoi($ngayHienTai = null)
-    {
-        if (!$ngayHienTai) {
-            $ngayHienTai = date('Y-m-d');
+        if (!$date) {
+            $date = date('Y-m-d');
         }
-        $KhoaHoc = self::where('id', date('Y', strtotime($ngayHienTai)))
-            ->orWhereRaw('(ngay_bat_dau <= ? and ? <= ngay_ket_thuc)', [
-                $ngayHienTai,
-                $ngayHienTai,
-            ])->first();
+
+        $KhoaHoc = self::where('id', date('Y', strtotime($date)))
+            ->orWhereRaw('(ngay_bat_dau <= ? and ? <= ngay_ket_thuc)', [$date, $date,])
+            ->first();
+
         if (is_object($KhoaHoc)) {
             return $KhoaHoc;
         }
 
-        return self::taoKhoaHocMacDinh($ngayHienTai);
+        return self::taoKhoaHocMacDinh($date);
     }
 
     /**
      * @param $ngayHienTai
-     * @return static
+     * @return mixed
      */
     private static function taoKhoaHocMacDinh($ngayHienTai)
     {
         $NamHoc     = date('Y', strtotime($ngayHienTai));
         $ngayBatDau = date("$NamHoc-08-01");
-        // if ($ngayHienTai < $ngayBatDau) {
-        //     --$NamHoc;
-        //     $ngayBatDau = date("$NamHoc-m-d", strtotime($ngayBatDau));
-        // }
+
         return self::create([
             'id'                    => $NamHoc,
             'ngay_bat_dau'          => $ngayBatDau,
