@@ -70,7 +70,7 @@ class KhoaHocRequest extends FormRequest
     public function rules()
     {
         return [
-            'ngay_bat_dau' => 'required|date',
+            'ngay_bat_dau'  => 'required|date',
             'ngay_ket_thuc' => 'required|date|unique_date:ngay_bat_dau',
         ];
     }

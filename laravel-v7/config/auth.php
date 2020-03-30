@@ -36,15 +36,9 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'tai_khoan',
-        ],
-
         'api' => [
             'driver' => 'jwt',
             'provider' => 'tai_khoan',
-//            'hash' => false,
         ],
     ],
 

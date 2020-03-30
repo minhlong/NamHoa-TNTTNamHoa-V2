@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Excel\Exports\TongKetSheet;
 use App\LopHoc;
 use Illuminate\Http\JsonResponse as JsonResponseAlias;
 
@@ -45,5 +46,12 @@ class LopHocController extends Controller
         $lopHoc->ten = $lopHoc->taoTen();
 
         return response()->json($lopHoc);
+    }
+
+    public function getTongKet(LopHoc $lopHoc)
+    {
+        return response()->json(
+            (new TongKetSheet($lopHoc))->getData()
+        );
     }
 }

@@ -40,7 +40,7 @@ class KhoaHocController extends Controller
     public function getThongTin(KhoaHoc $khoaHoc)
     {
         return response()->json([
-            'data' => $khoaHoc
+            'data' => $khoaHoc,
         ]);
     }
 
