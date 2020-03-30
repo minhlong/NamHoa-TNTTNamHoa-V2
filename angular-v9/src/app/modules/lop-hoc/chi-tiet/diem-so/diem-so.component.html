@@ -1,0 +1,53 @@
+<ng-container *ngIf="tab === 'thong-tin'">
+  <div class="ibox-content" [class.sk-loading]="isLoading">
+    <div class="sk-spinner sk-spinner-three-bounce">
+      <div class="sk-bounce1"></div>
+      <div class="sk-bounce2"></div>
+      <div class="sk-bounce3"></div>
+    </div>
+    <div class="row m-b-sm">
+      <div class="col-xs-offset-3 col-xs-6">
+        <select (change)="loadData()" [(ngModel)]="dotKTHienTai" class="form-control input-sm">
+          <option *ngFor="let _item of dotKTArr" [value]="_item">Lần {{_item}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr *ngIf="apiData">
+              <th colspan="5" class="text-center">Kiểm Tra Lần {{apiData.dot}}</th>
+            </tr>
+            <tr>
+              <th class="text-center">#</th>
+              <th>Họ và Tên</th>
+              <th *ngFor="let _item of lanKTArr" class="text-center">Đợt {{_item}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let _item of thieuNhiArr | paginate: pagingTN; let _i = index">
+              <td class="text-center">
+                {{((pagingTN.currentPage - 1) * pagingTN.itemsPerPage ) + _i + 1}}
+              </td>
+              <td> {{_item.ho_va_ten}}</td>
+              <td *ngFor="let _lan of lanKTArr" class="text-center">{{findDiemSo(_item, _lan).diem}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <app-paging [id]="pagingTN.id" (pageChange)="pagingTN.currentPage = $event;"></app-paging>
+      </div>
+    </div>
+  </div>
+  <div class="ibox-footer" *ngIf="hasPerm() && !isLoading">
+    <button *ngFor="let _item of lanKTArr" (click)="openForm(_item)" class="btn btn-default btn-sm m-l-lg">Sửa Đợt {{_item}}</button>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="tab === 'form'" class="ibox">
+  <app-form-diem-so [thieuNhiArr]="thieuNhiArr" [apiData]="apiData" [lanKT]="lanKTHienTai" (updateInfo)="update($event)"></app-form-diem-so>
+</ng-container>

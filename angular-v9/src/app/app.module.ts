@@ -1,77 +1,76 @@
-import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule, Store } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools'; // Have to remove on production mod
-import { NgxPaginationModule } from 'ngx-pagination';
-import { ToasterModule } from 'angular2-toaster';
-import { TextMaskModule } from 'angular2-text-mask';
 import { HttpClientModule } from '@angular/common/http';
-import { SelectModule } from 'ng2-select';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { JwtModule } from '@auth0/angular-jwt';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools'; // Have to remove on production mod
+import { ToasterModule, ToasterService } from 'angular2-toaster';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { ROUTES } from './app.routes';
-
-// Modules
+import { AppRoutingModule } from './app-routing.module';
 import { LayoutsModule } from './modules/layouts/layouts.module';
-import { SharedModule } from './modules/shared/shared.module';
+
+import { AppComponent } from './app.component';
+import { LoginComponent } from './components/login/login.component';
 
 // Services
 import { providers } from './services';
 
-// Redux - Effects
+import { reducer } from './store/reducers';
 import { AuthEffect } from './store/effects/auth.effect';
 import { LopHocEffect } from './store/effects/lop-hoc.effect';
-// Redux - Reducer
-import { reducer } from './store/reducers';
-
-// Components
-import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
+import { environment } from 'src/environments/environment';
+import { SharedModule } from './modules/shared/shared.module';
+import { NgxPaginationModule } from 'ngx-pagination';
+// import { SelectModule } from 'ng2-select';
 import { LogoutComponent } from './components/logout.component';
 import { TrangChuComponent } from './components/trang-chu/trang-chu.component';
+import { TextMaskModule } from 'angular2-text-mask';
 
-// Pipe
-import { environment } from 'environments/environment';
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     LogoutComponent,
-    TrangChuComponent,
+    TrangChuComponent
   ],
   imports: [
-    // Angular modules
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
     NgxPaginationModule,
     ToasterModule,
+    // SelectModule,
     TextMaskModule,
     SharedModule,
-    HttpClientModule,
-    SelectModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter,
+        whitelistedDomains: ['new-api.tnttnamhoa.org'],
+      }
+    }),
 
     // Layout
     LayoutsModule,
-    // Routes
-    RouterModule.forRoot(ROUTES, { useHash: true }),
+    AppRoutingModule,
 
     // Redux
     StoreModule.forRoot(reducer),
     EffectsModule.forRoot([AuthEffect, LopHocEffect]),
 
     // Should be removed when deploy
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [
     providers(), // Services
-    // actions(), // Redux - Action
+    ToasterService
   ],
   bootstrap: [AppComponent]
 })

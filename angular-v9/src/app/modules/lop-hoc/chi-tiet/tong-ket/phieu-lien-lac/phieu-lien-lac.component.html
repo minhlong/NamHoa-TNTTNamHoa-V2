@@ -1,0 +1,266 @@
+<div class="ibox hidden-print">
+  <div class="ibox-content">
+    <form class="form-horizontal">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-4 control-label">Logo Đoàn</label>
+            <div class="col-sm-6">
+              <input type="text" [(ngModel)]="logoImg" name="logoImg" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-4 control-label">Chức Danh Linh Mục</label>
+            <div class="col-sm-6">
+              <input type="text" [(ngModel)]="chucDanhLinhMuc" name="chucDanhLinhMuc" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-4 control-label">Linh Mục</label>
+            <div class="col-sm-6">
+              <input type="text" [(ngModel)]="linhMuc" name="linhMuc" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-4 control-label">Chữ Ký Linh Mục</label>
+            <div class="col-sm-6">
+              <input type="text" [(ngModel)]="linhMucImg" name="linhMucImg" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-4 control-label">Xứ Đoàn Trưởng</label>
+            <div class="col-sm-6">
+              <input type="text" [(ngModel)]="xuDoanTruong" name="xuDoanTruong" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-4 control-label">Chữ Ký Đoàn Trưởng</label>
+            <div class="col-sm-6">
+              <input type="text" [(ngModel)]="doanTruongImg" name="doanTruongImg" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-4 control-label">Huynh Trưởng</label>
+            <div class="col-sm-6">
+              <input type="text" [(ngModel)]="htPhuTrach" name="htPhuTrach" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-4 control-label">Ngày Xét Duyệt</label>
+            <div class="col-sm-6">
+              <input type="text" [(ngModel)]="ngayXetDuyet" name="ngayXetDuyet" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="ibox-footer">
+    <button (click)="cancel()" class="btn btn-default btn-sm m-l-lg">Thoát</button>
+    <button (click)="print();" class="btn btn-primary btn-sm m-l-lg">In</button>
+  </div>
+</div>
+<div class="ibox-content hidden-print" *ngIf="apiData">
+  <app-paging [id]="pagingTN.id" (pageChange)="pagingTN.currentPage = $event;"></app-paging>
+</div>
+<div class="ibox-content" *ngIf="apiData">
+  <div class="break-page"></div>
+  <ng-container *ngFor="let _tn of apiData.Data | paginate: pagingTN; let _i = index">
+    <div class="row">
+      <div class="invoice col-md-12">
+        <div class="row invoice-logo">
+          <div class="col-xs-12">
+            <div class="invoice-logo-space">
+              <img src="{{logoImg}}" class="img-responsive" alt="Logo">
+            </div>
+            <div class="organ-name">Giáo xứ Nam Hòa
+              <br> Đoàn TNTT Chúa Chiên Lành</div>
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="col-xs-12">
+            <h1 class="bold">PHIẾU BÁO KẾT QUẢ HỌC GIÁO LÝ</h1>
+            <h2 class="bold">Năm học: {{lopHocInfo.khoa_hoc_id}} - {{lopHocInfo.khoa_hoc_id + 1}}</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-9">
+            <ul class="list-unstyled profile-content">
+              <li>Em {{_tn.ten_thanh}} {{_tn.ho_va_ten}}</li>
+              <li>{{lopHocInfo.ten}}</li>
+              <li>Huynh trưởng phụ trách: {{htPhuTrach}}</li>
+            </ul>
+          </div>
+          <div class="col-xs-3 text-center">
+            <div class="profile-image">
+              <img
+                src="http://res.cloudinary.com/tnttnamhoa/image/upload/d_default.png/c_crop,g_face,h_400,r_max,w_400/c_scale,w_200/v1/profile/{{_tn.id}}"
+                alt="{{_tn.id}}">
+              <button type="button" class="btn btn-circle btn-default">{{_tn.id}}</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <h4>Chuyên Cần</h4>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th colspan="4" class="text-center">Đi Lễ
+                    <span class="sub-title">(Số Lần|Điểm)</span>
+                  </th>
+                  <th colspan="2" class="text-center">Đi Học
+                    <span class="sub-title">(Số Lần|Điểm)</span>
+                  </th>
+                  <th rowspan="2" class="text-center">Tổng (10)</th>
+                  <th rowspan="2" class="text-center">Xếp Loại</th>
+                </tr>
+                <tr>
+                  <td class="text-center" style="white-space: inherit">Phiếu Trắng</td>
+                  <td class="text-center" style="white-space: inherit">Phiếu Hồng</td>
+                  <td class="text-center" style="white-space: inherit">Vắng Không Phép</td>
+                  <td class="text-center" style="white-space: inherit">Vắng Có Phép</td>
+                  <td class="text-center" style="white-space: inherit">Vắng Không Phép</td>
+                  <td class="text-center" style="white-space: inherit">Vắng Có Phép</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <!-- Đi Lễ -->
+                  <td class="text-center no-wrap">{{thongKePhieu(_tn,'di_le', 'T')}}</td>
+                  <td class="text-center no-wrap">{{thongKePhieu(_tn,'di_le', 'H')}}</td>
+                  <td class="text-center no-wrap">{{thongKePhieu(_tn,'di_le', 'K')}}</td>
+                  <td class="text-center no-wrap">{{thongKePhieu(_tn,'di_le', 'P')}}</td>
+
+                  <!-- Đi Học -->
+                  <td class="text-center no-wrap">{{thongKePhieu(_tn,'di_hoc', 'K')}}</td>
+                  <td class="text-center no-wrap">{{thongKePhieu(_tn,'di_hoc', 'P')}}</td>
+
+                  <td class="text-center no-wrap">{{_tn.pivot.chuyen_can}}</td>
+                  <td class="text-center no-wrap">{{_tn.pivot.loaiChuyenCan | xepLoai: 'ChuyenCan'}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <h4>Học Lực</h4>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <!-- Kiểm Tra  -->
+                  <ng-container *ngFor="let _dot of apiData.SoDot">
+                    <th [colSpan]="apiData.SoLan.length" class="text-center">Lần {{_dot}}</th>
+                  </ng-container>
+                  <th rowspan="2" class="text-center">TB</th>
+                  <th rowspan="2" class="text-center">Xếp Loại</th>
+                </tr>
+                <tr>
+                  <!-- Kiểm Tra  -->
+                  <ng-container *ngFor="let _dot of apiData.SoDot">
+                    <td class="text-center" *ngFor="let _lan of apiData.SoLan">Đợt {{_lan}}</td>
+                  </ng-container>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <!-- Kiểm Tra  -->
+                  <ng-container *ngFor="let _dot of apiData.SoDot">
+                    <td class="text-center no-wrap" *ngFor="let _lan of apiData.SoLan">
+                      <ng-container
+                        *ngIf="apiData.DiemSo[_tn.id] && apiData.DiemSo[_tn.id][_dot] && apiData.DiemSo[_tn.id][_dot][_lan] !== null">
+                        {{apiData.DiemSo[_tn.id][_dot][_lan]}}
+                      </ng-container>
+                    </td>
+                  </ng-container>
+                  <td class="text-center no-wrap">{{_tn.pivot.hoc_luc}}</td>
+                  <td class="text-center no-wrap">{{_tn.pivot.loaiHocLuc | xepLoai}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row" style="margin-bottom: 30px">
+          <div class="col-xs-12">
+            <h4>Trung Bình Chuyên Cần và Học Lực:
+              <strong>{{tbCaNam(_tn)}}</strong>
+            </h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-7">
+            <p class="comment-title">
+              Nhận xét của huynh trưởng hướng dẫn
+            </p>
+            <div style="padding-right: 50px">
+              <p *ngIf="_tn.pivot.nhan_xet" style="text-indent: 50px;">{{_tn.pivot.nhan_xet}}</p>
+              <hr class="dashed-line" *ngIf="!_tn.pivot.nhan_xet">
+              <hr class="dashed-line" *ngIf="!_tn.pivot.nhan_xet">
+              <hr class="dashed-line" *ngIf="!_tn.pivot.nhan_xet">
+            </div>
+          </div>
+          <div class="col-xs-5">
+            <p class="comment-title">
+              Quyết định của Đoàn TNTT
+            </p>
+            <ul class="list-unstyled profile-content">
+              <li>
+                <i class="fa fa-check-square-o"></i> {{_tn.pivot.xep_hang | xepHang}}
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="row text-center m-t-lg">
+          <div class="col-xs-offset-6 col-xs-6">
+            {{ngayXetDuyet}}
+          </div>
+        </div>
+        <div class="row text-center bold">
+          <div class="col-xs-6">
+            <p>
+              DUYỆT
+              <br>
+              {{chucDanhLinhMuc}}
+            </p>
+            <div class="img-sign">
+              <img src="{{linhMucImg}}" class="sign-Cha" alt="Logo">
+              <img src="/assets/images/sign.png" class="sign" alt="Logo">
+            </div>
+            <p class="sign-name">{{linhMuc}}</p>
+          </div>
+          <div class="col-xs-6">
+            <p>
+              TM. Đoàn TNTT
+              <br>
+              Xứ Đoàn Trưởng
+            </p>
+            <img src="{{doanTruongImg}}" class="img-sign sign-ADai" alt="Logo">
+            <p class="sign-name">{{xuDoanTruong}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="break-page"></div>
+  </ng-container>
+</div>
