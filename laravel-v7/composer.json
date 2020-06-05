@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
+        "anatoki/tntt": "dev-upgrade-larV7-angV9",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
@@ -68,5 +69,11 @@
             "@php artisan ide-helper:generate",
             "@php artisan ide-helper:meta"
         ]
+    },
+    "repositories": {
+        "local": {
+            "type": "path",
+            "url": "./packages/anatoki/tntt"
+        }
     }
 }
