@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => 'api', 'namespace' => 'TNTT\Controllers', 'middleware' => 'bindings'], function () {
+Route::group(['prefix' => 'api', 'namespace' => 'TNTT\Controllers'], function () {
 
     // Auto pull git when push new commits
     Route::post('auto-pull', 'PullGitController@postAutoPull');

@@ -3,6 +3,7 @@
 - This version is building ... 
 
 ## To Do list
+php artisan vendor:publish --force
 
 - Model: remove constructures, optimize relationship (morph...)
 - Time: Carbon time

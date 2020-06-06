@@ -28,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
         // app()->make('router')->aliasMiddleware('fireapps.redirect', SocialAuthRedirect::class);
         $this->publishes([
             __DIR__.'/../config' => base_path('config'),
+            __DIR__.'/../lang' => resource_path('lang/en'),
         ]);
 
         $this->app->bind(

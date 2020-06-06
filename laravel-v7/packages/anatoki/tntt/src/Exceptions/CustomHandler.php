@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Spatie\Permission\Exceptions\PermissionDoesNotExist;
+use Spatie\Permission\Exceptions\RoleDoesNotExist;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Throwable;
@@ -60,6 +62,8 @@ class CustomHandler extends ExceptionHandler
         // dd(get_class($exception));
         if ($exception instanceof ModelNotFoundException ||
             $exception instanceof MethodNotAllowedHttpException ||
+            $exception instanceof PermissionDoesNotExist ||
+            $exception instanceof RoleDoesNotExist ||
             $exception instanceof NotFoundHttpException) {
             return response()->json([
                 'error' => 'Không tìm thấy dữ liệu.',
