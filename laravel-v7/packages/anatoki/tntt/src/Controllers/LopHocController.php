@@ -3,7 +3,7 @@
 namespace TNTT\Controllers;
 
 use TNTT\Services\Excel\Exports\TongKetSheet;
-use TNTT\LopHoc;
+use TNTT\Models\LopHoc;
 use Illuminate\Http\JsonResponse as JsonResponseAlias;
 
 class LopHocController extends Controller

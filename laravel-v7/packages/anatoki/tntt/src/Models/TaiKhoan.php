@@ -1,6 +1,6 @@
 <?php
 
-namespace TNTT;
+namespace TNTT\Models;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;

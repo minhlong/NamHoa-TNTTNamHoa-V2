@@ -2,7 +2,7 @@
 
 namespace TNTT\Requests;
 
-use TNTT\KhoaHoc;
+use TNTT\Models\KhoaHoc;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Validator;
 

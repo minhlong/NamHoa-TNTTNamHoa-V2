@@ -18,6 +18,11 @@ class PhanNhomController extends Controller
             'update',
             'destroy',
         ]);
+        $this->middleware(['can:Phân Quyền'])->only([
+            'store',
+            'update',
+            'destroy',
+        ]);
     }
 
     /**
@@ -71,9 +76,9 @@ class PhanNhomController extends Controller
     public function update(Request $request, Role $nhom_tai_khoan)
     {
         $request->validate([
-            "name" => "required",
+            "note" => "required",
         ]);
-        $nhom_tai_khoan->fill($request->only(['name', 'note']))->save();
+        $nhom_tai_khoan->fill($request->get('note'))->save();
 
         return response()->json($nhom_tai_khoan->toArray());
 

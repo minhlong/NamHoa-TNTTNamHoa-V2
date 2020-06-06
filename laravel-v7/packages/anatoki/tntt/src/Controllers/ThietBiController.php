@@ -3,7 +3,7 @@ namespace TNTT\Controllers;
 
 use TNTT\Services\Library;
 use TNTT\ThietBi;
-use TNTT\KhoaHoc;
+use TNTT\Models\KhoaHoc;
 use Illuminate\Http\Request;
 
 class ThietBiController extends Controller

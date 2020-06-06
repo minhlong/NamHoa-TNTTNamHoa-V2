@@ -2,11 +2,11 @@
 
 namespace TNTT\Controllers;
 
-use TNTT\DiemDanh;
-use TNTT\KhoaHoc;
-use TNTT\LopHoc;
+use TNTT\Models\DiemDanh;
+use TNTT\Models\KhoaHoc;
+use TNTT\Models\LopHoc;
 use TNTT\Services\Library;
-use TNTT\TaiKhoan;
+use TNTT\Models\TaiKhoan;
 
 class TrangChuController extends Controller
 {

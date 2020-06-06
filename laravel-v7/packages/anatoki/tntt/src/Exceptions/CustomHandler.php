@@ -59,7 +59,7 @@ class CustomHandler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        // dd(get_class($exception));
+        info(get_class($exception));
         if ($exception instanceof ModelNotFoundException ||
             $exception instanceof MethodNotAllowedHttpException ||
             $exception instanceof PermissionDoesNotExist ||

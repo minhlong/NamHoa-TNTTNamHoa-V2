@@ -3,7 +3,7 @@
 namespace TNTT\Controllers;
 
 use TNTT\Requests\KhoaHocRequest;
-use TNTT\KhoaHoc;
+use TNTT\Models\KhoaHoc;
 use Illuminate\Http\JsonResponse;
 
 class KhoaHocController extends Controller

@@ -165,9 +165,9 @@ return [
         /*
          * Package Service Providers...
          */
-        \Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-        Spatie\Permission\PermissionServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
+        // \Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        // Spatie\Permission\PermissionServiceProvider::class,
+        // Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
         /*

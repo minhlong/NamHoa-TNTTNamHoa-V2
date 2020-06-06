@@ -2,10 +2,10 @@
 
 namespace TNTT\Services\Excel\Exports;
 
-use App\DiemDanh;
-use App\DiemSo;
-use App\KhoaHoc;
-use App\LopHoc;
+use TNTT\Models\DiemDanh;
+use TNTT\Models\DiemSo;
+use TNTT\Models\KhoaHoc;
+use TNTT\Models\LopHoc;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;

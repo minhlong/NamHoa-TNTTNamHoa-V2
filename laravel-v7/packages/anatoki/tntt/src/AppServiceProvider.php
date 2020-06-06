@@ -3,6 +3,7 @@
 namespace TNTT;
 
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use TNTT\Exceptions\CustomHandler;
 
@@ -24,16 +25,21 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Custom handle error
+        $this->app->bind(ExceptionHandler::class, CustomHandler::class);
+
+        // Load Routers
         $this->loadRoutesFrom(__DIR__.'/../routers.php');
-        // app()->make('router')->aliasMiddleware('fireapps.redirect', SocialAuthRedirect::class);
+
+        // Force update config file
         $this->publishes([
             __DIR__.'/../config' => base_path('config'),
-            __DIR__.'/../lang' => resource_path('lang/en'),
+            __DIR__.'/../lang'   => resource_path('lang/en'),
         ]);
 
-        $this->app->bind(
-            ExceptionHandler::class,
-            CustomHandler::class
-        );
+        // Validate supper admin
+        Gate::before(function ($user, $ability) {
+            return $user->isSuperAdmin() ? true : null;
+        });
     }
 }

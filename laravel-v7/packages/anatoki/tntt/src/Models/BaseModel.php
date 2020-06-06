@@ -1,6 +1,6 @@
 <?php
 
-namespace TNTT;
+namespace TNTT\Models;
 
 use Auth;
 use Illuminate\Database\Eloquent\Model;

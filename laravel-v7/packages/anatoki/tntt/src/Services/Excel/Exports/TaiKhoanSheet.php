@@ -2,7 +2,7 @@
 
 namespace TNTT\Services\Excel\Exports;
 
-use App\TaiKhoan;
+use TNTT\Models\TaiKhoan;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;

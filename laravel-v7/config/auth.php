@@ -62,7 +62,7 @@ return [
     'providers' => [
         'tai_khoan' => [
             'driver' => 'eloquent',
-            'model' => \TNTT\TaiKhoan::class,
+            'model' => \TNTT\Models\TaiKhoan::class,
         ],
 
         // 'users' => [

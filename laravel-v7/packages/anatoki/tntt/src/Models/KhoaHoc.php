@@ -1,6 +1,6 @@
 <?php
 
-namespace TNTT;
+namespace TNTT\Models;
 
 class KhoaHoc extends BaseModel
 {

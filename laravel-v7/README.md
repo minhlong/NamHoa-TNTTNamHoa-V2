@@ -4,6 +4,7 @@
 
 ## To Do list
 php artisan vendor:publish --force
+php artisan db:seed --class=TNTT\\Database\\Seeds\\DatabaseSeeder
 
 - Model: remove constructures, optimize relationship (morph...)
 - Time: Carbon time

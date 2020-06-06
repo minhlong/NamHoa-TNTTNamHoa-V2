@@ -1,5 +1,5 @@
 <?php
-namespace TNTT;
+namespace TNTT\Models;
 
 class DiemSo extends BaseModel
 {

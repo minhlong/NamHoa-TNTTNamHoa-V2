@@ -18,8 +18,8 @@ Route::group(['prefix' => 'api', 'namespace' => 'TNTT\Controllers'], function ()
     Route::group(['prefix' => 'tai-khoan'], function () {
         Route::get(null, 'TaiKhoanController@getDanhSach');
         Route::get('export', 'TaiKhoanController@generateExcelFile');
-        Route::post('ngay-them-suc', 'TaiKhoanController@postThemSuc')->middleware(['can:Lớp Họcrr']);
-        Route::post('ngay-ruoc-le', 'TaiKhoanController@postRuocLe')->middleware(['can:Lớp Học']);
+        Route::post('ngay-them-suc', 'TaiKhoanController@postThemSuc');
+        Route::post('ngay-ruoc-le', 'TaiKhoanController@postRuocLe');
 
         // Route::post('tap-tin', 'TaiKhoanController@postTapTin')->middleware(['permission:Tài Khoản']);
         // Route::post('tap-tin/tao', 'TaiKhoanController@postTao')->middleware(['permission:Tài Khoản']);
@@ -31,31 +31,9 @@ Route::group(['prefix' => 'api', 'namespace' => 'TNTT\Controllers'], function ()
     });
 
     Route::apiResources([
-        'phan-quyen' => 'PhanQuyenController',
-        'nhom-tai-khoan' => 'PhanNhomController'
-    ]);
-
-    /* Phân Quyền */
-    // Route::group(['prefix' => 'phan-quyen'], function () {
-    //     Route::get(null, 'PhanQuyenController@getDanhSach');
-    //     // Route::post('{PhanQuyen}', 'PhanQuyenController@postThongTin');
-    //     // Route::group(['prefix' => '{PhanQuyen}', 'middleware' => ['permission:Phân Quyền']], function () {
-    //     //     Route::post('/nhom', 'PhanQuyenController@postThemNhom');
-    //     //     Route::post('/tai-khoan', 'PhanQuyenController@postThemTaiKhoan');
-    //     //     Route::post('/xoa', 'PhanQuyenController@postXoa');
-    //     // });
-    // });
-    //
-    // /* Phân Nhóm */
-    // Route::group(['prefix' => 'nhom-tai-khoan'], function () {
-    //     Route::get(null, 'NhomTaiKhoanController@get');
-    //     //     Route::post('{NhomTaiKhoan?}', 'NhomTaiKhoanController@post')->middleware(['permission:Phân Quyền']);
-    //     //     Route::group(['prefix' => '{NhomTaiKhoan}', 'middleware' => ['permission:Phân Quyền']], function () {
-    //     //         Route::post('tai-khoan', 'NhomTaiKhoanController@postThem');
-    //     //         Route::post('xoa-tai-khoan', 'NhomTaiKhoanController@postXoa');
-    //     //         Route::delete(null, 'NhomTaiKhoanController@delete');
-    //     //     });
-    // });
+        'phan-quyen'     => 'PhanQuyenController',
+        'nhom-tai-khoan' => 'PhanNhomController',
+    ], ['except' => ['store', 'destroy']]);
 
     /* Khoa Hoc */
     Route::group(['prefix' => 'khoa-hoc'], function () {

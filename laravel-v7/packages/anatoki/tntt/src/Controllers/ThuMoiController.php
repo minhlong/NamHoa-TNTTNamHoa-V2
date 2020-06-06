@@ -3,7 +3,7 @@ namespace TNTT\Controllers;
 
 use TNTT\Services\Library;
 use TNTT\ThuMoi;
-use TNTT\KhoaHoc;
+use TNTT\Models\KhoaHoc;
 
 class ThuMoiController extends Controller
 {

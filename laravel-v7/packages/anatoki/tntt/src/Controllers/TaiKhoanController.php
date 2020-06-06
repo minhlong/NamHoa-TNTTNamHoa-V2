@@ -6,17 +6,24 @@ use Entrust;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use TNTT\LopHoc;
+use TNTT\Models\LopHoc;
+use TNTT\Models\TaiKhoan;
 use TNTT\Requests\TaiKhoanFormRequest;
 use TNTT\Services\Excel\Exports\TaiKhoanExport;
 use TNTT\Services\Library;
-use TNTT\TaiKhoan;
 
 class TaiKhoanController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth:api');
+        $this->middleware(['bindings'])->only([
+            'getThongTin',
+        ]);
+        $this->middleware(['can:Lớp Học'])->only([
+            'postThemSuc',
+            'postRuocLe',
+        ]);
     }
 
     /**
