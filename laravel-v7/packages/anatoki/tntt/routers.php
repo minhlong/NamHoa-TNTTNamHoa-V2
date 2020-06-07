@@ -18,16 +18,17 @@ Route::group(['prefix' => 'api', 'namespace' => 'TNTT\Controllers'], function ()
     Route::group(['prefix' => 'tai-khoan'], function () {
         Route::get(null, 'TaiKhoanController@getDanhSach');
         Route::get('export', 'TaiKhoanController@generateExcelFile');
-        Route::post('ngay-them-suc', 'TaiKhoanController@postThemSuc');
-        Route::post('ngay-ruoc-le', 'TaiKhoanController@postRuocLe');
+        Route::put('ngay-them-suc', 'TaiKhoanController@postThemSuc');
+        Route::put('ngay-ruoc-le', 'TaiKhoanController@postRuocLe');
 
-        // Route::post('tap-tin', 'TaiKhoanController@postTapTin')->middleware(['permission:Tài Khoản']);
-        // Route::post('tap-tin/tao', 'TaiKhoanController@postTao')->middleware(['permission:Tài Khoản']);
-        //
+        Route::post('import/validate', 'TaiKhoanController@postTapTin');
+        Route::post('import', 'TaiKhoanController@postTao');
+        Route::get('import', 'TaiKhoanController@postTaoDownload');
+
         Route::get('{taiKhoan}', 'TaiKhoanController@getThongTin');
-        // Route::post('{TaiKhoan}', 'TaiKhoanController@postUpdate');
-        // Route::delete('{TaiKhoan}', 'TaiKhoanController@postXoa')->middleware(['permission:Tài Khoản']);
-        // Route::post('{TaiKhoan}/mat-khau', 'TaiKhoanController@postMatKhau');
+        Route::put('{taiKhoan}', 'TaiKhoanController@postUpdate');
+        Route::put('{taiKhoan}/mat-khau', 'TaiKhoanController@postMatKhau');
+        Route::delete('{taiKhoan}', 'TaiKhoanController@postXoa');
     });
 
     Route::apiResources([

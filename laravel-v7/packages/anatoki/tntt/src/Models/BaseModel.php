@@ -13,11 +13,15 @@ class BaseModel extends Model
      */
     public function save(array $options = [])
     {
-        if (Auth::check()) {
-            $this->tai_khoan_cap_nhat = Auth::user()->id;
-        }
+        $this->beforeSave();
 
         return parent::save($options);
     }
 
+    public function beforeSave()
+    {
+        if (Auth::check()) {
+            $this->tai_khoan_cap_nhat = Auth::user()->id;
+        }
+    }
 }

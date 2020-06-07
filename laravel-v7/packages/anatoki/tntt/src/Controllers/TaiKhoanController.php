@@ -2,14 +2,20 @@
 
 namespace TNTT\Controllers;
 
-use Entrust;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
+use TNTT\Models\KhoaHoc;
 use TNTT\Models\LopHoc;
 use TNTT\Models\TaiKhoan;
-use TNTT\Requests\TaiKhoanFormRequest;
+use TNTT\Repositories\TaiKhoanRepository;
 use TNTT\Services\Excel\Exports\TaiKhoanExport;
+use TNTT\Services\Excel\Exports\TaiKhoanInsert;
+use TNTT\Services\Excel\Imports\TaiKhoanImport;
 use TNTT\Services\Library;
 
 class TaiKhoanController extends Controller
@@ -19,10 +25,23 @@ class TaiKhoanController extends Controller
         $this->middleware('auth:api');
         $this->middleware(['bindings'])->only([
             'getThongTin',
+            'postUpdate',
+            'postMatKhau',
+            'postXoa',
+        ]);
+        $this->middleware('check-owner')->only([
+            'postUpdate',
+            'postMatKhau',
         ]);
         $this->middleware(['can:Lớp Học'])->only([
             'postThemSuc',
             'postRuocLe',
+        ]);
+        $this->middleware(['can:Tài Khoản'])->only([
+            'postXoa',
+            'postTapTin',
+            'postTao',
+            'postTaoDownload',
         ]);
     }
 
@@ -103,194 +122,114 @@ class TaiKhoanController extends Controller
     }
 
     /**
-     * Luu Thong Tin Tai Khoan.
-     *
+     * @param  Request  $request
      * @param  TaiKhoan  $taiKhoan
-     * @param  TaiKhoanFormRequest  $taiKhoanFormRequest
      *
-     * @return string
+     * @return JsonResponse
+     * @throws Exception
      */
-    // public function postUpdate(TaiKhoan $taiKhoan, TaiKhoanFormRequest $taiKhoanFormRequest)
-    // {
-    //     if (!Entrust::can('tai-khoan') && $taiKhoan->id != Auth::user()->id) {
-    //         abort(403);
-    //     }
-    //
-    //     $taiKhoan->fill($taiKhoanFormRequest->all());
-    //     $taiKhoan->save();
-    //     // Update Trang Thai
-    //     if ($taiKhoan->trang_thai == 'TAM_NGUNG' && !$taiKhoan->trashed()) {
-    //         $taiKhoan->delete();
-    //     } elseif ($taiKhoan->trang_thai == 'HOAT_DONG' && $taiKhoan->trashed()) {
-    //         $taiKhoan->restore();
-    //     }
-    //
-    //     return $this->getThongTin($taiKhoan);
-    // }
+    public function postUpdate(Request $request, TaiKhoan $taiKhoan)
+    {
+        $request->validate([
+            'ngay_sinh'     => 'required|date_format:Y-m-d',
+            'ngay_rua_toi'  => 'nullable|date_format:Y-m-d',
+            'ngay_ruoc_le'  => 'nullable|date_format:Y-m-d',
+            'ngay_them_suc' => 'nullable|date_format:Y-m-d',
+            'ho_va_ten'     => 'required',
+        ]);
 
-    // public function postMatKhau(TaiKhoan $taiKhoan)
-    // {
-    //     if (!Entrust::can('tai-khoan') && $taiKhoan->id != Auth::user()->id) {
-    //         abort(403);
-    //     }
-    //
-    //     $taiKhoan->capNhatMatKhau(\Request::get('mat_khau'));
-    //     $taiKhoan->save();
-    //
-    //     return response()->json($taiKhoan);
-    // }
+        $taiKhoan->fill($request->all())->save();
 
-    // public function postXoa(TaiKhoan $taiKhoan)
-    // {
-    //     try {
-    //         $taiKhoan->forceDelete();
-    //     } catch (Exception $e) {
-    //         return response()->json([
-    //             'error' => 'Liên hệ quản trị',
-    //         ], 400);
-    //     }
-    //
-    //     return response()->json();
-    // }
+        // Update Trang Thai
+        if ($taiKhoan->trang_thai == 'TAM_NGUNG' && !$taiKhoan->trashed()) {
+            $taiKhoan->delete();
+        } elseif ($taiKhoan->trang_thai == 'HOAT_DONG' && $taiKhoan->trashed()) {
+            $taiKhoan->restore();
+        }
 
-    // public function postTapTin(Request $request, Library $library)
-    // {
-    //     if (!$request->hasFile('file')) {
-    //         return response()->json([
-    //             'error' => 'Không tìm thấy tập tin.',
-    //         ], 400);
-    //     }
-    //
-    //     $file    = $request->file('file');
-    //     $results = Excel::load($file->getRealPath())->get();
-    //
-    //     try {
-    //         $tmpCollect = $results[0];
-    //         $arrTmp     = [];
-    //         $khoaHocID  = KhoaHoc::hienTaiHoacTaoMoi()->id;
-    //         $lopHocColl = LopHoc::where('khoa_hoc_id', $khoaHocID)->get();
-    //         $tmpRule    = [
-    //             'ho_va_ten'     => 'required',
-    //             'ngay_sinh'     => 'required|date_format:Y-m-d',
-    //             'ngay_rua_toi'  => 'nullable|date_format:Y-m-d',
-    //             'ngay_ruoc_le'  => 'nullable|date_format:Y-m-d',
-    //             'ngay_them_suc' => 'nullable|date_format:Y-m-d',
-    //         ];
-    //
-    //         $tmpCollect = $tmpCollect->filter(function ($c) {
-    //             return $c->ho_va_ten && $c->ngay_sinh;
-    //         })->map(function ($c) use ($library) {
-    //             $c['ngay_sinh']     = $library->chuanHoaNgay($c['ngay_sinh']);
-    //             $c['ngay_rua_toi']  = $c['ngay_rua_toi'] ? $library->chuanHoaNgay($c['ngay_rua_toi']) : null;
-    //             $c['ngay_ruoc_le']  = $c['ngay_ruoc_le'] ? $library->chuanHoaNgay($c['ngay_ruoc_le']) : null;
-    //             $c['ngay_them_suc'] = $c['ngay_them_suc'] ? $library->chuanHoaNgay($c['ngay_them_suc']) : null;
-    //
-    //             return $c;
-    //         });
-    //
-    //         foreach ($tmpCollect as $c) {
-    //             $validator = Validator::make($c->toArray(), $tmpRule);
-    //             if ($validator->fails()) {
-    //                 return response()->json([
-    //                     'error' => $validator->errors(),
-    //                 ], 400);
-    //             }
-    //
-    //             $tmpLop = $lopHocColl->filter(function ($lh) use ($c) {
-    //                 return $lh->nganh == $c->nganh && $lh->cap == $c->cap && $lh->doi == $c->doi;
-    //             })->first();
-    //
-    //             if ($tmpLop) {
-    //                 $c['lop_hoc_id']  = $tmpLop->id;
-    //                 $c['lop_hoc_ten'] = $tmpLop->taoTen();
-    //             }
-    //         }
-    //
-    //         return response()->json([
-    //             'data' => array_merge([], $tmpCollect->toArray()),
-    //         ]);
-    //     } catch (Exception $e) {
-    //         return response()->json([
-    //             'error' => 'Kiểm tra lại định dạng tập tin.',
-    //         ], 400);
-    //     }
-    // }
+        return $this->getThongTin($taiKhoan);
+    }
 
-    // public function postTao(Request $request, Library $library)
-    // {
-    //     if (!$request->has('data')) {
-    //         return response()->json([
-    //             'error' => 'Không thấy dữ liệu.',
-    //         ], 400);
-    //     }
-    //
-    //     $resultArr   = [];
-    //     $taiKhoanArr = $request->data;
-    //     $khoaHocID   = KhoaHoc::hienTaiHoacTaoMoi()->id;
-    //     $lopHocColl  = LopHoc::where('khoa_hoc_id', $khoaHocID)->get();
-    //
-    //     DB::beginTransaction();
-    //     foreach ($taiKhoanArr as $taiKhoan) {
-    //         $newItem = TaiKhoan::taoTaiKhoan($taiKhoan);
-    //         if (isset($taiKhoan['lop_hoc_id'])) {
-    //             $tmpLop = $lopHocColl->filter(function ($lh) use ($taiKhoan) {
-    //                 return $lh->id == $taiKhoan['lop_hoc_id'];
-    //             })->first();
-    //
-    //             if ($tmpLop) {
-    //                 App::make('TNTT\Controllers\LopHocController')->themThanhVien($tmpLop, [$newItem->id]);
-    //                 $newItem['lop_hoc_ten'] = $tmpLop->taoTen();
-    //             }
-    //         }
-    //         $resultArr[] = $newItem;
-    //     }
-    //
-    //     $arrRow[] = [
-    //         'Mã Số',
-    //         'Họ và Tên',
-    //         'Tên',
-    //         'Lớp',
-    //         'Loại Tài Khoản',
-    //         'Trạng Thái',
-    //         'Tên Thánh',
-    //         'Giới Tính',
-    //         'Ngày Sinh',
-    //         'Ngày Rửa Tội',
-    //         'Ngày Ruớc Lễ',
-    //         'Ngày Thêm Sức',
-    //         'Điện Thoại',
-    //         'Địa Chỉ',
-    //     ];
-    //     foreach ($resultArr as $item) {
-    //         $arrRow[] = [
-    //             $item->id,
-    //             $item->ho_va_ten,
-    //             $item->ten,
-    //             $item->lop_hoc_ten,
-    //             $item->loai_tai_khoan,
-    //             $item->trang_thai,
-    //             $item->ten_thanh,
-    //             $item->gioi_tinh,
-    //             $library->chuanHoaNgay($item->ngay_sinh),
-    //             $library->chuanHoaNgay($item->ngay_rua_toi),
-    //             $library->chuanHoaNgay($item->ngay_ruoc_le),
-    //             $library->chuanHoaNgay($item->ngay_them_suc),
-    //             $item->dien_thoai,
-    //             $item->dia_chi,
-    //         ];
-    //     }
-    //
-    //     $file = Excel::create('TaoMoi_TaiKhoan_'.date('d-m-Y'), function ($excel) use ($arrRow) {
-    //         $excel->sheet('Danh Sách', function ($sheet) use ($arrRow) {
-    //             $sheet->fromArray($arrRow)
-    //                 ->setFreeze('C2');
-    //         });
-    //     })->store('xlsx', '/tmp', true);
-    //     DB::commit();
-    //
-    //     return response()->json([
-    //         'data' => $resultArr,
-    //         'file' => $file['file'],
-    //     ]);
-    // }
+    public function postMatKhau(Request $request, TaiKhoan $taiKhoan)
+    {
+        $request->validate([
+            'mat_khau' => 'required',
+        ]);
+        $taiKhoan->capNhatMatKhau($request->get('mat_khau'));
+        $taiKhoan->save();
+
+        return response()->json($taiKhoan);
+    }
+
+    public function postXoa(TaiKhoan $taiKhoan)
+    {
+        try {
+            $taiKhoan->forceDelete();
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => 'Liên hệ quản trị',
+            ], 400);
+        }
+
+        // TODO: delete relative items
+
+        return response()->json(['result' => 'true']);
+    }
+
+    public function postTapTin(Request $request, Library $library)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xls,xlsx',
+        ]);
+
+        $importer = new TaiKhoanImport();
+        Excel::import($importer, $request->file('file'));
+
+        return response()->json([
+            'data' => $importer->getResult(),
+        ]);
+    }
+
+    public function postTao(Request $request, Library $library, TaiKhoanRepository $taiKhoanRepo)
+    {
+        $request->validate([
+            'data' => 'required',
+        ]);
+
+        $result = new Collection();
+        $rows   = $request->data;
+        $khoaId = KhoaHoc::hienTai()->id;
+        $lops   = LopHoc::where('khoa_hoc_id', $khoaId)->get();
+
+        DB::beginTransaction();
+        foreach ($rows as $row) {
+            $taiKhoan = TaiKhoan::taoTaiKhoan($row);
+            if (isset($row['lop_hoc_id'])) {
+                $tmpLop = $lops->filter(function ($lh) use ($row) {
+                    return $lh->id == $row['lop_hoc_id'];
+                })->first();
+
+                if ($tmpLop) {
+                    $taiKhoanRepo->themThanhVien($tmpLop, [$taiKhoan->id]);
+                    $taiKhoan['lop_hoc_ten'] = $tmpLop->taoTen();
+                }
+            }
+            $result->push($taiKhoan);
+        }
+
+        DB::commit();
+
+        return response()->json([
+            'data' => $result,
+        ]);
+    }
+
+    public function postTaoDownload(Request $request)
+    {
+        $request->validate([
+            'data' => 'required',
+        ]);
+
+        return new TaiKhoanInsert($request->data);
+    }
 }

@@ -22,7 +22,14 @@ class CustomHandler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        ModelNotFoundException::class,
+        MethodNotAllowedHttpException::class,
+        PermissionDoesNotExist::class,
+        RoleDoesNotExist::class,
+        NotFoundHttpException::class,
+        ExcelInvalidFormat::class,
+        ValidationException::class,
+        AuthorizationException::class,
     ];
 
     /**
@@ -59,7 +66,6 @@ class CustomHandler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        info(get_class($exception));
         if ($exception instanceof ModelNotFoundException ||
             $exception instanceof MethodNotAllowedHttpException ||
             $exception instanceof PermissionDoesNotExist ||
@@ -74,6 +80,10 @@ class CustomHandler extends ExceptionHandler
             return response()->json([
                 'error' => $exception->errors(),
             ], 400);
+        }
+
+        if ($exception instanceof ExcelInvalidFormat) {
+            return $exception->render();
         }
 
         if ($exception instanceof AuthorizationException) {

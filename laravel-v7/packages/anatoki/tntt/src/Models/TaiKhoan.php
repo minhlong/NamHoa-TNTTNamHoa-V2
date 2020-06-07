@@ -185,7 +185,7 @@ class TaiKhoan extends BaseModel implements AuthenticatableContract, JWTSubject,
             }
         } else {
             if (!$khoaHocID) {
-                $khoaHocID = KhoaHoc::hienTaiHoacTaoMoi()->id;
+                $khoaHocID = KhoaHoc::hienTai()->id;
             }
             return substr($khoaHocID, -2);
         }
@@ -220,6 +220,7 @@ class TaiKhoan extends BaseModel implements AuthenticatableContract, JWTSubject,
         $taiKhoan->trang_thai = 'HOAT_DONG';
         $taiKhoan->id         = $taiKhoan->taoID($taiKhoan->loai_tai_khoan);
         $taiKhoan->capNhatMatKhau($taiKhoan->id);
+
         if (!$taiKhoan->save()) {
             abort(500);
         }
