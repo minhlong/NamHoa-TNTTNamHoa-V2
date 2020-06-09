@@ -1,44 +1,44 @@
 <?php
+
 namespace TNTT\Controllers;
 
-use TNTT\Services\Library;
-use TNTT\ThietBi;
-use TNTT\Models\KhoaHoc;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use TNTT\Models\KhoaHoc;
+use TNTT\ThietBi;
+use Validator;
 
 class ThietBiController extends Controller
 {
     /**
-     * @param ThietBi $thietBi
-     * @param Library $library
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param  ThietBi  $thietBi
+     * @return Response
      */
-    public function getDanhSach(ThietBi $thietBi, Library $library)
+    public function getDanhSach(ThietBi $thietBi)
     {
-        $khoaHocID = KhoaHoc::hienTai()->id;
-        $thietBi = $thietBi->with(['tai_khoan'])->get();
+        $thietBi   = $thietBi->with(['tai_khoan'])->get();
 
         return response()->json([
             'data' => $thietBi,
         ]);
     }
 
-    public function post(ThietBi $thietBi, Library $library)
+    public function post(ThietBi $thietBi)
     {
-        $tmpRule    = [
+        $tmpRule = [
             'ten'       => 'required',
             'ngay_muon' => 'nullable|date_format:Y-m-d',
             'ngay_tra'  => 'nullable|date_format:Y-m-d',
         ];
 
-        $validator = \Validator::make(\Request::all(), $tmpRule, [
-            'date_format' => 'Trường :attribute không đúng định dạng.'
+        $validator = Validator::make(\Request::all(), $tmpRule, [
+            'date_format' => 'Trường :attribute không đúng định dạng.',
         ]);
         $validator->setAttributeNames([
-            'ten' => 'Tên Thiết Bị',
-            'ngay_muon'  => 'Ngày Mượn',
+            'ten'       => 'Tên Thiết Bị',
+            'ngay_muon' => 'Ngày Mượn',
             'ngay_tra'  => 'Ngày Trả',
-        ]); 
+        ]);
         if ($validator->fails()) {
             return response()->json([
                 'error' => $validator->errors(),
@@ -53,20 +53,20 @@ class ThietBiController extends Controller
 
     public function postDangKy(ThietBi $thietBi, Request $request)
     {
-        $tmpRule    = [
+        $tmpRule = [
             'tai_khoan_id' => 'required',
             'ngay_muon'    => 'required|date_format:Y-m-d',
             'ngay_tra'     => 'required|date_format:Y-m-d',
         ];
 
-        $validator = \Validator::make(array_merge($request->get('info')), $tmpRule, [
-            'date_format' => 'Trường :attribute không đúng định dạng.'
+        $validator = Validator::make(array_merge($request->get('info')), $tmpRule, [
+            'date_format' => 'Trường :attribute không đúng định dạng.',
         ]);
         $validator->setAttributeNames([
             'tai_khoan_id' => 'Huynh Trưởng',
-            'ngay_muon'  => 'Ngày Mượn',
-            'ngay_tra'  => 'Ngày Trả',
-        ]); 
+            'ngay_muon'    => 'Ngày Mượn',
+            'ngay_tra'     => 'Ngày Trả',
+        ]);
         if ($validator->fails()) {
             return response()->json([
                 'error' => $validator->errors(),

@@ -6,15 +6,24 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use TNTT\Exceptions\ExcelInvalidFormat;
 use TNTT\Models\KhoaHoc;
 use TNTT\Models\LopHoc;
-use TNTT\Models\TaiKhoan;
-use TNTT\Services\Library;
 
-class TaiKhoanImport implements ToCollection, WithHeadingRow
+class TaiKhoanImport implements ToCollection, WithHeadingRow, WithMultipleSheets
 {
     protected $data = [];
+
+    /**
+     * @return array
+     */
+    public function sheets(): array
+    {
+        return [
+            0 => $this,
+        ];
+    }
 
     /**
      * $row = [
@@ -35,7 +44,7 @@ class TaiKhoanImport implements ToCollection, WithHeadingRow
      * ];
      *
      * @param  Collection  $rows
-     * @return TaiKhoan[]
+     * @return array
      * @throws ExcelInvalidFormat
      */
     public function collection(Collection $rows)
@@ -43,19 +52,17 @@ class TaiKhoanImport implements ToCollection, WithHeadingRow
         $khoaId    = KhoaHoc::hienTai()->id;
         $lopHocArr = LopHoc::where('khoa_hoc_id', $khoaId)->get();
 
-        $library = new Library();
-        $rows    = $rows->whereNotNull('ngay_sinh')->whereNotNull('ho_va_ten')
-            ->map(function ($c) use ($library) {
-                $c['ngay_sinh']     = $library->chuanHoaNgay($c['ngay_sinh']);
-                $c['ngay_rua_toi']  = $c['ngay_rua_toi'] ? $library->chuanHoaNgay($c['ngay_rua_toi']) : null;
-                $c['ngay_ruoc_le']  = $c['ngay_ruoc_le'] ? $library->chuanHoaNgay($c['ngay_ruoc_le']) : null;
-                $c['ngay_them_suc'] = $c['ngay_them_suc'] ? $library->chuanHoaNgay($c['ngay_them_suc']) : null;
+        $rows = $rows->whereNotNull('ngay_sinh')->whereNotNull('ho_va_ten')
+            ->map(function ($c) {
+                $c['ngay_sinh']     = mapDate($c['ngay_sinh']);
+                $c['ngay_rua_toi']  = $c['ngay_rua_toi'] ? mapDate($c['ngay_rua_toi']) : null;
+                $c['ngay_ruoc_le']  = $c['ngay_ruoc_le'] ? mapDate($c['ngay_ruoc_le']) : null;
+                $c['ngay_them_suc'] = $c['ngay_them_suc'] ? mapDate($c['ngay_them_suc']) : null;
 
                 return $c;
             });
 
         $tmpRule = [
-            'ho_va_ten'     => 'required',
             'ngay_sinh'     => 'required|date_format:Y-m-d',
             'ngay_rua_toi'  => 'nullable|date_format:Y-m-d',
             'ngay_ruoc_le'  => 'nullable|date_format:Y-m-d',

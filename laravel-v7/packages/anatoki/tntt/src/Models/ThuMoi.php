@@ -1,7 +1,9 @@
 <?php
+
 namespace TNTT\Models;
 
-use TNTT\Services\Library;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Request;
 
 class ThuMoi extends BaseModel
 {
@@ -19,7 +21,7 @@ class ThuMoi extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function tai_khoan()
     {
@@ -28,22 +30,21 @@ class ThuMoi extends BaseModel
 
     /**
      * @param $query
-     * @param Library $library
      */
-    public function scopeLocDuLieu($query, Library $library)
+    public function scopeLocDuLieu($query)
     {
-        if ($q = \Request::get('tai_khoan_id')) {
+        if ($q = Request::get('tai_khoan_id')) {
             $query->where('tai_khoan_id', $q);
         }
-        if ($q = \Request::get('ho_va_ten')) {
+        if ($q = Request::get('ho_va_ten')) {
             $query->whereHas('tai_khoan', function ($query) use ($q) {
-                $query->where('ho_va_ten', 'like', '%' . $q . '%');
+                $query->where('ho_va_ten', 'like', '%'.$q.'%');
             });
         }
-        if ($q = \Request::get('tu_ngay')) {
+        if ($q = Request::get('tu_ngay')) {
             $query->where('ngay', '>=', $q);
         }
-        if ($q = \Request::get('den_ngay')) {
+        if ($q = Request::get('den_ngay')) {
             $query->where('ngay', '<=', $q);
         }
         $query->orderBy('ngay', 'desc');

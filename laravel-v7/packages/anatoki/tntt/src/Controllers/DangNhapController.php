@@ -15,7 +15,7 @@ class DangNhapController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['dangNhap']]);
+        $this->middleware('auth:api', ['except' => ['login']]);
     }
 
     /**
@@ -23,7 +23,7 @@ class DangNhapController extends Controller
      *
      * @return JsonResponse
      */
-    public function dangNhap()
+    public function login()
     {
         $credentials = request(['id', 'password']);
 
@@ -63,7 +63,7 @@ class DangNhapController extends Controller
      *
      * @return JsonResponse
      */
-    public function dangXuat()
+    public function logout()
     {
         auth()->logout();
 

@@ -5,7 +5,6 @@ namespace TNTT\Controllers;
 use TNTT\Models\DiemDanh;
 use TNTT\Models\KhoaHoc;
 use TNTT\Models\LopHoc;
-use TNTT\Services\Library;
 use TNTT\Models\TaiKhoan;
 
 class TrangChuController extends Controller
@@ -15,7 +14,7 @@ class TrangChuController extends Controller
         $this->middleware('auth:api');
     }
 
-    public function getThongTin(Library $library)
+    public function get()
     {
         $khoaHocID    = KhoaHoc::hienTai()->id;
         $counterAuNhi = TaiKhoan::where('trang_thai', 'HOAT_DONG')
@@ -52,11 +51,11 @@ class TrangChuController extends Controller
                 'ht_du_bi'     => $countHTDuBi,
                 'huynh_truong' => $countHT,
             ],
-            'chua_diem_danh' => $this->getChuaDiemDanh($library),
+            'chua_diem_danh' => $this->chuaDiemDanh(),
         ]);
     }
 
-    protected function getChuaDiemDanh(Library $library)
+    protected function chuaDiemDanh()
     {
         // Trong pham vi 6 ngay
         $endDate   = strtotime('now');
@@ -65,7 +64,7 @@ class TrangChuController extends Controller
         $endDate   = date('Y-m-d', $endDate);
 
         // Lay ngay Chua Nhat
-        $currentSunday = $library->SpecificDayBetweenDates($startDate, $endDate);
+        $currentSunday = getSundays($startDate, $endDate);
         $currentSunday = array_shift($currentSunday);
         $result        = [];
         $list          = LopHoc::where('khoa_hoc_id', KhoaHoc::hienTai()->id)

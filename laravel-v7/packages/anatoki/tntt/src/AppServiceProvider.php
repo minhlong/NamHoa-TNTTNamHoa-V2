@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
         // Custom handle error
         $this->app->bind(ExceptionHandler::class, CustomHandler::class);
 
-        Route::aliasMiddleware('check-owner', CheckOwner::class);
+        Route::aliasMiddleware('isOwner', CheckOwner::class);
 
         // Load Routers
         $this->loadRoutesFrom(__DIR__.'/../routers.php');

@@ -33,8 +33,11 @@ class ThongSo extends BaseModel
 
     public static function layTen($loaiDuLieu, $kyHieu)
     {
-        return self::where('loai_du_lieu', $loaiDuLieu)
+        info($loaiDuLieu);
+        info( $kyHieu);
+        $x= self::where('loai_du_lieu', $loaiDuLieu)
             ->where('ky_hieu', $kyHieu)
             ->first()->ten;
+        info($x);
     }
 }

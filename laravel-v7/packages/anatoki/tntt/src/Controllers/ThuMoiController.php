@@ -1,26 +1,31 @@
 <?php
+
 namespace TNTT\Controllers;
 
-use TNTT\Services\Library;
-use TNTT\ThuMoi;
+use Request;
+use Symfony\Component\HttpFoundation\Response;
 use TNTT\Models\KhoaHoc;
+use TNTT\Models\ThuMoi;
 
 class ThuMoiController extends Controller
 {
     /**
-     * @param ThuMoi $thumoi
-     * @param Library $library
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param  ThuMoi  $thumoi
+     * @return Response
      */
-    public function getDanhSach(ThuMoi $thumoi, Library $library)
+    public function getDanhSach(ThuMoi $thumoi)
     {
         $khoaHocID = KhoaHoc::hienTai()->id;
-        $thumoi = $thumoi->locDuLieu($library)
-            ->with(['tai_khoan' => function($query) use ($khoaHocID) {
-                return $query->with(['lop_hoc' => function($query) use ($khoaHocID) {
-                    return $query->where('khoa_hoc_id', $khoaHocID);
-                }]);
-            }])->get()->map(function ($c) {
+        $thumoi    = $thumoi->locDuLieu()
+            ->with([
+                'tai_khoan' => function ($query) use ($khoaHocID) {
+                    return $query->with([
+                        'lop_hoc' => function ($query) use ($khoaHocID) {
+                            return $query->where('khoa_hoc_id', $khoaHocID);
+                        },
+                    ]);
+                },
+            ])->get()->map(function ($c) {
                 $c['tai_khoan']['lop_hoc']->map(function ($d) {
                     $d->ten = $d->taoTen();
                     return $d;
@@ -33,15 +38,15 @@ class ThuMoiController extends Controller
         ]);
     }
 
-    public function post(ThuMoi $thuMoi, Library $library)
+    public function post(ThuMoi $thuMoi)
     {
-        $thuMoi->fill(\Request::all());
+        $thuMoi->fill(Request::all());
         $thuMoi->save();
 
         return response()->json(true);
     }
 
-    public function getThongTin(ThuMoi $thuMoi, Library $library)
+    public function getThongTin(ThuMoi $thuMoi)
     {
         return response()->json($thuMoi);
     }

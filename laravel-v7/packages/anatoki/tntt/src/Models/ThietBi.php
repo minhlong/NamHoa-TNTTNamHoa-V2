@@ -1,7 +1,8 @@
 <?php
+
 namespace TNTT\Models;
 
-use TNTT\Services\Library;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ThietBi extends BaseModel
 {
@@ -22,7 +23,7 @@ class ThietBi extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function tai_khoan()
     {

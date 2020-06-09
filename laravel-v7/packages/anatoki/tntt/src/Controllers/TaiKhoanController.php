@@ -9,14 +9,14 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 use TNTT\Models\KhoaHoc;
 use TNTT\Models\LopHoc;
 use TNTT\Models\TaiKhoan;
 use TNTT\Repositories\TaiKhoanRepository;
 use TNTT\Services\Excel\Exports\TaiKhoanExport;
-use TNTT\Services\Excel\Exports\TaiKhoanInsert;
+use TNTT\Services\Excel\Exports\TaiKhoanInserted;
 use TNTT\Services\Excel\Imports\TaiKhoanImport;
-use TNTT\Services\Library;
 
 class TaiKhoanController extends Controller
 {
@@ -24,24 +24,24 @@ class TaiKhoanController extends Controller
     {
         $this->middleware('auth:api');
         $this->middleware(['bindings'])->only([
-            'getThongTin',
-            'postUpdate',
-            'postMatKhau',
-            'postXoa',
+            'show',
+            'update',
+            'updatePassword',
+            'delete',
         ]);
-        $this->middleware('check-owner')->only([
-            'postUpdate',
-            'postMatKhau',
+        $this->middleware('isOwner')->only([
+            'update',
+            'updatePassword',
         ]);
         $this->middleware(['can:Lớp Học'])->only([
-            'postThemSuc',
-            'postRuocLe',
+            'updateThemSuc',
+            'updateRuocLe',
         ]);
         $this->middleware(['can:Tài Khoản'])->only([
-            'postXoa',
-            'postTapTin',
-            'postTao',
-            'postTaoDownload',
+            'delete',
+            'importStep1',
+            'importStep2',
+            'importStep3',
         ]);
     }
 
@@ -50,7 +50,7 @@ class TaiKhoanController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function getDanhSach(TaiKhoan $taiKhoan, Request $request)
+    public function index(Request $request)
     {
         $taiKhoan = TaiKhoan::withTrashed()->locDuLieu()->get();
 
@@ -79,7 +79,7 @@ class TaiKhoanController extends Controller
      * @param  TaiKhoan  $taiKhoan
      * @return JsonResponse
      */
-    public function getThongTin(TaiKhoan $taiKhoan)
+    public function show(TaiKhoan $taiKhoan)
     {
         $taiKhoan->load(['lop_hoc']);
         foreach ($taiKhoan->lop_hoc as &$item) {
@@ -90,12 +90,12 @@ class TaiKhoanController extends Controller
         return response()->json($taiKhoan->toArray());
     }
 
-    public function generateExcelFile(TaiKhoan $taiKhoan, LopHoc $lopHoc, Request $request, Library $library)
+    public function export()
     {
         return new TaiKhoanExport();
     }
 
-    public function postThemSuc(Request $request)
+    public function updateThemSuc(Request $request)
     {
         try {
             TaiKhoan::whereIn('id', $request->get('tai_khoan'))->update(['ngay_them_suc' => $request->get('ngay_them_suc')]);
@@ -108,7 +108,7 @@ class TaiKhoanController extends Controller
         return response()->json(['result' => 'true']);
     }
 
-    public function postRuocLe(Request $request)
+    public function updateRuocLe(Request $request)
     {
         try {
             TaiKhoan::whereIn('id', $request->get('tai_khoan'))->update(['ngay_ruoc_le' => $request->get('ngay_ruoc_le')]);
@@ -128,7 +128,7 @@ class TaiKhoanController extends Controller
      * @return JsonResponse
      * @throws Exception
      */
-    public function postUpdate(Request $request, TaiKhoan $taiKhoan)
+    public function update(Request $request, TaiKhoan $taiKhoan)
     {
         $request->validate([
             'ngay_sinh'     => 'required|date_format:Y-m-d',
@@ -147,10 +147,10 @@ class TaiKhoanController extends Controller
             $taiKhoan->restore();
         }
 
-        return $this->getThongTin($taiKhoan);
+        return $this->show($taiKhoan);
     }
 
-    public function postMatKhau(Request $request, TaiKhoan $taiKhoan)
+    public function updatePassword(Request $request, TaiKhoan $taiKhoan)
     {
         $request->validate([
             'mat_khau' => 'required',
@@ -161,7 +161,7 @@ class TaiKhoanController extends Controller
         return response()->json($taiKhoan);
     }
 
-    public function postXoa(TaiKhoan $taiKhoan)
+    public function delete(TaiKhoan $taiKhoan)
     {
         try {
             $taiKhoan->forceDelete();
@@ -176,7 +176,13 @@ class TaiKhoanController extends Controller
         return response()->json(['result' => 'true']);
     }
 
-    public function postTapTin(Request $request, Library $library)
+    /**
+     * Update excel file
+     *
+     * @param  Request  $request
+     * @return JsonResponse
+     */
+    public function importStep1(Request $request)
     {
         $request->validate([
             'file' => 'required|file|mimes:xls,xlsx',
@@ -190,7 +196,15 @@ class TaiKhoanController extends Controller
         ]);
     }
 
-    public function postTao(Request $request, Library $library, TaiKhoanRepository $taiKhoanRepo)
+    /**
+     * Insert into DB
+     *
+     * @param  Request  $request
+     * @param  TaiKhoanRepository  $taiKhoanRepo
+     * @return JsonResponse
+     * @throws Throwable
+     */
+    public function importStep2(Request $request, TaiKhoanRepository $taiKhoanRepo)
     {
         $request->validate([
             'data' => 'required',
@@ -216,7 +230,6 @@ class TaiKhoanController extends Controller
             }
             $result->push($taiKhoan);
         }
-
         DB::commit();
 
         return response()->json([
@@ -224,12 +237,18 @@ class TaiKhoanController extends Controller
         ]);
     }
 
-    public function postTaoDownload(Request $request)
+    /**
+     * Download imported user
+     *
+     * @param  Request  $request
+     * @return TaiKhoanInserted
+     */
+    public function importStep3(Request $request)
     {
         $request->validate([
             'data' => 'required',
         ]);
 
-        return new TaiKhoanInsert($request->data);
+        return new TaiKhoanInserted($request->data);
     }
 }

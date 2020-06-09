@@ -12,13 +12,12 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Excel;
-use TNTT\Services\Library;
 
-class TaiKhoanInsert implements FromArray, Responsable, WithTitle, WithHeadings, ShouldAutoSize, WithEvents
+class LopHocInserted implements FromArray, Responsable, WithTitle, WithHeadings, ShouldAutoSize, WithEvents
 {
     use Exportable;
 
-    private $fileName = 'TaoMoi_TaiKhoan_';
+    private $fileName = 'TaoMoi_LopHoc_';
     private $writerType = Excel::XLSX;
     private $data = null;
 
@@ -37,7 +36,7 @@ class TaiKhoanInsert implements FromArray, Responsable, WithTitle, WithHeadings,
     {
         return [
             AfterSheet::class => function (AfterSheet $event) {
-                $event->sheet->freezePane('C2');
+                $event->sheet->freezePane('A2');
             },
         ];
     }
@@ -45,20 +44,9 @@ class TaiKhoanInsert implements FromArray, Responsable, WithTitle, WithHeadings,
     public function headings(): array
     {
         return [
-            'Mã Số',
-            'Họ và Tên',
+            'Mã Lớp',
             'Tên',
-            'Lớp',
-            'Loại Tài Khoản',
-            'Trạng Thái',
-            'Tên Thánh',
-            'Giới Tính',
-            'Ngày Sinh',
-            'Ngày Rửa Tội',
-            'Ngày Ruớc Lễ',
-            'Ngày Thêm Sức',
-            'Điện Thoại',
-            'Địa Chỉ',
+            'Vị Trí Học',
         ];
     }
 
@@ -67,24 +55,12 @@ class TaiKhoanInsert implements FromArray, Responsable, WithTitle, WithHeadings,
      */
     public function array(): array
     {
-        $library = new Library();
         $results = [];
         foreach ($this->data as $item) {
             $results[] = [
                 $item['id'],
-                $item['ho_va_ten'],
                 $item['ten'],
-                $item['lop_hoc_ten'],
-                $item['loai_tai_khoan'],
-                $item['trang_thai'],
-                $item['ten_thanh'],
-                $item['gioi_tinh'],
-                $library->chuanHoaNgay($item['ngay_sinh']),
-                $library->chuanHoaNgay($item['ngay_rua_toi']),
-                $library->chuanHoaNgay($item['ngay_ruoc_le']),
-                $library->chuanHoaNgay($item['ngay_them_suc']),
-                $item['dien_thoai'],
-                $item['dia_chi'],
+                $item['vi_tri_hoc'],
             ];
         }
         return $results;
