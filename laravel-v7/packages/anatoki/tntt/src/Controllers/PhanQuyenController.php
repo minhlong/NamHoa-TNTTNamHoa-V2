@@ -96,4 +96,14 @@ class PhanQuyenController extends Controller
         $phan_quyen->delete();
         return response()->json(['result' => true]);
     }
+
+    public function addRole()
+    {
+        
+    }
+
+    public function addTaiKhoan()
+    {
+        
+    }
 }

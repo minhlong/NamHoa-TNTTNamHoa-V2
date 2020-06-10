@@ -2,7 +2,8 @@
 
 namespace TNTT\Controllers;
 
-use Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use TNTT\Models\KhoaHoc;
 use TNTT\Models\ThuMoi;
@@ -10,13 +11,31 @@ use TNTT\Models\ThuMoi;
 class ThuMoiController extends Controller
 {
     /**
-     * @param  ThuMoi  $thumoi
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+        $this->middleware(['bindings'])->only([
+            'show',
+            'update',
+            'destroy',
+        ]);
+        $this->middleware(['can:Lớp Học'])->only([
+            'store',
+            'update',
+            'destroy',
+        ]);
+    }
+
+    /**
+     * @param  ThuMoi  $thuMoi
      * @return Response
      */
-    public function getDanhSach(ThuMoi $thumoi)
+    public function index(ThuMoi $thuMoi)
     {
         $khoaHocID = KhoaHoc::hienTai()->id;
-        $thumoi    = $thumoi->locDuLieu()
+        $thuMoi    = $thuMoi->locDuLieu()
             ->with([
                 'tai_khoan' => function ($query) use ($khoaHocID) {
                     return $query->with([
@@ -34,27 +53,38 @@ class ThuMoiController extends Controller
             });
 
         return response()->json([
-            'data' => $thumoi,
+            'data' => $thuMoi,
         ]);
     }
 
-    public function post(ThuMoi $thuMoi)
+    /**
+     * @param  Request  $request
+     * @return JsonResponse
+     */
+    public function store(Request $request)
     {
-        $thuMoi->fill(Request::all());
-        $thuMoi->save();
+        $item = ThuMoi::create($request->all());
 
-        return response()->json(true);
+        return response()->json($item->toArray());
     }
 
-    public function getThongTin(ThuMoi $thuMoi)
+    public function update(ThuMoi $thu_moi, Request $request)
+    {
+        $thu_moi->fill($request->all());
+        $thu_moi->save();
+
+        return response()->json(['result' => true]);
+    }
+
+    public function show(ThuMoi $thuMoi)
     {
         return response()->json($thuMoi);
     }
 
-    public function delete(ThuMoi $thumoi)
+    public function destroy(ThuMoi $thu_moi)
     {
-        $thumoi->delete();
+        $thu_moi->destroy();
 
-        return response()->json(true);
+        return response()->json(['result' => true]);
     }
 }

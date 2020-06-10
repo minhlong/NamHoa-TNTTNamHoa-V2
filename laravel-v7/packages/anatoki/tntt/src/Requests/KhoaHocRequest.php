@@ -2,9 +2,9 @@
 
 namespace TNTT\Requests;
 
-use TNTT\Models\KhoaHoc;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Validator;
+use TNTT\Models\KhoaHoc;
 
 class KhoaHocRequest extends FormRequest
 {
@@ -28,7 +28,7 @@ class KhoaHocRequest extends FormRequest
             if (strtotime($value) <= strtotime($otherDate)) {
                 return false;
             }
-            $counter = KhoaHoc::where('id', '<>', $this->KhoaHoc->id)
+            $counter = KhoaHoc::where('id', '<>', $this->khoa_hoc->id)
                 ->whereRaw(
                     '( (ngay_bat_dau <= ? and ? <= ngay_ket_thuc) or (ngay_bat_dau <= ? and ? <= ngay_ket_thuc) )',
                     [$value, $value, $otherDate, $otherDate,]

@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'api', 'namespace' => 'TNTT\Controllers'], function () {
 
     // Auto pull git when push new commits
-    Route::post('auto-pull', 'PullGitController@postAutoPull');
+    Route::post('auto-pull', 'HelperController@postAutoPull');
 
     /* Trang Chu */
     Route::get('trang-chu', 'TrangChuController@get');
@@ -57,17 +57,12 @@ Route::group(['prefix' => 'api', 'namespace' => 'TNTT\Controllers'], function ()
         Route::post('{lopHoc}/tong-ket/nhan-xet', 'LopHocController@postNhanXet');
     });
 
-    /* Khoa Hoc */
-    Route::group(['prefix' => 'khoa-hoc'], function () {
-        Route::get(null, 'KhoaHocController@getDanhSach');
-        // Route::post(null, 'KhoaHocController@postTaoMoi')->middleware(['permission:Hệ Thống']);
-
-        // Route::get('{khoaHoc}', 'KhoaHocController@getThongTin');
-        // Route::post(null, 'KhoaHocController@postThongTin')->middleware(['permission:Hệ Thống']);
-    });
-
     Route::apiResources([
         'phan-quyen'     => 'PhanQuyenController',
         'nhom-tai-khoan' => 'PhanNhomController',
     ], ['except' => ['store', 'destroy']]);
+
+    Route::apiResource('khoa-hoc', 'KhoaHocController', ['except' => ['destroy']]);
+    Route::apiResource('thiet-bi', 'ThietBiController', ['except' => ['show']]);
+    Route::apiResource('thu-moi', 'ThuMoiController');
 });

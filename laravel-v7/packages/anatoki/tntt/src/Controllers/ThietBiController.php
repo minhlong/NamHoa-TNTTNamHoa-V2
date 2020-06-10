@@ -4,74 +4,62 @@ namespace TNTT\Controllers;
 
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use TNTT\Models\KhoaHoc;
-use TNTT\ThietBi;
-use Validator;
+use TNTT\Models\ThietBi;
 
 class ThietBiController extends Controller
 {
     /**
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+        $this->middleware(['bindings'])->only([
+            'show',
+            'update',
+            'destroy',
+        ]);
+        $this->middleware(['can:Thiết Bị'])->only([
+            'store',
+            'update',
+            'destroy',
+        ]);
+    }
+
+    /**
      * @param  ThietBi  $thietBi
      * @return Response
      */
-    public function getDanhSach(ThietBi $thietBi)
+    public function index(ThietBi $thietBi)
     {
-        $thietBi   = $thietBi->with(['tai_khoan'])->get();
+        $thietBi = $thietBi->with(['tai_khoan'])->get();
 
         return response()->json([
             'data' => $thietBi,
         ]);
     }
 
-    public function post(ThietBi $thietBi)
+    public function update(ThietBi $thiet_bi, Request $request)
     {
-        $tmpRule = [
+        $data = $request->validate([
             'ten'       => 'required',
             'ngay_muon' => 'nullable|date_format:Y-m-d',
             'ngay_tra'  => 'nullable|date_format:Y-m-d',
-        ];
-
-        $validator = Validator::make(\Request::all(), $tmpRule, [
-            'date_format' => 'Trường :attribute không đúng định dạng.',
         ]);
-        $validator->setAttributeNames([
-            'ten'       => 'Tên Thiết Bị',
-            'ngay_muon' => 'Ngày Mượn',
-            'ngay_tra'  => 'Ngày Trả',
-        ]);
-        if ($validator->fails()) {
-            return response()->json([
-                'error' => $validator->errors(),
-            ], 400);
-        }
 
-        $thietBi->fill(\Request::all());
-        $thietBi->save();
+        $thiet_bi->fill($data);
+        $thiet_bi->save();
 
-        return response()->json(true);
+        return response()->json(['result' => true]);
     }
 
-    public function postDangKy(ThietBi $thietBi, Request $request)
+    public function store(ThietBi $thietBi, Request $request)
     {
-        $tmpRule = [
-            'tai_khoan_id' => 'required',
-            'ngay_muon'    => 'required|date_format:Y-m-d',
-            'ngay_tra'     => 'required|date_format:Y-m-d',
-        ];
-
-        $validator = Validator::make(array_merge($request->get('info')), $tmpRule, [
-            'date_format' => 'Trường :attribute không đúng định dạng.',
+        $data = $request->validate([
+            'info.tai_khoan_id' => 'required',
+            'info.ngay_muon'    => 'required|date_format:Y-m-d',
+            'info.ngay_tra'     => 'required|date_format:Y-m-d',
         ]);
-        $validator->setAttributeNames([
-            'tai_khoan_id' => 'Huynh Trưởng',
-            'ngay_muon'    => 'Ngày Mượn',
-            'ngay_tra'     => 'Ngày Trả',
-        ]);
-        if ($validator->fails()) {
-            return response()->json([
-                'error' => $validator->errors(),
-            ], 400);
-        }
 
         $arrThietBi = $thietBi->whereIn('id', $request->get('devices'))->get();
 
@@ -79,13 +67,13 @@ class ThietBiController extends Controller
             $item->fill($request->get('info'));
             $item->save();
         }
-        return response()->json(true);
+        return response()->json(['result' => true]);
     }
 
-    public function delete(ThietBi $thietBi)
+    public function destroy(ThietBi $thiet_bi)
     {
-        $thietBi->delete();
+        $thiet_bi->delete();
 
-        return response()->json(true);
+        return response()->json(['result' => true]);
     }
 }

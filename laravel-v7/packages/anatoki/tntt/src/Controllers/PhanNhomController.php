@@ -96,4 +96,9 @@ class PhanNhomController extends Controller
         $nhom_tai_khoan->delete();
         return response()->json(['result' => true]);
     }
+
+    public function addTaiKhoan()
+    {
+
+    }
 }

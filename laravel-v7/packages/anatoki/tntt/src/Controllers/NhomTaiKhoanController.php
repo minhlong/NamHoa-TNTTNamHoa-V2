@@ -56,6 +56,6 @@ class NhomTaiKhoanController extends Controller
     {
         $nhomTaiKhoan->delete();
 
-        return response()->json(true);
+        return response()->json(['result' => true]);
     }
 }

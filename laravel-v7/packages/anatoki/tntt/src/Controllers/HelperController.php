@@ -2,7 +2,7 @@
 
 namespace TNTT\Controllers;
 
-class PullGitController extends Controller
+class HelperController extends Controller
 {
     public function postAutoPull()
     {
