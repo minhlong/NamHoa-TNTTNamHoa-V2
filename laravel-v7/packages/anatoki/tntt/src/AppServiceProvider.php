@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use TNTT\Exceptions\CustomHandler;
 use TNTT\Middleware\CheckOwner;
+use TNTT\Middleware\CheckTeacher;
 use TNTT\Repositories\TaiKhoanRepository;
 
 class AppServiceProvider extends ServiceProvider
@@ -28,12 +29,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->initACL();
+
         $this->app->singleton(TaiKhoanRepository::class);
 
         // Custom handle error
         $this->app->bind(ExceptionHandler::class, CustomHandler::class);
-
-        Route::aliasMiddleware('isOwner', CheckOwner::class);
 
         // Load Routers
         $this->loadRoutesFrom(__DIR__.'/../routers.php');
@@ -43,8 +44,6 @@ class AppServiceProvider extends ServiceProvider
             __DIR__.'/../config' => base_path('config'),
             __DIR__.'/../lang'   => resource_path('lang/en'),
         ]);
-
-        $this->initACL();
     }
 
     protected function initACL()
@@ -54,6 +53,7 @@ class AppServiceProvider extends ServiceProvider
             return $user->isSuperAdmin() ? true : null;
         });
 
-
+        Route::aliasMiddleware('isOwner', CheckOwner::class);
+        Route::aliasMiddleware('isTeacher', CheckTeacher::class);
     }
 }

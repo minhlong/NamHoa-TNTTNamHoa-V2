@@ -2,8 +2,10 @@
 
 namespace TNTT\Controllers;
 
-use TNTT\NhomTaiKhoan;
+use Exception;
+use Request;
 use Spatie\Permission\Models\Role;
+use TNTT\NhomTaiKhoan;
 
 class NhomTaiKhoanController extends Controller
 {
@@ -17,14 +19,12 @@ class NhomTaiKhoanController extends Controller
     public function post(NhomTaiKhoan $nhomTaiKhoan)
     {
         try {
-            $nhomTaiKhoan->fill(\Request::all());
+            $nhomTaiKhoan->fill(Request::all());
             $nhomTaiKhoan->loai = 'NHOM';
             $nhomTaiKhoan->ten  = $nhomTaiKhoan->ten_hien_thi;
             $nhomTaiKhoan->save();
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Liên hệ quản trị',
-            ], 400);
+        } catch (Exception $e) {
+            abort(400, 'Liên hệ quản trị');
         }
 
         return response()->json([
@@ -34,7 +34,7 @@ class NhomTaiKhoanController extends Controller
 
     public function postThem(NhomTaiKhoan $nhomTaiKhoan)
     {
-        $arrTaiKhoanID = \Request::has('TaiKhoan') ? \Request::get('TaiKhoan') : [];
+        $arrTaiKhoanID = Request::has('TaiKhoan') ? Request::get('TaiKhoan') : [];
         $nhomTaiKhoan->tai_khoan()->attach($arrTaiKhoanID);
 
         return response()->json([
@@ -44,7 +44,7 @@ class NhomTaiKhoanController extends Controller
 
     public function postXoa(NhomTaiKhoan $nhomTaiKhoan)
     {
-        $arrTaiKhoanID = \Request::has('TaiKhoan') ? \Request::get('TaiKhoan') : [];
+        $arrTaiKhoanID = Request::has('TaiKhoan') ? Request::get('TaiKhoan') : [];
         $nhomTaiKhoan->tai_khoan()->detach($arrTaiKhoanID);
 
         return response()->json([

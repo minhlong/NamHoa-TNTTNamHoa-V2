@@ -100,9 +100,7 @@ class TaiKhoanController extends Controller
         try {
             TaiKhoan::whereIn('id', $request->get('tai_khoan'))->update(['ngay_them_suc' => $request->get('ngay_them_suc')]);
         } catch (Exception $e) {
-            return response()->json([
-                'error' => 'Sai định dạng ngày',
-            ], 400);
+            abort(400, 'Sai định dạng ngày');
         }
 
         return response()->json(['result' => 'true']);
@@ -113,9 +111,7 @@ class TaiKhoanController extends Controller
         try {
             TaiKhoan::whereIn('id', $request->get('tai_khoan'))->update(['ngay_ruoc_le' => $request->get('ngay_ruoc_le')]);
         } catch (Exception $e) {
-            return response()->json([
-                'error' => 'Sai định dạng ngày',
-            ], 400);
+            abort(400, 'Sai định dạng ngày');
         }
 
         return response()->json();
@@ -166,9 +162,7 @@ class TaiKhoanController extends Controller
         try {
             $taiKhoan->forceDelete();
         } catch (Exception $e) {
-            return response()->json([
-                'error' => 'Liên hệ quản trị',
-            ], 400);
+            abort(400, 'Liên hệ quản trị');
         }
 
         // TODO: delete relative items

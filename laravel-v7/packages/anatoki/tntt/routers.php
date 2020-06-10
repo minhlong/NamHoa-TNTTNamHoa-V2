@@ -34,28 +34,27 @@ Route::group(['prefix' => 'api', 'namespace' => 'TNTT\Controllers'], function ()
     /* Lop Hoc */
     Route::group(['prefix' => 'lop-hoc'], function () {
         Route::get('khoa-{khoaID}', 'LopHocController@index');
-        Route::get('{lopHoc}', 'LopHocController@show');
 
-        // Route::post(null, 'LopHocController@post');
         Route::post('import/upload', 'LopHocController@importStep1');
         Route::post('import/insert', 'LopHocController@importStep2');
         Route::get('import/file', 'LopHocController@importStep3');
-        // Route::post('{LopHoc}', 'LopHocController@postUpdate')->middleware(['can:Lớp Học']);
-        // Route::post('{LopHoc}/thanh-vien', 'LopHocController@postThemThanhVien')->middleware(['can:Lớp Học']);
-        // Route::post('{LopHoc}/thanh-vien/xoa', 'LopHocController@postXoaThanhVien')->middleware(['can:Lớp Học']);
-        // Route::delete('{LopHoc}', 'LopHocController@postXoa')->middleware(['can:Lớp Học']);
-        //
-        // Route::get('{LopHoc}/chuyen-can', 'LopHocController@getChuyenCan');
-        // Route::post('{LopHoc}/chuyen-can', 'LopHocController@postChuyenCan'); // Fix: Update permission
-        //
-        // Route::get('{LopHoc}/hoc-luc', 'LopHocController@getHocLuc');
-        // Route::post('{LopHoc}/hoc-luc', 'LopHocController@postHocLuc'); // Fix: Update permission
-        //
+
+        Route::get('{lopHoc}', 'LopHocController@show');
+        Route::put('{lopHoc}', 'LopHocController@update');
+        Route::delete('{lopHoc}', 'LopHocController@delete');
+
+        Route::post('{lopHoc}/thanh-vien', 'LopHocController@postMember');
+        Route::delete('{lopHoc}/thanh-vien', 'LopHocController@deleteMember');
+
+        Route::get('{lopHoc}/chuyen-can', 'LopHocController@getChuyenCan');
+        Route::post('{lopHoc}/chuyen-can', 'LopHocController@postChuyenCan'); // Fix: Update permission
+
+        Route::get('{lopHoc}/hoc-luc', 'LopHocController@getHocLuc');
+        Route::post('{lopHoc}/hoc-luc', 'LopHocController@postHocLuc');
+
         Route::get('{lopHoc}/tong-ket', 'LopHocController@getTongKet');
-        // Route::post('{LopHoc}/tong-ket/xep-hang',
-        //     'LopHocController@postXepHang')->middleware(['permission:danh-gia-cuoi-nam']);
-        // Route::post('{LopHoc}/tong-ket/nhan-xet',
-        //     'LopHocController@postNhanXet'); // Fix: Update permission ->middleware(['permission:nhan-xet']);
+        Route::post('{lopHoc}/tong-ket/xep-hang', 'LopHocController@postXepHang');
+        Route::post('{lopHoc}/tong-ket/nhan-xet', 'LopHocController@postNhanXet');
     });
 
     /* Khoa Hoc */

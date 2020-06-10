@@ -129,9 +129,13 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
+        'attribute-name'            => [
             'rule-name' => 'custom-message',
         ],
+        'ngay_sinh.date_format'     => 'Trường :attribute không hợp lệ. (Vd: 24-12-2000)',
+        'ngay_rua_toi.date_format'  => 'Trường :attribute không hợp lệ. (Vd: 24-12-2000)',
+        'ngay_ruoc_le.date_format'  => 'Trường :attribute không hợp lệ. (Vd: 24-12-2000)',
+        'ngay_them_suc.date_format' => 'Trường :attribute không hợp lệ. (Vd: 24-12-2000)',
     ],
 
     /*
@@ -178,5 +182,11 @@ return [
         'message'               => 'lời nhắn',
         'available'             => 'có sẵn',
         'size'                  => 'kích thước',
+        'ngay_sinh'             => 'Ngày Sinh',
+        'ngay_rua_toi'          => 'Ngày Rửa Tội',
+        'ngay_ruoc_le'          => 'Ngày Ruớc Lễ',
+        'ngay_them_suc'         => 'Ngày Thêm Sức',
+        'ho_va_ten'             => 'Họ và Tên',
+        'dot'                   => 'Đợt',
     ],
 ];
