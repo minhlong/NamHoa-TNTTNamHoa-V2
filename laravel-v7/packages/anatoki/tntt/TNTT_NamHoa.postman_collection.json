@@ -1,0 +1,2261 @@
+{
+	"info": {
+		"_postman_id": "90242572-81c8-5c11-59ba-5efb0d63ba9b",
+		"name": "TNTT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "/auth/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7ca41ebf-0c46-4f6c-bcab-d8c2dd20c5d2",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"token\", jsonData.data);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":\"HT028\",\n\t\"password\": \"123\"\n}"
+						},
+						"url": {
+							"raw": "{{local}}/auth/login",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7ca41ebf-0c46-4f6c-bcab-d8c2dd20c5d2",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{local}}/auth/logout",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/refresh",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fc1fa6e3-bc27-4f65-8ead-41e2b6aba503",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"token\", jsonData.data);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{local}}/auth/refresh",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "tai-khoan",
+			"item": [
+				{
+					"name": "/tai-khoan",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/tai-khoan?id=ht028&khoa=2019",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"tai-khoan"
+							],
+							"query": [
+								{
+									"key": "loadLopHoc",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "id",
+									"value": "ht028"
+								},
+								{
+									"key": "khoa",
+									"value": "2019"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tai-khoan/export",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "text/plain",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/tai-khoan/export?ho_va_ten=long&khoa=2019",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"tai-khoan",
+								"export"
+							],
+							"query": [
+								{
+									"key": "ngay_sinh",
+									"value": "1988-07-09",
+									"disabled": true
+								},
+								{
+									"key": "ho_va_ten",
+									"value": "long"
+								},
+								{
+									"key": "id",
+									"value": "ht028",
+									"disabled": true
+								},
+								{
+									"key": "khoa",
+									"value": "2019"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tai-khoan/ngay-them-suc",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "tai_khoan[]",
+									"value": "\"HT028\"",
+									"type": "text"
+								},
+								{
+									"key": "ngay_them_suc",
+									"value": "2020-01-01",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/tai-khoan/ngay-them-suc",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"tai-khoan",
+								"ngay-them-suc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tai-khoan/ngay_ruoc_le",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "tai_khoan[]",
+									"value": "\"HT028\"",
+									"type": "text"
+								},
+								{
+									"key": "ngay_ruoc_le",
+									"value": "2020-01-01",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/tai-khoan/ngay-them-suc",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"tai-khoan",
+								"ngay-them-suc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tai-khoan/import/upload",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/timmy/Downloads/SoYeuLyLich.xlsx"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/tai-khoan/import/upload",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"tai-khoan",
+								"import",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tai-khoan/import/insert",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": [\n        {\n            \"nganh\": \"THIEU_NHI\",\n            \"cap\": 1,\n            \"doi\": 1,\n            \"loai_tai_khoan\": \"THIEU_NHI\",\n            \"ten_thanh\": \"Gioan Baotixita\",\n            \"ho_va_ten\": \"Mai Võ Hoàng Ân\",\n            \"gioi_tinh\": \"NAM\",\n            \"ngay_sinh\": \"2009-12-30\",\n            \"ngay_rua_toi\": \"2010-02-06\",\n            \"ngay_ruoc_le\": null,\n            \"ngay_them_suc\": null,\n            \"dien_thoai\": \"0912345678\",\n            \"dia_chi\": \"221/1/35 Đất Thánh\",\n            \"\": null,\n            \"lop_hoc_id\": 177,\n            \"lop_hoc_ten\": \"Khóa 2019 - Ngành Thiếu Nhi - Cấp 1 - Đội 1\"\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{local}}/tai-khoan/import/insert",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"tai-khoan",
+								"import",
+								"insert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tai-khoan/import/file",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": [\n        {\n            \"loai_tai_khoan\": \"THIEU_NHI\",\n            \"ho_va_ten\": \"Mai Võ Hoàng Ân\",\n            \"ten_thanh\": \"Gioan Baotixita\",\n            \"gioi_tinh\": \"NAM\",\n            \"ngay_sinh\": \"2009-12-30\",\n            \"ngay_rua_toi\": \"2010-02-06\",\n            \"ngay_ruoc_le\": null,\n            \"ngay_them_suc\": null,\n            \"dien_thoai\": \"0912345678\",\n            \"dia_chi\": \"221/1/35 Đất Thánh\",\n            \"trang_thai\": \"HOAT_DONG\",\n            \"id\": \"19083\",\n            \"tai_khoan_cap_nhat\": \"HT028\",\n            \"ten\": \"Ân\",\n            \"updated_at\": \"2020-06-07T19:13:31.000000Z\",\n            \"created_at\": \"2020-06-07T19:13:31.000000Z\",\n            \"lop_hoc_ten\": \"Khóa 2019 - Ngành Thiếu Nhi - Cấp 1 - Đội 1\"\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{local}}/tai-khoan/import/file",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"tai-khoan",
+								"import",
+								"file"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tai-khoan/:id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/tai-khoan/HT028",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"tai-khoan",
+								"HT028"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tai-khoan/:id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "ngay_sinh",
+									"value": "2020-01-01",
+									"type": "text"
+								},
+								{
+									"key": "ho_va_ten",
+									"value": "Nguyen LONG HO MINH",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/tai-khoan/HT028",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"tai-khoan",
+								"HT028"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tai-khoan/:id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/tai-khoan/19084",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"tai-khoan",
+								"19084"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tai-khoan/:id/mat-khau",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "mat_khau",
+									"value": "123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/tai-khoan/HT028/mat-khau",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"tai-khoan",
+								"HT028",
+								"mat-khau"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "lop-hoc",
+			"item": [
+				{
+					"name": "/lop-hoc/khoa-{year}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/lop-hoc/khoa-2019",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"lop-hoc",
+								"khoa-2019"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/lop-hoc/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/lop-hoc/91",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"lop-hoc",
+								"91"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/lop-hoc/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"vi_tri_hoc\":123\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/lop-hoc/91",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"lop-hoc",
+								"91"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/lop-hoc/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "khoa_hoc_id",
+									"value": "2017",
+									"type": "text"
+								},
+								{
+									"key": "nganh",
+									"value": "AU_NHI",
+									"type": "text"
+								},
+								{
+									"key": "cap",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "doi",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/lop-hoc/130",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"lop-hoc",
+								"130"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/lop-hoc/import/upload",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/timmy/Downloads/LopHoc.xlsx"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/lop-hoc/import/upload",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"lop-hoc",
+								"import",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/lop-hoc/import/insert",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"data\": [\n        {\n            \"nganh\": \"THIEU_NHI\",\n            \"cap\": 1,\n            \"doi\": 1,\n            \"vi_tri_hoc\": \"Phòng tượng\",\n            \"\": null\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{local}}/lop-hoc/import/insert",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"lop-hoc",
+								"import",
+								"insert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/lop-hoc/import/file",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": [\n        {\n            \"khoa_hoc_id\": 2019,\n            \"nganh\": \"THIEU_NHI\",\n            \"cap\": 1,\n            \"doi\": 1,\n            \"vi_tri_hoc\": \"Phòng tượng\",\n            \"tai_khoan_cap_nhat\": \"HT028\",\n            \"updated_at\": \"2020-06-09T17:45:16.000000Z\",\n            \"created_at\": \"2020-06-09T17:45:16.000000Z\",\n            \"id\": 218,\n            \"tenNganh\": \"Ngành \",\n            \"tenCap\": \"Cấp \",\n            \"ten\": \"Khóa 2019 - Ngành  - Cấp  - Đội \"\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{local}}/lop-hoc/import/file",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"lop-hoc",
+								"import",
+								"file"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/lop-hoc/{id}/thanh-vien",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": [ \"19050\",\"HT022\"]\n}"
+						},
+						"url": {
+							"raw": "{{local}}/lop-hoc/91/thanh-vien",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"lop-hoc",
+								"91",
+								"thanh-vien"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/lop-hoc/{id}/thanh-vien",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": [ \"19050\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/lop-hoc/91/thanh-vien",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"lop-hoc",
+								"91",
+								"thanh-vien"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/lop-hoc/{id}/chuyen-can",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0YWlfa2hvYW4iOnsiaWQiOiJIVDAxMCIsImxvYWlfdGFpX2tob2FuIjoiSFVZTkhfVFJVT05HIiwidHJhbmdfdGhhaSI6IkhPQVRfRE9ORyIsImdpb2lfdGluaCI6Ik5BTSIsInRlbl90aGFuaCI6Ikdpb2FuIEJhb3RpeGl0YSIsImhvX3ZhX3RlbiI6IkhvXHUwMGUwbmcgUXVhbmcgXHUwMTEwXHUxZWExaSIsInRlbiI6Ilx1MDExMFx1MWVhMWkiLCJuZ2F5X3NpbmgiOiIxOTg3LTA5LTA5IiwibmdheV9ydWFfdG9pIjpudWxsLCJuZ2F5X3J1b2NfbGUiOm51bGwsIm5nYXlfdGhlbV9zdWMiOm51bGwsImVtYWlsIjpudWxsLCJkaWVuX3Rob2FpIjoiMDkwNy4yMzMuMzk5IiwiZGlhX2NoaSI6IjEwOS8yNi8yIFx1MDExMFx1MWVhNXQgVGhcdTAwZTFuaCwgcGhcdTAxYjBcdTFlZGRuZyA2LCBUXHUwMGUybiBCXHUwMGVjbmgiLCJnaGlfY2h1IjpudWxsLCJnaWFvX2hvIjoiUGhlcm8iLCJ0YWlfa2hvYW5fY2FwX25oYXQiOiJIVDAxMCIsImNyZWF0ZWRfYXQiOiIyMDE0LTExLTA4IDAzOjE2OjM0IiwidXBkYXRlZF9hdCI6IjIwMTctMTAtMDUgMDM6MTM6MjUiLCJkZWxldGVkX2F0IjpudWxsfSwicGhhbl9xdXllbiI6WyJkYW5oLWdpYS1jdW9pLW5hbSIsInRhaS1raG9hbiIsImxvcC1ob2MiLCJkaWVtLWRhbmgiLCJoZS10aG9uZyIsInBoYW4tcXV5ZW4iLCJuaGFuLXhldCJdLCJsb3BfaG9jX2hpZW5fdGFpX2lkIjoxMDAsImtob2FfaG9jX2hpZW5fdGFpX2lkIjoyMDE3LCJzdWIiOiJIVDAxMCIsImlzcyI6Imh0dHA6Ly8xOTIuMTY4LjEwLjEwOjgxL3YxL2RhbmctbmhhcCIsImlhdCI6MTUwNzE3ODQ1MywiZXhwIjoxNTA3MjIxNjUzLCJuYmYiOjE1MDcxNzg0NTMsImp0aSI6IklYWHRXcXdKcWVqalpIZ3gifQ.-aOTPW7Z99zYBcVywCcUimtqUyZaMAgc0RA9DxYU54E"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/lop-hoc/168/chuyen-can?ngay_hoc=2019-12-20",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"lop-hoc",
+								"168",
+								"chuyen-can"
+							],
+							"query": [
+								{
+									"key": "ngay_hoc",
+									"value": "2019-12-20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/lop-hoc/{id}/chuyen-can",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0YWlfa2hvYW4iOnsiaWQiOiJIVDAxMCIsImxvYWlfdGFpX2tob2FuIjoiSFVZTkhfVFJVT05HIiwidHJhbmdfdGhhaSI6IkhPQVRfRE9ORyIsImdpb2lfdGluaCI6Ik5BTSIsInRlbl90aGFuaCI6Ikdpb2FuIEJhb3RpeGl0YSIsImhvX3ZhX3RlbiI6IkhvXHUwMGUwbmcgUXVhbmcgXHUwMTEwXHUxZWExaSIsInRlbiI6Ilx1MDExMFx1MWVhMWkiLCJuZ2F5X3NpbmgiOiIxOTg3LTA5LTA5IiwibmdheV9ydWFfdG9pIjpudWxsLCJuZ2F5X3J1b2NfbGUiOm51bGwsIm5nYXlfdGhlbV9zdWMiOm51bGwsImVtYWlsIjpudWxsLCJkaWVuX3Rob2FpIjoiMDkwNy4yMzMuMzk5IiwiZGlhX2NoaSI6IjEwOS8yNi8yIFx1MDExMFx1MWVhNXQgVGhcdTAwZTFuaCwgcGhcdTAxYjBcdTFlZGRuZyA2LCBUXHUwMGUybiBCXHUwMGVjbmgiLCJnaGlfY2h1IjpudWxsLCJnaWFvX2hvIjoiUGhlcm8iLCJ0YWlfa2hvYW5fY2FwX25oYXQiOiJIVDAxMCIsImNyZWF0ZWRfYXQiOiIyMDE0LTExLTA4IDAzOjE2OjM0IiwidXBkYXRlZF9hdCI6IjIwMTctMTAtMDUgMDM6MTM6MjUiLCJkZWxldGVkX2F0IjpudWxsfSwicGhhbl9xdXllbiI6WyJkYW5oLWdpYS1jdW9pLW5hbSIsInRhaS1raG9hbiIsImxvcC1ob2MiLCJkaWVtLWRhbmgiLCJoZS10aG9uZyIsInBoYW4tcXV5ZW4iLCJuaGFuLXhldCJdLCJsb3BfaG9jX2hpZW5fdGFpX2lkIjoxMDAsImtob2FfaG9jX2hpZW5fdGFpX2lkIjoyMDE3LCJzdWIiOiJIVDAxMCIsImlzcyI6Imh0dHA6Ly8xOTIuMTY4LjEwLjEwOjgxL3YxL2RhbmctbmhhcCIsImlhdCI6MTUwNzE3ODQ1MywiZXhwIjoxNTA3MjIxNjUzLCJuYmYiOjE1MDcxNzg0NTMsImp0aSI6IklYWHRXcXdKcWVqalpIZ3gifQ.-aOTPW7Z99zYBcVywCcUimtqUyZaMAgc0RA9DxYU54E"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"ngay\":\"2019-12-15\",\n\t\"thieu_nhi\":[\n\t\t{\n\t\t\t\"id\" : 18001,\n\t\t\t\"di_le\": \"H\",\n\t\t\t\"di_hoc\": \"\",\n\t\t\t\"ghi_chu\": \"\"\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{local}}/lop-hoc/168/chuyen-can",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"lop-hoc",
+								"168",
+								"chuyen-can"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/lop-hoc/{id}/hoc-luc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0YWlfa2hvYW4iOnsiaWQiOiJIVDAxMCIsImxvYWlfdGFpX2tob2FuIjoiSFVZTkhfVFJVT05HIiwidHJhbmdfdGhhaSI6IkhPQVRfRE9ORyIsImdpb2lfdGluaCI6Ik5BTSIsInRlbl90aGFuaCI6Ikdpb2FuIEJhb3RpeGl0YSIsImhvX3ZhX3RlbiI6IkhvXHUwMGUwbmcgUXVhbmcgXHUwMTEwXHUxZWExaSIsInRlbiI6Ilx1MDExMFx1MWVhMWkiLCJuZ2F5X3NpbmgiOiIxOTg3LTA5LTA5IiwibmdheV9ydWFfdG9pIjpudWxsLCJuZ2F5X3J1b2NfbGUiOm51bGwsIm5nYXlfdGhlbV9zdWMiOm51bGwsImVtYWlsIjpudWxsLCJkaWVuX3Rob2FpIjoiMDkwNy4yMzMuMzk5IiwiZGlhX2NoaSI6IjEwOS8yNi8yIFx1MDExMFx1MWVhNXQgVGhcdTAwZTFuaCwgcGhcdTAxYjBcdTFlZGRuZyA2LCBUXHUwMGUybiBCXHUwMGVjbmgiLCJnaGlfY2h1IjpudWxsLCJnaWFvX2hvIjoiUGhlcm8iLCJ0YWlfa2hvYW5fY2FwX25oYXQiOiJIVDAxMCIsImNyZWF0ZWRfYXQiOiIyMDE0LTExLTA4IDAzOjE2OjM0IiwidXBkYXRlZF9hdCI6IjIwMTctMTAtMDUgMDM6MTM6MjUiLCJkZWxldGVkX2F0IjpudWxsfSwicGhhbl9xdXllbiI6WyJkYW5oLWdpYS1jdW9pLW5hbSIsInRhaS1raG9hbiIsImxvcC1ob2MiLCJkaWVtLWRhbmgiLCJoZS10aG9uZyIsInBoYW4tcXV5ZW4iLCJuaGFuLXhldCJdLCJsb3BfaG9jX2hpZW5fdGFpX2lkIjoxMDAsImtob2FfaG9jX2hpZW5fdGFpX2lkIjoyMDE3LCJzdWIiOiJIVDAxMCIsImlzcyI6Imh0dHA6Ly8xOTIuMTY4LjEwLjEwOjgxL3YxL2RhbmctbmhhcCIsImlhdCI6MTUwNzE3ODQ1MywiZXhwIjoxNTA3MjIxNjUzLCJuYmYiOjE1MDcxNzg0NTMsImp0aSI6IklYWHRXcXdKcWVqalpIZ3gifQ.-aOTPW7Z99zYBcVywCcUimtqUyZaMAgc0RA9DxYU54E"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{local}}/lop-hoc/170/hoc-luc?dot=1",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"lop-hoc",
+								"170",
+								"hoc-luc"
+							],
+							"query": [
+								{
+									"key": "dot",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/lop-hoc/{id}/hoc-luc",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0YWlfa2hvYW4iOnsiaWQiOiJIVDAxMCIsImxvYWlfdGFpX2tob2FuIjoiSFVZTkhfVFJVT05HIiwidHJhbmdfdGhhaSI6IkhPQVRfRE9ORyIsImdpb2lfdGluaCI6Ik5BTSIsInRlbl90aGFuaCI6Ikdpb2FuIEJhb3RpeGl0YSIsImhvX3ZhX3RlbiI6IkhvXHUwMGUwbmcgUXVhbmcgXHUwMTEwXHUxZWExaSIsInRlbiI6Ilx1MDExMFx1MWVhMWkiLCJuZ2F5X3NpbmgiOiIxOTg3LTA5LTA5IiwibmdheV9ydWFfdG9pIjpudWxsLCJuZ2F5X3J1b2NfbGUiOm51bGwsIm5nYXlfdGhlbV9zdWMiOm51bGwsImVtYWlsIjpudWxsLCJkaWVuX3Rob2FpIjoiMDkwNy4yMzMuMzk5IiwiZGlhX2NoaSI6IjEwOS8yNi8yIFx1MDExMFx1MWVhNXQgVGhcdTAwZTFuaCwgcGhcdTAxYjBcdTFlZGRuZyA2LCBUXHUwMGUybiBCXHUwMGVjbmgiLCJnaGlfY2h1IjpudWxsLCJnaWFvX2hvIjoiUGhlcm8iLCJ0YWlfa2hvYW5fY2FwX25oYXQiOiJIVDAxMCIsImNyZWF0ZWRfYXQiOiIyMDE0LTExLTA4IDAzOjE2OjM0IiwidXBkYXRlZF9hdCI6IjIwMTctMTAtMDUgMDM6MTM6MjUiLCJkZWxldGVkX2F0IjpudWxsfSwicGhhbl9xdXllbiI6WyJkYW5oLWdpYS1jdW9pLW5hbSIsInRhaS1raG9hbiIsImxvcC1ob2MiLCJkaWVtLWRhbmgiLCJoZS10aG9uZyIsInBoYW4tcXV5ZW4iLCJuaGFuLXhldCJdLCJsb3BfaG9jX2hpZW5fdGFpX2lkIjoxMDAsImtob2FfaG9jX2hpZW5fdGFpX2lkIjoyMDE3LCJzdWIiOiJIVDAxMCIsImlzcyI6Imh0dHA6Ly8xOTIuMTY4LjEwLjEwOjgxL3YxL2RhbmctbmhhcCIsImlhdCI6MTUwNzE3ODQ1MywiZXhwIjoxNTA3MjIxNjUzLCJuYmYiOjE1MDcxNzg0NTMsImp0aSI6IklYWHRXcXdKcWVqalpIZ3gifQ.-aOTPW7Z99zYBcVywCcUimtqUyZaMAgc0RA9DxYU54E"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"dot\":1,\n\t\"lan\":1,\n\t\"thieu_nhi\":[\n\t\t{\n\t\t\t\"id\" : 18003,\n\t\t\t\"diem\": 71\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{local}}/lop-hoc/170/hoc-luc",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"lop-hoc",
+								"170",
+								"hoc-luc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/lop-hoc/{id}/tong-ket",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/lop-hoc/170/tong-ket",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"lop-hoc",
+								"170",
+								"tong-ket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/lop-hoc/{id}/tong-ket/nhan-xet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"thieu_nhi\":[\n\t\t{\n\t\t\t\"id\" : 18069,\n\t\t\t\"nhan_xet\": \"I\"\n\t\t}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/lop-hoc/170/tong-ket/nhan-xet",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"lop-hoc",
+								"170",
+								"tong-ket",
+								"nhan-xet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/lop-hoc/{id}/tong-ket/xep-hang",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"thieu_nhi\":[\n\t\t{\n\t\t\t\"id\" : 18069,\n\t\t\t\"xep_hang\": \"I\",\n\t\t\t\"ghi_chu\": \"\"\n\t\t}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/lop-hoc/170/tong-ket/xep-hang",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"lop-hoc",
+								"170",
+								"tong-ket",
+								"xep-hang"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "khoa-hoc",
+			"item": [
+				{
+					"name": "/khoa-hoc",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{local}}/khoa-hoc",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"khoa-hoc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/khoa-hoc",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7ca41ebf-0c46-4f6c-bcab-d8c2dd20c5d2",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/khoa-hoc",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"khoa-hoc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/khoa-hoc/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/khoa-hoc/2019",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"khoa-hoc",
+								"2019"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/khoa-hoc/{id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7ca41ebf-0c46-4f6c-bcab-d8c2dd20c5d2",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ngay_bat_dau\": \"2019-08-01\",\n  \"ngay_ket_thuc\": \"2020-07-31\",\n  \"so_dot_kiem_tra\": 5,\n  \"so_lan_kiem_tra\": 2,\n  \"cap_nhat_dot_kiem_tra\": 3,\n  \"ngung_diem_danh\": 3,\n  \"di_le\": {\n    \"K\": -0.5,\n    \"P\": -0.2,\n    \"T\": -0.3,\n    \"H\": -0.2\n  },\n  \"di_hoc\": {\n    \"K\": -0.5,\n    \"P\": -0.2\n  },\n  \"xep_loai\": {\n    \"CHUYEN_CAN\": {\n      \"TB\": 5,\n      \"KHA\": 6.5,\n      \"GIOI\": 8\n    },\n    \"HOC_LUC\": {\n      \"TB\": 5,\n      \"KHA\": 6.5,\n      \"GIOI\": 8\n    }\n  },\n  \"xep_hang\": {\n    \"CHUYEN_CAN\": {\n      \"LEN_LOP\": 5,\n      \"KHUYEN_KHICH\": 9,\n      \"III\": 8,\n      \"II\": 8,\n      \"I\": 8\n    },\n    \"HOC_LUC\": {\n      \"LEN_LOP\": 5,\n      \"KHUYEN_KHICH\": 8,\n      \"III\": 8,\n      \"II\": 8,\n      \"I\": 8\n    },\n    \"SO_LUONG\": {\n      \"KHUYEN_KHICH\": 1,\n      \"III\": 1,\n      \"II\": 1,\n      \"I\": 1\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/khoa-hoc/2019",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"khoa-hoc",
+								"2019"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "thu-moi",
+			"item": [
+				{
+					"name": "/thu-moi",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{local}}/thu-moi",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"thu-moi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/thu-moi",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ac6b9e18-1412-4765-9e51-1b2a00f6cefd",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/thu-moi",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"thu-moi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/thu-moi/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/thu-moi/89",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"thu-moi",
+								"89"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/thu-moi/{id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0410e9d5-dcf3-493a-a4b7-62b810fc160b",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ngay_bat_dau\": \"2019-08-01\",\n  \"ngay_ket_thuc\": \"2020-07-31\",\n  \"so_dot_kiem_tra\": 5,\n  \"so_lan_kiem_tra\": 2,\n  \"cap_nhat_dot_kiem_tra\": 3,\n  \"ngung_diem_danh\": 3,\n  \"di_le\": {\n    \"K\": -0.5,\n    \"P\": -0.2,\n    \"T\": -0.3,\n    \"H\": -0.2\n  },\n  \"di_hoc\": {\n    \"K\": -0.5,\n    \"P\": -0.2\n  },\n  \"xep_loai\": {\n    \"CHUYEN_CAN\": {\n      \"TB\": 5,\n      \"KHA\": 6.5,\n      \"GIOI\": 8\n    },\n    \"HOC_LUC\": {\n      \"TB\": 5,\n      \"KHA\": 6.5,\n      \"GIOI\": 8\n    }\n  },\n  \"xep_hang\": {\n    \"CHUYEN_CAN\": {\n      \"LEN_LOP\": 5,\n      \"KHUYEN_KHICH\": 9,\n      \"III\": 8,\n      \"II\": 8,\n      \"I\": 8\n    },\n    \"HOC_LUC\": {\n      \"LEN_LOP\": 5,\n      \"KHUYEN_KHICH\": 8,\n      \"III\": 8,\n      \"II\": 8,\n      \"I\": 8\n    },\n    \"SO_LUONG\": {\n      \"KHUYEN_KHICH\": 1,\n      \"III\": 1,\n      \"II\": 1,\n      \"I\": 1\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/thu-moi/89",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"thu-moi",
+								"89"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/thu-moi/{id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "68000c34-151e-43ed-b4f9-4c01a8b21468",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ngay_bat_dau\": \"2019-08-01\",\n  \"ngay_ket_thuc\": \"2020-07-31\",\n  \"so_dot_kiem_tra\": 5,\n  \"so_lan_kiem_tra\": 2,\n  \"cap_nhat_dot_kiem_tra\": 3,\n  \"ngung_diem_danh\": 3,\n  \"di_le\": {\n    \"K\": -0.5,\n    \"P\": -0.2,\n    \"T\": -0.3,\n    \"H\": -0.2\n  },\n  \"di_hoc\": {\n    \"K\": -0.5,\n    \"P\": -0.2\n  },\n  \"xep_loai\": {\n    \"CHUYEN_CAN\": {\n      \"TB\": 5,\n      \"KHA\": 6.5,\n      \"GIOI\": 8\n    },\n    \"HOC_LUC\": {\n      \"TB\": 5,\n      \"KHA\": 6.5,\n      \"GIOI\": 8\n    }\n  },\n  \"xep_hang\": {\n    \"CHUYEN_CAN\": {\n      \"LEN_LOP\": 5,\n      \"KHUYEN_KHICH\": 9,\n      \"III\": 8,\n      \"II\": 8,\n      \"I\": 8\n    },\n    \"HOC_LUC\": {\n      \"LEN_LOP\": 5,\n      \"KHUYEN_KHICH\": 8,\n      \"III\": 8,\n      \"II\": 8,\n      \"I\": 8\n    },\n    \"SO_LUONG\": {\n      \"KHUYEN_KHICH\": 1,\n      \"III\": 1,\n      \"II\": 1,\n      \"I\": 1\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/thu-moi/89",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"thu-moi",
+								"89"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "thiet-bi",
+			"item": [
+				{
+					"name": "/thiet-bi",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{local}}/thiet-bi",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"thiet-bi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/thiet-bi",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1c52de1a-6145-4151-925a-5954e8e62325",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/thu-moi",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"thu-moi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/thiet-bi{id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "666f399e-4a46-4952-bc94-9d62c1a5cba7",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ngay_bat_dau\": \"2019-08-01\",\n  \"ngay_ket_thuc\": \"2020-07-31\",\n  \"so_dot_kiem_tra\": 5,\n  \"so_lan_kiem_tra\": 2,\n  \"cap_nhat_dot_kiem_tra\": 3,\n  \"ngung_diem_danh\": 3,\n  \"di_le\": {\n    \"K\": -0.5,\n    \"P\": -0.2,\n    \"T\": -0.3,\n    \"H\": -0.2\n  },\n  \"di_hoc\": {\n    \"K\": -0.5,\n    \"P\": -0.2\n  },\n  \"xep_loai\": {\n    \"CHUYEN_CAN\": {\n      \"TB\": 5,\n      \"KHA\": 6.5,\n      \"GIOI\": 8\n    },\n    \"HOC_LUC\": {\n      \"TB\": 5,\n      \"KHA\": 6.5,\n      \"GIOI\": 8\n    }\n  },\n  \"xep_hang\": {\n    \"CHUYEN_CAN\": {\n      \"LEN_LOP\": 5,\n      \"KHUYEN_KHICH\": 9,\n      \"III\": 8,\n      \"II\": 8,\n      \"I\": 8\n    },\n    \"HOC_LUC\": {\n      \"LEN_LOP\": 5,\n      \"KHUYEN_KHICH\": 8,\n      \"III\": 8,\n      \"II\": 8,\n      \"I\": 8\n    },\n    \"SO_LUONG\": {\n      \"KHUYEN_KHICH\": 1,\n      \"III\": 1,\n      \"II\": 1,\n      \"I\": 1\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/thiet-bi/2",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"thiet-bi",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/thiet-bi{id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2781fa0c-fc0c-4fa8-bb2e-39d3aae88464",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ngay_bat_dau\": \"2019-08-01\",\n  \"ngay_ket_thuc\": \"2020-07-31\",\n  \"so_dot_kiem_tra\": 5,\n  \"so_lan_kiem_tra\": 2,\n  \"cap_nhat_dot_kiem_tra\": 3,\n  \"ngung_diem_danh\": 3,\n  \"di_le\": {\n    \"K\": -0.5,\n    \"P\": -0.2,\n    \"T\": -0.3,\n    \"H\": -0.2\n  },\n  \"di_hoc\": {\n    \"K\": -0.5,\n    \"P\": -0.2\n  },\n  \"xep_loai\": {\n    \"CHUYEN_CAN\": {\n      \"TB\": 5,\n      \"KHA\": 6.5,\n      \"GIOI\": 8\n    },\n    \"HOC_LUC\": {\n      \"TB\": 5,\n      \"KHA\": 6.5,\n      \"GIOI\": 8\n    }\n  },\n  \"xep_hang\": {\n    \"CHUYEN_CAN\": {\n      \"LEN_LOP\": 5,\n      \"KHUYEN_KHICH\": 9,\n      \"III\": 8,\n      \"II\": 8,\n      \"I\": 8\n    },\n    \"HOC_LUC\": {\n      \"LEN_LOP\": 5,\n      \"KHUYEN_KHICH\": 8,\n      \"III\": 8,\n      \"II\": 8,\n      \"I\": 8\n    },\n    \"SO_LUONG\": {\n      \"KHUYEN_KHICH\": 1,\n      \"III\": 1,\n      \"II\": 1,\n      \"I\": 1\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/thu-moi/89",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"thu-moi",
+								"89"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "phan-quyen",
+			"item": [
+				{
+					"name": "/phan-quyen",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/phan-quyen",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"phan-quyen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/phan-quyen",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"name\": \"Điểm Danh21\",\n        \"note\": \"Điểm Danh 1\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/phan-quyen",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"phan-quyen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/phan-quyen/:id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/phan-quyen/60",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"phan-quyen",
+								"60"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/phan-quyen/:id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"name\": \"Điểm Danh21\",\n        \"note\": \"Điểm Danh 1\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/phan-quyen/52",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"phan-quyen",
+								"52"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/phan-quyen/:id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/phan-quyen/61",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"phan-quyen",
+								"61"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/nhom-tai-khoan",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/nhom-tai-khoan",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"nhom-tai-khoan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/nhom-tai-khoan",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"name\": \"Điểm Danh21\",\n        \"note\": \"Điểm Danh 1\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/nhom-tai-khoan",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"nhom-tai-khoan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/nhom-tai-khoan/:id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/nhom-tai-khoan/44",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"nhom-tai-khoan",
+								"44"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/nhom-tai-khoan/:id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"name\": \"Điểm Danh 2221\",\n        \"note\": \"Điểm Danh 1\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/nhom-tai-khoan/44",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"nhom-tai-khoan",
+								"44"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/nhom-tai-khoan/:id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"name\": \"Điểm Danh 2221\",\n        \"note\": \"Điểm Danh 1\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/nhom-tai-khoan/44",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"nhom-tai-khoan",
+								"44"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "/trang-chu",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{local}}/trang-chu",
+					"host": [
+						"{{local}}"
+					],
+					"path": [
+						"trang-chu"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/auto-pull",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{local}}/auto-pull",
+					"host": [
+						"{{local}}"
+					],
+					"path": [
+						"auto-pull"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "62576796-1628-4d9b-ae20-263e03877ba3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "cb50bfba-3762-4116-bd40-3869714ac9ac",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
