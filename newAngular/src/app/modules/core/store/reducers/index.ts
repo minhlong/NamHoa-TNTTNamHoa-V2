@@ -3,8 +3,8 @@ import * as authReducer from './auth.reducer';
 import * as lopHocReducer from './lop-hoc.reducer';
 
 export interface AppState {
-  auth: authReducer.AuthState,
-  lop_hoc: lopHocReducer.LopHocState,
+  auth: authReducer.AuthState;
+  lop_hoc: lopHocReducer.LopHocState;
 }
 
 export const reducer: ActionReducerMap<AppState> = {

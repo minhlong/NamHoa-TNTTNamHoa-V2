@@ -1,16 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, CanActivateChild } from '@angular/router';
-// import { tokenNotExpired } from 'angular2-jwt';
-// import { Store } from '@ngrx/store';
-
-// import { AppState } from '../../store/reducers';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class GuestGuard implements CanActivate, CanActivateChild {
 
   constructor(
     private router: Router,
-    // private store: Store<AppState>
+    public jwtHelper: JwtHelperService
   ) {
   }
 
@@ -23,13 +20,14 @@ export class GuestGuard implements CanActivate, CanActivateChild {
   }
 
   private checkGuard() {
+    const isExpired = this.jwtHelper.isTokenExpired();
+    console.log(isExpired, 1);
+
+    if (!isExpired) {
+      this.router.navigate(['/home']);
+      return false;
+    }
+
     return true;
-    // const notAuth = !tokenNotExpired();
-
-    // if (!notAuth) {
-    //   this.router.navigate(['/home']);
-    // }
-
-    // return notAuth;
   }
 }

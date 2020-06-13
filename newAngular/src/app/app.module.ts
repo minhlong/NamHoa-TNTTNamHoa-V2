@@ -8,7 +8,8 @@ import { SharedModule } from './modules/sharedx/shared.module';
 import { LoginComponent } from './login/login.component';
 import { TrangChuComponent } from './trang-chu/trang-chu.component';
 import { CoreModule } from './modules/core';
-import { AuthGuard, GuestGuard } from './services';
+// import { AuthGuard, GuestGuard } from './services';
+
 
 @NgModule({
   declarations: [
@@ -27,8 +28,8 @@ import { AuthGuard, GuestGuard } from './services';
     LayoutsModule,
   ],
   providers: [
-    AuthGuard,
-    GuestGuard
+    // AuthGuard,
+    // GuestGuard
   ],
   bootstrap: [AppComponent]
 })

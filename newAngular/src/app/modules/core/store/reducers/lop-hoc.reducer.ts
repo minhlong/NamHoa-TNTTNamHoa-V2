@@ -1,5 +1,3 @@
-import { AppState } from '.';
-import { ActionReducer } from '@ngrx/store';
 import * as lopHocAction from '../actions/lop-hoc.action';
 
 export type Action = lopHocAction.All;

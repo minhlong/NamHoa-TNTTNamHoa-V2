@@ -1,5 +1,3 @@
-import { AppState } from '.';
-import { ActionReducer } from '@ngrx/store';
 import * as authAction from '../actions/auth.action';
 
 export type Action = authAction.All;
@@ -10,8 +8,8 @@ export type Action = authAction.All;
 export interface AuthState {
   loading: boolean;
   tai_khoan: { [id: string]: any; };
-  phan_quyen: any[],
-  lop_hoc_hien_tai_id: number,
+  phan_quyen: any[];
+  lop_hoc_hien_tai_id: number;
   khoa_hoc_hien_tai: { [id: string]: any; };
   error: string;
 }

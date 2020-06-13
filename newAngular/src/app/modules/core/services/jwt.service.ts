@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-
 @Injectable()
 export class JwtService {
 
@@ -15,5 +14,4 @@ export class JwtService {
   destroyToken() {
     window.localStorage.removeItem('jwtToken');
   }
-
 }

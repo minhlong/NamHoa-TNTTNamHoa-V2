@@ -7,5 +7,5 @@ export const environment = {
   versionFrequency: 1000 * 60,
 
   webURL: 'http://laravel.test',
-  api_url: 'http://laravel.test/v1',
+  apiUrl: 'http://laravel.test/v1',
 };
