@@ -4,24 +4,23 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutsModule } from './modules/layouts/layouts.module';
-import { SharedModule } from './modules/sharedx/shared.module';
-import { LoginComponent } from './login/login.component';
+import { SharedModule } from './modules/shared/shared.module';
 import { TrangChuComponent } from './trang-chu/trang-chu.component';
 import { CoreModule } from './modules/core';
-// import { AuthGuard, GuestGuard } from './services';
-
+import { LoginComponent, LogoutComponent } from './components';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    LogoutComponent,
     TrangChuComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
 
-    // SharedModule,
+    SharedModule,
     CoreModule,
 
     // Layout

@@ -21,7 +21,6 @@ export class GuestGuard implements CanActivate, CanActivateChild {
 
   private checkGuard() {
     const isExpired = this.jwtHelper.isTokenExpired();
-    console.log(isExpired, 1);
 
     if (!isExpired) {
       this.router.navigate(['/home']);

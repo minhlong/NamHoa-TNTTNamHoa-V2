@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { TrangChuComponent } from './trang-chu/trang-chu.component';
-import { LoginComponent } from './login/login.component';
 import { GuestGuard, AuthGuard } from './modules/core';
 import { BlankComponent, BasicComponent } from './modules/layouts';
+import { LogoutComponent, LoginComponent } from './components';
 
 const noAuth: Routes = [
   {
@@ -18,8 +18,8 @@ const hasAuth: Routes = [
   {
     path: '', component: BasicComponent,
     children: [
-      //   { path: '', redirectTo: 'trang-chu', pathMatch: 'full' },
-      //   { path: 'dang-xuat', component: LogoutComponent },
+      { path: '', redirectTo: 'trang-chu', pathMatch: 'full' },
+      { path: 'dang-xuat', component: LogoutComponent },
       { path: 'trang-chu', component: TrangChuComponent },
       //   { path: 'tai-khoan', loadChildren: './modules/tai-khoan/tai-khoan.module#TaiKhoanModule' },
       //   { path: 'lop-hoc', loadChildren: './modules/lop-hoc/lop-hoc.module#LopHocModule' },

@@ -1,3 +1,4 @@
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
@@ -9,6 +10,7 @@ export class AuthService {
 
   constructor(
     private apiSer: ApiService,
+    private jwtHelper: JwtHelperService
   ) { }
 
   /**
@@ -19,21 +21,19 @@ export class AuthService {
       id,
       password
     }).pipe(
-      map((res: any) => res.json()),
       map((res: any) => {
         localStorage.setItem('token', res.data);
-        return true;
-        // return this.jwtHelper.decodeToken(res.data);
+        return this.jwtHelper.decodeToken(res.data);
       })
     );
   }
 
   isAuthenticated() {
-    // if (!tokenNotExpired()) {
-    //   return false;
-    // }
-    return true;
-    // return this.jwtHelper.decodeToken(localStorage.getItem('token'));
+    if (this.jwtHelper.isTokenExpired()) {
+      return false;
+    }
+
+    return this.jwtHelper.decodeToken(localStorage.getItem('token'));
   }
 
   logout() {

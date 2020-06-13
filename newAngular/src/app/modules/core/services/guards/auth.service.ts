@@ -25,8 +25,6 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   private checkGuard() {
     const isExpired = this.jwtHelper.isTokenExpired();
 
-    console.log(isExpired, 2);
-
     if (isExpired) {
       this.store.dispatch(new Logout());
       return false;

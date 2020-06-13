@@ -47,6 +47,7 @@ export class AuthEffect {
   @Effect()
   authCompleted$ = this.actions$.pipe(
     ofType(AuthActions.AUTH_COMPLETED),
+    map((res: any) => res.payload),
     switchMap((data: any) => {
       return this.http.get('/khoa-hoc/' + data.khoa_hoc_hien_tai_id).pipe(
         map((res: any) => res.json()),

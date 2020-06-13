@@ -6,6 +6,6 @@ export const environment = {
   // Auto check and refresh browser after 60 seconds
   versionFrequency: 1000 * 60,
 
-  webURL: 'http://laravel.test',
-  apiUrl: 'http://laravel.test/v1',
+  webURL: 'https://api.tnttnamhoa.org',
+  apiUrl: 'https://api.tnttnamhoa.org/v1',
 };

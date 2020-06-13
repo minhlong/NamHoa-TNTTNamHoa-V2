@@ -32,7 +32,7 @@ import { EffectsModule } from '@ngrx/effects';
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
-          return localStorage.getItem('access_token');
+          return localStorage.getItem('token');
         },
         whitelistedDomains: ['tnttnamhoa.org'],
         // blacklistedRoutes: ['http://example.com/examplebadroute/'],
