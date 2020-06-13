@@ -53,7 +53,7 @@ export function reducer(state = defaultState, action: Action): AuthState {
     }
     case authAction.AUTH_FAILED: {
       return Object.assign({}, defaultState, {
-        error: action.err,
+        error: action.err.error,
       });
     }
     case authAction.LOGOUT_SUCCESS: {

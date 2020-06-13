@@ -12,7 +12,7 @@ export class ApiService {
   ) { }
 
   private formatErrors(error: any) {
-    return throwError(error.error);
+    return throwError(error);
   }
 
   get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
@@ -29,8 +29,7 @@ export class ApiService {
 
   post(path: string, body: any = {}): Observable<any> {
     return this.http.post(
-      `${environment.apiUrl}${path}`,
-      JSON.stringify(body)
+      `${environment.apiUrl}${path}`, body
     ).pipe(catchError(this.formatErrors));
   }
 

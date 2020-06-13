@@ -5,9 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutsModule } from './modules/layouts/layouts.module';
 import { SharedModule } from './modules/shared/shared.module';
-import { TrangChuComponent } from './trang-chu/trang-chu.component';
 import { CoreModule } from './modules/core';
+
 import { LoginComponent, LogoutComponent } from './components';
+import { TrangChuComponent } from './trang-chu/trang-chu.component';
 
 @NgModule({
   declarations: [
@@ -27,8 +28,6 @@ import { LoginComponent, LogoutComponent } from './components';
     LayoutsModule,
   ],
   providers: [
-    // AuthGuard,
-    // GuestGuard
   ],
   bootstrap: [AppComponent]
 })
