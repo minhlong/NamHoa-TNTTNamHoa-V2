@@ -1,0 +1,71 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+  <div class="sidebar-collapse">
+    <ul class="nav metismenu" id="side-menu">
+      <li class="nav-header">
+        <div class="dropdown profile-element">
+          <a data-toggle="dropdown" class="dropdown-toggle">
+            <span class="clear">
+              <span class="block m-t-xs">
+                <strong class="font-bold">TNTT Nam Hòa</strong>
+              </span>
+            </span>
+          </a>
+        </div>
+        <div class="logo-element">
+          NH
+        </div>
+      </li>
+      <li [ngClass]="{active: activeRoute('/trang-chu')}">
+        <a routerLink="/trang-chu">
+          <i class="fa fa-home"></i>
+          <span class="nav-label">Trang Chủ</span>
+        </a>
+      </li>
+      <li [ngClass]="{active: activeRoute('/tai-khoan')}">
+        <a routerLink="/tai-khoan">
+          <i class="fa fa-users"></i>
+          <span class="nav-label">Tài Khoản</span>
+        </a>
+      </li>
+      <li [ngClass]="{active: activeRoute('/lop-hoc')}">
+        <a routerLink="/lop-hoc">
+          <i class="fa fa fa-graduation-cap"></i>
+          <span class="nav-label">Lớp học</span>
+        </a>
+      </li>
+      <li [ngClass]="{active: activeRoute('/thu-moi')}">
+        <a routerLink="/thu-moi">
+          <i class="fa fa fa-envelope"></i>
+          <span class="nav-label">Thư Mời</span>
+        </a>
+      </li>
+      <li [ngClass]="{active: activeRoute('/thiet-bi')}">
+        <a routerLink="/thiet-bi">
+          <i class="fa fa fa-laptop"></i>
+          <span class="nav-label">Thiết Bị</span>
+        </a>
+      </li>
+      <li [ngClass]="{active: activeRoute('/khoa-hoc')}">
+        <a routerLink="/khoa-hoc">
+          <i class="fa fa fa-bookmark"></i>
+          <span class="nav-label">Khóa Học</span>
+        </a>
+      </li>
+      <li [ngClass]="{active: activeRoute('/phan-quyen')}">
+        <a routerLink="/phan-quyen">
+          <i class="fa fa-low-vision"></i>
+          <span class="nav-label">Phân Quyền</span>
+        </a>
+      </li>
+      <li [ngClass]="{active: activeRoute('/phan-nhom')}">
+        <a routerLink="/phan-nhom">
+          <i class="fa fa-user-plus"></i>
+          <span class="nav-label">Phân Nhóm</span>
+        </a>
+      </li>
+      <li class="nav-version">
+        <span class="nav-label">Verion {{env.version}}</span>
+      </li>
+    </ul>
+  </div>
+</nav>

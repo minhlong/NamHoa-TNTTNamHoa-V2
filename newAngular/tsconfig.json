@@ -14,7 +14,10 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@env/*": ["./src/environments/*"]  // <-- must be an array
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
