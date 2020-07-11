@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { smoothlyMenu } from '../../../_helpers';
+import { smoothlyMenu } from '../../../helpers';
 import { AppState } from '../../core/store';
 
 declare var jQuery: any;

@@ -2,12 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LayoutsModule } from './modules/layouts/layouts.module';
-import { SharedModule } from './modules/shared/shared.module';
-import { CoreModule } from './modules/core';
+import { AppComponent, LoginComponent, LogoutComponent } from './components';
 
-import { LoginComponent, LogoutComponent } from './components';
+import { CoreModule, SharedModule, LayoutsModule } from './modules';
 import { TrangChuComponent } from './trang-chu/trang-chu.component';
 
 @NgModule({

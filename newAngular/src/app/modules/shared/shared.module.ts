@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 // import { ListErrorsComponent } from './list-errors.component';
-// import { ShowAuthedDirective } from './show-authed.directive';
 
 @NgModule({
   imports: [
@@ -16,7 +15,6 @@ import { RouterModule } from '@angular/router';
   ],
   declarations: [
     // ListErrorsComponent,
-    // ShowAuthedDirective
   ],
   exports: [
     CommonModule,

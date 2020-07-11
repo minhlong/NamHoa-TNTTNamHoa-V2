@@ -1,3 +1,3 @@
-import * from './core/core.module';
-import * from './layouts/layouts.module';
-import * from './shared/shared.module';
+export { CoreModule } from './core';
+export { LayoutsModule } from './layouts';
+export { SharedModule } from './shared';
