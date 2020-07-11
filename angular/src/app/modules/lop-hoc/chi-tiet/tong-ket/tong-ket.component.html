@@ -11,6 +11,7 @@
           <thead>
             <tr>
               <th rowspan="2" class="text-center">#</th>
+              <th rowspan="2">Tên Thánh</th>
               <th rowspan="2">Họ và Tên</th>
               <th rowspan="2">Học Lực</th>
               <th rowspan="2">Chuyên Cần</th>
@@ -44,6 +45,7 @@
               <td class="text-center">
                 {{((pagingTN.currentPage - 1) * pagingTN.itemsPerPage ) + _i + 1}}
               </td>
+              <td>{{_item.ten_thanh}}</td>
               <td>{{_item.ho_va_ten}}</td>
               <td>{{_item.pivot.hoc_luc}}</td>
               <td>{{_item.pivot.chuyen_can}}</td>

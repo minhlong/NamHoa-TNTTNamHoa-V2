@@ -18,7 +18,7 @@ export class PhieuLienLacComponent implements OnInit, OnDestroy {
   linhMuc = 'Phanxico Xavier Đậu Nguyễn Hoàng Linh';
   linhMucImg = 'http://tnttnamhoa.org/assets/images/sign-Cha.png';
 
-  xuDoanTruong = 'Giuse Đinh Hoàng Thiên';
+  xuDoanTruong = 'Gioan Baotixita Hoàng Quang Vũ';
   doanTruongImg = 'http://tnttnamhoa.org/assets/images/sign-AThien.png';
 
   htPhuTrach: string;
@@ -45,12 +45,23 @@ export class PhieuLienLacComponent implements OnInit, OnDestroy {
 
       // Lấy thông tin huynh trưởng đầu tiên của lớp để in Phiếu Liên Lạc
       if (res && res.huynh_truong && res.huynh_truong.length) {
-        this.htPhuTrach = res.huynh_truong[0].ten_thanh + ' ' + res.huynh_truong[0].ho_va_ten;
-      }
+        const tmpArr = [];
+        res.huynh_truong.forEach(el => {
+          let ten = '';
+          if (el.loai_tai_khoan === 'HUYNH_TRUONG') {
+            if (el.gioi_tinh === 'NU') {
+              ten += 'Chị ';
+            } else if (el.gioi_tinh === 'NAM') {
+              ten += 'Anh ';
+            }
+          } else if (el.loai_tai_khoan === 'SOEUR') {
+            ten += 'Sơ ';
+          }
 
-      // Thống kê số lần/chuyên cần
-      if (res && res.huynh_truong && res.huynh_truong.length) {
-        this.htPhuTrach = res.huynh_truong[0].ten_thanh + ' ' + res.huynh_truong[0].ho_va_ten;
+          ten += el.ten_thanh + ' ' + el.ho_va_ten;
+          tmpArr.push(ten);
+        });
+        this.htPhuTrach = tmpArr.join('; ');
       }
     });
 
