@@ -19,7 +19,7 @@ export class PhieuLienLacComponent implements OnInit, OnDestroy {
   linhMucImg = 'http://tnttnamhoa.org/assets/images/sign-Cha.png';
 
   xuDoanTruong = 'Gioan Baotixita Hoàng Quang Vũ';
-  doanTruongImg = 'http://tnttnamhoa.org/assets/images/sign-AThien.png';
+  doanTruongImg = 'http://tnttnamhoa.org/assets/images/sign-AVu.png';
 
   htPhuTrach: string;
   ngayXetDuyet: string;
