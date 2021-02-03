@@ -59,8 +59,11 @@ Route::group(['prefix' => 'api', 'namespace' => 'TNTT\Controllers'], function ()
 
     Route::apiResources([
         'phan-quyen'     => 'PhanQuyenController',
-        'nhom-tai-khoan' => 'PhanNhomController',
     ], ['except' => ['store', 'destroy']]);
+
+    Route::apiResources([
+        'nhom-tai-khoan' => 'PhanNhomController',
+    ]);
 
     Route::apiResource('khoa-hoc', 'KhoaHocController', ['except' => ['destroy']]);
     Route::apiResource('thiet-bi', 'ThietBiController', ['except' => ['show']]);

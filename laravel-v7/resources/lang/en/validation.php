@@ -188,5 +188,7 @@ return [
         'ngay_them_suc'         => 'Ngày Thêm Sức',
         'ho_va_ten'             => 'Họ và Tên',
         'dot'                   => 'Đợt',
+        'ngay_muon'             => 'Ngày Mượn',
+        'ngay_tra'              => 'Ngày Trả',
     ],
 ];
