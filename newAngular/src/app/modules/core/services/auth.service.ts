@@ -6,8 +6,6 @@ import { ApiService } from './api.service';
 
 @Injectable()
 export class AuthService {
-  private url = '/dang-nhap';
-
   constructor(
     private apiSer: ApiService,
     private jwtHelper: JwtHelperService
@@ -17,7 +15,8 @@ export class AuthService {
    * Authticate base on username/email and password
    */
   authenticate(id: string, password: string) {
-    return this.apiSer.post(this.url, {
+    let url = '/auth/login';
+    return this.apiSer.post(url, {
       id,
       password
     }).pipe(
@@ -34,9 +33,5 @@ export class AuthService {
     }
 
     return this.jwtHelper.decodeToken(localStorage.getItem('token'));
-  }
-
-  logout() {
-    localStorage.clear();
   }
 }

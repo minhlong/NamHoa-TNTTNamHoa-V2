@@ -1,11 +1,11 @@
-import { AuthService } from './services/auth.service';
-import { AuthEffect } from './store/effects/auth.effect';
 import { environment } from '@env/environment';
 import { NgModule } from '@angular/core';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
+import { EffectsModule } from '@ngrx/effects';
 
+import { AuthService } from './services';
 import { reducer } from './store';
 
 import {
@@ -15,7 +15,7 @@ import {
   GuestGuard
 } from './services';
 import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
+import { AuthEffect } from './store/effects/auth.effect';
 
 @NgModule({
   imports: [
@@ -27,11 +27,11 @@ import { EffectsModule } from '@ngrx/effects';
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
-          console.log(111);
           return localStorage.getItem('token');
         },
         whitelistedDomains: [
           'api.tnttnamhoa.org',
+          'localhost',
         ],
       },
     }),

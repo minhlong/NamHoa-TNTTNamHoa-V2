@@ -1,9 +1,9 @@
-import { switchMap, map, catchError, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { switchMap, map, catchError, tap } from 'rxjs/operators';
 
 import { AuthService, ApiService } from '../../services';
 import * as AuthActions from './../actions/auth.action';
@@ -26,7 +26,9 @@ export class AuthEffect {
           this.router.navigate(['/home']);
           return new AuthActions.AuthCompleted(data);
         }),
-        catchError((err) => of(new AuthActions.AuthFailed(err)))
+        catchError((err) => {
+          return of(new AuthActions.AuthFailed(err));
+        })
       );
     })
   );
@@ -41,7 +43,9 @@ export class AuthEffect {
       }
       return new AuthActions.Logout();
     }),
-    catchError((err) => of(new AuthActions.AuthFailed(err)))
+    catchError((err) => {
+      return of(new AuthActions.AuthFailed(err));
+    })
   );
 
   @Effect()
@@ -50,9 +54,10 @@ export class AuthEffect {
     map((res: any) => res.payload),
     switchMap((data: any) => {
       return this.http.get('/khoa-hoc/' + data.khoa_hoc_hien_tai_id).pipe(
-        map((res: any) => res.json()),
         map((res: any) => new AuthActions.GetKhoaHoc(res.data)),
-        catchError((err) => of(new AuthActions.AuthFailed(err)))
+        catchError((err) => {
+          return of(new AuthActions.AuthFailed(err));
+        })
       );
     })
   );
@@ -60,11 +65,17 @@ export class AuthEffect {
   @Effect()
   logout$ = this.actions$.pipe(
     ofType(AuthActions.LOGOUT),
-    map(() => {
-      this.authSer.logout();
-      return new AuthActions.LogoutSuccess();
-    }),
-    catchError((err) => of(new AuthActions.AuthFailed(err)))
+    switchMap((data: any) => {
+      return this.http.post('/auth/logout').pipe(
+        map((res: any) => {
+          localStorage.clear();
+          return new AuthActions.LogoutSuccess();
+        }),
+        catchError((err) => {
+          return of(new AuthActions.AuthFailed(err));
+        })
+      );
+    })
   );
 
   @Effect({ dispatch: false })
@@ -73,6 +84,8 @@ export class AuthEffect {
     tap(() => {
       this.router.navigate(['/dang-nhap']);
     }),
-    catchError((err) => of(new AuthActions.AuthFailed(err)))
+    catchError((err) => {
+      return of(new AuthActions.AuthFailed(err));
+    })
   );
 }
