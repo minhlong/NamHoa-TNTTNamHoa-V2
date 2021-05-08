@@ -84,7 +84,6 @@
   <app-paging [id]="pagingTN.id" (pageChange)="pagingTN.currentPage = $event;"></app-paging>
 </div>
 <div class="ibox-content" *ngIf="apiData">
-  <div class="break-page"></div>
   <ng-container *ngFor="let _tn of apiData.Data | paginate: pagingTN; let _i = index">
     <div class="row">
       <div class="invoice col-md-12">
@@ -201,7 +200,7 @@
             </table>
           </div>
         </div>
-        <div class="row" style="margin-bottom: 30px">
+        <div class="row" style="margin-bottom: 15px">
           <div class="col-xs-12">
             <h4>Trung Bình Chuyên Cần và Học Lực:
               <strong>{{tbCaNam(_tn)}}</strong>
@@ -213,7 +212,7 @@
             <p class="comment-title">
               Nhận xét của huynh trưởng hướng dẫn
             </p>
-            <div style="padding-right: 50px">
+            <div>
               <p *ngIf="_tn.pivot.nhan_xet" style="text-indent: 50px;">{{_tn.pivot.nhan_xet}}</p>
               <hr class="dashed-line" *ngIf="!_tn.pivot.nhan_xet">
               <hr class="dashed-line" *ngIf="!_tn.pivot.nhan_xet">
@@ -231,7 +230,7 @@
             </ul>
           </div>
         </div>
-        <div class="row text-center m-t-lg">
+        <div class="row text-center">
           <div class="col-xs-offset-6 col-xs-6">
             {{ngayXetDuyet}}
           </div>
